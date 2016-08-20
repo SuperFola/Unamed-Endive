@@ -1,0 +1,275 @@
+Titre : # blabla
+     \_____> englobe souvent une scène
+
+Personne(s) présente(s) dans la scène : [personne1, ...]
+
+Description des images : -description-
+                     \____> image qu'il faudra bien entendu afficher
+
+Note du créateur : (*note: contenu ...*)
+
+Description d'une cinématique : *description*
+
+Texte : -> blabla
+   ou : nom_de_la_personne : blabla
+   Nota bene : très très souvent (genre tout le temps), "->" est utilisé pour introduire les paroles du prof
+   Nota bene bis : System: texte affichera un texte dans une bulle bleue
+
+Entrée utilisateur demandée : INPUT variable_où_stocker_l'input
+
+Choix utilisateur demandé : CHOICE texte [choix1, ...] variable_où_stocker_le_choix
+
+Conditions : IF [condition] THEN
+            ELIF [condition] THEN
+            ELSE THEN
+            EndIF
+
+Quand un event se passe : OnEVENT [event] DO ... EndEVENT
+
+Variable : {nom_de_la_variable}
+
+Notes :  - régions fictives souvent évoquées dans l'histoire : - Tanjoh
+                                                              - Ult'af
+        - liste des variables utilisées : - player_name
+                                          - tu_ecoutes
+
+
+                     _______  _______  _______  _        _______  _______ _________ _______ 
+                    (  ____ \(  ____ \(  ____ \( (    /|(  ___  )(  ____ )\__   __/(  ___  )
+                    | (    \/| (    \/| (    \/|  \  ( || (   ) || (    )|   ) (   | (   ) |
+                    | (_____ | |      | (__    |   \ | || (___) || (____)|   | |   | |   | |
+                    (_____  )| |      |  __)   | (\ \) ||  ___  ||     __)   | |   | |   | |
+                          ) || |      | (      | | \   || (   ) || (\ (      | |   | |   | |
+                    /\____) || (____/\| (____/\| )  \  || )   ( || ) \ \_____) (___| (___) |
+                    \_______)(_______/(_______/|/    )_)|/     \||/   \__/\_______/(_______)
+
+
+# Début jeu - Cinématique, grâce au module du core, on voit l'île comme si on la survolait
+    [Prof, conducteur de l'avion, nous]
+    -Un prof apparait dans l'ombre.-
+    -> Debout du'ch'mol ! Le voyage s'est bien passé ?
+    ...
+    -Image du prof en clair-
+    -> Allez, secoue toi ! Je suis la prof' Mirabel (*note: il manque 'le', c'est fait exprès*), on travaille ensemble.
+    On travaille ensemble et tu dois me rappeler ton nom ? xD
+    -> Oui toi tu connais mon nom puisque tu travailles avec moi mais le gars qui nous observe derrière son écran lui ne le sais pas :P
+    -> D'ailleurs ... *it's ARPG time !* Quel est ton nom ?
+    INPUT player_name
+    -> Revenons-en au but de ce voyage. Toi, tu es chargé de récupérer des données sur les créatures peuplant l'île d'Unamed, pendant que j'analyserai celles que tu m'auras déjà envoyée (*note: envoyées à moi, la prof, on accorde (pour ceux qui se demandent, j'ai aussi hésité un peu xD)*).
+    -Disparition du prof-
+    Conducteur de l'avion : Voilà l'île ! On atterit bientôt, accrochez vooooooooooooous !
+    J'vais ... vomir
+
+# Sur l'île - Cinématique
+    [Prof, notre future première créature, nous]
+    -> Maintenant que nous avons fait connaissance, laisse moi détailler un peu plus nos différents jobs.
+    -> Tu es chargé d'arpenter cette île de long en large, de travers en pas-travers, bref d'aller partout. Et ce dans le but de récolter des données sur l'environnement et les créatures y vivant.
+    -> Grâce à toutes ces données, je pourrais améliorer ta carte (très sommaire pour le moment, même les habitants ont peur d'explorer l'île à cause des créatures).
+    -> Tu vas sûrement rencontrer des créatures sauvages, il va te falloir du courage (ben oui, on est dans un ARPG quand même ! Si t'as pas les boules, je serais pas contente :( ) !
+    ... Pardon ? Je comprends plus trop là ... C'est toi, Mirabel, qui me parle là ? Ou c'est le zozo qu'a fait ce jeu ?
+    -> Donc, nous disions ... Ah oui ! Bon, comme à Tanjoh et Ult'af, on soupsonne l'existence des créatures découvertes dans ces 2 régions ici aussi.
+    (*note: régions fictives, me faut bien un background. Et pis je veux pas d'ennui avec Nintendo :P*)
+    -> Je pense donc partir sur une sorte de "Dexeur", qui fonctionnera comme ceux qu'on a utilisés à Tanjoh et Ult'af. En voilà déjà un, mais je vais l'améliorer par la suite hein ;)
+    System: {player_name} a reçu un "Dexeur" ! Youpi !
+    Euh ... Nan mais il va vraiment copier Poké... ?
+    -> Tu m'écoutes quand je te parle ou pas ?
+    CHOICE ... [oui, non] tu_ecoutes
+    IF [{tu_ecoutes} == oui] THEN
+        -> J'en avais pas l'impression
+    ELSE THEN
+        -> Bon ok, je recommence du début alors
+        ... Naaaaaaaaaaaaaaan !
+        -> Comme tu voudras :P
+    EndIF
+    -> Je pense avoir bien tout dit.
+    -Une créature nous saute dessus-
+    -> Ah ah ! Je l'avais vu venir en plus, mais comme tu m'écoutais pas ... tu vas le regretter :D !
+    Aïe !
+    -> Oignon (notez qu'on peut dire ognon aussi xP)
+    S'pas drôle, elle m'a blessée
+    -> Tiens, utilise vite ce capturateur-ultra-sonic-boom-très-cool !
+    La baballe quoi
+    -> Tais toi et obéis
+    *Ok ok*
+    ...
+    J'ai cru que ça marcherait jamais
+    -> Elles sont corriaces ces créa', j'aurais pas croivu
+    Oh mer** une STMG qui sait pas parler
+    -> S't'ai pour voir si tu suivais. Reprenons. Tu as chopé avec brio ce ... cette ... enfin ce "trukibidule"
+    -> Maintenant on va le tuer pour le disséquer :perv:
+    O_o Mirabel, tu fais peur
+    -> Je rigole (gros kikoo va)
+    ...
+    -> Elle a l'air de t'apprécier, c'est étrange ! Tu te rappelles à Ult'af avec le Mparf...
+    Pas un mot de plus.
+    -> Comme tu voudras. :P
+    -> Direction la ville, on va dans mon labo (et oui, en à peine 2 minutes de cinématique, j'ai déjà trouvé un labo ^^ la magie des jeux videos)
+
+# Direction la ville
+    [Prof, nous]
+    OnEVENT [premier combat contre une autre créature] DO
+    *
+        notre créature s'interpose
+        petit regard gentil (#tropcute)
+        elle nous défend
+        nous: waouh ! Ca roxe du poney ça !
+        nous: ... pardon ? T'attends quoi de moi ... ?
+        nous: Ah mer**. Maintenant c'est moi qui choisi ... ?
+        nous: ok ! Kick du droit balayette du gauche rotation arrière du coude !
+        nous: T'as ... pas de ... coude(s) ? Shit
+        écran noir, on a gagné (petit message), GG
+    *
+    EndEvent
+    -> Wah ! Pas mal du tout, c'est la première fois que je te vois gagner un combat contre une créa' ! Tu t'rappelles, à Tanjoh, tu te faisais la-mi-ner
+    ...
+    System: Tu connais que '...' comme réplique ou quoi ?
+    -> Bon, ce qui est pas mal, c'est qu'on a de l'espace pour s'entrainer.
+    -> Du coup j'ai changé mes plans, je vais chercher une créa', et toi pendant ce temps tu m'attends en entrainant la tienne.
+    -> On ira à mon labo après.
+    Ok ok.
+    Tu sais quoi ?
+    -> Bah nan
+    J'vais écrire un journal pour parler de tout ça, et je serais riiiiiiche ! $_$
+    -> Fais c'que tu veux, mais compte pas sur ça ah ah. T'as jamais eu de bol
+    (*note: le journal est donc débloqué dans le menu in game, à chaque avancée, un truc sera écrit dedans OU BIEN c'est l'utilisateur qui peut y écrire / modifier le contenu déjà présent*)
+
+# En ville (Silancard)
+    [Prof, nous, un de ses amis]
+    -> Me rappelait pas que la ville était aussi petite quand je suis venue la première fois
+    - un gars qui a l'air perdu -
+    Robert: ... !
+    - nettement ; un scientifique -
+    Robert: Salut Mira' ! Comment va ?
+    -> Va bien, merci. Et toi ?
+    Robert: Oh, tu amènes ton assistant ?
+    Y a plus de respect x)
+    -> Voici donc {player_name}. C'est lui qui sera chargé de (faire le sale boulot) récupérer les données sur les créatures.
+    Eh oh ! Je suis pas un assistant, j'ai eu mon diplôme de professeur y a 3 ans !
+    -> * Je te pari que tu te souviens de rien :-° *
+    Robert: Je me présente donc je m'appelle Robert. Je vit ici depuis maintenant 5 ans, 6 mois, et 4 jours.
+    J'avais deviné, ton nom est écrit à côté de ce que tu dis xD
+    Robert: Allons donc dans mon labo, j'ai des choses à vous montrer !
+    Oh la la ! Une maison close :D j'aaaaaaaaaaarrive !
+
+# Au labo
+    [Prof, nous, un de ses amis (son confrère)]
+    - Intérieur du labo -
+    Robert: Voici tout mon matériel !
+    -> Pas mal. Y a d'la place, on pourra y installer le trampo-scope-etra-line
+    Le q-q-quoi ?
+    -> Une machine qui permet d'étudier le saut d'une créature de manière à en déduire plein de trucs pas super utiles (mais ça reste fun à utiliser :D)
+    Un trampoline en gros
+    -> Ferme là
+    Porte ?
+    - Image de son bureau mal rangé -
+    Robert: Et mon bureau est ici !
+    Le gars qui s'en fout de nous en fait ^^'
+    Robert: J'ai déjà commencé à accumuler des données sur les créatures vivant ici.
+    Robert: Mais je me suis aperçu que j'avais stocké ça au mauvais endroit, donc j'ai tout déplacé. Et je ne les retrouve plus
+    RT
+    Robert: Donc ...
+    -> {player_name} tu vas tu charger d'accumuler toutes les données !
+    C'était mon but au début non ? :sight:
+
+# La découverte du nombre de créatures maximum transportable (dehors, en sortant du labo)
+    *
+        un homme a tenté de chopper plus de 6 créatures
+        on voit ces créatures commencer à se battre entre elles
+        nous on en a pile poil 5, et aucun problème
+        on comprend donc qu'au delà de 6 (pas compris) les créatures ressentent une tension
+    *
+    Amasing ... Ce gars vient de perdre sa main droite et sa jambe gauche en 42 secondes chrono
+    -> Donc ... 6 c'est trop
+    Trop, c'est jamais assez :D
+
+# La suite du voyage - no 1
+    [Prof, nous]
+    -> Cc
+    DD
+    -> RT
+    T'as perdu !
+    -> Robert a dit d'aller dans la ville suivante
+    Laquelle ? Parce que y en a 2. Piderflor ou Pah'tapey ?
+    -> On va commencer par Pah'tapey je pense, ça nous mènera au centre de l'île
+    Ké chef
+    -> Et débrouille toi pour chopper d'autres créatures en chemin
+
+# La suite du voyage - no 2
+    [Prof, nous, un truc par terre]
+    Truc: Bonjour, je suis un truc !
+    -> *Continue de marcher sans rien dire :-°*
+    Cc
+    Truc: 'Alut
+    Truc: Tu veux de l'héro ? Coc' ? Métaenphétamynes ?
+    *T'avais raison*
+    Euh ... non merci ça ira vieux
+    -> *Région de pek'nos ...*
+
+# A Pah'tapey
+    [Nous, un gars]
+    Ca me fait penser à "Pate à pain"
+    Gars: Tu parles tout seul
+    Gars: T'es skizo' ?
+    Nop' Je parlais à ce truc qui m'adore en pensant qu'il va m'écouter mais en fait il doit pas me comprendre (oui, oui, je suis bien seul dans ma vie --')
+    Gars: Tuer. Je veux tuer.
+    Oké ... Tu sais quoi, je vais te laisser :-°
+    Gars: Nan nan j'ai besoin de toi
+    Euuuh ... Si c'est pour de l'héro, demande au truc qui trainait là-bas, j'en ai pas ! J'suis clean !
+    Gars: Tu accompagnes le prof Mirabel non ?
+    Oui. Pourquoi ? Tu l'as sautée ?
+    Gars: Elle est bien plus weird que ce que tu crois :ahde:
+    ...
+
+# Seul (je pense (au sens propre))
+    [Nous, la prof]
+    Merde.
+    *mode philosophe on*
+    Est-ce que je bosse pour Mirabel car elle me l'a demandé ou bien parce que j'en ai envie ?
+    Mais à la fin, est-ce que ces voyages ont tous un but commun, celui d'aider la science ?
+    Et si ce n'était pas le cas ... ?
+    *mode philosophe off*
+    -> *bourée* Salu' 'oi ! T'as pas un truc à néfu pour m'oi ?
+
+# Retour au labo
+    [La prof, nous, Robert, le gars de Pah'Tapey]
+    -> Hé René !
+    C'est Robert
+    -> On s'en tape.
+    -> T'as vu ce que je t'amène ? Deux belles créatures MORTES C:
+    Robert: *vomi*
+    -> {player_name} vient là toi.
+    Euuh ... Où ça ?! Les trucs pas nets j'en ai marre !
+    -> *donne du VC Net active + à {player_name}*
+    --' Suuuuuuuuuicide
+    Gars: Owiii. J'peux aider ! J'peux aider !
+    Mais qu'est-ce que ... ?
+    System: *censuré* #laCensureC'estMal
+    -> Roooooobert ! Mirabel repart en couilles
+    System: *une bonne fessée plus tard*
+    Robert: Go disséquer alors ;)
+    *Si tu dissèques c'est que tu es un biologiste*
+    Robert: Hein ? J'ai un diplôme de technicien de surfaces - avec un 10,1 / 20 C: -, ça suffit amplement tu sais !
+
+Nota bene : scénario pas entièrement fini. Et j'ai pu faire des fautes, je suis humain et je me plante (je tape trop en SMS xD) :'( Donc désolé si j'ai heurté quelqu'un en tapant heure taux graphe :D
+Nota bene bis : j'use énormément de smileys, je sais. Askip' c'est dangereux pour la santé xD Mais je trouve que ça donne de la vie dans les scénas (IMO)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// lignes blanches car j'écris ça dans Notepad++ et sinon je peux pas scroller donc ça fait moche ... fin bref voilà, faut pas s'inquiéter :)
