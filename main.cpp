@@ -1,9 +1,9 @@
-#include "game.hpp"
+#include "src/game.hpp"
 
 int main()
 {
-    Game game = new Game();
-    game.run();
+    // create game instance
+    Game game {};
 
-    return 0;
+    return game.run();  // if an error occure, Game::run() will return 1, else 0 (EXIT_SUCCESS)
 }
