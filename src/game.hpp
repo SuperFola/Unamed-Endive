@@ -22,6 +22,8 @@ private:
     void dispatch_events(sf::Event&);
     void resize_window(int, int);
     void render();
+    void update(sf::Time);
+    void update_fps(sf::Time, int&);
 
 public:
     // methods

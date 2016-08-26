@@ -39,7 +39,7 @@ void  Game::dispatch_events(sf::Event& event)
         if (this->sm.change_view(new_view))
         {
             // an error occured
-            fprintf(stderr, "Unable to find the view %i", new_view);
+            fprintf(stderr, "Unable to find the view %d to process the events", new_view);
         }
     }
 }
@@ -62,7 +62,40 @@ void Game::render()
     }
     else
     {
-        fprintf(stderr, "Unable to find the view %i", c_view);
+        fprintf(stderr, "Unable to find the view %d to render it", c_view);
+    }
+}
+
+void Game::update(sf::Time elapsed)
+{
+    int c_view = this->sm.getId();
+
+    if (c_view != -1) // does the view exist ?
+    {
+        switch (c_view)
+        {
+        case DEFAULT_VIEW_ID:
+            this->def_view.update(this->window, elapsed);
+            break;
+
+        default:
+            break;
+        }
+    }
+    else
+    {
+        fprintf(stderr, "Unable to find the view %d to update it", c_view);
+    }
+}
+
+void Game::update_fps(sf::Time dt, int& _fps_update)
+{
+    float fps = 1.0f / (dt.asSeconds());
+    _fps_update++;
+    if (_fps_update % 200 == 0 && DISPLAY_FPS_IN_TITLE)
+    {
+        this->window.setTitle(WIN_TITLE + to_string(fps));
+        _fps_update = 0;
     }
 }
 
@@ -76,14 +109,12 @@ int Game::run()
     {
         // get deltatime
         sf::Time dt = this->clock.restart();
+
+        // update the current view
+        this->update(dt);
+
         // update FPS and display
-        float fps = 1.0f / (dt.asSeconds());
-        _fps_update++;
-        if (_fps_update % 200 == 0 && DISPLAY_FPS_IN_TITLE)
-        {
-            this->window.setTitle(WIN_TITLE + to_string(fps));
-            _fps_update = 0;
-        }
+        this->update_fps(dt, _fps_update);
 
         // dispatch events using a loop
         while (this->window.pollEvent(event))
