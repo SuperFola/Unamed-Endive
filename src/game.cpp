@@ -69,13 +69,21 @@ void Game::render()
 // public
 int Game::run()
 {
+    int _fps_update {0};
+
     sf::Event event;
     while (this->window.isOpen())
     {
         // get deltatime
         sf::Time dt = this->clock.restart();
+        // update FPS and display
         float fps = 1.0f / (dt.asSeconds());
-        this->window.setTitle(WIN_TITLE + " " + to_string(fps));
+        _fps_update++;
+        if (_fps_update % 200 == 0 && DISPLAY_FPS_IN_TITLE)
+        {
+            this->window.setTitle(WIN_TITLE + to_string(fps));
+            _fps_update = 0;
+        }
 
         // dispatch events using a loop
         while (this->window.pollEvent(event))

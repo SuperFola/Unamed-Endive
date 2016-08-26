@@ -4,4 +4,6 @@
 #define UNREACHABLE_VIEW_ID -1
 #define DEFAULT_VIEW_ID 1
 
+#define DISPLAY_FPS_IN_TITLE 1
+
 #endif // DEF_CONSTANTS
