@@ -1,18 +1,14 @@
 #include <iostream>
+#include <string>
 
 #include "game.hpp"
+#include "abstract/functions.hpp"
 
 // private
 Game::Game() : window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titlebar | sf::Style::Close), sm()
 {
-}
-
-int Game::prepare()
-{
-    // load components here
-    this->shape = sf::CircleShape(100.0f);
-    this->shape.setFillColor(sf::Color::Green);
-    return 0;
+    // we only add the id of the views
+    this->sm.add_view(DEFAULT_VIEW_ID);
 }
 
 void Game::resize_window(int nx, int ny)
@@ -24,34 +20,62 @@ void Game::resize_window(int nx, int ny)
 
 void  Game::dispatch_events(sf::Event& event)
 {
-    switch(event.type)
-    {
-    case sf::Event::KeyPressed:
-        this->shape.setFillColor(sf::Color::Blue);
-        break;
+    int c_view = this->sm.getId();
 
-    default:
-        break;
+    if (c_view != -1)  // we check if the view exist
+    {
+        int new_view = UNREACHABLE_VIEW_ID;
+
+        switch (c_view)
+        {
+        case DEFAULT_VIEW_ID:
+            new_view = this->def_view.process_event(event);
+            break;
+
+        default:
+            break;
+        }
+
+        if (this->sm.change_view(new_view))
+        {
+            // an error occured
+            fprintf(stderr, "Unable to find the view %i", new_view);
+        }
     }
 }
 
 void Game::render()
 {
-    this->window.draw(this->shape);
+    int c_view = this->sm.getId();
+
+    if (c_view != -1) // does the view exist ?
+    {
+        switch (c_view)
+        {
+        case DEFAULT_VIEW_ID:
+            this->def_view.render(this->window);
+            break;
+
+        default:
+            break;
+        }
+    }
+    else
+    {
+        fprintf(stderr, "Unable to find the view %i", c_view);
+    }
 }
 
 // public
 int Game::run()
 {
-    // load components and variables
-    if (this->prepare())
-        return 1;  // error while loading
-
     sf::Event event;
     while (this->window.isOpen())
     {
         // get deltatime
         sf::Time dt = this->clock.restart();
+        float fps = 1.0f / (dt.asSeconds());
+        this->window.setTitle(WIN_TITLE + " " + to_string(fps));
 
         // dispatch events using a loop
         while (this->window.pollEvent(event))

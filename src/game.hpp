@@ -8,16 +8,17 @@
 #include <SFML/Graphics.hpp>
 
 #include "abstract/statemachine.hpp"
+#include "constants.hpp"
+#include "views/default.hpp"
 
 class Game {
 private:
     // variables
     sf::RenderWindow window;
-    sf::CircleShape shape;
     sf::Clock clock;
     StateMachine sm;
+    DefaultView def_view {};
     // methods
-    int prepare();
     void dispatch_events(sf::Event&);
     void resize_window(int, int);
     void render();

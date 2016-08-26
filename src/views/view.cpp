@@ -1,9 +1,7 @@
 #include "view.hpp"
 
-// private
-
 // public
-View::View()
+View::View(int new_id) : id(new_id)
 {
 
 }
@@ -12,3 +10,4 @@ int View::getId()
 {
     return this->id;
 }
+
