@@ -8,27 +8,27 @@ Pokémon-like, ARPG, dungeon crawler, jouable sous peu en LAN (peut-être même 
 
 Histoire | History
 -------- | -------
-Vous êtes un chercheur et arrivez sur Unamed, une île où vit très peu de personnes. Les seuls régions peuplées sont situées près du rivage car les habitant n'ont pas de créatures pour se défendre fassent à celles vivants dans les terres. Vous allez vous installer sur cette île, et partir à la recherche de toutes les créatures de l'île ! Il vous faudra de la patience pour venir à bout des dongeons, de bons "captureurs" que vous pourrez programmer in-game et from scratch ! | You are a scientist and you arrive on Unamed, an island where a few people live. The only livable places are situated near the ocean because the inhabitants don't have any creatures to defend them-selve against the ones living in the center of the island. You are going to settle down here, and go to search for all these creatures ! You will need to be patient to get out of the dungeons, some good "balls" which will be programmable in-game and from-scratch !
+Vous êtes un chercheur et arrivez sur Unamed, une île où vivent très peu de personnes. Les seuls régions peuplées sont situées près du rivage car les habitant n'ont pas de créatures pour se défendre face à celles vivants dans les terres. Vous allez vous installer sur cette île, et partir à la recherche de toutes les créatures de l'île ! Il vous faudra de la patience pour venir à bout des dongeons, de bons "captureurs" que vous pourrez programmer in-game et from-scratch ! | You are a scientist and you arrive on Unamed, an island where a few people live. The only livable places are situated near the ocean because the inhabitants don't have any creatures to defend themselves against the ones living in the center of the island. You are going to settle down here, and look for all these creatures ! You will need to be patient to get out of the dungeons, some good "balls" which will be programmable in-game and from-scratch !
 
 Nécessités | Requirements
 ---------- | ------------
-Ce jeu nécessite un compilateur C++ à jour et la SFML 2.3 pour fonctionner correctement, si vous souhaitez l'installer via la source. | This game need an up-to-date compiler for C++ and the SFML 2.3 to run correctly, if you want to install it from the source.
+Ce jeu nécessite un compilateur C++ à jour et la SFML 2.3 pour fonctionner correctement, si vous souhaitez l'installer via la source. | This game needs an up-to-date compiler for C++ and the SFML 2.3 to run correctly, if you want to install it from the source.
 
 Note | Note
 ---- | ----
-Vous pouvez aussi télécharger un exécutable pour installer le jeu sans devoir installer les dépendances. | You can also download an executable to install the game without installing the dependencies
+Vous pouvez aussi télécharger un exécutable pour installer le jeu sans devoir installer les dépendances. | You can also download an executable to install the game without installing the dependencies.
 
 # Crédits - Credits
 
-Un énorme merci à Wesley FG qui a créé toutes les tiles utilisées (uniquement les tiles, pas les personnages), originellement pour le projet "Pokémon Marnian"
+Un énorme merci à Wesley FG qui a créé toutes les tiles utilisées (uniquement les tiles, pas les personnages), originellement pour le projet `Pokémon Marnian`.
 
-Big thanks to Wesley FG who created all the tiles (just the tiles, not the characters), originally for the project "Pokémon Marnian"
+Big thanks to Wesley FG who created all the tiles (only the tiles, not the characters), originally for the project `Pokémon Marnian`.
 
 ----
 
-De même, je remercie du fond du coeur Smiley-Fakemon, qui me laisse utiliser ses "Fakemon" pour ce projet
+De même, je remercie du fond du coeur Smiley-Fakemon, qui me laisse utiliser ses "Fakemon" pour ce projet.
 
-Also, I send a special thanks to Smiley-Fakemon, who lets me using his "Fakemon" for this project
+Also, I send a special thanks to Smiley-Fakemon, who lets me using his "Fakemon" for this project.
 
 ----
 
@@ -56,9 +56,15 @@ The three names above are cities names in Unamed, found by ShootingStarD
 
 ----
 
+Les 12 thèmes du jeu ont été composés par Bat' exclusivement pour ce projet.
+
+The 12 musical themes were composed by Bat' exclusively for this project.
+
+----
+
 Les différentes conversations que j'ai eu avec ces graphistes m'autorisant à utiliser leurs créations (les messages les plus récents sont les premiers) :
 
-Here are the conversations I had with these graphists (the most recent messages are the first ones) :
+Here are the different conversations I had with these graphists who allowed to use their work (the most recent messages are the first ones) :
 
 ```
 loodoor said the following:  

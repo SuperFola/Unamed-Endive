@@ -9,6 +9,10 @@ Game::Game() : window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titleba
 {
     // we only add the id of the views
     this->sm.add_view(DEFAULT_VIEW_ID);
+
+    // creating base folders
+    system("mkdir saves");
+    system("mkdir screenshots");
 }
 
 void Game::resize_window(int nx, int ny)

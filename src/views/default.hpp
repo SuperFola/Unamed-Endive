@@ -2,6 +2,7 @@
 #define DEF_DEFAULT_VIEW
 
 #include "view.hpp"
+#include "../map/map.hpp"
 #include "../particles/particles.hpp"
 
 class DefaultView : public View
@@ -10,6 +11,7 @@ private:
     // variables
     sf::VertexArray triangle;
     ParticleSystem particles;
+    Map mymap;
 
 public:
     // methods

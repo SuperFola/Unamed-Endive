@@ -7,5 +7,6 @@
 #define DISPLAY_FPS_IN_TITLE 1
 
 #define TILE_SIZE 16
+#define TILE_SIZE_IN_TILESET 17
 
 #endif // DEF_CONSTANTS

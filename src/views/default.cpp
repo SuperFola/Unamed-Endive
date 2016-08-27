@@ -4,13 +4,15 @@
 #include "../constants.hpp"
 
 // public
-DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000)
+DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000), mymap("tests.json")
 {
+    mymap.load();
+
     this->triangle = sf::VertexArray(sf::Triangles, 3);
 
-    this->triangle[0].position = sf::Vector2f(10, 10);
-    this->triangle[1].position = sf::Vector2f(100, 10);
-    this->triangle[2].position = sf::Vector2f(100, 100);
+    this->triangle[0].position = sf::Vector2f(200, 200);
+    this->triangle[1].position = sf::Vector2f(300, 200);
+    this->triangle[2].position = sf::Vector2f(300, 300);
 
     this->triangle[0].color = sf::Color::Red;
     this->triangle[1].color = sf::Color::Blue;
@@ -19,6 +21,7 @@ DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000)
 
 void DefaultView::render(sf::RenderWindow& window)
 {
+    this->mymap.render(window);
     window.draw(this->triangle);
     window.draw(this->particles);
 }
