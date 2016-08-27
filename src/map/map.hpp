@@ -36,6 +36,8 @@ public:
     int load();
     void render(sf::RenderWindow&);
     void update(sf::RenderWindow&, sf::Time);
+    int getWidth();
+    int getHeight();
 };
 
 #endif // DEF_MAP

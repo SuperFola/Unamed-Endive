@@ -35,3 +35,13 @@ void Map::update(sf::RenderWindow& window, sf::Time elapsed)
 {
 
 }
+
+int Map::getWidth()
+{
+    return this->map_width;
+}
+
+int Map::getHeight()
+{
+    return this->map_height;
+}
