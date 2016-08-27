@@ -113,6 +113,18 @@ int Character::move(DIR direction, Map map_, sf::Time elapsed)
         if (this->pos.getX() + speed - this->sprite.getTexture().getSize().x < map_.getWidth() * TILE_SIZE)
             vect[1] = 1 * speed;
     }
+
+    bool pass = map_.colliding_at(int, int);
+
+    if (pass)
+    {
+        // we can set the new position
+        this->pos.move(int(vect[0]), int(vect[1]));
+    }
+    else
+    {
+        // we need to recalculate a valide position
+    }
 }
 
 int Character::save()

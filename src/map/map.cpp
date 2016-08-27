@@ -45,3 +45,12 @@ int Map::getHeight()
 {
     return this->map_height;
 }
+
+bool Map::colliding_at(int tx, int ty)
+{
+    int rpos = tx + ty * this->map_width;
+
+    if (rpos < this->map_height * this->map_width)
+        return this->level[rpos].is_solid();
+    return true;
+}

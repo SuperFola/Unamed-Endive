@@ -6,13 +6,14 @@
 #include <vector>
 
 #include "tilemap.hpp"
+#include "blocks/block.hpp"
 //#include "../json/jsoncpp.cpp"
 
 class Map
 {
 private:
     // variables
-    std::vector<int> level =
+    std::vector<Block> level =
     {
         0,  1,  2, 68, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         3,  4,  5, 68, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
@@ -38,6 +39,7 @@ public:
     void update(sf::RenderWindow&, sf::Time);
     int getWidth();
     int getHeight();
+    bool colliding_at(int, int);
 };
 
 #endif // DEF_MAP
