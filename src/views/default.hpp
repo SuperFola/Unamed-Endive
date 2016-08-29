@@ -4,6 +4,7 @@
 #include "view.hpp"
 #include "../map/map.hpp"
 #include "../particles/particles.hpp"
+#include "../entities/character.hpp"
 
 class DefaultView : public View
 {
@@ -11,6 +12,7 @@ private:
     // variables
     sf::VertexArray triangle;
     ParticleSystem particles;
+    Character player;
     Map mymap;
 
 public:

@@ -1,10 +1,11 @@
+#include <SFML/System/Vector2.hpp>
+
 #include "character.hpp"
 #include "../abstract/functions.hpp"
 
-void load_character_textures(std::vector<std::vector<sf::Sprite>>& character_sprites, const string& path)
+void load_character_textures(std::vector<sf::Sprite>& character_sprites, const std::string& path)
 {
     std::vector<std::string> chtexfname = {"haut", "bas", "gauche", "droite"};
-    int j = 0;
 
     for (auto direction: chtexfname)
     {
@@ -15,9 +16,8 @@ void load_character_textures(std::vector<std::vector<sf::Sprite>>& character_spr
             image.createMaskFromColor(sf::Color(255, 0, 255, 255));
             sf::Texture texture;
             texture.loadFromImage(image);
-            character_sprites[j][i] = sf::Sprite(texture);
+            character_sprites.push_back(sf::Sprite(texture));
         }
-        j++;
     }
 }
 
@@ -45,7 +45,7 @@ void Character::update_walk_anim()
         goto stop;
     }
 
-    stop:
+    stop:;
 }
 
 void Character::update_run_anim()
@@ -66,16 +66,16 @@ void Character::update_run_anim()
         goto stop;
     }
 
-    stop:
+    stop:;
 }
 
 // public
-Character::Character() : name("Someone"), speed(2), anim_cursor(states::idle)
+Character::Character() : name("Someone"), speed(2), anim_cursor(ChState::idle), direction(0)
 {
     load_character_textures(this->sprites, "assets/players/male/");
 }
 
-Character::Character(const std::string& name_or_path, bool load=false) : speed(2), anim_cursor(states::idle)
+Character::Character(const std::string& name_or_path, bool load) : speed(2), anim_cursor(ChState::idle), direction(0)
 {
     if (!load)
     {
@@ -84,7 +84,7 @@ Character::Character(const std::string& name_or_path, bool load=false) : speed(2
     else
     {
         // load character data from the indicated file
-        load_character_textures("assets/players/girl/");  // temporary solution. We need to get JsonCpp working to read the saved config file
+        load_character_textures(this->sprites, "assets/players/girl/");  // temporary solution. We need to get JsonCpp working to read the saved config file
     }
 }
 
@@ -92,6 +92,7 @@ int Character::move(DIR direction, Map map_, sf::Time elapsed)
 {
     float speed = this->speed * TILE_SIZE * elapsed.asSeconds() * 10;
     std::vector<float> vect {0, 0};
+    sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
     if (direction == DIR::up)
     {
@@ -100,7 +101,7 @@ int Character::move(DIR direction, Map map_, sf::Time elapsed)
     }
     else if (direction == DIR::down)
     {
-        if (this->pos.getY() + speed - this->sprite.getTexture().getSize().y < map_.getHeight() * TILE_SIZE)
+        if (this->pos.getY() + speed - csprite_size.y < map_.getHeight() * TILE_SIZE)
             vect[0] = 1 * speed;
     }
     else if (direction == DIR::left)
@@ -110,11 +111,11 @@ int Character::move(DIR direction, Map map_, sf::Time elapsed)
     }
     else if (direction == DIR::right)
     {
-        if (this->pos.getX() + speed - this->sprite.getTexture().getSize().x < map_.getWidth() * TILE_SIZE)
+        if (this->pos.getX() + speed - csprite_size.x < map_.getWidth() * TILE_SIZE)
             vect[1] = 1 * speed;
     }
 
-    bool pass = map_.colliding_at(int, int);
+    bool pass = map_.colliding_at(0, 0);
 
     if (pass)
     {
@@ -130,4 +131,14 @@ int Character::move(DIR direction, Map map_, sf::Time elapsed)
 int Character::save()
 {
     // save to "saves/player_name.umd"
+}
+
+sf::Sprite Character::getCurrentSprite()
+{
+    return this->sprites[this->direction * 4 + static_cast<int>(this->anim_cursor)];
+}
+
+void Character::update(sf::RenderWindow& window, sf::Time elapsed)
+{
+
 }

@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include "blocks/block.hpp"
+
 class TileMap : public sf::Drawable, public sf::Transformable
 {
 private:
@@ -20,7 +22,7 @@ private:
 
 public:
     // methods
-    int load(const std::string&, sf::Vector2u, const std::vector<int>&, unsigned int, unsigned int);
+    int load(const std::string&, sf::Vector2u, std::vector<Block>&, unsigned int, unsigned int);
 };
 
 #endif // DEF_TILEMAP

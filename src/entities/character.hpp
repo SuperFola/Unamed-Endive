@@ -8,8 +8,7 @@
 
 #include "../constants.hpp"
 #include "../abstract/point.hpp"
-
-class Map;
+#include "../map/map.hpp"
 
 enum class ChState {
     idle,
@@ -24,7 +23,8 @@ private:
     std::string name;
     Point pos;
     int speed;
-    std::vector<std::vector<sf::Sprite>> sprites;
+    int direction;
+    std::vector<sf::Sprite> sprites;
     ChState anim_cursor;
     // methods
     void update_walk_anim();
@@ -36,6 +36,8 @@ public:
     Character(const std::string&, bool=false);
     int move(DIR, Map, sf::Time);
     int save();
+    sf::Sprite getCurrentSprite();
+    void update(sf::RenderWindow&, sf::Time);
 };
 
 #endif // DEF_CHARACTER

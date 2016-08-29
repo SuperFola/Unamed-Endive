@@ -6,6 +6,8 @@
 // public
 Map::Map(std::string path) : tileset_path {"assets/tileset.png"}, map_width(16), map_height(8)
 {
+    for (int i=0; i < this->map_width * this->map_height; i++)
+        this->level.push_back(Block(68, false));
     this->map_data_path = path;
 
     /*std::ifstream config_doc(this->map_data_path, std::ifstream::binary);

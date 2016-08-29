@@ -46,14 +46,20 @@
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Unit filename="src/abstract/functions.hpp" />
+		<Unit filename="src/abstract/point.cpp" />
+		<Unit filename="src/abstract/point.hpp" />
 		<Unit filename="src/abstract/statemachine.cpp" />
 		<Unit filename="src/abstract/statemachine.hpp" />
 		<Unit filename="src/constants.hpp" />
+		<Unit filename="src/entities/character.cpp" />
+		<Unit filename="src/entities/character.hpp" />
 		<Unit filename="src/game.cpp" />
 		<Unit filename="src/game.hpp" />
 		<Unit filename="src/json/json/json-forwards.h" />
 		<Unit filename="src/json/json/json.h" />
 		<Unit filename="src/json/jsoncpp.cpp" />
+		<Unit filename="src/map/blocks/block.cpp" />
+		<Unit filename="src/map/blocks/block.hpp" />
 		<Unit filename="src/map/map.cpp" />
 		<Unit filename="src/map/map.hpp" />
 		<Unit filename="src/map/tilemap.cpp" />

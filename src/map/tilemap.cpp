@@ -2,7 +2,7 @@
 #include "../constants.hpp"
 
 // public
-int TileMap::load(const std::string& tileset_path, sf::Vector2u tileSize, const std::vector<int>& tiles, unsigned int width, unsigned int height)
+int TileMap::load(const std::string& tileset_path, sf::Vector2u tileSize, std::vector<Block>& tiles, unsigned int width, unsigned int height)
 {
     // load tileset !
     if (!this->tileset.loadFromFile(tileset_path))
@@ -16,7 +16,7 @@ int TileMap::load(const std::string& tileset_path, sf::Vector2u tileSize, const 
     for (unsigned int i = 0; i < width; ++i)
         for (unsigned int j = 0; j < height; ++j)
         {
-            int tileNumber = tiles[i + j * width];
+            int tileNumber = tiles[i + j * width].getId();
 
             int tu = tileNumber % (this->tileset.getSize().x / tileSize.x);
             int tv = tileNumber / (this->tileset.getSize().x / tileSize.x);

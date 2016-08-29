@@ -11,7 +11,7 @@ Block::Block(int id_) : solid(false), id(id_)
 
 }
 
-Block::block(int id_, bool solid_) : solid(solid_), id(id_)
+Block::Block(int id_, bool solid_) : solid(solid_), id(id_)
 {
 
 }

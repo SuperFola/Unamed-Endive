@@ -8,6 +8,8 @@ DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000), mymap("test
 {
     mymap.load();
 
+    this->player = Character();
+
     this->triangle = sf::VertexArray(sf::Triangles, 3);
 
     this->triangle[0].position = sf::Vector2f(200, 200);

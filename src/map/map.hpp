@@ -13,17 +13,7 @@ class Map
 {
 private:
     // variables
-    std::vector<Block> level =
-    {
-        0,  1,  2, 68, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        3,  4,  5, 68, 1, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0,
-        6,  7,  8, 68, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3,
-        68, 68, 68, 70, 2, 0, 3, 3, 3, 0, 1, 1, 1, 0, 0, 0,
-        0, 1, 1, 0, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2, 0, 0,
-        0, 0, 1, 0, 3, 0, 2, 2, 0, 0, 1, 1, 1, 1, 2, 0,
-        2, 0, 1, 0, 3, 0, 2, 2, 2, 0, 1, 1, 1, 1, 1, 1,
-        0, 0, 1, 0, 3, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1,
-    }; // we will load it from a file in the future
+    std::vector<Block> level;
     TileMap tmap;
     //Json::Value root;
     std::string tileset_path;
