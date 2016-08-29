@@ -657,7 +657,7 @@
 
 1472309579 f:\endive\src\abstract\point.hpp
 
-1472473479 f:\endive\src\entities\character.hpp
+1472492297 f:\endive\src\entities\character.hpp
 	<string>
 	<vector>
 	<SFML/System/Time.hpp>
@@ -665,14 +665,25 @@
 	"../constants.hpp"
 	"../abstract/point.hpp"
 	"../map/map.hpp"
+	"../abstract/texturesmanager.hpp"
 
-1472472609 source:f:\endive\src\entities\character.cpp
+1472492349 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
-	<assert.h>
 	"character.hpp"
 	"../abstract/functions.hpp"
+	"../abstract/texturesmanager.hpp"
 
 1472330979 source:f:\endive\src\map\blocks\block.cpp
 	"block.hpp"
+
+1472493004 f:\endive\src\abstract\texturesmanager.hpp
+	<SFML/Graphics.hpp>
+	<string>
+	<tuple>
+	<map>
+
+1472491807 source:f:\endive\src\abstract\texturesmanager.cpp
+	<iostream>
+	"texturesmanager.hpp"
 

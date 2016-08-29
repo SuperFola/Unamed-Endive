@@ -5,31 +5,6 @@
 #include "../abstract/functions.hpp"
 #include "../abstract/texturesmanager.hpp"
 
-void load_character_textures(std::vector<sf::Sprite>& character_sprites, std::vector<sf::Texture>& textures, const std::string& path)
-{
-    std::vector<std::string> chtexfname = {"haut", "bas", "gauche", "droite"};
-
-    for (auto direction: chtexfname)
-    {
-        for (int i=0; i < 4; i++)
-        {
-            sf::Image image;
-
-            std::cout << "Loading " << path << direction << to_string<int>(i) << ".png" << std::endl;
-            if (!image.loadFromFile(path + direction + to_string<int>(i) + ".png"))
-            {
-                std::cout << "Unable to open " << path << direction << to_string<int>(i) << ".png" << std::endl;
-            }
-
-            image.createMaskFromColor(sf::Color(255, 0, 255, 255));
-            sf::Texture texture;
-            texture.loadFromImage(image);
-            textures.push_back(std::move(texture));
-            character_sprites.push_back(sf::Sprite(textures[textures.size() - 1]));
-        }
-    }
-}
-
 // private
 void Character::update_walk_anim()
 {
@@ -78,23 +53,45 @@ void Character::update_run_anim()
     stop:;
 }
 
-// public
-Character::Character() : name("Someone"), speed(2), direction(0), anim_cursor(ChState::idle)
+void Character::load_character_textures()
 {
-    load_character_textures(this->sprites, this->textures, "assets/players/male/");
+    const std::vector<std::string> chtexfname = {"haut", "bas", "gauche", "droite"};
+
+    for (const auto direction: chtexfname)
+    {
+        for (int i=0; i < 4; i++)
+        {
+            sf::Image image;
+
+            std::cout << "Loading " << this->path << direction << to_string<int>(i) << ".png" << std::endl;
+            if (!image.loadFromFile(path + direction + to_string<int>(i) + ".png"))
+            {
+                std::cout << "Unable to open " << this->path << direction << to_string<int>(i) << ".png" << std::endl;
+            }
+
+            image.createMaskFromColor(sf::Color(255, 0, 255, 255));
+            sf::Texture texture;
+            texture.loadFromImage(image);
+
+            this->textures.addTexture(this->path + direction + to_string<int>(i), texture);
+            this->sprites.push_back(sf::Sprite(textures.getTexture(this->path + direction + to_string<int>(i))));
+        }
+    }
 }
 
-Character::Character(const std::string& name_or_path, bool load) : speed(2), direction(0), anim_cursor(ChState::idle)
+// public
+Character::Character() : name("Someone"), speed(2), direction(0), anim_cursor(ChState::idle), path("assets/players/male/")
 {
-    if (!load)
-    {
-        this->name = name_or_path;
-    }
-    else
-    {
-        // load character data from the indicated file
-        load_character_textures(this->sprites, this->textures, "assets/players/girl/");  // temporary solution. We need to get JsonCpp working to read the saved config file
-    }
+    this->load_character_textures();
+}
+
+Character::Character(const std::string& name, const std::string& path) : speed(2), direction(0), anim_cursor(ChState::idle)
+{
+    this->name = name;
+    this->path = path;
+
+    // load character data from the indicated file
+    this->load_character_textures();
 }
 
 int Character::move(DIR direction, Map map_, sf::Time elapsed)
