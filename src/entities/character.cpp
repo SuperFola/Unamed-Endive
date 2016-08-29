@@ -1,9 +1,11 @@
 #include <SFML/System/Vector2.hpp>
+#include <iostream>
 
 #include "character.hpp"
 #include "../abstract/functions.hpp"
+#include "../abstract/texturesmanager.hpp"
 
-void load_character_textures(std::vector<sf::Sprite>& character_sprites, const std::string& path)
+void load_character_textures(std::vector<sf::Sprite>& character_sprites, std::vector<sf::Texture>& textures, const std::string& path)
 {
     std::vector<std::string> chtexfname = {"haut", "bas", "gauche", "droite"};
 
@@ -12,11 +14,18 @@ void load_character_textures(std::vector<sf::Sprite>& character_sprites, const s
         for (int i=0; i < 4; i++)
         {
             sf::Image image;
-            image.loadFromFile(path + direction + to_string<int>(i) + ".png");
+
+            std::cout << "Loading " << path << direction << to_string<int>(i) << ".png" << std::endl;
+            if (!image.loadFromFile(path + direction + to_string<int>(i) + ".png"))
+            {
+                std::cout << "Unable to open " << path << direction << to_string<int>(i) << ".png" << std::endl;
+            }
+
             image.createMaskFromColor(sf::Color(255, 0, 255, 255));
             sf::Texture texture;
             texture.loadFromImage(image);
-            character_sprites.push_back(sf::Sprite(texture));
+            textures.push_back(std::move(texture));
+            character_sprites.push_back(sf::Sprite(textures[textures.size() - 1]));
         }
     }
 }
@@ -70,12 +79,12 @@ void Character::update_run_anim()
 }
 
 // public
-Character::Character() : name("Someone"), speed(2), anim_cursor(ChState::idle), direction(0)
+Character::Character() : name("Someone"), speed(2), direction(0), anim_cursor(ChState::idle)
 {
-    load_character_textures(this->sprites, "assets/players/male/");
+    load_character_textures(this->sprites, this->textures, "assets/players/male/");
 }
 
-Character::Character(const std::string& name_or_path, bool load) : speed(2), anim_cursor(ChState::idle), direction(0)
+Character::Character(const std::string& name_or_path, bool load) : speed(2), direction(0), anim_cursor(ChState::idle)
 {
     if (!load)
     {
@@ -84,7 +93,7 @@ Character::Character(const std::string& name_or_path, bool load) : speed(2), ani
     else
     {
         // load character data from the indicated file
-        load_character_textures(this->sprites, "assets/players/girl/");  // temporary solution. We need to get JsonCpp working to read the saved config file
+        load_character_textures(this->sprites, this->textures, "assets/players/girl/");  // temporary solution. We need to get JsonCpp working to read the saved config file
     }
 }
 
@@ -121,16 +130,20 @@ int Character::move(DIR direction, Map map_, sf::Time elapsed)
     {
         // we can set the new position
         this->pos.move(int(vect[0]), int(vect[1]));
+        return 0;
     }
     else
     {
         // we need to recalculate a valide position
+        return 0;
     }
+    return 1;
 }
 
 int Character::save()
 {
     // save to "saves/player_name.umd"
+    return 0;
 }
 
 sf::Sprite Character::getCurrentSprite()

@@ -25,6 +25,7 @@ private:
     int speed;
     int direction;
     std::vector<sf::Sprite> sprites;
+    std::vector<sf::Texture> textures;
     ChState anim_cursor;
     // methods
     void update_walk_anim();

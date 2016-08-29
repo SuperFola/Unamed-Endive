@@ -43,7 +43,7 @@ void  Game::dispatch_events(sf::Event& event)
         if (this->sm.change_view(new_view))
         {
             // an error occured
-            fprintf(stderr, "Unable to find the view %d to process the events", new_view);
+            std::cout << "Unable to find the view " << new_view << " to process the events" << std::endl;
         }
     }
 }
@@ -66,7 +66,8 @@ void Game::render()
     }
     else
     {
-        fprintf(stderr, "Unable to find the view %d to render it", c_view);
+        // error
+        std::cout << "Unable to find the view " << c_view << " to render it" << std::endl;
     }
 }
 
@@ -88,7 +89,8 @@ void Game::update(sf::Time elapsed)
     }
     else
     {
-        fprintf(stderr, "Unable to find the view %d to update it", c_view);
+        // error
+        std::cout << "Unable to find the view " << c_view << " to update it" << std::endl;
     }
 }
 

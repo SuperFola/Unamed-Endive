@@ -416,11 +416,12 @@
 1472222341 f:\endive\src\views\view.hpp
 	<SFML/Graphics.hpp>
 
-1472209379 source:f:\endive\src\abstract\statemachine.cpp
+1472473216 source:f:\endive\src\abstract\statemachine.cpp
+	<iostream>
 	"statemachine.hpp"
 	"functions.hpp"
 
-1472226452 source:f:\endive\src\game.cpp
+1472473018 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
@@ -439,7 +440,7 @@
 	<string>
 	<sstream>
 
-1472329811 source:f:\endive\src\views\default.cpp
+1472468217 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
 	"default.hpp"
 	"../constants.hpp"
@@ -656,7 +657,7 @@
 
 1472309579 f:\endive\src\abstract\point.hpp
 
-1472466912 f:\endive\src\entities\character.hpp
+1472473479 f:\endive\src\entities\character.hpp
 	<string>
 	<vector>
 	<SFML/System/Time.hpp>
@@ -665,8 +666,10 @@
 	"../abstract/point.hpp"
 	"../map/map.hpp"
 
-1472330938 source:f:\endive\src\entities\character.cpp
+1472472609 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
+	<iostream>
+	<assert.h>
 	"character.hpp"
 	"../abstract/functions.hpp"
 

@@ -26,6 +26,7 @@ void DefaultView::render(sf::RenderWindow& window)
     this->mymap.render(window);
     window.draw(this->triangle);
     window.draw(this->particles);
+    window.draw(this->player.getCurrentSprite());
 }
 
 void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
