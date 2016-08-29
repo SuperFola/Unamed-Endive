@@ -22,7 +22,7 @@ void Game::resize_window(int nx, int ny)
     this->window.setSize(sf::Vector2u(nx, ny));
 }
 
-void  Game::dispatch_events(sf::Event& event)
+void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 {
     int c_view = this->sm.getId();
 
@@ -33,7 +33,7 @@ void  Game::dispatch_events(sf::Event& event)
         switch (c_view)
         {
         case DEFAULT_VIEW_ID:
-            new_view = this->def_view.process_event(event);
+            new_view = this->def_view.process_event(event, elapsed);
             break;
 
         default:
@@ -137,7 +137,7 @@ int Game::run()
             }
 
             // dispatching
-            this->dispatch_events(event);
+            this->dispatch_events(event, dt);
         }
 
         // rendering

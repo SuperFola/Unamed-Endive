@@ -4,27 +4,15 @@
 #include "../constants.hpp"
 
 // public
-DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000), mymap("tests.json")
+DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000), level("tests.json")
 {
-    mymap.load();
-
+    level.load();
     this->player = Character();
-
-    this->triangle = sf::VertexArray(sf::Triangles, 3);
-
-    this->triangle[0].position = sf::Vector2f(200, 200);
-    this->triangle[1].position = sf::Vector2f(300, 200);
-    this->triangle[2].position = sf::Vector2f(300, 300);
-
-    this->triangle[0].color = sf::Color::Red;
-    this->triangle[1].color = sf::Color::Blue;
-    this->triangle[2].color = sf::Color::Green;
 }
 
 void DefaultView::render(sf::RenderWindow& window)
 {
-    this->mymap.render(window);
-    window.draw(this->triangle);
+    this->level.render(window);
     window.draw(this->particles);
     window.draw(this->player.getCurrentSprite());
 }
@@ -36,13 +24,29 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
     particles.update(elapsed);
 }
 
-int DefaultView::process_event(sf::Event& event)
+int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
 {
     switch(event.type)
     {
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
+        case sf::Keyboard::Z:
+            this->player.move(DIR::up, this->level, elapsed);
+            break;
+
+        case sf::Keyboard::S:
+            this->player.move(DIR::down, this->level, elapsed);
+            break;
+
+        case sf::Keyboard::Q:
+            this->player.move(DIR::left, this->level, elapsed);
+            break;
+
+        case sf::Keyboard::D:
+            this->player.move(DIR::right, this->level, elapsed);
+            break;
+
         default:
             break;
         }

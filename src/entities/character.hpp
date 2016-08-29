@@ -11,11 +11,17 @@
 #include "../map/map.hpp"
 #include "../abstract/texturesmanager.hpp"
 
-enum class ChState {
+enum class MvState {
     idle,
     walking,
     idle2,
     walking2
+};
+
+enum class ChState {
+    idle,
+    walking,
+    running
 };
 
 class Character {
@@ -24,10 +30,11 @@ private:
     std::string name;
     Point pos;
     int speed;
-    int direction;
+    DIR direction;
     TexturesManager textures;
     std::vector<sf::Sprite> sprites;
-    ChState anim_cursor;
+    ChState state;
+    MvState anim_cursor;
     std::string path;
     // methods
     void update_walk_anim();

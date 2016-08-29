@@ -19,7 +19,7 @@ private:
     StateMachine sm;
     DefaultView def_view {};
     // methods
-    void dispatch_events(sf::Event&);
+    void dispatch_events(sf::Event&, sf::Time);
     void resize_window(int, int);
     void render();
     void update(sf::Time);

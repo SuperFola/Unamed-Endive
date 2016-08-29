@@ -12,8 +12,8 @@
 enum class DIR {
     up,
     down,
-    right,
-    left
+    left,
+    right
 };
 
 #endif // DEF_CONSTANTS

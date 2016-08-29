@@ -11,7 +11,7 @@ public:
     View(int);
     int getId();
     virtual void render(sf::RenderWindow&) = 0;
-    virtual int process_event(sf::Event&) = 0;
+    virtual int process_event(sf::Event&, sf::Time) = 0;
     virtual void update(sf::RenderWindow&, sf::Time) = 0;
 };
 

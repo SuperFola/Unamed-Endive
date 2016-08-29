@@ -10,16 +10,15 @@ class DefaultView : public View
 {
 private:
     // variables
-    sf::VertexArray triangle;
     ParticleSystem particles;
     Character player;
-    Map mymap;
+    Map level;
 
 public:
     // methods
     DefaultView();
     void render(sf::RenderWindow&) override;
-    int process_event(sf::Event&) override;
+    int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
 };
 
