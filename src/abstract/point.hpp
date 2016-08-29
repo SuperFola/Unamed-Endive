@@ -1,20 +1,23 @@
 #ifndef DEF_POINT
 #define DEF_POINT
 
+#include <SFML/System/Vector2.hpp>
+
 class Point {
 private:
-    int x;
-    int y;
+    float x;
+    float y;
 
 public:
     Point();
-    Point(int, int);
-    void move(int, int);
-    void move_x(int);
-    void move_y(int);
-    void set(int, int);
-    int getX();
-    int getY();
+    Point(float, float);
+    void move(float, float);
+    void move_x(float);
+    void move_y(float);
+    void set(float, float);
+    float getX();
+    float getY();
+    sf::Vector2f get();
 };
 
 #endif // DEF_POINT

@@ -1,3 +1,4 @@
+#include <iostream>
 #include <fstream>
 
 #include "map.hpp"
@@ -10,14 +11,14 @@ Map::Map(std::string path) : tileset_path {"assets/tileset.png"}, map_width(16),
         this->level.push_back(Block(68, false));
     this->map_data_path = path;
 
-    /*std::ifstream config_doc(this->map_data_path, std::ifstream::binary);
+    /* std::ifstream config_doc(this->map_data_path, std::ifstream::binary);
     config_doc >> this->root;
 
     this->map_width = this->root["width"].asInt();
     this->map_height = this->root["height"].asInt();
-    std::vector<int> loaded_map;
+    std::vector<Block> loaded_map;
     for (int i=0; i < this->root["level"].size(); ++i)
-        loaded_map.push_back(this->root["level"][i].asInt());
+        loaded_map.push_back(Block(this->root["level"][i].asInt(), true));
     this->level = loaded_map;*/
 }
 

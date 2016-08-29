@@ -99,45 +99,42 @@ int Character::move(DIR dir, Map map_, sf::Time elapsed)
     // set the new direction
     this->direction = dir;
 
-    float speed = this->speed * TILE_SIZE * elapsed.asSeconds() * 10;
+    float speed = this->speed * TILE_SIZE * elapsed.asMilliseconds() / 10.0f;
     std::vector<float> vect {0, 0};
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
     if (dir == DIR::up)
     {
         if (this->pos.getY() - speed >= 0.0f)
-            vect[0] = -1 * speed;
+            vect[1] = -1 * speed;
     }
     else if (dir == DIR::down)
     {
         if (this->pos.getY() + speed - csprite_size.y < map_.getHeight() * TILE_SIZE)
-            vect[0] = 1 * speed;
+            vect[1] = 1 * speed;
     }
     else if (dir == DIR::left)
     {
         if (this->pos.getX() - speed >= 0.0f)
-            vect[1] = -1 * speed;
+            vect[0] = -1 * speed;
     }
     else if (dir == DIR::right)
     {
         if (this->pos.getX() + speed - csprite_size.x < map_.getWidth() * TILE_SIZE)
-            vect[1] = 1 * speed;
+            vect[0] = 1 * speed;
     }
 
-    bool pass = map_.colliding_at(int(vect[0]) / TILE_SIZE, int(vect[1]) / TILE_SIZE);
+    bool pass = !map_.colliding_at(int(vect[0]) / TILE_SIZE, int(vect[1]) / TILE_SIZE);
 
     if (pass)
     {
         // we can set the new position
-        this->pos.move(int(vect[0]), int(vect[1]));
+        this->pos.move(vect[0], vect[1]);
         return 0;
     }
-    else
-    {
-        // we need to recalculate a valide position
-        std::cout << "need to recalculate a valid position" << std::endl;
-        return 0;
-    }
+    // we need to recalculate a valid position
+    std::cout << "need to recalculate a valid position" << std::endl;
+    return 0;
 }
 
 int Character::save()
@@ -146,12 +143,16 @@ int Character::save()
     return 0;
 }
 
-sf::Sprite Character::getCurrentSprite()
+sf::Sprite& Character::getCurrentSprite()
 {
     return this->sprites[static_cast<int>(this->direction) * 4 + static_cast<int>(this->anim_cursor)];
 }
 
+
 void Character::update(sf::RenderWindow& window, sf::Time elapsed)
 {
+    sf::Vector2f _pos = this->pos.get();
 
+    if (this->getCurrentSprite().getPosition() != _pos)
+        this->getCurrentSprite().setPosition(_pos);
 }

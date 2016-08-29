@@ -21,7 +21,9 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     sf::Vector2i mouse = sf::Mouse::getPosition(window);
     this->particles.setEmitter(window.mapPixelToCoords(mouse));
-    particles.update(elapsed);
+    this->particles.update(elapsed);
+
+    this->player.update(window, elapsed);
 }
 
 int DefaultView::process_event(sf::Event& event, sf::Time elapsed)

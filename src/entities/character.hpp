@@ -47,7 +47,7 @@ public:
     Character(const std::string&, const std::string&);
     int move(DIR, Map, sf::Time);
     int save();
-    sf::Sprite getCurrentSprite();
+    sf::Sprite& getCurrentSprite();
     void update(sf::RenderWindow&, sf::Time);
 };
 

@@ -440,7 +440,7 @@
 	<string>
 	<sstream>
 
-1472494092 source:f:\endive\src\views\default.cpp
+1472498908 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
 	"default.hpp"
 	"../constants.hpp"
@@ -465,7 +465,8 @@
 	<vector>
 	"blocks/block.hpp"
 
-1472328637 source:f:\endive\src\map\map.cpp
+1472498527 source:f:\endive\src\map\map.cpp
+	<iostream>
 	<fstream>
 	"map.hpp"
 	"../constants.hpp"
@@ -652,12 +653,13 @@
 
 1472315857 f:\endive\src\map\blocks\block.hpp
 
-1472309748 source:f:\endive\src\abstract\point.cpp
+1472499208 source:f:\endive\src\abstract\point.cpp
 	"point.hpp"
 
-1472309579 f:\endive\src\abstract\point.hpp
+1472499165 f:\endive\src\abstract\point.hpp
+	<SFML/System/Vector2.hpp>
 
-1472494320 f:\endive\src\entities\character.hpp
+1472499372 f:\endive\src\entities\character.hpp
 	<string>
 	<vector>
 	<SFML/System/Time.hpp>
@@ -667,7 +669,7 @@
 	"../map/map.hpp"
 	"../abstract/texturesmanager.hpp"
 
-1472494062 source:f:\endive\src\entities\character.cpp
+1472494413 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
 	"character.hpp"
