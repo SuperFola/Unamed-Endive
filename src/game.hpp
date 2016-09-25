@@ -1,8 +1,6 @@
 #ifndef DEF_GAME
 #define DEF_GAME
 
-#define WIN_W 640
-#define WIN_H 540
 #define WIN_TITLE "Unamed"
 
 #include <SFML/Graphics.hpp>

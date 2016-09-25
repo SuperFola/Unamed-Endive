@@ -401,7 +401,7 @@
 
 1472132693 f:\endive\view.hpp
 
-1472493718 f:\endive\src\game.hpp
+1474706240 f:\endive\src\game.hpp
 	<SFML/Graphics.hpp>
 	"abstract/statemachine.hpp"
 	"constants.hpp"
@@ -433,14 +433,14 @@
 	"../particles/particles.hpp"
 	"../entities/character.hpp"
 
-1472494148 f:\endive\src\constants.hpp
+1474706250 f:\endive\src\constants.hpp
 
-1472210378 f:\endive\src\abstract\functions.hpp
+1474819356 f:\endive\src\abstract\functions.hpp
 	<vector>
 	<string>
 	<sstream>
 
-1472498908 source:f:\endive\src\views\default.cpp
+1474819002 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
 	"default.hpp"
 	"../constants.hpp"
@@ -456,34 +456,58 @@
 	<random>
 	"particles.hpp"
 
-1472331777 source:f:\endive\src\map\tilemap.cpp
+1473506644 source:f:\endive\src\map\tilemap.cpp
 	"tilemap.hpp"
 	"../constants.hpp"
 
-1472331782 f:\endive\src\map\tilemap.hpp
+1473506642 f:\endive\src\map\tilemap.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	"blocks/block.hpp"
 
-1472498527 source:f:\endive\src\map\map.cpp
+1474819721 source:f:\endive\src\map\map.cpp
 	<iostream>
 	<fstream>
 	"map.hpp"
 	"../constants.hpp"
 
-1472328586 f:\endive\src\map\map.hpp
+1474816969 f:\endive\src\map\map.hpp
 	<string>
 	<SFML/Graphics.hpp>
 	<vector>
 	"tilemap.hpp"
 	"blocks/block.hpp"
+	"../json/json.h"
 
-1467007943 f:\endive\src\json\json.h
-	"autolink.h"
-	"value.h"
-	"reader.h"
-	"writer.h"
+1472229553 f:\endive\src\json\json.h
+	<stddef.h>
+	<string>
+	<cpptl/config.h>
+	"version.h"
+	"allocator.h"
+	"config.h"
+	"forwards.h"
+	"forwards.h"
+	<string>
+	<vector>
+	<exception>
+	<map>
+	<cpptl/smallmap.h>
+	<cpptl/forwards.h>
 	"features.h"
+	"value.h"
+	<deque>
+	<iosfwd>
+	<stack>
+	<string>
+	<istream>
+	"value.h"
+	<vector>
+	<string>
+	<ostream>
+	<stdlib.h>
+	<sstream>
+	"config.h"
 
 1467007943 f:\endive\src\json\autolink.h
 	"config.h"
@@ -651,7 +675,7 @@
 	<cmath>
 	<float.h>
 
-1472315857 f:\endive\src\map\blocks\block.hpp
+1474706628 f:\endive\src\map\blocks\block.hpp
 
 1472499208 source:f:\endive\src\abstract\point.cpp
 	"point.hpp"
@@ -669,7 +693,7 @@
 	"../map/map.hpp"
 	"../abstract/texturesmanager.hpp"
 
-1472494413 source:f:\endive\src\entities\character.cpp
+1473505170 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
 	"character.hpp"
@@ -688,4 +712,48 @@
 1472493008 source:f:\endive\src\abstract\texturesmanager.cpp
 	<iostream>
 	"texturesmanager.hpp"
+
+1472229553 source:f:\endive\src\jsoncpp.cpp
+	"json/json.h"
+	<json/assertions.h>
+	<json/reader.h>
+	<json/value.h>
+	"json_tool.h"
+	<utility>
+	<cstdio>
+	<cassert>
+	<cstring>
+	<istream>
+	<sstream>
+	<memory>
+	<set>
+	<limits>
+	<json/assertions.h>
+	<json/value.h>
+	<json/writer.h>
+	<math.h>
+	<sstream>
+	<utility>
+	<cstring>
+	<cassert>
+	<cpptl/conststring.h>
+	<cstddef>
+	<algorithm>
+	"json_valueiterator.inl"
+	<json/writer.h>
+	"json_tool.h"
+	<iomanip>
+	<memory>
+	<sstream>
+	<utility>
+	<set>
+	<cassert>
+	<cstring>
+	<cstdio>
+	<float.h>
+	<ieeefp.h>
+	<math.h>
+	<math.h>
+	<cmath>
+	<float.h>
 

@@ -28,7 +28,7 @@ if sys.argv[1:]:
             temp = {
                 "type": "map",
                 "path": map_path_to_load,
-                "content": dict(open(map_path_to_load).read())
+                "content": eval(open(map_path_to_load).read())
             }
         except IndexError:
             print("Missing argument for option -p")
@@ -68,7 +68,7 @@ def render(screen, tilemap, list_tiles):
     for i, element in enumerate(tilemap["map"]):
         if element is not None:
             tu, tv = i % tilemap["width"], i // tilemap["width"]
-            screen.blit(list_tiles[element], (tu * REAL_TS, tv * REAL_TS))
+            screen.blit(list_tiles[element["id"]], (tu * REAL_TS, tv * REAL_TS))
 
 
 def resize_tmap(tmap, nw, nh):
@@ -103,14 +103,15 @@ tmap = {
     "width": DEF_WIDTH,
     "height": DEF_HEIGHT
 }
-tmap["map"] = [0 for _ in range(tmap["width"] * tmap["height"])]
+tmap["map"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
 done = False
 current_block = 0
 clic = 0  # 0 = not clicking ; 1 = left clicking ; 2 = right clicking ; 3 = wheel clicking
 
 if temp:
     if temp["type"] == "map":
-        map_path = temp["path"]
+        map_path = temp["path"].split('/')[-1]
+        print(map_path)
         tmap = temp["content"]
         temp = None
 
@@ -135,11 +136,23 @@ while not done:
                 # height - 1
                 resize_tmap(tmap, tmap["width"], tmap["height"] - 1)
                 tmap["height"] -= 1
-            elif event.key == pygame.K_S:
+            elif event.key == pygame.K_s:
                 # save the map
                 with open("maps/%s" % map_path, "w") as file:
-                    file.write(str(tmap))
+                    file.write(str(tmap).replace("'", '"').replace('True', "true").replace('False', "false"))
                 print("Saved to maps/%s" % map_path)
+            elif event.key == pygame.K_c:
+                # change the colliding state
+                xp, yp = pygame.mouse.get_pos()
+                rpos = xp // REAL_TS + yp // REAL_TS * tmap["width"]
+                tmap["map"][rpos]["collide"] = True
+                print("Block at %s (%i) is colliding" % (rpos, tmap["map"][rpos]["id"]))
+            elif event.key == pygame.K_v:
+                # change the colliding state
+                xp, yp = pygame.mouse.get_pos()
+                rpos = xp // REAL_TS + yp // REAL_TS * tmap["width"]
+                tmap["map"][rpos]["collide"] = False
+                print("Block at %s (%i) is not colliding" % (rpos, tmap["map"][rpos]["id"]))
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button < 4:
                 clic = event.button
@@ -159,13 +172,13 @@ while not done:
 
             if clic == 1:
                 # put a block
-                tmap["map"][rpos] = current_block
+                tmap["map"][rpos]["id"] = current_block
             elif clic == 2:
                 # destroy a block
-                tmap["map"][rpos] = None
+                tmap["map"][rpos]["id"] = None
             elif clic == 3:
                 # pick a chu ... pick a block
-                current_block = tmap["map"][rpos]
+                current_block = tmap["map"][rpos]["id"]
         elif event.type == pygame.MOUSEMOTION:
             xp, yp = event.pos
             rpos = xp // REAL_TS + yp // REAL_TS * tmap["width"]
@@ -175,13 +188,13 @@ while not done:
 
             if clic == 1:
                 # put a block
-                tmap["map"][rpos] = current_block
+                tmap["map"][rpos]["id"] = current_block
             elif clic == 2:
                 # destroy a block
-                tmap["map"][rpos] = None
+                tmap["map"][rpos]["id"] = None
             elif clic == 3:
                 # pick a chu ... pick a block
-                current_block = tmap["map"][rpos]
+                current_block = tmap["map"][rpos]["id"]
         elif event.type == pygame.MOUSEBUTTONUP:
             clic = 0
 

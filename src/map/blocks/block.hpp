@@ -3,10 +3,12 @@
 
 class Block {
 private:
+    // variables
     bool solid;
     int id;
 
 public:
+    // methods
     Block();
     Block(int);
     Block(int, bool);

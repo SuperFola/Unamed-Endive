@@ -50,9 +50,9 @@ Notes :  - régions fictives souvent évoquées dans l'histoire : - Tanjoh
     -> Debout du'ch'mol ! Le voyage s'est bien passé ?
     ...
     -Image du prof en clair-
-    -> Allez, secoue toi ! Je suis la prof' Mirabel (*note: il manque 'le', c'est fait exprès*), on travaille ensemble.
-    On travaille ensemble et tu dois me rappeler ton nom ? xD
-    -> Oui toi tu connais mon nom puisque tu travailles avec moi mais le gars qui nous observe derrière son écran lui ne le sait pas :P
+    -> Allez, secoue toi ! Je suis la prof' Mirabel, on travaille ensemble.
+    On travaille ensemble, et tu dois me rappeler ton nom ? xD
+    -> Oui, toi tu connais mon nom puisque tu travailles avec moi mais le gars qui nous observe derrière son écran, lui, ne le sait pas :P
     -> D'ailleurs ... *it's ARPG time !* Quel est ton nom ?
     INPUT player_name
     -> Revenons-en au but de ce voyage. Toi, tu es chargé de récupérer des données sur les créatures peuplant l'île d'Unamed, pendant que j'analyserai celles que tu m'auras déjà envoyée.
@@ -69,7 +69,7 @@ Notes :  - régions fictives souvent évoquées dans l'histoire : - Tanjoh
     -> Tu vas sûrement rencontrer des créatures sauvages, il va te falloir du courage (ben oui, on est dans un ARPG quand même ! Si t'as pas les boules, je serais pas contente :( ) !
     ... Pardon ? Je comprends plus trop là ... C'est toi qui me parle là ? Ou c'est le zozo qu'a fait ce jeu ?
     -> Donc, nous disions ... Ah oui ! Bon, comme à Tanjoh et Ult'af, on soupsonne l'existence des créatures découvertes dans ces 2 régions ici aussi.
-    (*note: régions fictives, me faut bien un background. Et pis je veux pas d'ennui avec Nintendo :P*)
+    (*note: régions fictives, me faut bien un background. Et pis je veux pas d'ennuis avec Nintendo :P*)
     -> Je pense donc créer une sorte de "Dexeur", qui fonctionnera comme ceux qu'on avait utilisés à Tanjoh et Ult'af. En voilà déjà un, mais je vais l'améliorer par la suite hein ;)
     System: {player_name} a reçu un "Dexeur" ! Youpi !
     Euh ... Nan mais il va vraiment copier Poké... ?

@@ -7,7 +7,7 @@
 
 #include "tilemap.hpp"
 #include "blocks/block.hpp"
-//#include "../json/jsoncpp.cpp"
+#include "../json/json.h"
 
 class Map
 {
@@ -15,7 +15,7 @@ private:
     // variables
     std::vector<Block> level;
     TileMap tmap;
-    //Json::Value root;
+    Json::Value root;
     std::string tileset_path;
     std::string map_data_path;
     // default values for the moment

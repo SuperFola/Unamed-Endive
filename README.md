@@ -121,4 +121,4 @@ It's totally normal that some bugs persist in the code (I'm not God ahah), and i
 
 * [OpenClassrooms](https://openclassrooms.com/forum/sujet/arpg-pygame-2d-unamed)
 
-* [Trello](https://trello.com/b/9rBszau2/unamed)
+* [Trello](https://trello.com/b/JdzEnDJf)

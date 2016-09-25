@@ -57,7 +57,7 @@ void Character::load_character_textures()
 {
     const std::vector<std::string> chtexfname = {"haut", "bas", "gauche", "droite"};
 
-    for (const auto dir: chtexfname)
+    for (const auto& dir: chtexfname)
     {
         for (int i=0; i < 4; i++)
         {

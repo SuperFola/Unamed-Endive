@@ -9,6 +9,9 @@
 #define TILE_SIZE 16
 #define TILE_SIZE_IN_TILESET 17
 
+#define WIN_W 640
+#define WIN_H 540
+
 enum class DIR {
     up,
     down,

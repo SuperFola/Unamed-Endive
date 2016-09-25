@@ -4,7 +4,7 @@
 #include "../constants.hpp"
 
 // public
-DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000), level("tests.json")
+DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000), level("test.json")
 {
     level.load();
     this->player = Character();
@@ -58,5 +58,6 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
         break;
     }
 
+    // we don't need to change the view
     return -1;
 }
