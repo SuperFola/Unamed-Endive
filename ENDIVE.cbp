@@ -57,9 +57,9 @@
 		<Unit filename="src/entities/character.hpp" />
 		<Unit filename="src/game.cpp" />
 		<Unit filename="src/game.hpp" />
-		<Unit filename="src/json/json/json-forwards.h" />
-		<Unit filename="src/json/json/json.h" />
-		<Unit filename="src/json/jsoncpp.cpp" />
+		<Unit filename="src/json/json-forwards.h" />
+		<Unit filename="src/json/json.h" />
+		<Unit filename="src/jsoncpp.cpp" />
 		<Unit filename="src/map/blocks/block.cpp" />
 		<Unit filename="src/map/blocks/block.hpp" />
 		<Unit filename="src/map/map.cpp" />

@@ -24,7 +24,6 @@ Map::Map(std::string path) : tileset_path {"assets/tileset.png"}, map_width(16),
     this->map_data_path = path;
 
     std::ifstream config_doc(this->map_data_path);
-    //std::cout << config_doc << std::endl;
     config_doc >> this->root;
 
     this->map_width = this->root["width"].asInt();
