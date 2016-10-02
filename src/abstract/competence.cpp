@@ -1,4 +1,4 @@
-#include "competence"
+#include "competence.hpp"
 
 // public
 Competence::Competence()

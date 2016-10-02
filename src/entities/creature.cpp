@@ -8,7 +8,7 @@ Creature::Creature() :
     , id(0)
     , revealed(false)
     , sortilege()
-    , state(State::NORMAL)
+    , state(State::STD)
     , level(0)
 {
 
@@ -21,7 +21,7 @@ Creature::Creature(int given_id) :
     , id(given_id)
     , revealed(false)
     , sortilege()
-    , state(State::NORMAL)
+    , state(State::STD)
     , level(0)
 {
 
@@ -34,7 +34,7 @@ Creature::Creature(int given_id, bool given_revealed) :
     , id(given_id)
     , revealed(given_revealed)
     , sortilege()
-    , state(State::NORMAL)
+    , state(State::STD)
     , level(0)
 {
 
@@ -53,6 +53,15 @@ bool Creature::is_revealed()
 int Creature::getLife()
 {
     return this->life;
+}
+
+void Creature::update(std::vector<Creature>& board)
+{
+    if (! this->sortilege.getCooldown())
+        // attack
+        this->sortilege.act(board);
+    else
+        ;
 }
 
 // private

@@ -17,6 +17,7 @@ private:
 public:
     // methods
     DefaultView();
+    bool load() override;
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;

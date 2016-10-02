@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 #include "default.hpp"
 #include "../constants.hpp"
@@ -6,8 +7,18 @@
 // public
 DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000), level("test.json")
 {
-    level.load();
-    this->player = Character();
+    std::cout << "default view cstr" << std::endl;
+}
+
+bool DefaultView::load()
+{
+    this->level.load();
+
+    std::cout << std::endl << "loading player" << std:: endl;
+    this->player = Character("me", "assets/players/male/");
+    std::cout << "player loaded" << std::endl << std::endl;
+
+    return true;
 }
 
 void DefaultView::render(sf::RenderWindow& window)
@@ -31,6 +42,7 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
     switch(event.type)
     {
     case sf::Event::KeyPressed:
+        std::cout << "moving" << std::endl;
         switch(event.key.code)
         {
         case sf::Keyboard::Z:

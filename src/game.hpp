@@ -15,7 +15,7 @@ private:
     sf::RenderWindow window;
     sf::Clock clock;
     StateMachine sm;
-    DefaultView def_view {};
+    DefaultView def_view;
     // methods
     void dispatch_events(sf::Event&, sf::Time);
     void resize_window(int, int);

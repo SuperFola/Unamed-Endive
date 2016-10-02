@@ -401,7 +401,7 @@
 
 1472132693 f:\endive\view.hpp
 
-1474706240 f:\endive\src\game.hpp
+1475424469 f:\endive\src\game.hpp
 	<SFML/Graphics.hpp>
 	"abstract/statemachine.hpp"
 	"constants.hpp"
@@ -413,7 +413,7 @@
 	<SFML/Graphics.hpp>
 	"../views/view.hpp"
 
-1472493662 f:\endive\src\views\view.hpp
+1475432342 f:\endive\src\views\view.hpp
 	<SFML/Graphics.hpp>
 
 1472473216 source:f:\endive\src\abstract\statemachine.cpp
@@ -421,13 +421,13 @@
 	"statemachine.hpp"
 	"functions.hpp"
 
-1472493746 source:f:\endive\src\game.cpp
+1475437486 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
 	"abstract/functions.hpp"
 
-1472494257 f:\endive\src\views\default.hpp
+1475432369 f:\endive\src\views\default.hpp
 	"view.hpp"
 	"../map/map.hpp"
 	"../particles/particles.hpp"
@@ -435,13 +435,14 @@
 
 1474706250 f:\endive\src\constants.hpp
 
-1474819356 f:\endive\src\abstract\functions.hpp
+1475420807 f:\endive\src\abstract\functions.hpp
 	<vector>
 	<string>
 	<sstream>
 
-1474819002 source:f:\endive\src\views\default.cpp
+1475437654 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
+	<iostream>
 	"default.hpp"
 	"../constants.hpp"
 
@@ -465,7 +466,7 @@
 	<vector>
 	"blocks/block.hpp"
 
-1474819721 source:f:\endive\src\map\map.cpp
+1475432578 source:f:\endive\src\map\map.cpp
 	<iostream>
 	<fstream>
 	"map.hpp"
@@ -693,7 +694,7 @@
 	"../map/map.hpp"
 	"../abstract/texturesmanager.hpp"
 
-1473505170 source:f:\endive\src\entities\character.cpp
+1475432652 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
 	"character.hpp"
@@ -756,4 +757,42 @@
 	<math.h>
 	<cmath>
 	<float.h>
+
+1475419253 source:f:\endive\src\abstract\competence.cpp
+	"competence.hpp"
+
+1475094221 f:\endive\src\abstract\competence.hpp
+	<string>
+
+1475419509 source:f:\endive\src\entities\creature.cpp
+	"creature.hpp"
+
+1475419301 f:\endive\src\entities\creature.hpp
+	<string>
+	<vector>
+	"../abstract/type.hpp"
+	"../abstract/competence.hpp"
+	"effects/sort.hpp"
+	"states.hpp"
+
+1475419405 f:\endive\src\abstract\type.hpp
+
+1475419221 f:\endive\src\entities\effects\sort.hpp
+	<string>
+	<vector>
+	"../../abstract/type.hpp"
+
+1475419420 f:\endive\src\entities\states.hpp
+
+1475419212 source:f:\endive\src\entities\effects\sort.cpp
+	"sort.hpp"
+
+1475425276 source:f:\endive\src\abstract\equip.cpp
+	<iostream>
+	"equip.hpp"
+	"functions.hpp"
+
+1475421101 f:\endive\src\abstract\equip.hpp
+	<vector>
+	"../entities/creature.hpp"
 

@@ -5,16 +5,6 @@
 #include "abstract/functions.hpp"
 
 // private
-Game::Game() : window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titlebar | sf::Style::Close), sm()
-{
-    // we only add the id of the views
-    this->sm.add_view(DEFAULT_VIEW_ID);
-
-    // creating base folders
-    system("mkdir saves");
-    system("mkdir screenshots");
-}
-
 void Game::resize_window(int nx, int ny)
 {
     // do some stuff, like resizing tiles / player ...
@@ -106,6 +96,24 @@ void Game::update_fps(sf::Time dt, int& _fps_update)
 }
 
 // public
+Game::Game() :
+    window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titlebar | sf::Style::Close)
+    , sm()
+{
+    // init all the views
+    std::cout << "creating views" << std::endl;
+    this->def_view = DefaultView();
+    this->def_view.load();
+    std::cout << "views created" << std::endl;
+
+    // we only add the id of the views
+    this->sm.add_view(DEFAULT_VIEW_ID);
+
+    // creating base folders
+    system("mkdir saves");
+    system("mkdir screenshots");
+}
+
 int Game::run()
 {
     int _fps_update {0};

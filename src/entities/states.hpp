@@ -4,7 +4,7 @@
 enum State {
     BURNED,
     PARALISED,
-    NORMAL
+    STD
 };
 
 #endif // DEF_CREASTATE

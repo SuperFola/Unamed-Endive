@@ -1,7 +1,12 @@
 #ifndef DEF_SORT
 #define DEF_SORT
 
+#include <string>
+#include <vector>
+
 #include "../../abstract/type.hpp"
+
+class Creature;
 
 class Sort {
 private:
@@ -16,6 +21,10 @@ private:
 public:
     // methods
     Sort();
+    bool load(const std::string&);
+    int getCooldown();
+    void update();
+    void act(std::vector<Creature>&);
 };
 
 #endif // DEF_SORT

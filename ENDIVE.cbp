@@ -45,6 +45,8 @@
 			<Add directory="C:/SFML-2.3/lib" />
 		</Linker>
 		<Unit filename="main.cpp" />
+		<Unit filename="src/abstract/competence.cpp" />
+		<Unit filename="src/abstract/competence.hpp" />
 		<Unit filename="src/abstract/functions.hpp" />
 		<Unit filename="src/abstract/point.cpp" />
 		<Unit filename="src/abstract/point.hpp" />
@@ -52,9 +54,15 @@
 		<Unit filename="src/abstract/statemachine.hpp" />
 		<Unit filename="src/abstract/texturesmanager.cpp" />
 		<Unit filename="src/abstract/texturesmanager.hpp" />
+		<Unit filename="src/abstract/type.hpp" />
 		<Unit filename="src/constants.hpp" />
 		<Unit filename="src/entities/character.cpp" />
 		<Unit filename="src/entities/character.hpp" />
+		<Unit filename="src/entities/creature.cpp" />
+		<Unit filename="src/entities/creature.hpp" />
+		<Unit filename="src/entities/effects/sort.cpp" />
+		<Unit filename="src/entities/effects/sort.hpp" />
+		<Unit filename="src/entities/states.hpp" />
 		<Unit filename="src/game.cpp" />
 		<Unit filename="src/game.hpp" />
 		<Unit filename="src/json/json-forwards.h" />

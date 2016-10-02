@@ -30,7 +30,12 @@ Map::Map(std::string path) : tileset_path {"assets/tileset.png"}, map_width(16),
     this->map_height = this->root["height"].asInt();
     std::vector<Block> loaded_map;
     for (int i=0; i < this->root["level"].size(); ++i)
-        loaded_map.push_back(Block(this->root["level"][i]["id"].asInt(), this->root["level"][i]["collide"] == 1));
+        loaded_map.push_back(
+                             Block(
+                                   this->root["level"][i]["id"].asInt()
+                                   , this->root["level"][i]["collide"] == 1
+                                   )
+                             );
     this->level = loaded_map;
 }
 

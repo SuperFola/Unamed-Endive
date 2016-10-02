@@ -8,7 +8,7 @@
 
 #include "../abstract/type.hpp"
 #include "../abstract/competence.hpp"
-#include "sort.hpp"
+#include "effects/sort.hpp"
 #include "states.hpp"
 
 class Creature {
@@ -35,6 +35,7 @@ public:
     bool is_revealed();
     int getLife();
     int getLevel();
+    void update(std::vector<Creature>&);
 };
 
 #endif // DEF_CREATURE

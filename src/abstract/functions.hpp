@@ -6,8 +6,8 @@
 #include <sstream>
 
 template<typename T>
-int pop(std::vector<T>* obj, int i) {
-    int element {-1};
+T pop(std::vector<T>* obj, int i) {
+    T element {-1};
 
     if (0 <= i && i < obj->size())
     {

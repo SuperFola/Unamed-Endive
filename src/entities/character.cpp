@@ -80,13 +80,26 @@ void Character::load_character_textures()
 }
 
 // public
-Character::Character() : name("Someone"), speed(2), direction(DIR::down), state(ChState::idle), anim_cursor(MvState::idle), path("assets/players/male/")
+Character::Character() :
+    name("Someone")
+    , speed(2)
+    , direction(DIR::down)
+    , state(ChState::idle)
+    , anim_cursor(MvState::idle)
+    , path("assets/players/male/")
 {
+    std::cout << "first chara loader" << std::endl;
     this->load_character_textures();
 }
 
-Character::Character(const std::string& name, const std::string& path) : speed(2), direction(DIR::down), state(ChState::idle), anim_cursor(MvState::idle)
+Character::Character(const std::string& name, const std::string& path) :
+    speed(2)
+    , direction(DIR::down)
+    , state(ChState::idle)
+    , anim_cursor(MvState::idle)
 {
+    std::cout << "second chara loader" << std::endl;
+
     this->name = name;
     this->path = path;
 
