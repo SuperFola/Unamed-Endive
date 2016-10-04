@@ -1,0 +1,7 @@
+﻿notes:
+#include "../particles/particles.hpp"
+ParticleSystem particles;
+    sf::Vector2i mouse = sf::Mouse::getPosition(window);
+    this->particles.setEmitter(window.mapPixelToCoords(mouse));
+    this->particles.update(elapsed);
+        window.draw(this->particles);
