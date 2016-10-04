@@ -2,6 +2,7 @@
 #define DEF_BLOCK
 
 #include <string>
+#include <map>
 
 #include "triggers.hpp"
 

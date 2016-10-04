@@ -1,3 +1,4 @@
+#include <iostream>
 #include "block.hpp"
 
 // public
@@ -38,12 +39,12 @@ int Block::getId()
     return this->id;
 }
 
-void setTriggerReset(bool value)
+void Block::setTriggerReset(bool value)
 {
     this->reset_trigger = value;
 }
 
-void add_trigger(const std::string& name, const std::string& action, Trigger kind) // temp
+void Block::add_trigger(const std::string& name, const std::string& action, Trigger kind) // temp
 {
     if (this->trigg_kind == Trigger::NOTHING)
     {

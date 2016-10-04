@@ -5,9 +5,11 @@
 #include "../constants.hpp"
 
 // public
-DefaultView::DefaultView() : View(DEFAULT_VIEW_ID), particles(1000), level("test.json")
+DefaultView::DefaultView(const std::string& map_name) :
+    View(DEFAULT_VIEW_ID)
+    , level(map_name)
 {
-    std::cout << "default view cstr" << std::endl;
+
 }
 
 bool DefaultView::load()
@@ -15,8 +17,8 @@ bool DefaultView::load()
     this->level.load();
 
     std::cout << std::endl << "loading player" << std:: endl;
-    Character player = Character{"me", "assets/players/male/"};
-    std::cout << "player loaded" << std::endl << std::endl;
+    Character player {"me", "assets/players/male/"};
+    std::cout << "player loaded" << std::endl;
 
     return true;
 }
@@ -24,16 +26,11 @@ bool DefaultView::load()
 void DefaultView::render(sf::RenderWindow& window)
 {
     this->level.render(window);
-    window.draw(this->particles);
     window.draw(this->player.getCurrentSprite());
 }
 
 void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-    sf::Vector2i mouse = sf::Mouse::getPosition(window);
-    this->particles.setEmitter(window.mapPixelToCoords(mouse));
-    this->particles.update(elapsed);
-
     this->player.update(window, elapsed);
 }
 
