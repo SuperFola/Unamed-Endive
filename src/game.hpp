@@ -1,7 +1,7 @@
 #ifndef DEF_GAME
 #define DEF_GAME
 
-#define WIN_TITLE "Unamed"
+#define WIN_TITLE "Unamed Rebirth"
 
 #include <SFML/Graphics.hpp>
 

@@ -15,7 +15,7 @@ bool DefaultView::load()
     this->level.load();
 
     std::cout << std::endl << "loading player" << std:: endl;
-    this->player = Character("me", "assets/players/male/");
+    Character player = Character{"me", "assets/players/male/"};
     std::cout << "player loaded" << std::endl << std::endl;
 
     return true;

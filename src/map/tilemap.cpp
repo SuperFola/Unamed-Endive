@@ -1,12 +1,13 @@
+#include<iostream>
 #include "tilemap.hpp"
 #include "../constants.hpp"
 
 // public
-int TileMap::load(const std::string& tileset_path, sf::Vector2u tileSize, std::vector<Block>& tiles, unsigned int width, unsigned int height)
+int TileMap::load(const std::string& tileset_path, sf::Vector2u tileSize, std::vector<Block*> tiles, unsigned int width, unsigned int height)
 {
     // load tileset !
     if (!this->tileset.loadFromFile(tileset_path))
-            return 1;
+        return 1;
 
     // resize vertex array
     this->vertices.setPrimitiveType(sf::Quads);
@@ -16,7 +17,11 @@ int TileMap::load(const std::string& tileset_path, sf::Vector2u tileSize, std::v
     for (unsigned int i = 0; i < width; ++i)
         for (unsigned int j = 0; j < height; ++j)
         {
-            int tileNumber = tiles[i + j * width].getId();
+            int tileNumber;
+            if (tiles[i + j * width])
+                tileNumber = (tiles[i + j * width])->getId();
+            else
+                std::cout << "merde" << std::endl;
 
             int tu = tileNumber % (this->tileset.getSize().x / tileSize.x);
             int tv = tileNumber / (this->tileset.getSize().x / tileSize.x);

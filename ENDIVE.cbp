@@ -47,6 +47,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/abstract/competence.cpp" />
 		<Unit filename="src/abstract/competence.hpp" />
+		<Unit filename="src/abstract/equip.cpp" />
+		<Unit filename="src/abstract/equip.hpp" />
 		<Unit filename="src/abstract/functions.hpp" />
 		<Unit filename="src/abstract/point.cpp" />
 		<Unit filename="src/abstract/point.hpp" />

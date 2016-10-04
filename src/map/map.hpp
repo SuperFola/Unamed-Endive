@@ -13,7 +13,7 @@ class Map
 {
 private:
     // variables
-    std::vector<Block> level;
+    std::vector<Block*> level;
     TileMap tmap;
     Json::Value root;
     std::string tileset_path;

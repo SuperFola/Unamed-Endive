@@ -19,24 +19,25 @@ Map::Map(std::string path) : tileset_path {"assets/tileset.png"}, map_width(16),
         std::cout << "Can not find map file : ";
     std::cout << path << std::endl;
 
-    for (int i=0; i < this->map_width * this->map_height; i++)
-        this->level.push_back(Block(68, false));
+    /*for (int i=0; i < this->map_width * this->map_height; i++)
+        this->level.push_back(Block(68, false));*/
     this->map_data_path = path;
 
     std::ifstream config_doc(this->map_data_path);
     config_doc >> this->root;
 
+    std::cout << "Loading map" << std::endl;
     this->map_width = this->root["width"].asInt();
     this->map_height = this->root["height"].asInt();
-    std::vector<Block> loaded_map;
-    for (int i=0; i < this->root["level"].size(); ++i)
-        loaded_map.push_back(
-                             Block(
-                                   this->root["level"][i]["id"].asInt()
-                                   , this->root["level"][i]["collide"] == 1
-                                   )
-                             );
-    this->level = loaded_map;
+    for (int i=0; i < this->root["map"].size(); ++i)
+    {
+        Block* block = new Block (
+            this->root["map"][i]["id"].asInt(),
+            this->root["map"][i]["colliding"] == 1
+        );
+        this->level.push_back(block);
+    }
+    std::cout << "Map loaded" << std::endl;
 }
 
 int Map::load()
@@ -71,6 +72,6 @@ bool Map::colliding_at(int tx, int ty)
     int rpos = tx + ty * this->map_width;
 
     if (rpos < this->map_height * this->map_width)
-        return this->level[rpos].is_solid();
+        return this->level[rpos]->is_solid();
     return true;
 }

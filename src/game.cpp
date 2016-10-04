@@ -102,7 +102,7 @@ Game::Game() :
 {
     // init all the views
     std::cout << "creating views" << std::endl;
-    this->def_view = DefaultView();
+    DefaultView def_view = {};
     this->def_view.load();
     std::cout << "views created" << std::endl;
 

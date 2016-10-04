@@ -145,13 +145,13 @@ while not done:
                 # change the colliding state
                 xp, yp = pygame.mouse.get_pos()
                 rpos = xp // REAL_TS + yp // REAL_TS * tmap["width"]
-                tmap["map"][rpos]["collide"] = True
+                tmap["map"][rpos]["colliding"] = True
                 print("Block at %s (%i) is colliding" % (rpos, tmap["map"][rpos]["id"]))
             elif event.key == pygame.K_v:
                 # change the colliding state
                 xp, yp = pygame.mouse.get_pos()
                 rpos = xp // REAL_TS + yp // REAL_TS * tmap["width"]
-                tmap["map"][rpos]["collide"] = False
+                tmap["map"][rpos]["colliding"] = False
                 print("Block at %s (%i) is not colliding" % (rpos, tmap["map"][rpos]["id"]))
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button < 4:
