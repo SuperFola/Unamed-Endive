@@ -19,8 +19,6 @@ Map::Map(std::string path) : tileset_path {"assets/tileset.png"}, map_width(16),
         std::cout << "Can not find map file : ";
     std::cout << path << std::endl;
 
-    /*for (int i=0; i < this->map_width * this->map_height; i++)
-        this->level.push_back(Block(68, false));*/
     this->map_data_path = path;
 
     std::ifstream config_doc(this->map_data_path);
@@ -29,6 +27,7 @@ Map::Map(std::string path) : tileset_path {"assets/tileset.png"}, map_width(16),
     std::cout << "Loading map" << std::endl;
     this->map_width = this->root["width"].asInt();
     this->map_height = this->root["height"].asInt();
+
     for (int i=0; i < this->root["map"].size(); ++i)
     {
         Block* block = new Block (
