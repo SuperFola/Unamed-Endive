@@ -401,7 +401,7 @@
 
 1472132693 f:\endive\view.hpp
 
-1475424469 f:\endive\src\game.hpp
+1475691415 f:\endive\src\game.hpp
 	<SFML/Graphics.hpp>
 	"abstract/statemachine.hpp"
 	"constants.hpp"
@@ -427,10 +427,10 @@
 	"game.hpp"
 	"abstract/functions.hpp"
 
-1475432369 f:\endive\src\views\default.hpp
+1475611985 f:\endive\src\views\default.hpp
+	<string>
 	"view.hpp"
 	"../map/map.hpp"
-	"../particles/particles.hpp"
 	"../entities/character.hpp"
 
 1474706250 f:\endive\src\constants.hpp
@@ -440,13 +440,13 @@
 	<string>
 	<sstream>
 
-1475438239 source:f:\endive\src\views\default.cpp
+1475612097 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"default.hpp"
 	"../constants.hpp"
 
-1472207982 source:f:\endive\src\views\view.cpp
+1475611523 source:f:\endive\src\views\view.cpp
 	"view.hpp"
 
 1472221978 f:\endive\src\particles\particles.hpp
@@ -467,7 +467,7 @@
 	<vector>
 	"blocks/block.hpp"
 
-1475517082 source:f:\endive\src\map\map.cpp
+1475604726 source:f:\endive\src\map\map.cpp
 	<iostream>
 	<fstream>
 	"map.hpp"
@@ -677,7 +677,10 @@
 	<cmath>
 	<float.h>
 
-1474706628 f:\endive\src\map\blocks\block.hpp
+1475612038 f:\endive\src\map\blocks\block.hpp
+	<string>
+	<map>
+	"triggers.hpp"
 
 1472499208 source:f:\endive\src\abstract\point.cpp
 	"point.hpp"
@@ -685,7 +688,7 @@
 1472499165 f:\endive\src\abstract\point.hpp
 	<SFML/System/Vector2.hpp>
 
-1472499372 f:\endive\src\entities\character.hpp
+1475690788 f:\endive\src\entities\character.hpp
 	<string>
 	<vector>
 	<SFML/System/Time.hpp>
@@ -694,15 +697,17 @@
 	"../abstract/point.hpp"
 	"../map/map.hpp"
 	"../abstract/texturesmanager.hpp"
+	"../bag/bag.hpp"
 
-1475432652 source:f:\endive\src\entities\character.cpp
+1475690815 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
 	"character.hpp"
 	"../abstract/functions.hpp"
 	"../abstract/texturesmanager.hpp"
 
-1475438460 source:f:\endive\src\map\blocks\block.cpp
+1475612083 source:f:\endive\src\map\blocks\block.cpp
+	<iostream>
 	"block.hpp"
 
 1472493004 f:\endive\src\abstract\texturesmanager.hpp
@@ -799,4 +804,31 @@
 
 1475439555 f:\endive\src\abstract\container.hpp
 	<vector>
+
+1475609459 f:\endive\src\map\blocks\triggers.hpp
+
+1475696551 f:\endive\src\bag\bag.hpp
+	<vector>
+	"pockets/pocket.hpp"
+
+1475696876 f:\endive\src\bag\pockets\pocket.hpp
+	<vector>
+	<string>
+	"objects/object.hpp"
+
+1475612811 f:\endive\src\bag\pockets\objects\object.hpp
+
+1475611519 source:f:\endive\src\views\huds\hud.cpp
+	"hud.hpp"
+
+1475611507 f:\endive\src\views\huds\hud.hpp
+	<SFML/Graphics.hpp>
+
+1475696690 source:f:\endive\src\bag\bag.cpp
+	<iostream>
+	"bag.hpp"
+
+1475612853 source:f:\endive\src\bag\pockets\objects\object.cpp
+	<iostream>
+	"object.hpp"
 

@@ -10,6 +10,7 @@
 #include "../abstract/point.hpp"
 #include "../map/map.hpp"
 #include "../abstract/texturesmanager.hpp"
+#include "../bag/bag.hpp"
 
 enum class MvState {
     idle,
@@ -36,6 +37,7 @@ private:
     ChState state;
     MvState anim_cursor;
     std::string path;
+    Bag bag;
     // methods
     void update_walk_anim();
     void update_run_anim();
