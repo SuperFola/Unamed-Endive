@@ -31,3 +31,17 @@ void Pocket::drop_object(int id)
     else
         std::cout << "Can not find the object with the id " << id << std::endl;
 }
+
+Json::Value Pocket::serialize()
+{
+    Json::Value value;
+    std::string content = "{\"name\": " + this->name + ", \"objects\": []}";
+    content >> value;
+
+    for (int i=0; i < this->objects.size(); i++)
+    {
+        value["objects"].append(this->objects[i].serialize());
+    }
+
+    return value;
+}

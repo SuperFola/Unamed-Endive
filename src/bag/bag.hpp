@@ -3,6 +3,7 @@
 
 #include <vector>
 
+#include "../json/json.h"
 #include "pockets/pocket.hpp"
 
 class Bag {
@@ -14,6 +15,7 @@ public:
     Bag();
     void add_pocket(Pocket);
     Pocket* getPocket(int);
+    void serialize(Json::Value&);
 };
 
 #endif // DEF_BAG

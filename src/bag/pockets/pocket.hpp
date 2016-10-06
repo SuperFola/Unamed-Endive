@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+#include "../../json/json.h"
 #include "objects/object.hpp"
 
 class Pocket {
@@ -16,6 +17,7 @@ public:
     void add_object(Object);
     Object* getObject(int);
     void drop_object(int);
+    Json::Value serialize();
 };
 
 #endif // DEF_POCKET

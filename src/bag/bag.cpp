@@ -21,3 +21,12 @@ Pocket* Bag::getPocket(int id)
         return &this->pockets[0]; // return default one to avoid problems
     }
 }
+
+void Bag::serialize(Json::Value& value)
+{
+    // modify the reference to the value
+    for (int i=0; i < this->pockets.size(); i++)
+    {
+        value.append(this->pockets[i].serialize());
+    }
+}
