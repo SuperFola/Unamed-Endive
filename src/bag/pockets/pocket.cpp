@@ -35,8 +35,8 @@ void Pocket::drop_object(int id)
 Json::Value Pocket::serialize()
 {
     Json::Value value;
-    std::string content = "{\"name\": " + this->name + ", \"objects\": []}";
-    content >> value;
+    value["name"] = this->name;
+    value["objects"] = Json::Value();
 
     for (int i=0; i < this->objects.size(); i++)
     {

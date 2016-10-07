@@ -7,7 +7,7 @@
 
 template<typename T>
 T pop(std::vector<T>* obj, int i) {
-    T element {-1};
+    T element {};
 
     if (0 <= i && i < obj->size())
     {

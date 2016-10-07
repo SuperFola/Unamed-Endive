@@ -22,7 +22,7 @@ private:
 
 public:
     // methods
-    int load(const std::string&, sf::Vector2u, std::vector<Block*>, unsigned int, unsigned int);
+    int load(const std::string&);
     int load_map(sf::Vector2u, std::vector<Block*>, unsigned int, unsigned int);
 };
 

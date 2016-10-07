@@ -435,12 +435,12 @@
 
 1474706250 f:\endive\src\constants.hpp
 
-1475420807 f:\endive\src\abstract\functions.hpp
+1475875261 f:\endive\src\abstract\functions.hpp
 	<vector>
 	<string>
 	<sstream>
 
-1475612097 source:f:\endive\src\views\default.cpp
+1475873604 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"default.hpp"
@@ -457,23 +457,23 @@
 	<random>
 	"particles.hpp"
 
-1475600425 source:f:\endive\src\map\tilemap.cpp
+1475873389 source:f:\endive\src\map\tilemap.cpp
 	<iostream>
 	"tilemap.hpp"
 	"../constants.hpp"
 
-1475519470 f:\endive\src\map\tilemap.hpp
+1475875411 f:\endive\src\map\tilemap.hpp
 	<SFML/Graphics.hpp>
 	<vector>
 	"blocks/block.hpp"
 
-1475604726 source:f:\endive\src\map\map.cpp
+1475875460 source:f:\endive\src\map\map.cpp
 	<iostream>
 	<fstream>
 	"map.hpp"
 	"../constants.hpp"
 
-1475440479 f:\endive\src\map\map.hpp
+1475875778 f:\endive\src\map\map.hpp
 	<string>
 	<SFML/Graphics.hpp>
 	<vector>
@@ -781,7 +781,7 @@
 	"effects/sort.hpp"
 	"states.hpp"
 
-1475419405 f:\endive\src\abstract\type.hpp
+1475874013 f:\endive\src\abstract\type.hpp
 
 1475419221 f:\endive\src\entities\effects\sort.hpp
 	<string>
@@ -807,16 +807,21 @@
 
 1475609459 f:\endive\src\map\blocks\triggers.hpp
 
-1475696551 f:\endive\src\bag\bag.hpp
+1475781649 f:\endive\src\bag\bag.hpp
 	<vector>
+	"../json/json.h"
 	"pockets/pocket.hpp"
 
-1475696876 f:\endive\src\bag\pockets\pocket.hpp
+1475783336 f:\endive\src\bag\pockets\pocket.hpp
 	<vector>
 	<string>
+	"../../json/json.h"
 	"objects/object.hpp"
 
-1475612811 f:\endive\src\bag\pockets\objects\object.hpp
+1475873131 f:\endive\src\bag\pockets\objects\object.hpp
+	<string>
+	"../../../json/json.h"
+	"../../../abstract/type.hpp"
 
 1475611519 source:f:\endive\src\views\huds\hud.cpp
 	"hud.hpp"
@@ -824,11 +829,17 @@
 1475611507 f:\endive\src\views\huds\hud.hpp
 	<SFML/Graphics.hpp>
 
-1475696690 source:f:\endive\src\bag\bag.cpp
+1475782393 source:f:\endive\src\bag\bag.cpp
 	<iostream>
 	"bag.hpp"
 
-1475612853 source:f:\endive\src\bag\pockets\objects\object.cpp
+1475874792 source:f:\endive\src\bag\pockets\objects\object.cpp
 	<iostream>
 	"object.hpp"
+	"../../../abstract/functions.hpp"
+
+1475875144 source:f:\endive\src\bag\pockets\pocket.cpp
+	<iostream>
+	"pocket.hpp"
+	"../../abstract/functions.hpp"
 

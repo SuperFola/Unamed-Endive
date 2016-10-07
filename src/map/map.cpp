@@ -31,9 +31,11 @@ int Map::load()
 {
     for (int i=0; i < 3; i++)
     {
-        this->tmaps[i] = TileMap {};
+        TileMap* tmap = new TileMap();
+        tmap->load(this->tileset_path);
+        this->tmaps.push_back(tmap);
 
-        if (this->tmaps[i].load_map(this->tileset_path, sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level, this->map_width, this->map_height))
+        if (this->tmaps[i]->load_map(sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level, this->map_width, this->map_height))
             return 1;
     }
     return 0;
@@ -41,18 +43,22 @@ int Map::load()
 
 void Map::render(sf::RenderWindow& window)
 {
-    window.draw(this->tmaps[2]);
-    window.draw(this->tmaps[1]);
+    window.draw(*(this->tmaps[2]));
+    window.draw(*(this->tmaps[1]));
 }
 
 void Map::render_top(sf::RenderWindow& window)
 {
-    window.draw(this->tmaps[0]);
+    // temp
+    // window.draw(*(this->tmaps[0]));
 }
 
 void Map::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-    this->tmap.setPosition((WIN_W) / 2, (WIN_H) / 2);
+    for (int i=0; i < 3; i++)
+    {
+        this->tmaps[i]->setPosition((WIN_W) / 2, (WIN_H) / 2);
+    }
 }
 
 int Map::getWidth()

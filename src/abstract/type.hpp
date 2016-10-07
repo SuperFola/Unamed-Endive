@@ -13,8 +13,8 @@ enum SortilegeType {
 };
 
 enum ActionType {
-    Equipment,
-    OnCrea
+    Equipment = 0,
+    OnCrea = 1
 };
 
 #endif // DEF_TYPE
