@@ -27,6 +27,7 @@ void DefaultView::render(sf::RenderWindow& window)
 {
     this->level.render(window);
     window.draw(this->player.getCurrentSprite());
+    this->level.render_top(window);
 }
 
 void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)

@@ -12,9 +12,11 @@
 class Map
 {
 private:
+    // methods
+    int load_map(const std::string&);
     // variables
     std::vector<Block*> level;
-    TileMap tmap;
+    std::vector<TileMap> tmaps;
     Json::Value root;
     std::string tileset_path;
     std::string map_data_path;
@@ -26,6 +28,7 @@ public:
     Map(std::string);
     int load();
     void render(sf::RenderWindow&);
+    void render_top(sf::RenderWindow&);
     void update(sf::RenderWindow&, sf::Time);
     int getWidth();
     int getHeight();

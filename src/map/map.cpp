@@ -11,7 +11,10 @@ bool is_file_existing(const std::string& file)
 }
 
 // public
-Map::Map(std::string path) : tileset_path {"assets/tileset.png"}, map_width(16), map_height(8)
+Map::Map(std::string path) :
+    tileset_path {"assets/tileset.png"}
+    , map_width(16)
+    , map_height(8)
 {
     if (is_file_existing(path))
         std::cout << "Map file found : ";
@@ -21,34 +24,30 @@ Map::Map(std::string path) : tileset_path {"assets/tileset.png"}, map_width(16),
 
     this->map_data_path = path;
 
-    std::ifstream config_doc(this->map_data_path);
-    config_doc >> this->root;
-
-    std::cout << "Loading map" << std::endl;
-    this->map_width = this->root["width"].asInt();
-    this->map_height = this->root["height"].asInt();
-
-    for (int i=0; i < this->root["map"].size(); ++i)
-    {
-        Block* block = new Block (
-            this->root["map"][i]["id"].asInt(),
-            this->root["map"][i]["colliding"] == 1
-        );
-        this->level.push_back(block);
-    }
-    std::cout << "Map loaded" << std::endl;
+    this->load_map(this->map_data_path);
 }
 
 int Map::load()
 {
-    if (this->tmap.load(this->tileset_path, sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level, this->map_width, this->map_height))
-        return 1;
+    for (int i=0; i < 3; i++)
+    {
+        this->tmaps[i] = TileMap {};
+
+        if (this->tmaps[i].load_map(this->tileset_path, sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level, this->map_width, this->map_height))
+            return 1;
+    }
     return 0;
 }
 
 void Map::render(sf::RenderWindow& window)
 {
-    window.draw(this->tmap);
+    window.draw(this->tmaps[2]);
+    window.draw(this->tmaps[1]);
+}
+
+void Map::render_top(sf::RenderWindow& window)
+{
+    window.draw(this->tmaps[0]);
 }
 
 void Map::update(sf::RenderWindow& window, sf::Time elapsed)
@@ -73,4 +72,25 @@ bool Map::colliding_at(int tx, int ty)
     if (rpos < this->map_height * this->map_width)
         return this->level[rpos]->is_solid();
     return true;
+}
+
+// private
+int Map::load_map(const std::string& map_path)
+{
+    std::ifstream config_doc(map_path);
+    config_doc >> this->root;
+
+    std::cout << "Loading map " << map_path << std::endl;
+    this->map_width = this->root["width"].asInt();
+    this->map_height = this->root["height"].asInt();
+
+    for (int i=0; i < this->root["map"].size(); ++i)
+    {
+        Block* block = new Block (
+            this->root["map"][i]["id"].asInt(),
+            this->root["map"][i]["colliding"] == 1
+        );
+        this->level.push_back(block);
+    }
+    std::cout << "Map loaded" << std::endl;
 }

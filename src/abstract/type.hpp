@@ -12,4 +12,9 @@ enum SortilegeType {
     MultipleUs
 };
 
+enum ActionType {
+    Equipment,
+    OnCrea
+};
+
 #endif // DEF_TYPE
