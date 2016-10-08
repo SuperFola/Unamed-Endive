@@ -1,19 +1,15 @@
-# maps editor (using tileset and not separate tiles in assets/tiles folder)
+# maps editor (using tileset and not separate tiles in the assets/tiles folder)
 # made by Hxokunlug on 27th, August, 2016
 # All rights reserved
 
-import os
 import sys
-import glob
-import time
-import pygame
+
 
 TS = 17
 REAL_TS = 16
 DEF_WIDTH = 16
 DEF_HEIGHT = 8
-VERSION = "v0.0.1"
-
+VERSION = "v0.0.3"
 
 print("Starting")
 
@@ -32,14 +28,53 @@ if sys.argv[1:]:
             }
         except IndexError:
             print("Missing argument for option -p")
+    if "-W" in sys.argv[1:]:
+        try:
+            width = sys.argv[1:][sys.argv[1:].index("-W") + 1]
+            if not temp:
+                temp = {
+                    "type": "new map"
+                }
+                temp["width"] = int(width)
+            elif temp["type"] == "new map":
+                temp["width"] = int(width)
+            else:
+                print("You can not specify a default width for an existing map")
+        except IndexError or ValueError:
+            print("Missing argument for option -W")
+    if "-H" in sys.argv[1:]:
+        try:
+            height = sys.argv[1:][sys.argv[1:].index("-H") + 1]
+            if not temp:
+                temp = {
+                    "type": "new map"
+                }
+                temp["height"] = int(height)
+            elif temp["type"] == "new map":
+                temp["height"] = int(height)
+            else:
+                print("You can not specify a default height for an existing map")
+        except IndexError or ValueError:
+            print("Missing argument for option -H")
     if "-v" in sys.argv[1:]:
         print(VERSION)
+        sys.exit(0)
     if "-h" in sys.argv[1:]:
         print("""Available options :
         -h => display this help
         -v => display editor version
         -p [path] => indicate to the editor which map to load
+        -W [width] => specify a default width
+        -H [height] => specify a default height
         """)
+        sys.exit(0)
+
+
+import os
+import glob
+import time
+import pygame
+
 
 pygame.init()
 win = pygame.display.set_mode((840, 540))
@@ -57,15 +92,15 @@ def cut_ts_in_tiles(ts):
         for x in range(ts.get_width() // TS):
             tu, tv = x * TS, y * TS
             list_tiles.append(ts.subsurface((tu, tv, REAL_TS, REAL_TS)))
-
+    print("Loaded %i tiles" % len(list_tiles))
     return list_tiles
 
 
-def render(screen, tilemap, list_tiles):
+def render(screen, tilemap, layer, list_tiles):
     # a Background to visualize mapping errors
     pygame.draw.rect(screen, (255, 0, 0), (0, 0, tilemap["width"] * REAL_TS, tilemap["height"] * REAL_TS))
 
-    for i, element in enumerate(tilemap["map"]):
+    for i, element in enumerate(tilemap[layer]):
         if element is not None:
             tu, tv = i % tilemap["width"], i // tilemap["width"]
             screen.blit(list_tiles[element["id"]], (tu * REAL_TS, tv * REAL_TS))
@@ -86,10 +121,14 @@ def resize_tmap(tmap, nw, nh):
         # insert
         for elem in to_change:
             tmap["map"].insert(elem, None)
+            tmap["map2"].insert(elem, None)
+            tmap["map3"].insert(elem, None)
     elif ow > nw ^ oh > nh:
         # pop
         for elem in to_change:
             tmap["map"].pop(elem)
+            tmap["map2"].pop(elem)
+            tmap["map3"].pop(elem)
 
 
 print("Loading tileset")
@@ -100,10 +139,11 @@ print("Succesfully loaded the tiles")
 
 tmap = {
     "map": [],
+    "map2": [],
+    "map3": [],
     "width": DEF_WIDTH,
     "height": DEF_HEIGHT
 }
-tmap["map"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
 done = False
 current_block = 0
 clic = 0  # 0 = not clicking ; 1 = left clicking ; 2 = right clicking ; 3 = wheel clicking
@@ -114,6 +154,32 @@ if temp:
         print(map_path)
         tmap = temp["content"]
         temp = None
+    if temp["type"] == "new map":
+        tmap["width"] = temp.get("width", DEF_WIDTH)
+        tmap["height"] = temp.get("height", DEF_HEIGHT)
+        print("Creating a map of %ix%i" % (tmap["width"], tmap["height"]))
+
+tmap["map"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
+tmap["map2"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
+tmap["map3"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
+layer = "map"
+
+controls = [
+    "KP7 : map width + 1",
+    "KP8 : map width - 1",
+    "KP4 : map height + 1",
+    "KP5 : map height - 1",
+    "s : save the map",
+    "c : the block under the cursor is now colliding",
+    "v : the block under the cursor is no longer colliding",
+    "left clic : put a block",
+    "middle clic : pick a bloc",
+    "right clic : destroy a block",
+    "up : change the layer",
+    "down : change the layer"
+]
+
+print("Controls :" + "\n\t- ".join(controls))
 
 while not done:
     for event in pygame.event.get():
@@ -145,61 +211,81 @@ while not done:
                 # change the colliding state
                 xp, yp = pygame.mouse.get_pos()
                 rpos = xp // REAL_TS + yp // REAL_TS * tmap["width"]
-                tmap["map"][rpos]["colliding"] = True
-                print("Block at %s (%i) is colliding" % (rpos, tmap["map"][rpos]["id"]))
+                tmap[layer][rpos]["colliding"] = True
+                print("Block at %s (%i) is colliding" % (rpos, tmap[layer][rpos]["id"]))
             elif event.key == pygame.K_v:
                 # change the colliding state
                 xp, yp = pygame.mouse.get_pos()
                 rpos = xp // REAL_TS + yp // REAL_TS * tmap["width"]
-                tmap["map"][rpos]["colliding"] = False
-                print("Block at %s (%i) is not colliding" % (rpos, tmap["map"][rpos]["id"]))
+                tmap[layer][rpos]["colliding"] = False
+                print("Block at %s (%i) is not colliding" % (rpos, tmap[layer][rpos]["id"]))
+            elif event.key == pygame.K_UP:
+                # change the layer
+                print("Layer %s" % layer)
+                if layer == "map2":
+                    layer = "map"
+                elif layer == "map3":
+                    layer = "map2"
+                elif layer == "map":
+                    layer = "map3"
+                print("New layer is %s" % layer)
+            elif event.key == pygame.K_DOWN:
+                # change the layer
+                print("Layer %s" % layer)
+                if layer == "map3":
+                    layer = "map"
+                elif layer == "map2":
+                    layer = "map3"
+                elif layer == "map":
+                    layer = "map2"
+                print("New layer is %s" % layer)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button < 4:
                 clic = event.button
             elif event.button == 4:
                 # mouse wheel going up
                 current_block += 1
-                if current_block >= len(tmap["map"]):
+                if current_block >= len(tiles):
                     current_block = 0
             elif event.button == 5:
                 # going down
                 current_block -= 1
                 if current_block < 0:
-                    current_block = len(tmap["map"]) - 1
+                    current_block = len(tiles) - 1
 
             xp, yp = event.pos
             rpos = xp // REAL_TS + yp // REAL_TS * tmap["width"]
 
             if clic == 1:
                 # put a block
-                tmap["map"][rpos]["id"] = current_block
+                tmap[layer][rpos]["id"] = current_block
             elif clic == 2:
                 # destroy a block
-                tmap["map"][rpos]["id"] = None
+                tmap[layer][rpos]["id"] = None
             elif clic == 3:
                 # pick a chu ... pick a block
-                current_block = tmap["map"][rpos]["id"]
+                current_block = tmap[layer][rpos]["id"]
         elif event.type == pygame.MOUSEMOTION:
             xp, yp = event.pos
             rpos = xp // REAL_TS + yp // REAL_TS * tmap["width"]
 
-            if rpos < 0 or rpos >= len(tmap["map"]):
+            if rpos < 0 or rpos >= len(tmap[layer]):
                 clic = 0
 
             if clic == 1:
                 # put a block
-                tmap["map"][rpos]["id"] = current_block
+                tmap[layer][rpos]["id"] = current_block
             elif clic == 2:
                 # destroy a block
-                tmap["map"][rpos]["id"] = None
+                tmap[layer][rpos]["id"] = None
             elif clic == 3:
                 # pick a chu ... pick a block
-                current_block = tmap["map"][rpos]["id"]
+                current_block = tmap[layer][rpos]["id"]
         elif event.type == pygame.MOUSEBUTTONUP:
             clic = 0
 
     pygame.draw.rect(win, (0, 0, 0), (0, 0) + win.get_size())
-    render(win, tmap, tiles)
+    render(win, tmap, layer, tiles)
     xp, yp = pygame.mouse.get_pos()
     xp += 10 ; yp += 10
     win.blit(tiles[current_block], (xp, yp))
