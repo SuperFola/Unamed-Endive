@@ -12,6 +12,8 @@
 #define WIN_W 640
 #define WIN_H 540
 
+#define COLLIDING_LAYER 1
+
 enum class DIR {
     up,
     down,

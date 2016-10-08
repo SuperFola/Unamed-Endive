@@ -76,7 +76,7 @@ bool Map::colliding_at(int tx, int ty)
     int rpos = tx + ty * this->map_width;
 
     if (rpos < this->map_height * this->map_width)
-        return this->level[rpos]->is_solid();
+        return this->level[COLLIDING_LAYER][rpos]->is_solid();
     return true;
 }
 
@@ -90,13 +90,20 @@ int Map::load_map(const std::string& map_path)
     this->map_width = this->root["width"].asInt();
     this->map_height = this->root["height"].asInt();
 
-    for (int i=0; i < this->root["map"].size(); ++i)
+    const std::vector<std::string> maps = {"map", "map2", "map3"};
+    int layer =0;
+
+    for (const auto& map_name: maps)
     {
-        Block* block = new Block (
-            this->root["map"][i]["id"].asInt(),
-            this->root["map"][i]["colliding"] == 1
-        );
-        this->level.push_back(block);
+        for (int i=0; i < this->root[map_name].size(); ++i)
+        {
+            Block* block = new Block (
+                this->root[map_name][i]["id"].asInt(),
+                this->root[map_name][i]["colliding"] == 1
+            );
+            this->level[layer].push_back(block);
+        }
+        layer++;
     }
     std::cout << "Map loaded" << std::endl;
 }

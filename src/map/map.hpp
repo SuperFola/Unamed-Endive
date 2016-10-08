@@ -15,7 +15,7 @@ private:
     // methods
     int load_map(const std::string&);
     // variables
-    std::vector<Block*> level;
+    std::vector<std::vector<Block*>> level;
     std::vector<TileMap*> tmaps;
     Json::Value root;
     std::string tileset_path;
