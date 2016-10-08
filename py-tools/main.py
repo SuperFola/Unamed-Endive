@@ -24,7 +24,7 @@ if sys.argv[1:]:
             temp = {
                 "type": "map",
                 "path": map_path_to_load,
-                "content": eval(open(map_path_to_load).read())
+                "content": eval(open(map_path_to_load).read().replace('true', 'True').replace('false', 'False'))
             }
         except IndexError:
             print("Missing argument for option -p")
@@ -99,11 +99,16 @@ def cut_ts_in_tiles(ts):
 def render(screen, tilemap, layer, list_tiles):
     # a Background to visualize mapping errors
     pygame.draw.rect(screen, (255, 0, 0), (0, 0, tilemap["width"] * REAL_TS, tilemap["height"] * REAL_TS))
+    global alpha_black
 
     for i, element in enumerate(tilemap[layer]):
         if element is not None:
             tu, tv = i % tilemap["width"], i // tilemap["width"]
             screen.blit(list_tiles[element["id"]], (tu * REAL_TS, tv * REAL_TS))
+            # if the block is not colliding, let's draw a semi black thing on it
+            # to help the mapper identifying them (the non colliding tiles)
+            if not element["colliding"]:
+                screen.blit(alpha_black, (tu * REAL_TS, tv * REAL_TS))
 
 
 def resize_tmap(tmap, nw, nh):
@@ -112,18 +117,18 @@ def resize_tmap(tmap, nw, nh):
     oh = tmap["height"]
     for i, element in enumerate(tmap):
         tu, tv = i % ow, i // ow
-        if (ow != nw ^ oh != nw) and ((tu == nw & ow != nw) ^ (tv == nh & oh != nh)):
+        if ((ow != nw) ^ (oh != nw)) and (((tu == nw) & (ow != nw)) ^ ((tv == nh) & (oh != nh))):
             to_change.append(i)
 
     to_change = to_change[::-1]
 
-    if ow < nw ^ oh < nh:
+    if (ow < nw) ^ (oh < nh):
         # insert
         for elem in to_change:
             tmap["map"].insert(elem, None)
             tmap["map2"].insert(elem, None)
             tmap["map3"].insert(elem, None)
-    elif ow > nw ^ oh > nh:
+    elif (ow > nw) ^ (oh > nh):
         # pop
         for elem in to_change:
             tmap["map"].pop(elem)
@@ -136,6 +141,10 @@ tileset = pygame.image.load("../assets/tileset.png").convert()
 print("Cutting in tiles of %i*%i" % (REAL_TS, REAL_TS))
 tiles = cut_ts_in_tiles(tileset)
 print("Succesfully loaded the tiles")
+alpha_black = pygame.Surface((16, 16))
+alpha_black.fill(0)
+alpha_black.convert_alpha()
+alpha_black.set_alpha(90)
 
 tmap = {
     "map": [],
@@ -153,15 +162,16 @@ if temp:
         map_path = temp["path"].split('/')[-1]
         print(map_path)
         tmap = temp["content"]
-        temp = None
     if temp["type"] == "new map":
         tmap["width"] = temp.get("width", DEF_WIDTH)
         tmap["height"] = temp.get("height", DEF_HEIGHT)
         print("Creating a map of %ix%i" % (tmap["width"], tmap["height"]))
 
-tmap["map"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
-tmap["map2"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
-tmap["map3"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
+if not temp or temp["type"] == "new map":
+    tmap["map"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
+    tmap["map2"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
+    tmap["map3"] = [{"id": 0, "colliding": False} for _ in range(tmap["width"] * tmap["height"])]
+
 layer = "map"
 
 controls = [
