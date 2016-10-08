@@ -40,7 +40,6 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
     switch(event.type)
     {
     case sf::Event::KeyPressed:
-        std::cout << "moving" << std::endl;
         switch(event.key.code)
         {
         case sf::Keyboard::Z:

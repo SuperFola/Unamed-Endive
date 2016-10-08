@@ -30,7 +30,7 @@ private:
     // variables
     std::string name;
     Point pos;
-    int speed;
+    float speed;
     DIR direction;
     TexturesManager textures;
     std::vector<sf::Sprite> sprites;
@@ -38,7 +38,10 @@ private:
     MvState anim_cursor;
     std::string path;
     Bag bag;
+    sf::Time elapsed_mvt_time;
+    sf::Time not_moving_time;
     // methods
+    void update_anim(sf::Time);
     void update_walk_anim();
     void update_run_anim();
     void load_character_textures();

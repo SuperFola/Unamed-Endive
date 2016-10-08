@@ -6,6 +6,23 @@
 #include "../abstract/texturesmanager.hpp"
 
 // private
+void Character::update_anim(sf::Time elapsed)
+{
+    this->elapsed_mvt_time += elapsed;
+
+    if (this->elapsed_mvt_time.asMilliseconds() % 24 < 4)
+    {
+        if (this->state == ChState::walking)
+            this->update_walk_anim();
+        else if (this->state == ChState::running)
+            this->update_run_anim();
+    }
+
+    // reset timer to prevent an overflow
+    if (this->elapsed_mvt_time.asSeconds() > 3600.0f)
+        this->elapsed_mvt_time = sf::seconds((this->elapsed_mvt_time % sf::seconds(3600.0f)).asSeconds());
+}
+
 void Character::update_walk_anim()
 {
     if (this->anim_cursor == MvState::idle)
@@ -82,7 +99,8 @@ void Character::load_character_textures()
 // public
 Character::Character() :
     name("Someone")
-    , speed(2)
+    , pos(16, 16)
+    , speed(1.0f / 32.0f)
     , direction(DIR::down)
     , state(ChState::idle)
     , anim_cursor(MvState::idle)
@@ -93,8 +111,10 @@ Character::Character() :
     this->load_character_textures();
 }
 
-Character::Character(const std::string& name, const std::string& path) :
-    speed(2)
+Character::Character(const std::string& name_, const std::string& path) :
+    name(name_)
+    , pos(16, 16)
+    , speed(1.0f / 32.0f)
     , direction(DIR::down)
     , state(ChState::idle)
     , anim_cursor(MvState::idle)
@@ -102,7 +122,6 @@ Character::Character(const std::string& name, const std::string& path) :
 {
     std::cout << "second chara loader" << std::endl;
 
-    this->name = name;
     this->path = path;
 
     // load character data from the indicated file
@@ -111,10 +130,22 @@ Character::Character(const std::string& name, const std::string& path) :
 
 int Character::move(DIR dir, Map map_, sf::Time elapsed)
 {
+    // update state
+    if (this->state == ChState::idle)
+        this->state = ChState::walking;  // default value, we will change it regarding the player equipment in the future
+
     // set the new direction
+    if (this->direction != dir)
+        this->anim_cursor = MvState::idle;
+        // the player change his direction so we reset the anim cursor
+        // to prevent some visual glitches
     this->direction = dir;
 
-    float speed = this->speed * TILE_SIZE * elapsed.asMilliseconds() / 10.0f;
+    // update anim
+    this->not_moving_time = sf::seconds(0.0f);  // reset it
+    this->update_anim(elapsed);
+
+    float speed = this->speed * TILE_SIZE ;//* (elapsed.asMilliseconds() / 100.0f);
     std::vector<float> vect {0, 0};
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
@@ -139,7 +170,10 @@ int Character::move(DIR dir, Map map_, sf::Time elapsed)
             vect[0] = 1 * speed;
     }
 
-    bool pass = !map_.colliding_at(int(vect[0]) / TILE_SIZE, int(vect[1]) / TILE_SIZE);
+    bool pass = !map_.colliding_at(
+                                   int(vect[0]) / TILE_SIZE + this->pos.getX() / TILE_SIZE
+                                   , int(vect[1]) / TILE_SIZE + this->pos.getY() / TILE_SIZE
+                                   );
 
     if (pass)
     {
@@ -170,4 +204,9 @@ void Character::update(sf::RenderWindow& window, sf::Time elapsed)
 
     if (this->getCurrentSprite().getPosition() != _pos)
         this->getCurrentSprite().setPosition(_pos);
+
+    if (this->state != ChState::idle)
+        this->not_moving_time += elapsed;
+    if (this->not_moving_time.asSeconds() > 1.0f)
+        this->state = ChState::idle;
 }
