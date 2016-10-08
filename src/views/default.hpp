@@ -16,7 +16,7 @@ private:
 
 public:
     // methods
-    DefaultView(const std::string& ="test.json");
+    DefaultView(const std::string& ="assets/map/1-1441.umd");
     bool load() override;
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;

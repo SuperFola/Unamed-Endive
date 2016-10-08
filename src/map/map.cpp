@@ -23,22 +23,11 @@ Map::Map(std::string path) :
     std::cout << path << std::endl;
 
     this->map_data_path = path;
-
-    this->load_map(this->map_data_path);
 }
 
 int Map::load()
 {
-    for (int i=0; i < 3; i++)
-    {
-        TileMap* tmap = new TileMap();
-        tmap->load(this->tileset_path);
-        this->tmaps.push_back(tmap);
-
-        if (this->tmaps[i]->load_map(sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level, this->map_width, this->map_height))
-            return 1;
-    }
-    return 0;
+    return this->load_map(this->map_data_path);
 }
 
 void Map::render(sf::RenderWindow& window)
@@ -91,19 +80,30 @@ int Map::load_map(const std::string& map_path)
     this->map_height = this->root["height"].asInt();
 
     const std::vector<std::string> maps = {"map", "map2", "map3"};
-    int layer =0;
 
     for (const auto& map_name: maps)
     {
+        std::vector<Block*> temp;
         for (int i=0; i < this->root[map_name].size(); ++i)
         {
             Block* block = new Block (
                 this->root[map_name][i]["id"].asInt(),
                 this->root[map_name][i]["colliding"] == 1
             );
-            this->level[layer].push_back(block);
+            temp.push_back(block);
         }
-        layer++;
+        this->level.push_back(temp);
     }
     std::cout << "Map loaded" << std::endl;
+
+    for (int i=0; i < 3; i++)
+    {
+        TileMap* tmap = new TileMap();
+        tmap->load(this->tileset_path);
+        this->tmaps.push_back(tmap);
+
+        if (this->tmaps[i]->load_map(sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level[i], this->map_width, this->map_height))
+            return 1;
+    }
+    return 0;
 }
