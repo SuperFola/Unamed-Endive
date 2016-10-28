@@ -59,6 +59,7 @@ CreaturesLoader::CreaturesLoader()
 bool CreaturesLoader::load()
 {
     std::vector<std::string> files = list_files(this->folder);
+    bool done = true;
 
     for (const auto& file: files)
     {
@@ -68,6 +69,7 @@ bool CreaturesLoader::load()
         if (!image.loadFromFile(this->folder + "/" + file))
         {
             std::cout << "Unable to open " << this->folder + "/" + file << std::endl;
+            done = false;
         }
 
         image.createMaskFromColor(sf::Color(255, 0, 255, 255));
@@ -78,6 +80,8 @@ bool CreaturesLoader::load()
     }
 
     std::cout << "Finished loading creatures sprites" << std::endl;
+
+    return done;
 }
 
 sf::Texture& CreaturesLoader::get(const std::string& name)
