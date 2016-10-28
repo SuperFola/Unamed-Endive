@@ -14,6 +14,9 @@
 
 #define COLLIDING_LAYER 1
 
+#define PLATFORM_WIN
+// #define PLATFORM_POSIX
+
 enum class DIR {
     up,
     down,

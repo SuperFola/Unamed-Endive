@@ -91,7 +91,7 @@ void Character::load_character_textures()
             texture.loadFromImage(image);
 
             this->textures.addTexture(this->path + dir + to_string<int>(i), texture);
-            this->sprites.push_back(sf::Sprite(textures.getTexture(this->path + dir + to_string<int>(i))));
+            this->sprites.push_back(sf::Sprite(this->textures.getTexture(this->path + dir + to_string<int>(i))));
         }
     }
 }
