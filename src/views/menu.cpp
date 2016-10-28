@@ -5,7 +5,8 @@
 #include "../constants.hpp"
 
 // public
-MenuView::MenuView()
+MenuView::MenuView() :
+    View(MENU_VIEW_ID)
 {
 }
 

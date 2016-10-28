@@ -5,50 +5,6 @@
 #include <string>
 #include <sstream>
 
-#include "../constants.hpp"
-
-#ifdef PLATFORM_WIN
-#include <windows.h>
-#elifdef PLATFORM_POSIX
-#include <dirent.h>
-#endif // PLATFORM_WIN
-
-std::vector<std::string> glob(const std::string& directory)
-{
-    std::vector<std::string> files;
-
-    #ifdef PLATFORM_WIN
-    WIN32_FIND_DATA File;
-    HANDLE hSearch;
-
-    hSearch = FindFirstFile(directory + "/*.*", &File);
-    if (hSearch != INVALID_HANDLE_VALUE)
-    {
-        do {
-                files.push_back(std::string(File.cFileName));
-        } while (FindNextFile(hSearch, &File));
-
-        FindClose(hSearch);
-    }
-    #elifdef PLATFORM_POSIX
-    DIR* rep = opendir(directory);
-
-    if (rep != NULL)
-    {
-        struct dirent* ent;
-
-        while ((ent = readdir(rep)) != NULL)
-        {
-            files.push_back(ent->d_name);
-        }
-
-        closedir(rep);
-    }
-    #endif // PLATFORM_WIN
-
-    return files;
-}
-
 template<typename T>
 T pop(std::vector<T>* obj, int i) {
     T element {};

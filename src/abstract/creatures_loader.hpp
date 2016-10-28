@@ -16,6 +16,7 @@ private:
 public:
     CreaturesLoader();
     bool load();
+    sf::Texture& get(const std::string&);
 };
 
 #endif // DEF_CREA_LOADER

@@ -13,6 +13,7 @@ Equip::Equip() :
 bool Equip::add_creature(Creature& crea)
 {
     this->equip.push_back(crea);
+    return true;
 }
 
 bool Equip::remove_creature(int id)

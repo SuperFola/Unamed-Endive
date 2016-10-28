@@ -3,6 +3,7 @@
 
 #include "game.hpp"
 #include "abstract/functions.hpp"
+#include "abstract/creatures_loader.hpp"
 
 // private
 void Game::resize_window(int nx, int ny)
@@ -112,6 +113,10 @@ Game::Game() :
     // creating base folders
     system("mkdir saves");
     system("mkdir screenshots");
+
+    // testing
+    CreaturesLoader crea_load {};
+    crea_load.load();
 }
 
 int Game::run()
