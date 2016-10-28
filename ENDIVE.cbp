@@ -89,6 +89,8 @@
 		<Unit filename="src/views/default.hpp" />
 		<Unit filename="src/views/huds/hud.cpp" />
 		<Unit filename="src/views/huds/hud.hpp" />
+		<Unit filename="src/views/menu.cpp" />
+		<Unit filename="src/views/menu.hpp" />
 		<Unit filename="src/views/view.cpp" />
 		<Unit filename="src/views/view.hpp" />
 		<Extensions>

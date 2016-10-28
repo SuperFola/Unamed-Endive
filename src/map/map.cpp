@@ -88,7 +88,7 @@ int Map::load_map(const std::string& map_path)
         {
             Block* block = new Block (
                 this->root[map_name][i]["id"].asInt(),
-                this->root[map_name][i]["colliding"] == 1
+                this->root[map_name][i]["colliding"].asBool()
             );
             temp.push_back(block);
         }

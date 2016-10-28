@@ -27,6 +27,7 @@ void DefaultView::render(sf::RenderWindow& window)
 {
     this->level.render(window);
     window.draw(this->player.getCurrentSprite());
+    window.draw(this->player.rectangle);
     this->level.render_top(window);
 }
 

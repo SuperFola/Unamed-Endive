@@ -47,6 +47,7 @@ private:
     void load_character_textures();
 
 public:
+    sf::RectangleShape rectangle {sf::Vector2f(16.0f, 16.0f)};
     // methods
     Character();
     Character(const std::string&, const std::string&);
