@@ -8,6 +8,7 @@
 DefaultView::DefaultView(const std::string& map_name) :
     View(DEFAULT_VIEW_ID)
     , level(map_name)
+    , menu_hud()
 {
 
 }
@@ -29,11 +30,13 @@ void DefaultView::render(sf::RenderWindow& window)
     window.draw(this->player.getCurrentSprite());
     window.draw(this->player.rectangle);
     this->level.render_top(window);
+    this->menu_hud.render(window);
 }
 
 void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     this->player.update(window, elapsed);
+    this->menu_hud.update(window, elapsed);
 }
 
 int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
@@ -68,6 +71,5 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
         break;
     }
 
-    // we don't need to change the view
-    return -1;
+    return this->menu_hud.process_event(event, elapsed);
 }

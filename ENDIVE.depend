@@ -401,8 +401,9 @@
 
 1472132693 f:\endive\view.hpp
 
-1475691415 f:\endive\src\game.hpp
+1477686370 f:\endive\src\game.hpp
 	<SFML/Graphics.hpp>
+	<SFML/System.hpp>
 	"abstract/statemachine.hpp"
 	"constants.hpp"
 	"views/default.hpp"
@@ -844,16 +845,18 @@
 	"pocket.hpp"
 	"../../abstract/functions.hpp"
 
-1477677252 f:\endive\src\abstract\creatures_loader.hpp
+1477689940 f:\endive\src\abstract\creatures_loader.hpp
 	<string>
 	<vector>
 	<SFML/Graphics.hpp>
 	"texturesmanager.hpp"
 
-1477681950 source:f:\endive\src\abstract\creatures_loader.cpp
+1477684715 source:f:\endive\src\abstract\creatures_loader.cpp
 	<iostream>
 	"creatures_loader.hpp"
-	"functions.hpp"
+	"../constants.hpp"
+	<windows.h>
+	<dirent.h>
 
 1477678330 source:f:\endive\src\views\menu.cpp
 	<SFML/Graphics.hpp>

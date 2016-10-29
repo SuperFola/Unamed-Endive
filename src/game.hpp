@@ -4,6 +4,7 @@
 #define WIN_TITLE "Unamed Rebirth"
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 
 #include "abstract/statemachine.hpp"
 #include "constants.hpp"
