@@ -6,7 +6,7 @@
 class Hud {
 private:
     int id;
-    bool is_trigered;
+    bool is_triggered;
 
 public:
     Hud(int);
@@ -14,7 +14,8 @@ public:
     virtual void render(sf::RenderWindow&) = 0;
     virtual int process_event(sf::Event&, sf::Time) = 0;
     virtual void update(sf::RenderWindow&, sf::Time) = 0;
-    bool setTrigger(bool);
+    void setTrigger(bool);
+    bool isTriggered();
 };
 
 #endif // DEF_HUD

@@ -422,18 +422,19 @@
 	"statemachine.hpp"
 	"functions.hpp"
 
-1477684430 source:f:\endive\src\game.cpp
+1477749953 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
 	"abstract/functions.hpp"
 	"abstract/creatures_loader.hpp"
 
-1475934627 f:\endive\src\views\default.hpp
+1477738787 f:\endive\src\views\default.hpp
 	<string>
 	"view.hpp"
 	"../map/map.hpp"
 	"../entities/character.hpp"
+	"huds/menu.hpp"
 
 1477678420 f:\endive\src\constants.hpp
 
@@ -442,7 +443,7 @@
 	<string>
 	<sstream>
 
-1475950235 source:f:\endive\src\views\default.cpp
+1477747782 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"default.hpp"
@@ -701,7 +702,7 @@
 	"../abstract/texturesmanager.hpp"
 	"../bag/bag.hpp"
 
-1477675744 source:f:\endive\src\entities\character.cpp
+1477748193 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
 	"character.hpp"
@@ -825,10 +826,10 @@
 	"../../../json/json.h"
 	"../../../abstract/type.hpp"
 
-1475611519 source:f:\endive\src\views\huds\hud.cpp
+1477751388 source:f:\endive\src\views\huds\hud.cpp
 	"hud.hpp"
 
-1475611507 f:\endive\src\views\huds\hud.hpp
+1477751391 f:\endive\src\views\huds\hud.hpp
 	<SFML/Graphics.hpp>
 
 1475782393 source:f:\endive\src\bag\bag.cpp
@@ -868,4 +869,18 @@
 	<string>
 	<vector>
 	"view.hpp"
+
+1477767772 f:\endive\src\views\huds\menu.hpp
+	<map>
+	<vector>
+	<string>
+	<SFML/Graphics.hpp>
+	"hud.hpp"
+	"../../abstract/texturesmanager.hpp"
+
+1477767546 source:f:\endive\src\views\huds\menu.cpp
+	<SFML/Graphics.hpp>
+	<iostream>
+	"menu.hpp"
+	"../../constants.hpp"
 

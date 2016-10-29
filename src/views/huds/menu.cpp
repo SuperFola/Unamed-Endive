@@ -11,91 +11,107 @@ MenuHUD::MenuHUD() :
 {
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
         std::cout << "Can not load font at assets/fonts/pkmnemn.ttf" << std::endl;
+    std::cout << "menu hud loaded" << std::endl;
 }
 
 bool MenuHUD::load()
 {
     // loading textures
-    sf::Texture* bg;
-    if (!bg->loadFromFile("assets/gui/fd_menu.png"))
+    sf::Texture bg;
+    if (!bg.loadFromFile("assets/gui/fd_menu.png"))
         return false;
-    this->textures.push_back(bg);
+    this->textures.addTexture(this->BACKGROUND, bg);
 
-    sf::Texture* cat;
-    if (!cat->loadFromFile("assets/gui/fd_categorie_menu.png"))
+    sf::Texture cat;
+    if (!cat.loadFromFile("assets/gui/fd_categorie_menu.png"))
         return false;
-    this->textures.push_back(cat);
+    this->textures.addTexture(this->BG_CATEGORY, cat);
 
-    sf::Texture* cat_sel;
-    if (!cat_sel->loadFromFile("assets/gui/fd_categorie_selected_menu.png"))
+    sf::Texture cat_sel;
+    if (!cat_sel.loadFromFile("assets/gui/fd_categorie_selected_menu.png"))
         return false;
-    this->textures.push_back(cat_sel);
+    this->textures.addTexture(this->BG_CATEGORY_SELECTED, cat_sel);
 
     // creating sprites
-    this->sprites.push_back(sf::Sprite(this->textures[this->BACKGROUND]));
-    this->sprites.push_back(sf::Sprite(this->textures[this->BG_CATEGORY]));
-    this->sprites.push_back(sf::Sprite(this->textures[this->BG_CATEGORY_SELECTED]));
+    this->sprites[this->BACKGROUND] = sf::Sprite(this->textures.getTexture(this->BACKGROUND));
+    this->sprites[this->BG_CATEGORY] = sf::Sprite(this->textures.getTexture(this->BG_CATEGORY));
+    this->sprites[this->BG_CATEGORY_SELECTED] = sf::Sprite(this->textures.getTexture(this->BG_CATEGORY_SELECTED));
 
     // creating texts
-    sf::Text* crea(L"Créatures", this->font, 24);
-    crea->setColor(sf::Color::Black);
-    this->texts.push_back(crea);
+    sf::Text crea;
+    crea.setFont(this->font);
+    crea.setString("Créatures");
+    crea.setCharacterSize(24);
+    crea.setColor(sf::Color::Black);
+    this->texts[this->TXT_CREA] = crea;
 
-    sf::Text* invent("Inventaire", this->font, 24);
-    invent->setColor(sf::Color::Black);
-    this->texts.push_back(invent);
+    sf::Text invent;
+    invent.setFont(this->font);
+    invent.setString("Inventaire");
+    invent.setCharacterSize(24);
+    invent.setColor(sf::Color::Black);
+    this->texts[this->TXT_INVENT] = invent;
 
-    sf::Text* carte("Carte", this->font, 24);
-    carte->setColor(sf::Color::Black);
-    this->texts.push_back(carte);
+    sf::Text carte;
+    carte.setFont(this->font);
+    carte.setString("Carte");
+    carte.setCharacterSize(24);
+    carte.setColor(sf::Color::Black);
+    this->texts[this->TXT_MAP] = carte;
 
-    sf::Text* save("Sauvegarder", this->font, 24);
-    save->setColor(sf::Color::Black);
-    this->texts.push_back(save);
+    sf::Text save;
+    save.setFont(this->font);
+    save.setString("Sauvegarder");
+    save.setCharacterSize(24);
+    save.setColor(sf::Color::Black);
+    this->texts[this->TXT_SAVE] = save;
 
-    sf::Text* dex("Indexeur", this->font, 24);
-    dex->setColor(sf::Color::Black);
-    this->texts.push_back(dex);
+    sf::Text dex;
+    dex.setFont(this->font);
+    dex.setString("Indexeur");
+    dex.setCharacterSize(24);
+    dex.setColor(sf::Color::Black);
+    this->texts[this->TXT_DEX] = dex;
 
-    sf::Text* goback("Retour", this->font, 24);
-    goback->setColor(sf::Color::Black);
-    this->texts.push_back(goback);
+    sf::Text goback;
+    goback.setFont(this->font);
+    goback.setString("Retour");
+    goback.setCharacterSize(24);
+    goback.setColor(sf::Color::Black);
+    this->texts[this->TXT_BACK] = goback;
 
     return true;
 }
 
 void MenuHUD::render(sf::RenderWindow& window)
 {
-    if (!this->is_trigered)
+    if (!this->isTriggered())
         goto dont;
 
-    window.draw(*(this->sprites[this->BACKGROUND]));
-    window.draw(*(this->sprites[this->BG_CATEGORY]));
-    window.draw(*(this->sprites[this->BG_CATEGORY_SELECTED]));
-    window.draw(*(this->texts[this->TXT_CREA]));
-    window.draw(*(this->texts[this->TXT_INVENT]));
-    window.draw(*(this->texts[this->TXT_MAP]));
-    window.draw(*(this->texts[this->TXT_SAVE]));
-    window.draw(*(this->texts[this->TXT_DEX]));
-    window.draw(*(this->texts[this->TXT_BACK]));
+    window.draw(this->sprites[this->BACKGROUND]);
+    window.draw(this->sprites[this->BG_CATEGORY]);
+    window.draw(this->sprites[this->BG_CATEGORY_SELECTED]);
+    window.draw(this->texts[this->TXT_CREA]);
+    window.draw(this->texts[this->TXT_INVENT]);
+    window.draw(this->texts[this->TXT_MAP]);
+    window.draw(this->texts[this->TXT_SAVE]);
+    window.draw(this->texts[this->TXT_DEX]);
+    window.draw(this->texts[this->TXT_BACK]);
 
     dont:;
 }
 
 void MenuHUD::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-    if (!this->is_trigered)
-        goto dont2;
-    sf::Vector2i mouse = sf::Mouse::getPosition(window);
-
-    dont2:;
+    if (this->isTriggered())
+        sf::Vector2i mouse = sf::Mouse::getPosition(window);
 }
 
 int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
 {
     int new_view = -1;
 
-    if (!this->is_trigered)
+    if (!this->isTriggered())
         goto dont3;
 
     switch(event.type)
@@ -109,7 +125,7 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
             break;
 
         case sf::Keyboard::Escape:
-            this->is_trigered = false;
+            this->setTrigger(false);
             goto dont3;
             break;
 

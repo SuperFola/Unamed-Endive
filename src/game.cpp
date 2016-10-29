@@ -120,10 +120,7 @@ int Game::run()
     int _fps_update {0};
     // testing
     CreaturesLoader crea_load {};
-    sf::Thread thread([&crea_load](){
-                      crea_load.load();
-    });
-    thread.launch();
+    crea_load.load();
     sf::Sprite truc;
     truc.setTexture(crea_load.get("_____arubeum_by_smiley_fakemon-d850krr.png"));
     // end testing

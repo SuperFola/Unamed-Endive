@@ -3,12 +3,17 @@
 // public
 Hud::Hud(int id_) :
     id(id_)
-    , is_trigered(false)
+    , is_triggered(false)
 {
 
 }
 
-bool Hud::setTrigger(bool value)
+void Hud::setTrigger(bool value)
 {
-    this->is_trigered = value;
+    this->is_triggered = value;
+}
+
+bool Hud::isTriggered()
+{
+    return this->is_triggered;
 }
