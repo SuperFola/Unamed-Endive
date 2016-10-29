@@ -16,8 +16,10 @@ DefaultView::DefaultView(const std::string& map_name) :
 bool DefaultView::load()
 {
     this->level.load();
+    if (!this->menu_hud.load())
+        std::cout << "An error occured while loading the menu" <<std::endl;
 
-    std::cout << std::endl << "loading player" << std:: endl;
+    std::cout << "loading player" << std:: endl;
     Character player {"me", "assets/players/male/"};
     std::cout << "player loaded" << std::endl;
 
@@ -46,6 +48,10 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
+        case sf::Keyboard::RShift:
+            this->menu_hud.setTrigger(true);
+            break;
+
         case sf::Keyboard::Z:
             this->player.move(DIR::up, this->level, elapsed);
             break;

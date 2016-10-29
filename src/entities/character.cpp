@@ -54,20 +54,20 @@ void Character::update_run_anim()
     if (this->anim_cursor == MvState::idle)
     {
         this->anim_cursor = MvState::walking;
-        goto stop;
+        goto stop2;
     }
     else if (this->anim_cursor == MvState::walking)
     {
         this->anim_cursor = MvState::walking2;
-        goto stop;
+        goto stop2;
     }
     else if (this->anim_cursor == MvState::walking2)
     {
         this->anim_cursor = MvState::idle;
-        goto stop;
+        goto stop2;
     }
 
-    stop:;
+    stop2:;
 }
 
 void Character::load_character_textures()

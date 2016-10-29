@@ -7,7 +7,7 @@
 // public
 MenuHUD::MenuHUD() :
     Hud(MENU_VIEW_ID)
-    , current(0)
+    , current(-1)
 {
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
         std::cout << "Can not load font at assets/fonts/pkmnemn.ttf" << std::endl;
@@ -66,16 +66,37 @@ bool MenuHUD::load()
 
 void MenuHUD::render(sf::RenderWindow& window)
 {
+    if (!this->is_trigered)
+        goto dont;
+
+    window.draw(*(this->sprites[this->BACKGROUND]));
+    window.draw(*(this->sprites[this->BG_CATEGORY]));
+    window.draw(*(this->sprites[this->BG_CATEGORY_SELECTED]));
+    window.draw(*(this->texts[this->TXT_CREA]));
+    window.draw(*(this->texts[this->TXT_INVENT]));
+    window.draw(*(this->texts[this->TXT_MAP]));
+    window.draw(*(this->texts[this->TXT_SAVE]));
+    window.draw(*(this->texts[this->TXT_DEX]));
+    window.draw(*(this->texts[this->TXT_BACK]));
+
+    dont:;
 }
 
 void MenuHUD::update(sf::RenderWindow& window, sf::Time elapsed)
 {
+    if (!this->is_trigered)
+        goto dont2;
     sf::Vector2i mouse = sf::Mouse::getPosition(window);
+
+    dont2:;
 }
 
 int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
 {
     int new_view = -1;
+
+    if (!this->is_trigered)
+        goto dont3;
 
     switch(event.type)
     {
@@ -85,6 +106,11 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
         case sf::Keyboard::Return:
             if (this->current != -1)
                 new_view = this->current;
+            break;
+
+        case sf::Keyboard::Escape:
+            this->is_trigered = false;
+            goto dont3;
             break;
 
         default:
@@ -110,6 +136,7 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
         break;
     }
 
+    dont3:
     // return the new view id, if we need to change it
     return new_view;
 }
