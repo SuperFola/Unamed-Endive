@@ -37,6 +37,9 @@ bool MenuHUD::load()
     this->sprites[this->BG_CATEGORY] = sf::Sprite(this->textures.getTexture(this->BG_CATEGORY));
     this->sprites[this->BG_CATEGORY_SELECTED] = sf::Sprite(this->textures.getTexture(this->BG_CATEGORY_SELECTED));
 
+    // setting pos
+    this->sprites[this->BACKGROUND].setPosition(20.0f, 50.0f);
+
     // creating texts
     sf::Text crea;
     crea.setFont(this->font);
@@ -80,6 +83,14 @@ bool MenuHUD::load()
     goback.setColor(sf::Color::Black);
     this->texts[this->TXT_BACK] = goback;
 
+    // setting pos (texts)
+    this->texts[this->TXT_CREA].setPosition(54.0f, 76.0f);
+    this->texts[this->TXT_INVENT].setPosition(349.0f, 76.0f);
+    this->texts[this->TXT_MAP].setPosition(54.0f, 218.0f);
+    this->texts[this->TXT_SAVE].setPosition(349.0f, 218.0f);
+    this->texts[this->TXT_DEX].setPosition(54.0f, 360.0f);
+    this->texts[this->TXT_BACK].setPosition(349.0f, 360.0f);
+
     return true;
 }
 
@@ -89,8 +100,33 @@ void MenuHUD::render(sf::RenderWindow& window)
         goto dont;
 
     window.draw(this->sprites[this->BACKGROUND]);
-    window.draw(this->sprites[this->BG_CATEGORY]);
-    window.draw(this->sprites[this->BG_CATEGORY_SELECTED]);
+
+    // drawing cases
+    {
+        float y = 61.0f;
+        for (int i=0; i < 6; i++)
+        {
+            bool left = !(i % 2);
+            float x;
+            if (left) x = 30.0f;
+            else x = 325.0f;
+
+            if (i != this->current)
+            {
+                this->sprites[this->BG_CATEGORY].setPosition(x, y);
+                window.draw(this->sprites[this->BG_CATEGORY]);
+            }
+            else
+            {
+                this->sprites[this->BG_CATEGORY_SELECTED].setPosition(x, y);
+                window.draw(this->sprites[this->BG_CATEGORY_SELECTED]);
+            }
+
+            if (!left)
+                y += 143.0f;
+        }
+    }
+
     window.draw(this->texts[this->TXT_CREA]);
     window.draw(this->texts[this->TXT_INVENT]);
     window.draw(this->texts[this->TXT_MAP]);
@@ -124,9 +160,38 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
                 new_view = this->current;
             break;
 
-        case sf::Keyboard::Escape:
+        case sf::Keyboard::RShift:
+            this->current = -1;
             this->setTrigger(false);
             goto dont3;
+            break;
+
+        case sf::Keyboard::Up:
+            this->current -= 2;
+            if (this->current == -2)
+                this->current = 4;
+            else if (this->current == -1)
+                this->current = 5;
+            break;
+
+        case sf::Keyboard::Down:
+            this->current += 2;
+            if (this->current == 6)
+                this->current = 0;
+            else if (this->current == 7)
+                this->current = 1;
+            break;
+
+        case sf::Keyboard::Left:
+            this->current -= 1;
+            if (this->current == -1)
+                this->current = 5;
+            break;
+
+        case sf::Keyboard::Right:
+            this->current += 1;
+            if (this->current == 6)
+                this->current = 0;
             break;
 
         default:
@@ -160,5 +225,24 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
 // private
 void MenuHUD::clic(int x, int y)
 {
+    bool left = (x >= 30) && (x <= 320);
+    int nb = (y - 61) / 143;
 
+    switch (nb)
+    {
+    case 0:
+        if (!left) this->current = 1;
+        else this->current = 0;
+        break;
+
+    case 1:
+        if (!left) this->current = 3;
+        else this->current = 2;
+        break;
+
+    case 2:
+        if (!left) this->current = 5;
+        else this->current = 4;
+        break;
+    }
 }

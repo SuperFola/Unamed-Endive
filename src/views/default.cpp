@@ -43,6 +43,11 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
 
 int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
 {
+    bool has_triggered_hud = false;
+
+    if (this->menu_hud.isTriggered())
+        goto menu_hud_ev_processing;
+
     switch(event.type)
     {
     case sf::Event::KeyPressed:
@@ -50,6 +55,7 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
         {
         case sf::Keyboard::RShift:
             this->menu_hud.setTrigger(true);
+            has_triggered_hud = true;
             break;
 
         case sf::Keyboard::Z:
@@ -77,5 +83,8 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
         break;
     }
 
-    return this->menu_hud.process_event(event, elapsed);
+    menu_hud_ev_processing:
+    if (!has_triggered_hud) // if we triggered the hud, sending the event to it will cause to close it immediately
+        return this->menu_hud.process_event(event, elapsed);
+    return -1;  // we didn't triggered the hud so we don't need to change the view
 }
