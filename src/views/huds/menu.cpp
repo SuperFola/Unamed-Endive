@@ -219,7 +219,7 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
 
     dont3:
     // return the new view id, if we need to change it
-    return new_view;
+    return this->id_to_vid(new_view);
 }
 
 // private
@@ -247,10 +247,10 @@ void MenuHUD::clic(int x, int y)
     }
 }
 
-int MenuHUD::id_to_vid()
+int MenuHUD::id_to_vid(int value)
 {
     int ret;
-    switch (this->current)
+    switch (value)
     {
     case -1:
         ret = -1;
