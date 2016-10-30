@@ -32,6 +32,7 @@ private:
 
     // methods
     void clic(int, int);
+    int id_to_vid();
 
 public:
     // methods

@@ -246,3 +246,44 @@ void MenuHUD::clic(int x, int y)
         break;
     }
 }
+
+int MenuHUD::id_to_vid()
+{
+    int ret;
+    switch (this->current)
+    {
+    case -1:
+        ret = -1;
+        break;
+
+    case 0:
+        ret = MYCREATURES_VIEW_ID;
+        break;
+
+    case 1:
+        ret = INVENTORY_VIEW_ID;
+        break;
+
+    case 2:
+        ret = MAP_VIEW_ID;
+        break;
+
+    case 3:
+        ret = SAVING_VIEW_ID;
+        break;
+
+    case 4:
+        ret = DEX_VIEW_ID;
+        break;
+
+    case 5:
+        ret = DEFAULT_VIEW_ID;
+        break;
+
+    default:
+        ret = -1;  // should not happen
+        break;
+    }
+
+    return ret;
+}

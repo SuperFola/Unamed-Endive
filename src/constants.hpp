@@ -4,6 +4,13 @@
 // views id
 #define UNREACHABLE_VIEW_ID -1
 #define DEFAULT_VIEW_ID 1
+#define INVENTORY_VIEW_ID 2
+#define MAP_VIEW_ID 3
+#define MYCREATURES_VIEW_ID 4
+#define DEX_VIEW_ID 5
+#define SAVING_VIEW_ID 6
+
+// HUD
 #define MENU_VIEW_ID 2
 
 // specials define
