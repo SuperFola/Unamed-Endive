@@ -170,15 +170,14 @@ int Character::move(DIR dir, Map map_, sf::Time elapsed)
             vect[0] = 1 * speed;
     }
 
-    bool pass = !map_.colliding_at(
-                                   vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE
-                                   , vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE
-                                   );
+    bool pass = !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE)
+                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 1, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE)
+                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 1)
+                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 1, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 1);
     if (pass)
     {
         // we can set the new position
         this->pos.move(int(vect[0]), int(vect[1]));
-        std::cout << "> " << this->pos.getX() << " " << this->pos.getY() << std::endl;
         return 0;
     }
     // we need to recalculate a valid position

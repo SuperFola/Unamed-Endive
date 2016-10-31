@@ -5,6 +5,8 @@
 #include "abstract/functions.hpp"
 #include "abstract/creatures_loader.hpp"
 
+#include "scripting/scripting.hpp"
+
 // private
 void Game::resize_window(int nx, int ny)
 {
