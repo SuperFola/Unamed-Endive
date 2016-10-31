@@ -145,7 +145,7 @@ int Character::move(DIR dir, Map map_, sf::Time elapsed)
     this->not_moving_time = sf::seconds(0.0f);  // reset it
     this->update_anim(elapsed);
 
-    float speed = this->speed * TILE_SIZE ;//* (elapsed.asMilliseconds() / 100.0f);
+    float speed = this->speed * TILE_SIZE * 2;  // * (elapsed.asMilliseconds() / 100.0f);
     std::vector<float> vect {0, 0};
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
@@ -171,18 +171,18 @@ int Character::move(DIR dir, Map map_, sf::Time elapsed)
     }
 
     bool pass = !map_.colliding_at(
-                                   int(vect[0]) / TILE_SIZE + this->pos.getX() / TILE_SIZE
-                                   , int(vect[1]) / TILE_SIZE + this->pos.getY() / TILE_SIZE
+                                   vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE
+                                   , vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE
                                    );
-
     if (pass)
     {
         // we can set the new position
-        this->pos.move(vect[0], vect[1]);
+        this->pos.move(int(vect[0]), int(vect[1]));
+        std::cout << "> " << this->pos.getX() << " " << this->pos.getY() << std::endl;
         return 0;
     }
     // we need to recalculate a valid position
-    std::cout << "need to recalculate a valid position" << std::endl;
+    std::cout << "need to recalculate a valid position " << this->pos.getX() << " " << this->pos.getY() << std::endl;
     return 0;
 }
 
@@ -196,7 +196,6 @@ sf::Sprite& Character::getCurrentSprite()
 {
     return this->sprites[static_cast<int>(this->direction) * 4 + static_cast<int>(this->anim_cursor)];
 }
-
 
 void Character::update(sf::RenderWindow& window, sf::Time elapsed)
 {
