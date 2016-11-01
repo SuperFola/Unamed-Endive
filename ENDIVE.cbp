@@ -40,9 +40,12 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++14" />
 			<Add directory="C:/SFML-2.3/include" />
+			<Add directory="F:/ENDIVE/src/scripting/Python34/include" />
 		</Compiler>
 		<Linker>
+			<Add option="-lPython34" />
 			<Add directory="C:/SFML-2.3/lib" />
+			<Add directory="F:/ENDIVE/src/scripting/Python34/libs" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Unit filename="src/abstract/competence.cpp" />
@@ -87,6 +90,10 @@
 		<Unit filename="src/map/tilemap.hpp" />
 		<Unit filename="src/particles/particles.cpp" />
 		<Unit filename="src/particles/particles.hpp" />
+		<Unit filename="src/scripting/functions.cpp" />
+		<Unit filename="src/scripting/functions.hpp" />
+		<Unit filename="src/scripting/scripting.cpp" />
+		<Unit filename="src/scripting/scripting.hpp" />
 		<Unit filename="src/views/default.cpp" />
 		<Unit filename="src/views/default.hpp" />
 		<Unit filename="src/views/huds/hud.cpp" />
