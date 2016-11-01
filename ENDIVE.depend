@@ -401,10 +401,11 @@
 
 1472132693 f:\endive\view.hpp
 
-1477858899 f:\endive\src\game.hpp
+1478014390 f:\endive\src\game.hpp
 	<SFML/Graphics.hpp>
 	<SFML/System.hpp>
 	"abstract/statemachine.hpp"
+	"scripting/scripting.hpp"
 	"constants.hpp"
 	"views/default.hpp"
 
@@ -422,7 +423,7 @@
 	"statemachine.hpp"
 	"functions.hpp"
 
-1477934576 source:f:\endive\src\game.cpp
+1478015471 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
@@ -885,13 +886,19 @@
 	"menu.hpp"
 	"../../constants.hpp"
 
-1477934089 source:f:\endive\src\scripting\scripting.cpp
+1478021801 source:f:\endive\src\scripting\scripting.cpp
+	<iostream>
+	<fstream>
 	"scripting.hpp"
+	"../constants.hpp"
+	<windows.h>
+	<dirent.h>
 
-1477938786 f:\endive\src\scripting\scripting.hpp
+1478016698 f:\endive\src\scripting\scripting.hpp
 	<Python.h>
 	<vector>
 	<string>
+	"functions.hpp"
 
 1385202000 f:\endive\src\scripting\python34\include\python.h
 	"patchlevel.h"
@@ -1145,4 +1152,11 @@
 	<signal.h>
 	<setjmp.h>
 	<math.h>
+
+1478021677 source:f:\endive\src\scripting\functions.cpp
+	"functions.hpp"
+
+1478022052 f:\endive\src\scripting\functions.hpp
+	<Python.h>
+	"scripting.hpp"
 

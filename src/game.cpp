@@ -115,6 +115,10 @@ Game::Game() :
     // creating base folders
     system("mkdir saves");
     system("mkdir screenshots");
+
+    // load scripting module
+    PyScripting::connect();
+    PyScripting::setValue(10);
 }
 
 int Game::run()

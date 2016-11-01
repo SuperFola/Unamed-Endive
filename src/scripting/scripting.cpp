@@ -19,48 +19,9 @@ PyScripting::PyScripting():
     Py_SetProgramName(this->program);
 }
 
-PyObject* PyScripting::test(PyObject* self, PyObject* args)
+PyScripting& PyScripting::Instance()
 {
-    int x = 0;
-
-    PyArg_ParseTuple(args, "i", &x);
-
-    x *= 2;
-
-    return Py_BuildValue("i", x);
-}
-
-bool PyScripting::connect()
-{
-    if (!this->connected)
-    {
-        this->connected = true;
-        Py_Initialize();
-        Py_SetPythonHome(L"assets/scripts/");
-        this->load_all_modules();
-        this->create_and_init_cppModules();
-        return true;
-    }
-    return false;  // already running
-}
-
-bool PyScripting::disconnect()
-{
-    if (this->connected)
-    {
-        this->connected = false;
-        Py_Finalize();
-        return true;
-    }
-    return false;  // already disconnected
-}
-
-int PyScripting::run_code(const char* code)
-{
-    if (this->connected)
-        return PyRun_SimpleString(code);
-    std::cout << "You need to connect your PyScripting instance to Python before using it !" << std::endl;
-    return -1;
+    return instance;
 }
 
 void PyScripting::load_all_modules()
@@ -104,6 +65,8 @@ void PyScripting::load_all_modules()
         std::ifstream file;
         file.open(fname);
 
+        std::cout << "Loading " << fname << std::endl;
+
         std::string content;
         while (file)
         {
@@ -122,7 +85,57 @@ void PyScripting::load_all_modules()
 
 void PyScripting::create_and_init_cppModules()
 {
-    PyMethodDef module[] = {{"test", this->test, METH_VARARGS, NULL},
-                                                {NULL, NULL, 0, NULL}};
-    Py_InitModule("Unamed", module);
+    PyImport_AppendInittab(PyUnamed::name, PyUnamed::PyInit_Unamed);
+}
+
+// static methods
+bool PyScripting::connect()
+{
+    if (!instance.connected)
+    {
+        instance.connected = true;
+        instance.create_and_init_cppModules();
+        Py_Initialize();
+        Py_SetPythonHome(L"assets/scripts/");
+        instance.load_all_modules();
+        return true;
+    }
+    return false;  // already running
+}
+
+bool PyScripting::disconnect()
+{
+    if (instance.connected)
+    {
+        instance.connected = false;
+        Py_Finalize();
+        return true;
+    }
+    return false;  // already disconnected
+}
+
+int PyScripting::run_code(const char* code)
+{
+    if (instance.connected)
+        return PyRun_SimpleString(code);
+    std::cout << "You need to connect your PyScripting instance to Python before using it !" << std::endl;
+    return -1;
+}
+
+int PyScripting::run_all_modules()
+{
+    for (auto& module_code: instance.modules_content)
+    {
+        instance.run_code(module_code.data());
+    }
+}
+
+void PyScripting::setValue(int val)
+{
+    instance.value = val;
+}
+
+int PyScripting::getValue()
+{
+    return instance.value;
 }

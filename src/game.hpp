@@ -7,6 +7,7 @@
 #include <SFML/System.hpp>
 
 #include "abstract/statemachine.hpp"
+#include "scripting/scripting.hpp"
 #include "constants.hpp"
 #include "views/default.hpp"
 
