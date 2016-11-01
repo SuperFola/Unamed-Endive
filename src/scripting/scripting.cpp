@@ -12,6 +12,68 @@
 #include <dirent.h>
 #endif // PLATFORM_POSIX
 
+#define RETURN_NONE Py_INCREF(Py_None); return Py_None;
+
+namespace PyUnamed
+{
+    extern "C"
+    {
+        const char* name = "Unamed";
+
+        // errors
+        static PyObject* UnamedError;
+
+        // module functions
+        static PyObject* test(PyObject* self, PyObject* args)
+        {
+            int x = 0;
+
+            if (!PyArg_ParseTuple(args, "i", &x))
+            {
+                PyErr_SetString(UnamedError, "Can not parse arguments");
+                return NULL;
+            }
+
+            x *= 10;
+
+            return Py_BuildValue("i", x);
+        }
+
+        // module definition
+        static PyMethodDef UnamedMethods[] = {
+            // ...
+            {"test", test, METH_VARARGS, "Return a number time PyScripting::getValue()"},
+            // ...
+            {NULL, NULL, 0, NULL}  // sentinel
+        };
+        static PyModuleDef UnamedModule = {
+            PyModuleDef_HEAD_INIT,
+            name,
+            "C++ functions to modify the way some components of the game works",
+            -1,
+            UnamedMethods
+        };
+
+        // init the module
+        PyMODINIT_FUNC PyInit_Unamed(void)
+        {
+            PyObject* m;
+
+            m = PyModule_Create(&UnamedModule);
+            if (m == NULL)
+                return NULL;
+
+            UnamedError = PyErr_NewException("Unamed.error", NULL, NULL);
+            Py_INCREF(UnamedError);
+            PyModule_AddObject(m, "error", UnamedError);
+
+            return m;
+        }
+    }
+}
+
+PyScripting PyScripting::instance = PyScripting();
+
 PyScripting::PyScripting():
     connected(false)
     , program(L"PyScripter engine")
@@ -37,7 +99,7 @@ void PyScripting::load_all_modules()
     {
         do {
                 if (File.cFileName != "." && File.cFileName != "..")
-                    this->modules_names.push_back(std::string(File.cFileName));
+                    this->modules_names.push_back(directory + "/" + std::string(File.cFileName));
         } while (FindNextFile(hSearch, &File));
 
         FindClose(hSearch);
@@ -53,7 +115,7 @@ void PyScripting::load_all_modules()
 
         while ((ent = readdir(rep)) != NULL)
         {
-            this->modules_names.push_back(ent->d_name);
+            this->modules_names.push_back(directory + std::string(ent->d_name));
         }
 
         closedir(rep);
@@ -83,21 +145,19 @@ void PyScripting::load_all_modules()
     }
 }
 
-void PyScripting::create_and_init_cppModules()
-{
-    PyImport_AppendInittab(PyUnamed::name, PyUnamed::PyInit_Unamed);
-}
-
 // static methods
 bool PyScripting::connect()
 {
     if (!instance.connected)
     {
         instance.connected = true;
-        instance.create_and_init_cppModules();
+
+        PyImport_AppendInittab(PyUnamed::name, PyUnamed::PyInit_Unamed);
         Py_Initialize();
         Py_SetPythonHome(L"assets/scripts/");
+
         instance.load_all_modules();
+
         return true;
     }
     return false;  // already running
@@ -109,6 +169,7 @@ bool PyScripting::disconnect()
     {
         instance.connected = false;
         Py_Finalize();
+
         return true;
     }
     return false;  // already disconnected
@@ -124,10 +185,15 @@ int PyScripting::run_code(const char* code)
 
 int PyScripting::run_all_modules()
 {
+    int i = 0;
+
     for (auto& module_code: instance.modules_content)
     {
         instance.run_code(module_code.data());
+        i++;
     }
+
+    std::cout << "Ran " << i << " script(s) one time" << std::endl;
 }
 
 void PyScripting::setValue(int val)

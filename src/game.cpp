@@ -119,6 +119,7 @@ Game::Game() :
     // load scripting module
     PyScripting::connect();
     PyScripting::setValue(10);
+    PyScripting::run_all_modules();
 }
 
 int Game::run()

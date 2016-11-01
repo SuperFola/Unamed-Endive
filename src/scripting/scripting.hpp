@@ -1,22 +1,20 @@
 #ifndef DEF_SCRIPTING
 #define DEF_SCRIPTING
 
-extern "C" {
-    #include <Python.h>
-}
+#include <Python.h>
 
 #include <vector>
 #include <string>
 
-#include "functions.hpp"
+//#include "functions.hpp"
 
 class PyScripting
 {
 private:
-    PyScripting& operator=(const PyScripting&) {}
+    PyScripting& operator=(const PyScripting&) {return instance;}
     PyScripting(const PyScripting&) {}
 
-    static PyScripting instance;
+    static class PyScripting instance;
     PyScripting();
 
     // variables
@@ -28,7 +26,6 @@ private:
 
     // methods
     void load_all_modules();
-    void create_and_init_cppModules();
 
 public:
     static PyScripting& Instance();
