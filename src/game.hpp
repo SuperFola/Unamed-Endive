@@ -10,7 +10,6 @@
 #include "abstract/statemachine.hpp"
 #include "scripting/scripting.hpp"
 #include "abstract/creatures_loader.hpp"
-#include "views/default.hpp"
 
 class Game {
 private:
@@ -18,7 +17,7 @@ private:
     sf::RenderWindow window;
     sf::Clock clock;
     StateMachine sm;
-    DefaultView def_view;
+    // others utilities
     CreaturesLoader crea_load;
     sf::CircleShape shape;
     int shape_outline_sickness;

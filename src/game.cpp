@@ -18,19 +18,9 @@ void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 
     if (c_view != -1)  // we check if the view exist
     {
-        int new_view = UNREACHABLE_VIEW_ID;
+        int new_view = this->sm.process_event_current(event, elapsed);
 
-        switch (c_view)
-        {
-        case DEFAULT_VIEW_ID:
-            new_view = this->def_view.process_event(event, elapsed);
-            break;
-
-        default:
-            break;
-        }
-
-        if (this->sm.change_view(new_view))
+        if (this->sm.change_view(new_view) == -1)
         {
             // an error occured
             std::cout << "Unable to find the view " << new_view << " to process the events" << std::endl;
@@ -44,15 +34,7 @@ void Game::render()
 
     if (c_view != -1) // does the view exist ?
     {
-        switch (c_view)
-        {
-        case DEFAULT_VIEW_ID:
-            this->def_view.render(this->window);
-            break;
-
-        default:
-            break;
-        }
+        this->sm.render_current(this->window);
     }
     else
     {
@@ -73,15 +55,7 @@ void Game::update(sf::Time elapsed)
 
     if (c_view != -1) // does the view exist ?
     {
-        switch (c_view)
-        {
-        case DEFAULT_VIEW_ID:
-            this->def_view.update(this->window, elapsed);
-            break;
-
-        default:
-            break;
-        }
+        this->sm.update_current(this->window, elapsed);
     }
     else
     {
@@ -92,24 +66,21 @@ void Game::update(sf::Time elapsed)
 
 void Game::update_loading(sf::Time elapsed)
 {
-    // if (elapsed.asMilliseconds() % 50 < 20)
-    {
-        if (this->shape_increasing)
-            this->shape_outline_sickness++;
-        else
-            this->shape_outline_sickness--;
+    if (this->shape_increasing)
+        this->shape_outline_sickness++;
+    else
+        this->shape_outline_sickness--;
 
-        this->shape.setOutlineThickness(this->shape_outline_sickness);
-        this->shape.setRadius(50.0f - this->shape_outline_sickness);
-        this->shape.setOrigin(
-                              this->shape.getRadius() / 2 - this->shape_outline_sickness / 2
-                              , this->shape.getRadius() / 2 - this->shape_outline_sickness / 2);
+    this->shape.setOutlineThickness(this->shape_outline_sickness);
+    this->shape.setRadius(50.0f - this->shape_outline_sickness);
+    this->shape.setOrigin(
+                          this->shape.getRadius() / 2 - this->shape_outline_sickness / 2
+                          , this->shape.getRadius() / 2 - this->shape_outline_sickness / 2);
 
-        if (this->shape_increasing && this->shape_outline_sickness == 48)
-            this->shape_increasing = false;
-        else if (!this->shape_increasing && this->shape_outline_sickness == 2)
-            this->shape_increasing = true;
-    }
+    if (this->shape_increasing && this->shape_outline_sickness == 48)
+        this->shape_increasing = false;
+    else if (!this->shape_increasing && this->shape_outline_sickness == 2)
+        this->shape_increasing = true;
 }
 
 void Game::update_fps(sf::Time dt, int& _fps_update)
@@ -168,20 +139,14 @@ void Game::loading()
 // public
 Game::Game() :
     window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titlebar | sf::Style::Close)
-    , sm()
     , crea_load()
     , shape(50)
     , shape_outline_sickness(10)
     , shape_increasing(true)
 {
-    // init all the views
-    std::cout << "creating views" << std::endl;
-    DefaultView def_view = {};
-    this->def_view.load();
-    std::cout << "views created" << std::endl;
-
-    // we only add the id of the views
-    this->sm.add_view(DEFAULT_VIEW_ID);
+    StateMachine sm = StateMachine();
+    // we "add" a default view
+    this->sm.change_view(DEFAULT_VIEW_ID);
 
     // creating base folders
     system("mkdir saves");
@@ -190,8 +155,8 @@ Game::Game() :
     // load scripting module
     PyScripting::connect();
     PyScripting::setValue(10);
-    PyScripting::run_all_modules();
-    PyScripting::run_all_modules();
+    PyScripting::run_all_modules();  // testing
+    PyScripting::run_all_modules();  // testing bis
 
     // shapes
     this->shape.setFillColor(sf::Color(150, 50, 250));

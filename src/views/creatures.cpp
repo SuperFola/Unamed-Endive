@@ -10,4 +10,22 @@ CreaView::CreaView() :
 
 }
 
+bool CreaView::load()
+{
+    return true;
+}
 
+void CreaView::render(sf::RenderWindow& window)
+{
+
+}
+
+int CreaView::process_event(sf::Event& event, sf::Time elapsed)
+{
+    return 1;
+}
+
+void CreaView::update(sf::RenderWindow& window, sf::Time elapsed)
+{
+
+}

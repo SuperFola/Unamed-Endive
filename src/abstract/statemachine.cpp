@@ -4,24 +4,29 @@
 #include "functions.hpp"
 
 // public
-StateMachine::StateMachine() : current_view(-1)
+StateMachine::StateMachine() :
+    current_view(-1)
 {
     this->views.reserve(MAX_VIEWS);
     this->history.reserve(MAX_HISTORY);
-}
 
-void StateMachine::add_view(int view)
-{
-    if (this->views.size() == 0)
-    {
-        this->current_view = view;
-        std::cout << "The view with id " << view << " is now the default one" << std::endl;
-    }
-    this->views.push_back(view);
+    this->views.emplace_back(std::make_unique<DefaultView>());
+    this->views[this->views.size() - 1]->load();
 
-    std::cout << "Adding view id " << view << " to the SM" << std::endl << "    ";
-    for (auto value : this->views) {std::cout << value << " - ";}
-    std::cout << std::endl;
+    this->views.emplace_back(std::make_unique<CreaView>());
+    this->views[this->views.size() - 1]->load();
+
+    this->views.emplace_back(std::make_unique<DexView>());
+    this->views[this->views.size() - 1]->load();
+
+    this->views.emplace_back(std::make_unique<SaveView>());
+    this->views[this->views.size() - 1]->load();
+
+    this->views.emplace_back(std::make_unique<InventView>());
+    this->views[this->views.size() - 1]->load();
+
+    this->views.emplace_back(std::make_unique<MapView>());
+    this->views[this->views.size() - 1]->load();
 }
 
 int StateMachine::getId()
@@ -34,18 +39,18 @@ int StateMachine::change_view(int new_view)
     if (new_view == -1)
         return 0;
 
-    for (auto value : this->views)
+    for (auto& value : this->views)
     {
-        if (value == new_view)
+        if (value->getId() == new_view)
         {
-            this->history.push_back(value);
+            this->history.push_back(value->getId());
             this->current_view = new_view;
-            std::cout << "Changing view from id " << value << " to id " << new_view << std::endl;
+            std::cout << "Changing view from id " << value->getId() << " to id " << new_view << std::endl;
             return 0;
         }
     }
 
-    return 1;  // unable to find the correct view
+    return -1;  // unable to find the correct view
 }
 
 int StateMachine::go_back_to_last_view()
@@ -61,8 +66,32 @@ int StateMachine::go_back_to_last_view()
         }
         else
         {
-            return 1;  // can not pop
+            return -1;  // can not pop
         }
     }
-    return 1; // history is empty
+    return -1; // history is empty
+}
+
+int StateMachine::process_event_current(sf::Event& event, sf::Time elapsed)
+{
+    for (auto&& element: this->views) {
+        if (element->getId() == this->current_view)
+            return element->process_event(event, elapsed);
+    }
+}
+
+void StateMachine::render_current(sf::RenderWindow& window)
+{
+    for (auto&& element: this->views) {
+        if (element->getId() == this->current_view)
+            element->render(window);
+    }
+}
+
+void StateMachine::update_current(sf::RenderWindow& window, sf::Time elapsed)
+{
+    for (auto&& element: this->views) {
+        if (element->getId() == this->current_view)
+            element->update(window, elapsed);
+    }
 }
