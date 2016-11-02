@@ -222,6 +222,7 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
     if (new_view == 5) // back button
     {
         this->setTrigger(false);
+        this->current = -1;
         return -1;
     }
     return this->id_to_vid(new_view);
