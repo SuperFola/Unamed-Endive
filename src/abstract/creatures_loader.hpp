@@ -12,10 +12,12 @@ class CreaturesLoader
 private:
     const std::string folder = "assets/creatures";
     TexturesManager textures;
+    std::vector<std::string> files;
+    int current = 0;
 
 public:
     CreaturesLoader();
-    bool load();
+    bool load_next();
     sf::Texture& get(const std::string&);
 };
 

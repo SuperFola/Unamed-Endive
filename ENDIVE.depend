@@ -401,12 +401,13 @@
 
 1472132693 f:\endive\view.hpp
 
-1478014390 f:\endive\src\game.hpp
+1478093445 f:\endive\src\game.hpp
 	<SFML/Graphics.hpp>
 	<SFML/System.hpp>
+	"constants.hpp"
 	"abstract/statemachine.hpp"
 	"scripting/scripting.hpp"
-	"constants.hpp"
+	"abstract/creatures_loader.hpp"
 	"views/default.hpp"
 
 1477858899 f:\endive\src\abstract\statemachine.hpp
@@ -423,7 +424,7 @@
 	"statemachine.hpp"
 	"functions.hpp"
 
-1478033929 source:f:\endive\src\game.cpp
+1478081479 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
@@ -848,13 +849,13 @@
 	"pocket.hpp"
 	"../../abstract/functions.hpp"
 
-1477858899 f:\endive\src\abstract\creatures_loader.hpp
+1478089381 f:\endive\src\abstract\creatures_loader.hpp
 	<string>
 	<vector>
 	<SFML/Graphics.hpp>
 	"texturesmanager.hpp"
 
-1477858899 source:f:\endive\src\abstract\creatures_loader.cpp
+1478089532 source:f:\endive\src\abstract\creatures_loader.cpp
 	<iostream>
 	"creatures_loader.hpp"
 	"../constants.hpp"
@@ -886,7 +887,7 @@
 	"menu.hpp"
 	"../../constants.hpp"
 
-1478033822 source:f:\endive\src\scripting\scripting.cpp
+1478082390 source:f:\endive\src\scripting\scripting.cpp
 	<iostream>
 	<fstream>
 	"scripting.hpp"
@@ -894,7 +895,7 @@
 	<windows.h>
 	<dirent.h>
 
-1478034062 f:\endive\src\scripting\scripting.hpp
+1478085357 f:\endive\src\scripting\scripting.hpp
 	<Python.h>
 	<vector>
 	<string>

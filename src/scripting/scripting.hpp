@@ -6,8 +6,6 @@
 #include <vector>
 #include <string>
 
-//#include "functions.hpp"
-
 class PyScripting
 {
 private:
@@ -18,7 +16,6 @@ private:
     PyScripting();
 
     // variables
-    int value;
     bool connected;
     wchar_t* program;
     std::vector<std::string> modules_names;
@@ -26,6 +23,8 @@ private:
 
     // methods
     void load_all_modules();
+
+    int value;
 
 public:
     static PyScripting& Instance();
@@ -35,6 +34,7 @@ public:
     static bool disconnect();
     static int run_code(const char*);
     static int run_all_modules();
+
     static void setValue(int);
     static int getValue();
 };

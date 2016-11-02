@@ -34,7 +34,8 @@ namespace PyUnamed
                 return NULL;
             }
 
-            x *= 10;
+            x *= PyScripting::getValue();
+            PyScripting::setValue(PyScripting::getValue() + 1);
 
             return Py_BuildValue("i", x);
         }
@@ -59,7 +60,7 @@ namespace PyUnamed
         {
             PyObject* m;
 
-            m = PyModule_Create(&UnamedModule);
+            m = PyModule_Create2(&UnamedModule, PYTHON_API_VERSION);
             if (m == NULL)
                 return NULL;
 
@@ -98,7 +99,7 @@ void PyScripting::load_all_modules()
     if (hSearch != INVALID_HANDLE_VALUE)
     {
         do {
-                if (File.cFileName != "." && File.cFileName != "..")
+                if (std::string(File.cFileName) != "." && std::string(File.cFileName) != "..")
                     this->modules_names.push_back(directory + "/" + std::string(File.cFileName));
         } while (FindNextFile(hSearch, &File));
 
@@ -194,6 +195,8 @@ int PyScripting::run_all_modules()
     }
 
     std::cout << "Ran " << i << " script(s) one time" << std::endl;
+
+    return 1;
 }
 
 void PyScripting::setValue(int val)

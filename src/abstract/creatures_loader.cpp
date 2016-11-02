@@ -53,33 +53,29 @@ std::vector<std::string> list_files(const std::string& directory)
 // public
 CreaturesLoader::CreaturesLoader()
 {
-
+    this->files = list_files(this->folder);
 }
 
-bool CreaturesLoader::load()
+bool CreaturesLoader::load_next()
 {
-    std::vector<std::string> files = list_files(this->folder);
-    bool done = true;
+    bool done = false;
+    std::string file = this->files[this->current];
 
-    for (const auto& file: files)
-    {
-        sf::Image image;
+    sf::Image image;
 
-        std::cout << "Loading " << this->folder + "/" + file << std::endl;
-        if (!image.loadFromFile(this->folder + "/" + file))
-        {
-            std::cout << "Unable to open " << this->folder + "/" + file << std::endl;
-            done = false;
-        }
+    std::cout << "Loading " << this->folder + "/" + file << std::endl;
+    if (!image.loadFromFile(this->folder + "/" + file))
+        std::cout << "Unable to open " << this->folder + "/" + file << std::endl;
 
-        image.createMaskFromColor(sf::Color(255, 0, 255, 255));
-        sf::Texture texture;
-        texture.loadFromImage(image);
+    image.createMaskFromColor(sf::Color(255, 0, 255, 255));
+    sf::Texture texture;
+    texture.loadFromImage(image);
 
-        this->textures.addTexture(file, texture);
-    }
+    this->textures.addTexture(file, texture);
+    this->current++;  // increment the cursor
 
-    std::cout << "Finished loading creatures sprites" << std::endl;
+    if (this->current == this->files.size())
+        done = true;  // we tell the caller of this method that we are done
 
     return done;
 }

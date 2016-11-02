@@ -3,9 +3,6 @@
 
 #include "game.hpp"
 #include "abstract/functions.hpp"
-#include "abstract/creatures_loader.hpp"
-
-#include "scripting/scripting.hpp"
 
 // private
 void Game::resize_window(int nx, int ny)
@@ -64,6 +61,12 @@ void Game::render()
     }
 }
 
+void Game::render_loading()
+{
+    this->window.draw(this->shape);
+    this->window.draw(this->loading_text);
+}
+
 void Game::update(sf::Time elapsed)
 {
     int c_view = this->sm.getId();
@@ -87,6 +90,28 @@ void Game::update(sf::Time elapsed)
     }
 }
 
+void Game::update_loading(sf::Time elapsed)
+{
+    // if (elapsed.asMilliseconds() % 50 < 20)
+    {
+        if (this->shape_increasing)
+            this->shape_outline_sickness++;
+        else
+            this->shape_outline_sickness--;
+
+        this->shape.setOutlineThickness(this->shape_outline_sickness);
+        this->shape.setRadius(50.0f - this->shape_outline_sickness);
+        this->shape.setOrigin(
+                              this->shape.getRadius() / 2 - this->shape_outline_sickness / 2
+                              , this->shape.getRadius() / 2 - this->shape_outline_sickness / 2);
+
+        if (this->shape_increasing && this->shape_outline_sickness == 50)
+            this->shape_increasing = false;
+        else if (!this->shape_increasing && this->shape_outline_sickness == 2)
+            this->shape_increasing = true;
+    }
+}
+
 void Game::update_fps(sf::Time dt, int& _fps_update)
 {
     float fps = 1.0f / (dt.asSeconds());
@@ -98,10 +123,56 @@ void Game::update_fps(sf::Time dt, int& _fps_update)
     }
 }
 
+void Game::loading()
+{
+    int _fps_update = 0;
+    sf::Time elapsed;
+
+    sf::Event event;
+    while (this->window.isOpen())
+    {
+        // load a new sprite
+        if (crea_load.load_next())
+            break;
+
+        // get deltatime
+        sf::Time dt = this->clock.restart();
+
+        // update FPS and display
+        this->update_fps(dt, _fps_update);
+        elapsed += dt;
+        this->update_loading(elapsed);
+
+        // dispatch events using a loop
+        while (this->window.pollEvent(event))
+        {
+            // default events
+            switch(event.type)
+            {
+            case sf::Event::Closed:
+                this->window.close();
+                break;
+
+            default:
+                break;
+            }
+        }
+
+        // rendering
+        this->window.clear();
+        this->render_loading();
+        this->window.display();
+    }
+}
+
 // public
 Game::Game() :
     window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titlebar | sf::Style::Close)
     , sm()
+    , crea_load()
+    , shape(50)
+    , shape_outline_sickness(10)
+    , shape_increasing(true)
 {
     // init all the views
     std::cout << "creating views" << std::endl;
@@ -120,15 +191,31 @@ Game::Game() :
     PyScripting::connect();
     PyScripting::setValue(10);
     PyScripting::run_all_modules();
+    PyScripting::run_all_modules();
+
+    // shapes
+    this->shape.setFillColor(sf::Color(150, 50, 250));
+    this->shape.setOutlineThickness(10);
+    this->shape.setOutlineColor(sf::Color(250, 150, 50));
+    this->shape.setOrigin(25.0f, 25.0f);
+    this->shape.setPosition(int(WIN_W / 2 - 25), int(WIN_H / 2 - 25));
+
+    // font
+    if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
+        std::cout << "Missing font at assets/fonts/pkmnemn.ttf" << std::endl;
+
+    // texts
+    this->loading_text.setFont(this->font);
+    this->loading_text.setString("Chargement ...");
+    this->loading_text.setCharacterSize(24);
+    this->loading_text.setPosition(5.0f, 5.0f);
 }
 
 int Game::run()
 {
-    int _fps_update {0};
-    // testing
-    // CreaturesLoader crea_load {};
-    // crea_load.load();
-    // end testing
+    this->loading();
+
+    int _fps_update = 0;
 
     sf::Event event;
     while (this->window.isOpen())

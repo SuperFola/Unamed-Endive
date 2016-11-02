@@ -90,8 +90,6 @@
 		<Unit filename="src/map/tilemap.hpp" />
 		<Unit filename="src/particles/particles.cpp" />
 		<Unit filename="src/particles/particles.hpp" />
-		<Unit filename="src/scripting/functions.cpp" />
-		<Unit filename="src/scripting/functions.hpp" />
 		<Unit filename="src/scripting/scripting.cpp" />
 		<Unit filename="src/scripting/scripting.hpp" />
 		<Unit filename="src/views/default.cpp" />
