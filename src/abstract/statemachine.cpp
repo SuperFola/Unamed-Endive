@@ -39,7 +39,7 @@ int StateMachine::change_view(int new_view)
     if (new_view == -1)
         return 0;
 
-    for (auto& value : this->views)
+    for (auto&& value : this->views)
     {
         if (value->getId() == new_view)
         {
@@ -78,6 +78,7 @@ int StateMachine::process_event_current(sf::Event& event, sf::Time elapsed)
         if (element->getId() == this->current_view)
             return element->process_event(event, elapsed);
     }
+    return -1;
 }
 
 void StateMachine::render_current(sf::RenderWindow& window)

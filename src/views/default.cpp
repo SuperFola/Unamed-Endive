@@ -5,23 +5,22 @@
 #include "../constants.hpp"
 
 // public
-DefaultView::DefaultView(const std::string& map_name) :
+DefaultView::DefaultView() :
     View(DEFAULT_VIEW_ID)
-    , level(map_name)
-    , menu_hud()
+    , level("assets/map/1-1441.umd")
 {
-
 }
 
 bool DefaultView::load()
 {
     this->level.load();
     if (!this->menu_hud.load())
+    {
         std::cout << "An error occured while loading the menu" <<std::endl;
+        return false;
+    }
 
-    std::cout << "loading player" << std:: endl;
-    Character player {"me", "assets/players/male/"};
-    std::cout << "player loaded" << std::endl;
+    this->player.setName("me");
 
     return true;
 }

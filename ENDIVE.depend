@@ -425,18 +425,18 @@
 1477858900 f:\endive\src\views\view.hpp
 	<SFML/Graphics.hpp>
 
-1478118320 source:f:\endive\src\abstract\statemachine.cpp
+1478120939 source:f:\endive\src\abstract\statemachine.cpp
 	<iostream>
 	"statemachine.hpp"
 	"functions.hpp"
 
-1478118250 source:f:\endive\src\game.cpp
+1478121269 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
 	"abstract/functions.hpp"
 
-1477858900 f:\endive\src\views\default.hpp
+1478120995 f:\endive\src\views\default.hpp
 	<string>
 	"view.hpp"
 	"../map/map.hpp"
@@ -450,7 +450,7 @@
 	<string>
 	<sstream>
 
-1477858900 source:f:\endive\src\views\default.cpp
+1478121068 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"default.hpp"
@@ -698,7 +698,7 @@
 1477858899 f:\endive\src\abstract\point.hpp
 	<SFML/System/Vector2.hpp>
 
-1477858899 f:\endive\src\entities\character.hpp
+1478120719 f:\endive\src\entities\character.hpp
 	<string>
 	<vector>
 	<SFML/System/Time.hpp>
@@ -709,7 +709,7 @@
 	"../abstract/texturesmanager.hpp"
 	"../bag/bag.hpp"
 
-1477921144 source:f:\endive\src\entities\character.cpp
+1478120716 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
 	"character.hpp"
@@ -1192,5 +1192,15 @@
 1478110614 source:f:\endive\src\views\inventory.cpp
 	<iostream>
 	"inventory.hpp"
+	"../constants.hpp"
+
+1478118406 source:f:\endive\src\views\map.cpp
+	<iostream>
+	"map.hpp"
+	"../constants.hpp"
+
+1478110590 source:f:\endive\src\views\save.cpp
+	<iostream>
+	"save.hpp"
 	"../constants.hpp"
 

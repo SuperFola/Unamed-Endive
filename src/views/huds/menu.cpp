@@ -219,6 +219,11 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
 
     dont3:
     // return the new view id, if we need to change it
+    if (new_view == 5) // back button
+    {
+        this->setTrigger(false);
+        return -1;
+    }
     return this->id_to_vid(new_view);
 }
 

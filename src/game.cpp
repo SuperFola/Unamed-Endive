@@ -26,6 +26,11 @@ void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
             std::cout << "Unable to find the view " << new_view << " to process the events" << std::endl;
         }
     }
+    else
+    {
+        // error
+        std::cout << "Unable to find the view " << c_view << " to process the events" << std::endl;
+    }
 }
 
 void Game::render()
@@ -144,7 +149,6 @@ Game::Game() :
     , shape_outline_sickness(10)
     , shape_increasing(true)
 {
-    StateMachine sm = StateMachine();
     // we "add" a default view
     this->sm.change_view(DEFAULT_VIEW_ID);
 

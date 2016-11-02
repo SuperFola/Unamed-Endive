@@ -111,21 +111,9 @@ Character::Character() :
     this->load_character_textures();
 }
 
-Character::Character(const std::string& name_, const std::string& path) :
-    name(name_)
-    , pos(16, 16)
-    , speed(1.0f / 32.0f)
-    , direction(DIR::down)
-    , state(ChState::idle)
-    , anim_cursor(MvState::idle)
-    , bag()
+void Character::setName(const std::string new_name)
 {
-    std::cout << "second chara loader" << std::endl;
-
-    this->path = path;
-
-    // load character data from the indicated file
-    this->load_character_textures();
+    this->name = new_name;
 }
 
 int Character::move(DIR dir, Map map_, sf::Time elapsed)

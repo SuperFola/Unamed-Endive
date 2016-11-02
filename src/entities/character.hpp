@@ -50,11 +50,11 @@ public:
     sf::RectangleShape rectangle {sf::Vector2f(16.0f, 16.0f)};
     // methods
     Character();
-    Character(const std::string&, const std::string&);
     int move(DIR, Map, sf::Time);
     int save();
     sf::Sprite& getCurrentSprite();
     void update(sf::RenderWindow&, sf::Time);
+    void setName(const std::string);
 };
 
 #endif // DEF_CHARACTER
