@@ -1,4 +1,4 @@
-﻿**caution: mostly french, importants pieces of information are translated**
+**caution: mostly french, importants pieces of information are translated**
 
 # Unamed
 
@@ -122,3 +122,5 @@ It's totally normal that some bugs persist in the code (I'm not God ahah), and i
 * [OpenClassrooms](https://openclassrooms.com/forum/sujet/arpg-pygame-2d-unamed)
 
 * [Trello](https://trello.com/b/JdzEnDJf)
+
+* The scripting engine I created for this project : https://github.com/Loodoor/Py3ScriptingEngine
