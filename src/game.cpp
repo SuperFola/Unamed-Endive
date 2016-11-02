@@ -105,7 +105,7 @@ void Game::update_loading(sf::Time elapsed)
                               this->shape.getRadius() / 2 - this->shape_outline_sickness / 2
                               , this->shape.getRadius() / 2 - this->shape_outline_sickness / 2);
 
-        if (this->shape_increasing && this->shape_outline_sickness == 50)
+        if (this->shape_increasing && this->shape_outline_sickness == 48)
             this->shape_increasing = false;
         else if (!this->shape_increasing && this->shape_outline_sickness == 2)
             this->shape_increasing = true;
