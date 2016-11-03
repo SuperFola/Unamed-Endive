@@ -46,7 +46,7 @@ int StateMachine::change_view(int new_view)
             this->history.push_back(this->current_view);
             this->current_view = new_view;
             std::cout << "Changing view from id " << this->history[this->history.size() - 1] << " to id " << new_view << std::endl;
-            return 0;
+            return 1;
         }
     }
 

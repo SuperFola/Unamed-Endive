@@ -161,8 +161,6 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
             break;
 
         case sf::Keyboard::RShift:
-            this->current = -1;
-            this->setTrigger(false);
             goto dont3;
             break;
 
@@ -218,13 +216,14 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
     }
 
     dont3:
-    // return the new view id, if we need to change it
-    if (new_view == 5) // back button
+    if (new_view != -1)
     {
-        this->setTrigger(false);
+        // stop displaying hud
         this->current = -1;
-        return -1;
+        this->setTrigger(false);
     }
+    // return the new view id, if we need to change it
+    if (new_view == 5) return -1;  // back button
     return this->id_to_vid(new_view);
 }
 

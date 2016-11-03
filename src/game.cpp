@@ -20,10 +20,19 @@ void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
     {
         int new_view = this->sm.process_event_current(event, elapsed);
 
-        if (this->sm.change_view(new_view) == -1)
+        switch (this->sm.change_view(new_view))
         {
+        case -1:
             // an error occured
             std::cout << "Unable to find the view " << new_view << " to process the events" << std::endl;
+            break;
+
+        case 0:
+            break;
+
+        case 1:
+            std::cout << "Changed view (Game::dispatch_events). Old one was " << c_view << std::endl;
+            break;
         }
     }
     else
