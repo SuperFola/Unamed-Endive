@@ -140,7 +140,10 @@ void MenuHUD::render(sf::RenderWindow& window)
 void MenuHUD::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     if (this->isTriggered())
+    {
         sf::Vector2i mouse = sf::Mouse::getPosition(window);
+        this->clic(mouse.x, mouse.y);
+    }
 }
 
 int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)

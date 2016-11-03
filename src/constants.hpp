@@ -22,7 +22,7 @@
 
 // window
 #define WIN_W 640
-#define WIN_H 540
+#define WIN_H 640
 
 #define COLLIDING_LAYER 1
 

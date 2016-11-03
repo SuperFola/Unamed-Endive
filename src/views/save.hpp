@@ -1,7 +1,12 @@
 #ifndef DEF_SAVE_VIEW
 #define DEF_SAVE_VIEW
 
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <map>
+
 #include "view.hpp"
+#include "../abstract/texturesmanager.hpp"
 
 class SaveView : public View
 {

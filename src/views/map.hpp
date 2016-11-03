@@ -1,7 +1,12 @@
 #ifndef DEF_MAP_VIEW
 #define DEF_MAP_VIEW
 
+#include <SFML/Graphics.hpp>
+#include <string>
+#include <map>
+
 #include "view.hpp"
+#include "../abstract/texturesmanager.hpp"
 
 class MapView : public View
 {

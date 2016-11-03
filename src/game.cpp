@@ -113,12 +113,22 @@ void Game::loading()
     int _fps_update = 0;
     sf::Time elapsed;
 
+    bool load_sm = false;
+
     sf::Event event;
     while (this->window.isOpen())
     {
         // load a new sprite
-        if (crea_load.load_next())
-            break;
+        if (!load_sm)
+        {
+            if(this->crea_load.load_next())
+                load_sm = true;
+        }
+        else
+        {
+            if (this->sm.load())
+                break;
+        }
 
         // get deltatime
         sf::Time dt = this->clock.restart();
@@ -158,9 +168,6 @@ Game::Game() :
     , shape_outline_sickness(10)
     , shape_increasing(true)
 {
-    // we "add" a default view
-    this->sm.change_view(DEFAULT_VIEW_ID);
-
     // creating base folders
     system("mkdir saves");
     system("mkdir screenshots");
@@ -192,6 +199,8 @@ Game::Game() :
 int Game::run()
 {
     this->loading();
+    // we "add" a default view
+    this->sm.change_view(DEFAULT_VIEW_ID);
 
     int _fps_update = 0;
 

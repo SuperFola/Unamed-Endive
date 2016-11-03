@@ -105,7 +105,6 @@ Character::Character() :
     , state(ChState::idle)
     , anim_cursor(MvState::idle)
     , path("assets/players/male/")
-    , bag()
 {
     std::cout << "first chara loader" << std::endl;
     this->load_character_textures();

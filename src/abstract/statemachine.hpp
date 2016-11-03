@@ -20,6 +20,7 @@
 class StateMachine {
 private:
     // variables
+    int loaded;
     int current_view;
     std::vector<std::unique_ptr<View>> views;
     std::vector<int> history;
@@ -27,6 +28,7 @@ private:
 public:
     // methods
     StateMachine();
+    bool load();
     int getId();
     int change_view(int);
     int go_back_to_last_view();

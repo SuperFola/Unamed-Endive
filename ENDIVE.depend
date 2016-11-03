@@ -409,7 +409,7 @@
 	"scripting/scripting.hpp"
 	"abstract/creatures_loader.hpp"
 
-1478118312 f:\endive\src\abstract\statemachine.hpp
+1478195858 f:\endive\src\abstract\statemachine.hpp
 	<vector>
 	<memory>
 	<SFML/Graphics.hpp>
@@ -425,12 +425,12 @@
 1477858900 f:\endive\src\views\view.hpp
 	<SFML/Graphics.hpp>
 
-1478178938 source:f:\endive\src\abstract\statemachine.cpp
+1478191614 source:f:\endive\src\abstract\statemachine.cpp
 	<iostream>
 	"statemachine.hpp"
 	"functions.hpp"
 
-1478179090 source:f:\endive\src\game.cpp
+1478192017 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
@@ -443,7 +443,7 @@
 	"../entities/character.hpp"
 	"huds/menu.hpp"
 
-1477858899 f:\endive\src\constants.hpp
+1478196279 f:\endive\src\constants.hpp
 
 1477858899 f:\endive\src\abstract\functions.hpp
 	<vector>
@@ -709,7 +709,7 @@
 	"../abstract/texturesmanager.hpp"
 	"../bag/bag.hpp"
 
-1478120716 source:f:\endive\src\entities\character.cpp
+1478192953 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
 	"character.hpp"
@@ -885,7 +885,7 @@
 	"hud.hpp"
 	"../../abstract/texturesmanager.hpp"
 
-1478177368 source:f:\endive\src\views\huds\menu.cpp
+1478186158 source:f:\endive\src\views\huds\menu.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"menu.hpp"
@@ -1164,27 +1164,48 @@
 	<Python.h>
 	"scripting.hpp"
 
-1478109834 f:\endive\src\views\creatures.hpp
+1478192643 f:\endive\src\views\creatures.hpp
+	<SFML/Graphics.hpp>
+	<string>
+	<map>
 	"view.hpp"
+	"../abstract/texturesmanager.hpp"
 
-1478109800 f:\endive\src\views\dex.hpp
+1478185819 f:\endive\src\views\dex.hpp
+	<SFML/Graphics.hpp>
+	<string>
+	<map>
 	"view.hpp"
+	"../abstract/texturesmanager.hpp"
 
-1478109817 f:\endive\src\views\save.hpp
+1478186427 f:\endive\src\views\save.hpp
+	<SFML/Graphics.hpp>
+	<string>
+	<map>
 	"view.hpp"
+	"../abstract/texturesmanager.hpp"
 
-1478109855 f:\endive\src\views\inventory.hpp
+1478195650 f:\endive\src\views\inventory.hpp
+	<SFML/Graphics.hpp>
+	<string>
+	<map>
 	"view.hpp"
+	"../abstract/texturesmanager.hpp"
+	"../bag/bag.hpp"
 
-1478110734 f:\endive\src\views\map.hpp
+1478186427 f:\endive\src\views\map.hpp
+	<SFML/Graphics.hpp>
+	<string>
+	<map>
 	"view.hpp"
+	"../abstract/texturesmanager.hpp"
 
-1478110604 source:f:\endive\src\views\creatures.cpp
+1478195423 source:f:\endive\src\views\creatures.cpp
 	<iostream>
 	"creatures.hpp"
 	"../constants.hpp"
 
-1478110574 source:f:\endive\src\views\dex.cpp
+1478195903 source:f:\endive\src\views\dex.cpp
 	<iostream>
 	"dex.hpp"
 	"../constants.hpp"
@@ -1194,12 +1215,12 @@
 	"inventory.hpp"
 	"../constants.hpp"
 
-1478118406 source:f:\endive\src\views\map.cpp
+1478179169 source:f:\endive\src\views\map.cpp
 	<iostream>
 	"map.hpp"
 	"../constants.hpp"
 
-1478110590 source:f:\endive\src\views\save.cpp
+1478179171 source:f:\endive\src\views\save.cpp
 	<iostream>
 	"save.hpp"
 	"../constants.hpp"

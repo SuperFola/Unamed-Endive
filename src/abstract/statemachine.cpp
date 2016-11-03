@@ -5,28 +5,51 @@
 
 // public
 StateMachine::StateMachine() :
-    current_view(-1)
+    loaded(0)
+    , current_view(-1)
 {
     this->views.reserve(MAX_VIEWS);
     this->history.reserve(MAX_HISTORY);
+}
 
-    this->views.emplace_back(std::make_unique<DefaultView>());
-    this->views[this->views.size() - 1]->load();
+bool StateMachine::load()
+{
+    switch(this->loaded)
+    {
+    case 0:
+        this->views.emplace_back(std::make_unique<DefaultView>());
+        this->views[this->views.size() - 1]->load();
+        break;
 
-    this->views.emplace_back(std::make_unique<CreaView>());
-    this->views[this->views.size() - 1]->load();
+    case 1:
+        this->views.emplace_back(std::make_unique<CreaView>());
+        this->views[this->views.size() - 1]->load();
+        break;
 
-    this->views.emplace_back(std::make_unique<DexView>());
-    this->views[this->views.size() - 1]->load();
+    case 2:
+        this->views.emplace_back(std::make_unique<DexView>());
+        this->views[this->views.size() - 1]->load();
+        break;
 
-    this->views.emplace_back(std::make_unique<SaveView>());
-    this->views[this->views.size() - 1]->load();
+    case 3:
+        this->views.emplace_back(std::make_unique<SaveView>());
+        this->views[this->views.size() - 1]->load();
+        break;
 
-    this->views.emplace_back(std::make_unique<InventView>());
-    this->views[this->views.size() - 1]->load();
+    case 4:
+        this->views.emplace_back(std::make_unique<InventView>());
+        this->views[this->views.size() - 1]->load();
+        break;
 
-    this->views.emplace_back(std::make_unique<MapView>());
-    this->views[this->views.size() - 1]->load();
+    case 5:
+        this->views.emplace_back(std::make_unique<MapView>());
+        this->views[this->views.size() - 1]->load();
+        break;
+    }
+    std::cout << "Loading view " << this->views[this->views.size() - 1]->getId() << std::endl;
+    this->loaded++;
+
+    return this->loaded == 6;
 }
 
 int StateMachine::getId()
