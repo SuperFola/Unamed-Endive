@@ -3,6 +3,9 @@
 #include "creatures.hpp"
 #include "../constants.hpp"
 
+#define __X event.mouseButton.x
+#define __Y event.mouseButton.y
+
 // public
 CreaView::CreaView() :
     View(MYCREATURES_VIEW_ID)
@@ -48,10 +51,10 @@ bool CreaView::load()
 
     // setting pos
     this->sprites[this->BCKG].setPosition(20.0f, 20.0f);
-    this->sprites[this->BTN_PC].setPosition(587.0f, 30.0f);
-    this->sprites[this->BTN_TO_PC].setPosition(507.0f, 30.0f);
-    this->sprites[this->BTN_CREA].setPosition(587.0f, 30.0f);
-    this->sprites[this->BTN_TO_CREA].setPosition(507.0f, 30.0f);
+    this->sprites[this->BTN_PC].setPosition(540.0f, 30.0f);
+    this->sprites[this->BTN_TO_PC].setPosition(450.0f, 30.0f);
+    this->sprites[this->BTN_CREA].setPosition(540.0f, 30.0f);
+    this->sprites[this->BTN_TO_CREA].setPosition(450.0f, 30.0f);
 
     // texts
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
@@ -91,6 +94,10 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
+        case sf::Keyboard::Escape:
+            new_view = LAST_VIEW_ID;
+            break;
+
         default:
             break;
         }
@@ -100,16 +107,18 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            if (event.mouseButton.x >= 587 && event.mouseButton.x <= 668 && event.mouseButton.y >= 30 && event.mouseButton.x <= 53)
+            if (__X >= 540 && __X <= 610 && __Y >= 30 && __Y <= 50)
             {
+                std::cout << "clic" << std::endl;
                 this->displaying_crea = !this->displaying_crea;
                 if (this->displaying_crea)
                     this->text.setString("Equipe");
                 else
                     this->text.setString("PC");
             }
-            else if (event.mouseButton.x >= 507 && event.mouseButton.x <= 577 && event.mouseButton.y >= 30 && event.mouseButton.x <= 53)
+            else if (__X >= 450 && __X <= 530 && __Y >= 30 && __Y <= 50)
             {
+                std::cout << "clic 2" << std::endl;
                 if (this->displaying_crea)
                 {
                     // send selected crea to pc

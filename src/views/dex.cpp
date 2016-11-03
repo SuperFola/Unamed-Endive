@@ -3,6 +3,9 @@
 #include "dex.hpp"
 #include "../constants.hpp"
 
+#define __X event.mouseButton.x
+#define __Y event.mouseButton.y
+
 // public
 DexView::DexView() :
     View(DEX_VIEW_ID)
@@ -36,8 +39,8 @@ bool DexView::load()
 
     // setting pos
     this->sprites[this->BCKG].setPosition(20.0f, 20.0f);
-    this->sprites[this->TYPES_BTN].setPosition(587.0f, 30.0f);
-    this->sprites[this->CREA_BTN].setPosition(587.0f, 30.0f);
+    this->sprites[this->TYPES_BTN].setPosition(529.0f, 30.0f);
+    this->sprites[this->CREA_BTN].setPosition(529.0f, 30.0f);
 
     // texts
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
@@ -71,6 +74,10 @@ int DexView::process_event(sf::Event& event, sf::Time elapsed)
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
+        case sf::Keyboard::Escape:
+            new_view = LAST_VIEW_ID;
+            break;
+
         default:
             break;
         }
@@ -80,7 +87,7 @@ int DexView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            if (event.mouseButton.x >= 587 && event.mouseButton.x <= 668 && event.mouseButton.y >= 30 && event.mouseButton.x <= 53)
+            if (__X >= 529 && __X <= 610 && __Y >= 30 && __Y <= 53)
             {
                 this->displaying_crea = !this->displaying_crea;
                 if (this->displaying_crea)

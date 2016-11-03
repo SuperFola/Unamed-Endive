@@ -4,6 +4,9 @@
 #include "menu.hpp"
 #include "../../constants.hpp"
 
+#define __X event.mouseButton.x
+#define __Y event.mouseButton.y
+
 // public
 MenuHUD::MenuHUD() :
     Hud(MENU_VIEW_ID)
@@ -38,7 +41,7 @@ bool MenuHUD::load()
     this->sprites[this->BG_CATEGORY_SELECTED] = sf::Sprite(this->textures.getTexture(this->BG_CATEGORY_SELECTED));
 
     // setting pos
-    this->sprites[this->BACKGROUND].setPosition(20.0f, 50.0f);
+    this->sprites[this->BACKGROUND].setPosition(20.0f, WIN_H / 2 - 220.0f);
 
     // creating texts
     sf::Text crea;
@@ -84,12 +87,12 @@ bool MenuHUD::load()
     this->texts[this->TXT_BACK] = goback;
 
     // setting pos (texts)
-    this->texts[this->TXT_CREA].setPosition(54.0f, 76.0f);
-    this->texts[this->TXT_INVENT].setPosition(349.0f, 76.0f);
-    this->texts[this->TXT_MAP].setPosition(54.0f, 218.0f);
-    this->texts[this->TXT_SAVE].setPosition(349.0f, 218.0f);
-    this->texts[this->TXT_DEX].setPosition(54.0f, 360.0f);
-    this->texts[this->TXT_BACK].setPosition(349.0f, 360.0f);
+    this->texts[this->TXT_CREA].setPosition(54.0f, 26.0f + WIN_H / 2 - 220.0f);
+    this->texts[this->TXT_INVENT].setPosition(349.0f, 26.0f + WIN_H / 2 - 220.0f);
+    this->texts[this->TXT_MAP].setPosition(54.0f, 168.0f + WIN_H / 2 - 220.0f);
+    this->texts[this->TXT_SAVE].setPosition(349.0f, 168.0f + WIN_H / 2 - 220.0f);
+    this->texts[this->TXT_DEX].setPosition(54.0f, 310.0f + WIN_H / 2 - 220.0f);
+    this->texts[this->TXT_BACK].setPosition(349.0f, 310.0f + WIN_H / 2 - 220.0f);
 
     return true;
 }
@@ -103,7 +106,7 @@ void MenuHUD::render(sf::RenderWindow& window)
 
     // drawing cases
     {
-        float y = 61.0f;
+        float y = 11.0f + WIN_H / 2 - 220.0f;
         for (int i=0; i < 6; i++)
         {
             bool left = !(i % 2);
@@ -163,8 +166,12 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
                 new_view = this->current;
             break;
 
+        case sf::Keyboard::Escape:
+            new_view = 5;
+            break;
+
         case sf::Keyboard::RShift:
-            goto dont3;
+            new_view = 5;
             break;
 
         case sf::Keyboard::Up:
@@ -204,7 +211,7 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            this->clic(event.mouseButton.x, event.mouseButton.y);
+            this->clic(__X, __Y);
             if (this->current != -1)
                 new_view = this->current;
             break;
@@ -234,7 +241,7 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
 void MenuHUD::clic(int x, int y)
 {
     bool left = (x >= 30) && (x <= 320);
-    int nb = (y - 61) / 143;
+    int nb = (y - 11 - (WIN_H / 2 - 220.0f)) / 143;
 
     switch (nb)
     {

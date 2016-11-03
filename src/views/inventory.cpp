@@ -3,6 +3,9 @@
 #include "inventory.hpp"
 #include "../constants.hpp"
 
+#define __X event.mouseButton.x
+#define __Y event.mouseButton.y
+
 // public
 InventView::InventView() :
     View(INVENTORY_VIEW_ID)
@@ -87,7 +90,7 @@ bool InventView::load()
     this->current_pocket_name.setString("Pocket0");
     this->current_pocket_name.setCharacterSize(24);
     this->current_pocket_name.setColor(sf::Color::White);
-    this->current_pocket_name.setPosition(75.0f - this->current_pocket_name.getGlobalBounds().width / 2 + 50.0f, 30.0f);
+    this->current_pocket_name.setPosition(75.0f - this->current_pocket_name.getGlobalBounds().width / 2 + 50.0f, 240.0f);
 
     return true;
 }
@@ -104,7 +107,52 @@ void InventView::render(sf::RenderWindow& window)
 
 int InventView::process_event(sf::Event& event, sf::Time elapsed)
 {
-    return -1;
+    int new_view = -1;
+
+    switch(event.type)
+    {
+    case sf::Event::KeyPressed:
+        switch(event.key.code)
+        {
+        case sf::Keyboard::Escape:
+            new_view = LAST_VIEW_ID;
+            break;
+
+        default:
+            break;
+        }
+        break;
+
+    case sf::Event::MouseButtonPressed:
+        switch(event.mouseButton.button)
+        {
+        case sf::Mouse::Button::Left:
+            if (__X >= 30 && __X <= 50 && __Y >= 240 && __Y <= 260)
+            {
+                // previous
+                this->current--;
+                if (this->current < 0)
+                    this->current = 4;
+            }
+            else if (__X >= 180 && __X <= 200 && __Y >= 240 && __Y <= 260)
+            {
+                // next
+                this->current++;
+                if (this->current > 4)
+                    this->current = 0;
+            }
+            break;
+
+        default:
+            break;
+        }
+        break;
+
+    default:
+        break;
+    }
+
+    return new_view;
 }
 
 void InventView::update(sf::RenderWindow& window, sf::Time elapsed)
@@ -114,5 +162,26 @@ void InventView::update(sf::RenderWindow& window, sf::Time elapsed)
 
 void InventView::draw_content(sf::RenderWindow& window)
 {
-    window.draw(this->sprites[this->POCKET1]); // just to test
+    switch (this->current)
+    {
+    case 0:
+        window.draw(this->sprites[this->POCKET1]);
+        break;
+
+    case 1:
+        window.draw(this->sprites[this->POCKET2]);
+        break;
+
+    case 2:
+        window.draw(this->sprites[this->POCKET3]);
+        break;
+
+    case 3:
+        window.draw(this->sprites[this->POCKET4]);
+        break;
+
+    case 4:
+        window.draw(this->sprites[this->POCKET5]);
+        break;
+    }
 }

@@ -3,6 +3,7 @@
 
 // views id
 #define UNREACHABLE_VIEW_ID -1
+#define LAST_VIEW_ID 0
 #define DEFAULT_VIEW_ID 1
 #define INVENTORY_VIEW_ID 2
 #define MAP_VIEW_ID 3

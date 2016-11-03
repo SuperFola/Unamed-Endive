@@ -62,6 +62,15 @@ int StateMachine::change_view(int new_view)
     if (new_view == -1)
         return 0;
 
+    if (new_view == 0)
+    {
+        int v = this->go_back_to_last_view();
+        if (v == 0)
+            return 1;
+        else if (v == -1)
+            return -1;
+    }
+
     for (auto&& value : this->views)
     {
         if (value->getId() == new_view)
