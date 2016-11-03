@@ -55,6 +55,7 @@ public:
     sf::Sprite& getCurrentSprite();
     void update(sf::RenderWindow&, sf::Time);
     void setName(const std::string);
+    Bag* getBag();
 };
 
 #endif // DEF_CHARACTER

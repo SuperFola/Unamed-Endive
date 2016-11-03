@@ -128,3 +128,12 @@ void StateMachine::update_current(sf::RenderWindow& window, sf::Time elapsed)
             element->update(window, elapsed);
     }
 }
+
+View* StateMachine::get(int id)
+{
+    for (auto& element: this->views)
+    {
+        if (element->getId() == id)
+            return element.get();
+    }
+}

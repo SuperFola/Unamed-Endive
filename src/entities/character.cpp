@@ -199,3 +199,8 @@ void Character::update(sf::RenderWindow& window, sf::Time elapsed)
     if (this->not_moving_time.asSeconds() > 1.0f)
         this->state = ChState::idle;
 }
+
+Bag* Character::getBag()
+{
+    return &(this->bag);
+}

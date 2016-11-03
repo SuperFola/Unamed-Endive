@@ -42,12 +42,24 @@ bool CreaView::load()
         return false;
     this->textures.addTexture("btn_to_crea", btn_to_crea);
 
+    sf::Texture case_crea;
+    if (!case_crea.loadFromFile("assets/gui/fd_case_creature.png"))
+        return false;
+    this->textures.addTexture("bcg_crea", case_crea);
+
+    sf::Texture case_crea_sel;
+    if (!case_crea_sel.loadFromFile("assets/gui/fd_case_creature_selected.png"))
+        return false;
+    this->textures.addTexture("bcg_crea_sel", case_crea_sel);
+
     // setting sprites
     this->sprites[this->BCKG] = sf::Sprite(this->textures.getTexture("background"));
     this->sprites[this->BTN_PC] = sf::Sprite(this->textures.getTexture("btn_pc"));
     this->sprites[this->BTN_TO_PC] = sf::Sprite(this->textures.getTexture("btn_to_pc"));
     this->sprites[this->BTN_CREA] = sf::Sprite(this->textures.getTexture("btn_crea"));
     this->sprites[this->BTN_TO_CREA] = sf::Sprite(this->textures.getTexture("btn_to_crea"));
+    this->sprites[this->BCG_CREA] = sf::Sprite(this->textures.getTexture("bcg_crea"));
+    this->sprites[this->BCG_SEL_CREA] = sf::Sprite(this->textures.getTexture("bcg_crea_sel"));
 
     // setting pos
     this->sprites[this->BCKG].setPosition(20.0f, 20.0f);

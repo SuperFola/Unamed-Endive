@@ -35,6 +35,7 @@ public:
     int process_event_current(sf::Event&, sf::Time);
     void render_current(sf::RenderWindow&);
     void update_current(sf::RenderWindow&, sf::Time);
+    View* get(int);
 };
 
 #endif // DEF_STATEMACHINE

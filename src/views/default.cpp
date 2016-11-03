@@ -87,3 +87,8 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
         return this->menu_hud.process_event(event, elapsed);
     return -1;  // we didn't triggered the hud so we don't need to change the view
 }
+
+Character* DefaultView::getCharacter()
+{
+    return &(this->player);
+}
