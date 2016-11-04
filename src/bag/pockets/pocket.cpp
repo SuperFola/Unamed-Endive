@@ -11,17 +11,17 @@ Pocket::Pocket(const std::string& name_, bool default_one) :
 
 bool Pocket::load(Json::Value& root)
 {
-    if (!this->default_one)
+    if (!this->default_pocket)
     {
         for (int i=0; i < root.size(); i++)
         {
-            Object* object = new Object(root[i]["id"], root[i]["quantity"]);
+            Object* object = new Object(root[i]["id"].asInt(), root[i]["quantity"].asInt());
             this->add_object(object);
         }
     }
     else
     {
-        Object* object = new Object(this->name + " object test", 2);
+        Object* object = new Object(0, 1);
         this->add_object(object);
     }
     return true;
@@ -68,4 +68,9 @@ Json::Value Pocket::serialize()
 std::string& Pocket::getName()
 {
     return this->name;
+}
+
+int Pocket::getSize()
+{
+    return this->objects.size();
 }

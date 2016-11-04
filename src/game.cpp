@@ -3,6 +3,7 @@
 
 #include "game.hpp"
 #include "abstract/functions.hpp"
+#include "bag/objectstable.hpp"
 
 // private
 void Game::resize_window(int nx, int ny)
@@ -194,6 +195,8 @@ Game::Game() :
     this->loading_text.setString("Chargement ...");
     this->loading_text.setCharacterSize(24);
     this->loading_text.setPosition(5.0f, 5.0f);
+
+    ObjectsTable::load();
 }
 
 int Game::run()

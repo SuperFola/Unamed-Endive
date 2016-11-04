@@ -20,28 +20,96 @@ MenuHUD::MenuHUD() :
 bool MenuHUD::load()
 {
     // loading textures
-    sf::Texture bg;
-    if (!bg.loadFromFile("assets/gui/fd_menu.png"))
-        return false;
-    this->textures.addTexture(this->BACKGROUND, bg);
-
     sf::Texture cat;
-    if (!cat.loadFromFile("assets/gui/fd_categorie_menu.png"))
+    if (!cat.loadFromFile("assets/gui/menu/fd_case_creature.png"))
         return false;
-    this->textures.addTexture(this->BG_CATEGORY, cat);
+    this->textures.addTexture(this->BG_CAT_CREA, cat);
 
-    sf::Texture cat_sel;
-    if (!cat_sel.loadFromFile("assets/gui/fd_categorie_selected_menu.png"))
+    sf::Texture cat2;
+    if (!cat2.loadFromFile("assets/gui/menu/fd_case_creature_selected.png"))
         return false;
-    this->textures.addTexture(this->BG_CATEGORY_SELECTED, cat_sel);
+    this->textures.addTexture(this->BG_CAT_SEL_CREA, cat2);
+
+    sf::Texture cat3;
+    if (!cat3.loadFromFile("assets/gui/menu/fd_case_indexer.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_DEX, cat3);
+
+    sf::Texture cat4;
+    if (!cat4.loadFromFile("assets/gui/menu/fd_case_indexer_selected.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_SEL_DEX, cat4);
+
+    sf::Texture cat5;
+    if (!cat5.loadFromFile("assets/gui/menu/fd_case_inventaire.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_INVENTORY, cat5);
+
+    sf::Texture cat6;
+    if (!cat6.loadFromFile("assets/gui/menu/fd_case_inventaire_selected.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_SEL_INVENTORY, cat6);
+
+    sf::Texture cat7;
+    if (!cat7.loadFromFile("assets/gui/menu/fd_case_map.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_MAP, cat7);
+
+    sf::Texture cat8;
+    if (!cat8.loadFromFile("assets/gui/menu/fd_case_map_selected.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_SEL_MAP, cat8);
+
+    sf::Texture cat9;
+    if (!cat9.loadFromFile("assets/gui/menu/fd_case_retour.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_BACK, cat9);
+
+    sf::Texture cat10;
+    if (!cat10.loadFromFile("assets/gui/menu/fd_case_retour_selected.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_SEL_BACK, cat10);
+
+    sf::Texture cat11;
+    if (!cat11.loadFromFile("assets/gui/menu/fd_case_sauvegarder.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_SAVE, cat11);
+
+    sf::Texture cat12;
+    if (!cat12.loadFromFile("assets/gui/menu/fd_case_sauvegarder_selected.png"))
+        return false;
+    this->textures.addTexture(this->BG_CAT_SEL_SAVE, cat12);
 
     // creating sprites
-    this->sprites[this->BACKGROUND] = sf::Sprite(this->textures.getTexture(this->BACKGROUND));
-    this->sprites[this->BG_CATEGORY] = sf::Sprite(this->textures.getTexture(this->BG_CATEGORY));
-    this->sprites[this->BG_CATEGORY_SELECTED] = sf::Sprite(this->textures.getTexture(this->BG_CATEGORY_SELECTED));
+    this->sprites[this->BG_CAT_CREA] = sf::Sprite(this->textures.getTexture(this->BG_CAT_CREA));
+    this->sprites[this->BG_CAT_SEL_CREA] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_CREA));
+    this->sprites[this->BG_CAT_DEX] = sf::Sprite(this->textures.getTexture(this->BG_CAT_DEX));
+    this->sprites[this->BG_CAT_SEL_DEX] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_DEX));
+    this->sprites[this->BG_CAT_INVENTORY] = sf::Sprite(this->textures.getTexture(this->BG_CAT_INVENTORY));
+    this->sprites[this->BG_CAT_SEL_INVENTORY] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_INVENTORY));
+    this->sprites[this->BG_CAT_MAP] = sf::Sprite(this->textures.getTexture(this->BG_CAT_MAP));
+    this->sprites[this->BG_CAT_SEL_MAP] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_MAP));
+    this->sprites[this->BG_CAT_BACK] = sf::Sprite(this->textures.getTexture(this->BG_CAT_BACK));
+    this->sprites[this->BG_CAT_SEL_BACK] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_BACK));
+    this->sprites[this->BG_CAT_SAVE] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SAVE));
+    this->sprites[this->BG_CAT_SEL_SAVE] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_SAVE));
 
     // setting pos
-    this->sprites[this->BACKGROUND].setPosition(20.0f, WIN_H / 2 - 220.0f);
+    float y = 11.0f + WIN_H / 2 - 220.0f;
+    this->sprites[this->BG_CAT_CREA].setPosition(30.0f, y);
+    this->sprites[this->BG_CAT_SEL_CREA].setPosition(30.0f, y);
+    this->sprites[this->BG_CAT_INVENTORY].setPosition(325.0f, y);
+    this->sprites[this->BG_CAT_SEL_INVENTORY].setPosition(325.0f, y);
+    y += 143.0f;
+    this->sprites[this->BG_CAT_MAP].setPosition(30.0f, y);
+    this->sprites[this->BG_CAT_SEL_MAP].setPosition(30.0f, y);
+    this->sprites[this->BG_CAT_SAVE].setPosition(325.0f, y);
+    this->sprites[this->BG_CAT_SEL_SAVE].setPosition(325.0f, y);
+    y += 143.0f;
+    this->sprites[this->BG_CAT_DEX].setPosition(30.0f, y);
+    this->sprites[this->BG_CAT_SEL_DEX].setPosition(30.0f, y);
+    this->sprites[this->BG_CAT_BACK].setPosition(325.0f, y);
+    this->sprites[this->BG_CAT_SEL_BACK].setPosition(325.0f, y);
 
     // creating texts
     sf::Text crea;
@@ -102,32 +170,39 @@ void MenuHUD::render(sf::RenderWindow& window)
     if (!this->isTriggered())
         goto dont;
 
-    window.draw(this->sprites[this->BACKGROUND]);
+    window.draw(this->sprites[this->BG_CAT_CREA]);
+    window.draw(this->sprites[this->BG_CAT_DEX]);
+    window.draw(this->sprites[this->BG_CAT_INVENTORY]);
+    window.draw(this->sprites[this->BG_CAT_MAP]);
+    window.draw(this->sprites[this->BG_CAT_BACK]);
+    window.draw(this->sprites[this->BG_CAT_SAVE]);
 
     // drawing cases
+    switch (this->current)
     {
-        float y = 11.0f + WIN_H / 2 - 220.0f;
-        for (int i=0; i < 6; i++)
-        {
-            bool left = !(i % 2);
-            float x;
-            if (left) x = 30.0f;
-            else x = 325.0f;
+    case 0:
+        window.draw(this->sprites[this->BG_CAT_SEL_CREA]);
+        break;
 
-            if (i != this->current)
-            {
-                this->sprites[this->BG_CATEGORY].setPosition(x, y);
-                window.draw(this->sprites[this->BG_CATEGORY]);
-            }
-            else
-            {
-                this->sprites[this->BG_CATEGORY_SELECTED].setPosition(x, y);
-                window.draw(this->sprites[this->BG_CATEGORY_SELECTED]);
-            }
+    case 1:
+        window.draw(this->sprites[this->BG_CAT_SEL_INVENTORY]);
+        break;
 
-            if (!left)
-                y += 143.0f;
-        }
+    case 2:
+        window.draw(this->sprites[this->BG_CAT_SEL_MAP]);
+        break;
+
+    case 3:
+        window.draw(this->sprites[this->BG_CAT_SEL_SAVE]);
+        break;
+
+    case 4:
+        window.draw(this->sprites[this->BG_CAT_SEL_DEX]);
+        break;
+
+    case 5:
+        window.draw(this->sprites[this->BG_CAT_SEL_BACK]);
+        break;
     }
 
     window.draw(this->texts[this->TXT_CREA]);

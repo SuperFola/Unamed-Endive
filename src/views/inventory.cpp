@@ -2,6 +2,8 @@
 
 #include "inventory.hpp"
 #include "../constants.hpp"
+#include "../bag/objectstable.hpp"
+#include "../abstract/functions.hpp"
 
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
@@ -91,6 +93,12 @@ bool InventView::load()
     this->current_pocket_name.setCharacterSize(24);
     this->current_pocket_name.setColor(sf::Color::White);
     this->current_pocket_name.setPosition(75.0f - this->current_pocket_name.getGlobalBounds().width / 2 + 50.0f, 240.0f);
+
+    this->object_name.setFont(this->font);
+    this->object_name.setString("object0");
+    this->object_name.setCharacterSize(18);
+    this->object_name.setColor(sf::Color::White);
+    this->object_name.setPosition(250.0f, 40.0f);
 
     return true;
 }
@@ -184,6 +192,12 @@ void InventView::draw_content(sf::RenderWindow& window)
     case 4:
         window.draw(this->sprites[this->POCKET5]);
         break;
+    }
+
+    for (int i=0; i < this->bag->getPocket(this->current)->getSize(); i++)
+    {
+        Object* obj = this->bag->getPocket(this->current)->getObject(i);
+        this->object_name.setString(ObjectsTable::getName(obj) + " (" + to_string(obj->getQuantity()) + ")");
     }
 }
 

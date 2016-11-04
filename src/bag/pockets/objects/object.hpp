@@ -13,6 +13,9 @@ private:
 public:
     Object(int, int);
     Json::Value serialize();
+    int getId();
+    int getQuantity();
+    void drop(int quantity=1);
 };
 
 #endif // DEF_BAG_OBJECT

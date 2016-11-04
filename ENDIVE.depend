@@ -429,11 +429,12 @@
 	"statemachine.hpp"
 	"functions.hpp"
 
-1478192017 source:f:\endive\src\game.cpp
+1478270062 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
 	"abstract/functions.hpp"
+	"bag/objectstable.hpp"
 
 1478205742 f:\endive\src\views\default.hpp
 	<string>
@@ -444,10 +445,11 @@
 
 1478202825 f:\endive\src\constants.hpp
 
-1477858899 f:\endive\src\abstract\functions.hpp
+1478274246 f:\endive\src\abstract\functions.hpp
 	<vector>
 	<string>
 	<sstream>
+	<fstream>
 
 1478205892 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
@@ -697,7 +699,7 @@
 1477858899 f:\endive\src\abstract\point.hpp
 	<SFML/System/Vector2.hpp>
 
-1478205840 f:\endive\src\entities\character.hpp
+1478270668 f:\endive\src\entities\character.hpp
 	<string>
 	<vector>
 	<SFML/System/Time.hpp>
@@ -708,7 +710,7 @@
 	"../abstract/texturesmanager.hpp"
 	"../bag/bag.hpp"
 
-1478205862 source:f:\endive\src\entities\character.cpp
+1478273757 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
 	"character.hpp"
@@ -816,21 +818,21 @@
 
 1477858900 f:\endive\src\map\blocks\triggers.hpp
 
-1477858899 f:\endive\src\bag\bag.hpp
+1478256389 f:\endive\src\bag\bag.hpp
 	<vector>
+	<string>
 	"../json/json.h"
 	"pockets/pocket.hpp"
 
-1477858899 f:\endive\src\bag\pockets\pocket.hpp
+1478261721 f:\endive\src\bag\pockets\pocket.hpp
 	<vector>
 	<string>
 	"../../json/json.h"
 	"objects/object.hpp"
 
-1477858899 f:\endive\src\bag\pockets\objects\object.hpp
+1478270198 f:\endive\src\bag\pockets\objects\object.hpp
 	<string>
 	"../../../json/json.h"
-	"../../../abstract/type.hpp"
 
 1477858900 source:f:\endive\src\views\huds\hud.cpp
 	"hud.hpp"
@@ -838,16 +840,18 @@
 1477858900 f:\endive\src\views\huds\hud.hpp
 	<SFML/Graphics.hpp>
 
-1477858899 source:f:\endive\src\bag\bag.cpp
+1478274312 source:f:\endive\src\bag\bag.cpp
 	<iostream>
+	<fstream>
 	"bag.hpp"
+	"../abstract/functions.hpp"
 
-1477858899 source:f:\endive\src\bag\pockets\objects\object.cpp
+1478270252 source:f:\endive\src\bag\pockets\objects\object.cpp
 	<iostream>
 	"object.hpp"
 	"../../../abstract/functions.hpp"
 
-1477858899 source:f:\endive\src\bag\pockets\pocket.cpp
+1478273693 source:f:\endive\src\bag\pockets\pocket.cpp
 	<iostream>
 	"pocket.hpp"
 	"../../abstract/functions.hpp"
@@ -876,7 +880,7 @@
 	<vector>
 	"view.hpp"
 
-1477858900 f:\endive\src\views\huds\menu.hpp
+1478271814 f:\endive\src\views\huds\menu.hpp
 	<map>
 	<vector>
 	<string>
@@ -884,7 +888,7 @@
 	"hud.hpp"
 	"../../abstract/texturesmanager.hpp"
 
-1478203160 source:f:\endive\src\views\huds\menu.cpp
+1478273034 source:f:\endive\src\views\huds\menu.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"menu.hpp"
@@ -1184,7 +1188,7 @@
 	"view.hpp"
 	"../abstract/texturesmanager.hpp"
 
-1478254622 f:\endive\src\views\inventory.hpp
+1478261475 f:\endive\src\views\inventory.hpp
 	<SFML/Graphics.hpp>
 	<string>
 	<map>
@@ -1209,10 +1213,12 @@
 	"dex.hpp"
 	"../constants.hpp"
 
-1478206417 source:f:\endive\src\views\inventory.cpp
+1478274075 source:f:\endive\src\views\inventory.cpp
 	<iostream>
 	"inventory.hpp"
 	"../constants.hpp"
+	"../bag/objectstable.hpp"
+	"../abstract/functions.hpp"
 
 1478179169 source:f:\endive\src\views\map.cpp
 	<iostream>
@@ -1223,4 +1229,15 @@
 	<iostream>
 	"save.hpp"
 	"../constants.hpp"
+
+1478273284 source:f:\endive\src\bag\objectstable.cpp
+	<iostream>
+	<fstream>
+	"objectstable.hpp"
+
+1478269003 f:\endive\src\bag\objectstable.hpp
+	<map>
+	<string>
+	"pockets/objects/object.hpp"
+	"../json/json.h"
 

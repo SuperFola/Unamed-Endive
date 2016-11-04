@@ -19,6 +19,7 @@ private:
     sf::Font font;
     sf::Text text;
     sf::Text current_pocket_name;
+    sf::Text object_name;
     Bag* bag;
 
     const std::string BCKG = "backgroud";

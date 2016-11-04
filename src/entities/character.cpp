@@ -106,13 +106,19 @@ Character::Character() :
     , anim_cursor(MvState::idle)
     , path("assets/players/male/")
 {
-    std::cout << "first chara loader" << std::endl;
+    std::cout << "chara loader" << std::endl;
     this->load_character_textures();
 }
 
 void Character::setName(const std::string new_name)
 {
     this->name = new_name;
+    system(("mkdir saves/" + this->name).data());
+}
+
+bool Character::load()
+{
+    return this->bag.load("saves/" + this->name + "/bag.json");
 }
 
 int Character::move(DIR dir, Map map_, sf::Time elapsed)

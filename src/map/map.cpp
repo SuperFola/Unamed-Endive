@@ -3,12 +3,7 @@
 
 #include "map.hpp"
 #include "../constants.hpp"
-
-bool is_file_existing(const std::string& file)
-{
-    std::ifstream reader(file.c_str());
-    return !reader.fail();
-}
+#include "../abstract/functions.hpp"
 
 // public
 Map::Map(std::string path) :

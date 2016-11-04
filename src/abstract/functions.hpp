@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <fstream>
 
 template<typename T>
 T pop(std::vector<T>* obj, int i) {
@@ -29,6 +30,12 @@ std::string to_string(const T& n)
     std::ostringstream stm ;
     stm << n ;
     return stm.str() ;
+}
+
+bool is_file_existing(const std::string& file)
+{
+    std::ifstream reader(file.c_str());
+    return !reader.fail();
 }
 
 #endif // DEF_ABS_FUNC

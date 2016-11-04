@@ -21,6 +21,7 @@ public:
     void drop_object(int);
     Json::Value serialize();
     std::string& getName();
+    int getSize();
 };
 
 #endif // DEF_POCKET

@@ -20,9 +20,18 @@ private:
     std::map<std::string, sf::Sprite> sprites;
     std::map<std::string, sf::Text> texts;
 
-    const std::string BACKGROUND = "background";
-    const std::string BG_CATEGORY = "category";
-    const std::string BG_CATEGORY_SELECTED = "category selected";
+    const std::string BG_CAT_CREA = "categorie crea";
+    const std::string BG_CAT_SEL_CREA = "categorie selected crea";
+    const std::string BG_CAT_DEX = "categorie dex";
+    const std::string BG_CAT_SEL_DEX = "categorie selected dex";
+    const std::string BG_CAT_INVENTORY = "categorie inventory";
+    const std::string BG_CAT_SEL_INVENTORY = "categorie selected inventory";
+    const std::string BG_CAT_MAP = "categorie map";
+    const std::string BG_CAT_SEL_MAP = "categorie selected map";
+    const std::string BG_CAT_BACK = "categorie back";
+    const std::string BG_CAT_SEL_BACK = "categorie selected back";
+    const std::string BG_CAT_SAVE = "categorie save";
+    const std::string BG_CAT_SEL_SAVE = "categorie selected save";
     const std::string TXT_CREA = "creatures";
     const std::string TXT_INVENT = "inventory";
     const std::string TXT_MAP = "map";

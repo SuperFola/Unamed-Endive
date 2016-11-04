@@ -2,12 +2,7 @@
 #include <fstream>
 
 #include "bag.hpp"
-
-bool is_file_existing(const std::string& file)
-{
-    std::ifstream reader(file.c_str());
-    return !reader.fail();
-}
+#include "../abstract/functions.hpp"
 
 Bag::Bag()
 {
@@ -45,7 +40,7 @@ bool Bag::load(const std::string& path)
 
     for (const auto& pname: pockets)
     {
-        Pocket* pocket = new Pocket();
+        Pocket* pocket = new Pocket(pname);
         if (!pocket->load(this->root[pname]))
                 return false;
         this->add_pocket(pocket);
