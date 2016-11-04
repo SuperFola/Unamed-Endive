@@ -6,6 +6,7 @@
 
 #include "pockets/objects/object.hpp"
 #include "../json/json.h"
+#include "../abstract/functions.hpp"
 
 class ObjectsTable
 {

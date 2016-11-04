@@ -1,6 +1,5 @@
 #include <iostream>
 #include "object.hpp"
-#include "../../../abstract/functions.hpp"
 
 Object::Object(int id, int quantity)
 {

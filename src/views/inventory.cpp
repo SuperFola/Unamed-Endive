@@ -1,9 +1,6 @@
 #include <iostream>
 
 #include "inventory.hpp"
-#include "../constants.hpp"
-#include "../bag/objectstable.hpp"
-#include "../abstract/functions.hpp"
 
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
@@ -141,6 +138,7 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
                 this->current--;
                 if (this->current < 0)
                     this->current = 4;
+                this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             }
             else if (__X >= 180 && __X <= 200 && __Y >= 240 && __Y <= 260)
             {

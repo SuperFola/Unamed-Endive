@@ -8,6 +8,8 @@
 #include "tilemap.hpp"
 #include "blocks/block.hpp"
 #include "../json/json.h"
+#include "../constants.hpp"
+#include "../abstract/functions.hpp"
 
 class Map
 {

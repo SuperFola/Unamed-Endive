@@ -2,8 +2,6 @@
 #include <iostream>
 
 #include "character.hpp"
-#include "../abstract/functions.hpp"
-#include "../abstract/texturesmanager.hpp"
 
 // private
 void Character::update_anim(sf::Time elapsed)
@@ -113,7 +111,9 @@ Character::Character() :
 void Character::setName(const std::string new_name)
 {
     this->name = new_name;
-    system(("mkdir saves/" + this->name).data());
+    system("chdir saves");
+    system(("mkdir " + this->name).data());
+    system("chdir ..");
 }
 
 bool Character::load()

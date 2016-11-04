@@ -401,15 +401,17 @@
 
 1472132693 f:\endive\view.hpp
 
-1478116020 f:\endive\src\game.hpp
+1478282727 f:\endive\src\game.hpp
 	<SFML/Graphics.hpp>
 	<SFML/System.hpp>
 	"constants.hpp"
 	"abstract/statemachine.hpp"
 	"scripting/scripting.hpp"
 	"abstract/creatures_loader.hpp"
+	"abstract/functions.hpp"
+	"bag/objectstable.hpp"
 
-1478250236 f:\endive\src\abstract\statemachine.hpp
+1478274811 f:\endive\src\abstract\statemachine.hpp
 	<vector>
 	<SFML/Graphics.hpp>
 	<SFML/System.hpp>
@@ -420,21 +422,19 @@
 	"../views/save.hpp"
 	"../views/inventory.hpp"
 	"../views/map.hpp"
+	"functions.hpp"
 
 1478206657 f:\endive\src\views\view.hpp
 	<SFML/Graphics.hpp>
 
-1478254532 source:f:\endive\src\abstract\statemachine.cpp
+1478274804 source:f:\endive\src\abstract\statemachine.cpp
 	<iostream>
 	"statemachine.hpp"
-	"functions.hpp"
 
-1478270062 source:f:\endive\src\game.cpp
+1478279351 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
-	"abstract/functions.hpp"
-	"bag/objectstable.hpp"
 
 1478205742 f:\endive\src\views\default.hpp
 	<string>
@@ -445,13 +445,13 @@
 
 1478202825 f:\endive\src\constants.hpp
 
-1478274246 f:\endive\src\abstract\functions.hpp
+1478275680 f:\endive\src\abstract\functions.hpp
 	<vector>
 	<string>
 	<sstream>
 	<fstream>
 
-1478205892 source:f:\endive\src\views\default.cpp
+1478277933 source:f:\endive\src\views\default.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"default.hpp"
@@ -478,19 +478,20 @@
 	<vector>
 	"blocks/block.hpp"
 
-1477915438 source:f:\endive\src\map\map.cpp
+1478275058 source:f:\endive\src\map\map.cpp
 	<iostream>
 	<fstream>
 	"map.hpp"
-	"../constants.hpp"
 
-1477858900 f:\endive\src\map\map.hpp
+1478275062 f:\endive\src\map\map.hpp
 	<string>
 	<SFML/Graphics.hpp>
 	<vector>
 	"tilemap.hpp"
 	"blocks/block.hpp"
 	"../json/json.h"
+	"../constants.hpp"
+	"../abstract/functions.hpp"
 
 1477858899 f:\endive\src\json\json.h
 	<stddef.h>
@@ -699,7 +700,7 @@
 1477858899 f:\endive\src\abstract\point.hpp
 	<SFML/System/Vector2.hpp>
 
-1478270668 f:\endive\src\entities\character.hpp
+1478275018 f:\endive\src\entities\character.hpp
 	<string>
 	<vector>
 	<SFML/System/Time.hpp>
@@ -709,25 +710,23 @@
 	"../map/map.hpp"
 	"../abstract/texturesmanager.hpp"
 	"../bag/bag.hpp"
+	"../abstract/functions.hpp"
 
-1478273757 source:f:\endive\src\entities\character.cpp
+1478277918 source:f:\endive\src\entities\character.cpp
 	<SFML/System/Vector2.hpp>
 	<iostream>
 	"character.hpp"
-	"../abstract/functions.hpp"
-	"../abstract/texturesmanager.hpp"
 
 1477858899 source:f:\endive\src\map\blocks\block.cpp
 	<iostream>
 	"block.hpp"
 
-1477858899 f:\endive\src\abstract\texturesmanager.hpp
+1478281613 f:\endive\src\abstract\texturesmanager.hpp
 	<SFML/Graphics.hpp>
 	<string>
-	<tuple>
 	<map>
 
-1477858899 source:f:\endive\src\abstract\texturesmanager.cpp
+1478281597 source:f:\endive\src\abstract\texturesmanager.cpp
 	<iostream>
 	"texturesmanager.hpp"
 
@@ -818,17 +817,19 @@
 
 1477858900 f:\endive\src\map\blocks\triggers.hpp
 
-1478256389 f:\endive\src\bag\bag.hpp
+1478274826 f:\endive\src\bag\bag.hpp
 	<vector>
 	<string>
 	"../json/json.h"
 	"pockets/pocket.hpp"
+	"../abstract/functions.hpp"
 
-1478261721 f:\endive\src\bag\pockets\pocket.hpp
+1478274976 f:\endive\src\bag\pockets\pocket.hpp
 	<vector>
 	<string>
 	"../../json/json.h"
 	"objects/object.hpp"
+	"../../abstract/functions.hpp"
 
 1478270198 f:\endive\src\bag\pockets\objects\object.hpp
 	<string>
@@ -840,21 +841,18 @@
 1477858900 f:\endive\src\views\huds\hud.hpp
 	<SFML/Graphics.hpp>
 
-1478274312 source:f:\endive\src\bag\bag.cpp
+1478278050 source:f:\endive\src\bag\bag.cpp
 	<iostream>
 	<fstream>
 	"bag.hpp"
-	"../abstract/functions.hpp"
 
-1478270252 source:f:\endive\src\bag\pockets\objects\object.cpp
+1478274863 source:f:\endive\src\bag\pockets\objects\object.cpp
 	<iostream>
 	"object.hpp"
-	"../../../abstract/functions.hpp"
 
-1478273693 source:f:\endive\src\bag\pockets\pocket.cpp
+1478274959 source:f:\endive\src\bag\pockets\pocket.cpp
 	<iostream>
 	"pocket.hpp"
-	"../../abstract/functions.hpp"
 
 1478089381 f:\endive\src\abstract\creatures_loader.hpp
 	<string>
@@ -862,7 +860,7 @@
 	<SFML/Graphics.hpp>
 	"texturesmanager.hpp"
 
-1478089532 source:f:\endive\src\abstract\creatures_loader.cpp
+1478277774 source:f:\endive\src\abstract\creatures_loader.cpp
 	<iostream>
 	"creatures_loader.hpp"
 	"../constants.hpp"
@@ -888,7 +886,7 @@
 	"hud.hpp"
 	"../../abstract/texturesmanager.hpp"
 
-1478273034 source:f:\endive\src\views\huds\menu.cpp
+1478276545 source:f:\endive\src\views\huds\menu.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
 	"menu.hpp"
@@ -1188,13 +1186,16 @@
 	"view.hpp"
 	"../abstract/texturesmanager.hpp"
 
-1478261475 f:\endive\src\views\inventory.hpp
+1478275086 f:\endive\src\views\inventory.hpp
 	<SFML/Graphics.hpp>
 	<string>
 	<map>
 	"view.hpp"
 	"../abstract/texturesmanager.hpp"
 	"../bag/bag.hpp"
+	"../constants.hpp"
+	"../bag/objectstable.hpp"
+	"../abstract/functions.hpp"
 
 1478186427 f:\endive\src\views\map.hpp
 	<SFML/Graphics.hpp>
@@ -1213,12 +1214,9 @@
 	"dex.hpp"
 	"../constants.hpp"
 
-1478274075 source:f:\endive\src\views\inventory.cpp
+1478277568 source:f:\endive\src\views\inventory.cpp
 	<iostream>
 	"inventory.hpp"
-	"../constants.hpp"
-	"../bag/objectstable.hpp"
-	"../abstract/functions.hpp"
 
 1478179169 source:f:\endive\src\views\map.cpp
 	<iostream>
@@ -1230,14 +1228,141 @@
 	"save.hpp"
 	"../constants.hpp"
 
-1478273284 source:f:\endive\src\bag\objectstable.cpp
+1478276262 source:f:\endive\src\bag\objectstable.cpp
 	<iostream>
 	<fstream>
 	"objectstable.hpp"
 
-1478269003 f:\endive\src\bag\objectstable.hpp
+1478276203 f:\endive\src\bag\objectstable.hpp
 	<map>
 	<string>
 	"pockets/objects/object.hpp"
 	"../json/json.h"
+	"../abstract/functions.hpp"
+
+1478275695 source:f:\endive\src\abstract\functions.cpp
+	"functions.hpp"
+
+1478282093 f:\endive\src\abstract\musicplayer.hpp
+	<SFML/Audio.hpp>
+	<string>
+	<vector>
+	<map>
+	"soundmanager.hpp"
+
+1478282307 f:\endive\src\abstract\soundmanager.hpp
+	<SFML/Audio.hpp>
+	<string>
+	<map>
+
+1429780453 c:\sfml-2.3\include\sfml\audio.hpp
+	<SFML/System.hpp>
+	<SFML/Audio/InputSoundFile.hpp>
+	<SFML/Audio/Listener.hpp>
+	<SFML/Audio/Music.hpp>
+	<SFML/Audio/OutputSoundFile.hpp>
+	<SFML/Audio/Sound.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundBufferRecorder.hpp>
+	<SFML/Audio/SoundFileFactory.hpp>
+	<SFML/Audio/SoundFileReader.hpp>
+	<SFML/Audio/SoundFileWriter.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/Audio/SoundStream.hpp>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\inputsoundfile.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\export.hpp
+	<SFML/Config.hpp>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\listener.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/Vector3.hpp>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\music.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundStream.hpp>
+	<SFML/Audio/InputSoundFile.hpp>
+	<SFML/System/Mutex.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\soundstream.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<SFML/System/Mutex.hpp>
+	<cstdlib>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\soundsource.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Vector3.hpp>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\alresource.hpp
+	<SFML/Audio/Export.hpp>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\outputsoundfile.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/System/NonCopyable.hpp>
+	<string>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\sound.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundSource.hpp>
+	<SFML/System/Time.hpp>
+	<cstdlib>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\soundbuffer.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Time.hpp>
+	<string>
+	<vector>
+	<set>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\soundbufferrecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/SoundBuffer.hpp>
+	<SFML/Audio/SoundRecorder.hpp>
+	<vector>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\soundrecorder.hpp
+	<SFML/Audio/Export.hpp>
+	<SFML/Audio/AlResource.hpp>
+	<SFML/System/Thread.hpp>
+	<SFML/System/Time.hpp>
+	<vector>
+	<string>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\soundfilefactory.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+	<vector>
+	<SFML/Audio/SoundFileFactory.inl>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\soundfilefactory.inl
+
+1429780453 c:\sfml-2.3\include\sfml\audio\soundfilereader.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+
+1429780453 c:\sfml-2.3\include\sfml\audio\soundfilewriter.hpp
+	<SFML/Audio/Export.hpp>
+	<string>
+
+1478280377 source:f:\endive\src\abstract\musicplayer.cpp
+	<iostream>
+	"musicplayer.hpp"
+
+1478282367 source:f:\endive\src\abstract\soundmanager.cpp
+	<iostream>
+	"soundmanager.hpp"
 

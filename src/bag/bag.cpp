@@ -2,7 +2,6 @@
 #include <fstream>
 
 #include "bag.hpp"
-#include "../abstract/functions.hpp"
 
 Bag::Bag()
 {
@@ -28,7 +27,7 @@ bool Bag::load(const std::string& path)
         for (const auto& pname: pockets)
         {
             Pocket* pocket = new Pocket(pname, true);
-            this->add_pocket(pocket);
+            this->pockets.push_back(pocket);
         }
 
         std::cout << "Bag loaded" << std::endl;
@@ -43,7 +42,8 @@ bool Bag::load(const std::string& path)
         Pocket* pocket = new Pocket(pname);
         if (!pocket->load(this->root[pname]))
                 return false;
-        this->add_pocket(pocket);
+        this->pockets.push_back(pocket);
+        std::cout << "Loaded " << pname << std::endl;
     }
 
     std::cout << "Bag loaded" << std::endl;

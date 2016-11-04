@@ -1,6 +1,5 @@
 #include <iostream>
 #include "pocket.hpp"
-#include "../../abstract/functions.hpp"
 
 Pocket::Pocket(const std::string& name_, bool default_one) :
     name(name_)

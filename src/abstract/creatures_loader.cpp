@@ -23,7 +23,7 @@ std::vector<std::string> list_files(const std::string& directory)
     if (hSearch != INVALID_HANDLE_VALUE)
     {
         do {
-                if (File.cFileName != "." && File.cFileName != "..")
+                if (std::string(File.cFileName) != directory + "/." && std::string(File.cFileName) != directory + "/..")
                     files.push_back(std::string(File.cFileName));
         } while (FindNextFile(hSearch, &File));
 

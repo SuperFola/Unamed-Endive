@@ -6,6 +6,7 @@
 
 #include "../../json/json.h"
 #include "objects/object.hpp"
+#include "../../abstract/functions.hpp"
 
 class Pocket {
 private:

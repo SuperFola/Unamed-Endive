@@ -21,6 +21,7 @@ bool DefaultView::load()
     }
 
     this->player.setName("me");
+    this->player.load();
 
     return true;
 }

@@ -13,9 +13,16 @@ ObjectsTable::ObjectsTable() :
 
 bool ObjectsTable::load()
 {
+    std::cout << "Loading ObjectsTable" << std::endl;
     if (!instance.loaded)
     {
         instance.loaded = true;
+
+        if (is_file_existing("assets/inventory/objects.json"))
+            std::cout << "Objects.json found" << std::endl;
+        else
+            std::cout << "Can not find objects.json" << std::endl;
+
         std::ifstream file("assets/inventory/objects.json");
         file >> instance.root;
 

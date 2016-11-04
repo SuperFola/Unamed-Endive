@@ -8,18 +8,6 @@ TexturesManager::TexturesManager()
 
 }
 
-bool TexturesManager::loadTexture(const std::string& path)
-{
-    sf::Texture texture;
-    if (!texture.loadFromFile(path))
-    {
-        std::cout << "Can not load texture at " << path << std::endl;
-        return false;
-    }
-    this->textures.emplace(path, texture);
-    return true;
-}
-
 sf::Texture& TexturesManager::getTexture(const std::string& name)
 {
     auto it = this->textures.find(name);

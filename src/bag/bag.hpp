@@ -6,6 +6,7 @@
 
 #include "../json/json.h"
 #include "pockets/pocket.hpp"
+#include "../abstract/functions.hpp"
 
 class Bag {
 private:

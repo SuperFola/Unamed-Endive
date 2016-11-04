@@ -8,6 +8,9 @@
 #include "view.hpp"
 #include "../abstract/texturesmanager.hpp"
 #include "../bag/bag.hpp"
+#include "../constants.hpp"
+#include "../bag/objectstable.hpp"
+#include "../abstract/functions.hpp"
 
 class InventView : public View
 {

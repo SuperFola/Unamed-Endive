@@ -16,6 +16,8 @@
 #include "../views/inventory.hpp"
 #include "../views/map.hpp"
 
+#include "functions.hpp"
+
 class StateMachine {
 private:
     // variables

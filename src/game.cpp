@@ -2,8 +2,6 @@
 #include <string>
 
 #include "game.hpp"
-#include "abstract/functions.hpp"
-#include "bag/objectstable.hpp"
 
 // private
 void Game::resize_window(int nx, int ny)
@@ -207,6 +205,9 @@ int Game::run()
     this->sm.getInventory()->add_bag(this->sm.getDefault()->getCharacter()->getBag());
 
     int _fps_update = 0;
+
+    // musics
+    // this->mplayer.play(this->mplayer.getNext());
 
     sf::Event event;
     while (this->window.isOpen())

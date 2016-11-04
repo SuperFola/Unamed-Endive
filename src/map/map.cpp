@@ -2,8 +2,6 @@
 #include <fstream>
 
 #include "map.hpp"
-#include "../constants.hpp"
-#include "../abstract/functions.hpp"
 
 // public
 Map::Map(std::string path) :

@@ -11,6 +11,7 @@
 #include "../map/map.hpp"
 #include "../abstract/texturesmanager.hpp"
 #include "../bag/bag.hpp"
+#include "../abstract/functions.hpp"
 
 enum class MvState {
     idle,
