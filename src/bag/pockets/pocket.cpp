@@ -8,7 +8,17 @@ Pocket::Pocket(const std::string& name_) :
 
 }
 
-void Pocket::add_object(Object object)
+bool Pocket::load(Json::Value& root)
+{
+    for (int i=0; i < root.size(); i++)
+    {
+        Object* object = new Object(root[i]["id"], root[i]["quantity"]);
+        this->add_object(object);
+    }
+    return true;
+}
+
+void Pocket::add_object(Object* object)
 {
     this->objects.push_back(object);
 }
@@ -16,18 +26,18 @@ void Pocket::add_object(Object object)
 Object* Pocket::getObject(int id)
 {
     if (0 <= id && id < this->objects.size())
-        return &this->objects[id];
+        return this->objects[id];
     else
     {
         std::cout << "Can not find the object with the id " << id << std::endl;
-        return &this->objects[0]; // return first one to avoid problems
+        return this->objects[0]; // return first one to avoid problems
     }
 }
 
 void Pocket::drop_object(int id)
 {
     if (0 <= id && id < this->objects.size())
-        pop<Object>(&(this->objects), id);
+        pop<Object*>(&(this->objects), id);
     else
         std::cout << "Can not find the object with the id " << id << std::endl;
 }
@@ -40,7 +50,7 @@ Json::Value Pocket::serialize()
 
     for (int i=0; i < this->objects.size(); i++)
     {
-        value["objects"].append(this->objects[i].serialize());
+        value["objects"].append(this->objects[i]->serialize());
     }
 
     return value;

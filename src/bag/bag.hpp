@@ -2,6 +2,7 @@
 #define DEF_BAG
 
 #include <vector>
+#include <string>
 
 #include "../json/json.h"
 #include "pockets/pocket.hpp"
@@ -9,11 +10,14 @@
 class Bag {
 private:
     // variables
-    std::vector<Pocket> pockets;
+    std::vector<Pocket*> pockets;
+    std::string path;
+    Json::Value root;
 
 public:
     Bag();
-    void add_pocket(Pocket);
+    bool load(const std::string&);
+    void add_pocket(Pocket*);
     Pocket* getPocket(int);
     void serialize(Json::Value&);
 };

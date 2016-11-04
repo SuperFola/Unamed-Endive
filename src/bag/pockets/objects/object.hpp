@@ -4,16 +4,14 @@
 #include <string>
 
 #include "../../../json/json.h"
-#include "../../../abstract/type.hpp"
 
 class Object {
 private:
     int id;
     int quantity;
-    ActionType act_type;
 
 public:
-    Object();
+    Object(int, int);
     Json::Value serialize();
 };
 

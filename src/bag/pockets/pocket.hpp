@@ -9,12 +9,13 @@
 
 class Pocket {
 private:
-    std::vector<Object> objects;
+    std::vector<Object*> objects;
     std::string name;
 
 public:
     Pocket(const std::string&);
-    void add_object(Object);
+    bool load(Json::Value&);
+    void add_object(Object*);
     Object* getObject(int);
     void drop_object(int);
     Json::Value serialize();
