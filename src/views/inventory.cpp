@@ -185,3 +185,8 @@ void InventView::draw_content(sf::RenderWindow& window)
         break;
     }
 }
+
+void InventView::add_bag(Bag* bag)
+{
+    this->bag = bag;
+}

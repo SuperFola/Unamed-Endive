@@ -19,6 +19,7 @@ private:
     sf::Font font;
     sf::Text text;
     sf::Text current_pocket_name;
+    Bag* bag;
 
     const std::string BCKG = "backgroud";
     const std::string LARROW = "left_arrow";
@@ -39,8 +40,7 @@ public:
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
-    // variables
-    Bag* bag;  // please don't say anything about that
+    void add_bag(Bag*);
 };
 
 #endif // DEF_INVENT_VIEW

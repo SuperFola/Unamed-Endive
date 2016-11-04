@@ -5,7 +5,6 @@
 #define MAX_HISTORY 10
 
 #include <vector>
-#include <memory>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
@@ -22,8 +21,14 @@ private:
     // variables
     int loaded;
     int current_view;
-    std::vector<std::unique_ptr<View>> views;
     std::vector<int> history;
+    // views
+    DefaultView defaultv;
+    CreaView creav;
+    DexView dexv;
+    SaveView savev;
+    InventView inventoryv;
+    MapView mapv;
 
 public:
     // methods
@@ -35,7 +40,12 @@ public:
     int process_event_current(sf::Event&, sf::Time);
     void render_current(sf::RenderWindow&);
     void update_current(sf::RenderWindow&, sf::Time);
-    View* get(int);
+    DefaultView* getDefault();
+    CreaView* getCrea();
+    DexView* getDex();
+    SaveView* getSave();
+    InventView* getInventory();
+    MapView* getMap();
 };
 
 #endif // DEF_STATEMACHINE

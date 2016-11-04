@@ -201,7 +201,7 @@ int Game::run()
     this->loading();
     // we "add" a default view
     this->sm.change_view(DEFAULT_VIEW_ID);
-    // this->sm.get(INVENTORY_VIEW_ID)->bag = this->sm.get(DEFAULT_VIEW_ID)->player->getBag();
+    this->sm.getInventory()->add_bag(this->sm.getDefault()->getCharacter()->getBag());
 
     int _fps_update = 0;
 

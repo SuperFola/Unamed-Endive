@@ -8,45 +8,45 @@ StateMachine::StateMachine() :
     loaded(0)
     , current_view(-1)
 {
-    this->views.reserve(MAX_VIEWS);
     this->history.reserve(MAX_HISTORY);
 }
 
 bool StateMachine::load()
 {
+    int id = -1;
     switch(this->loaded)
     {
     case 0:
-        this->views.emplace_back(std::make_unique<DefaultView>());
-        this->views[this->views.size() - 1]->load();
+        id = this->defaultv.getId();
+        this->defaultv.load();
         break;
 
     case 1:
-        this->views.emplace_back(std::make_unique<CreaView>());
-        this->views[this->views.size() - 1]->load();
+        id = this->creav.getId();
+        this->creav.load();
         break;
 
     case 2:
-        this->views.emplace_back(std::make_unique<DexView>());
-        this->views[this->views.size() - 1]->load();
+        id = this->dexv.getId();
+        this->dexv.load();
         break;
 
     case 3:
-        this->views.emplace_back(std::make_unique<SaveView>());
-        this->views[this->views.size() - 1]->load();
+        id = this->savev.getId();
+        this->savev.load();
         break;
 
     case 4:
-        this->views.emplace_back(std::make_unique<InventView>());
-        this->views[this->views.size() - 1]->load();
+        id = this->inventoryv.getId();
+        this->inventoryv.load();
         break;
 
     case 5:
-        this->views.emplace_back(std::make_unique<MapView>());
-        this->views[this->views.size() - 1]->load();
+        id = this->mapv.getId();
+        this->mapv.load();
         break;
     }
-    std::cout << "Loading view " << this->views[this->views.size() - 1]->getId() << std::endl;
+    std::cout << "Loading view " << id << std::endl;
     this->loaded++;
 
     return this->loaded == 6;
@@ -71,18 +71,28 @@ int StateMachine::change_view(int new_view)
             return -1;
     }
 
-    for (auto&& value : this->views)
+    int ret_val = -1;
+
+    switch(new_view)
     {
-        if (value->getId() == new_view)
-        {
-            this->history.push_back(this->current_view);
-            this->current_view = new_view;
-            std::cout << "Changing view from id " << this->history[this->history.size() - 1] << " to id " << new_view << std::endl;
-            return 1;
-        }
+    case DEFAULT_VIEW_ID:
+    case MYCREATURES_VIEW_ID:
+    case DEX_VIEW_ID:
+    case SAVING_VIEW_ID:
+    case INVENTORY_VIEW_ID:
+    case MAP_VIEW_ID:
+        this->history.push_back(this->current_view);
+        this->current_view = new_view;
+        std::cout << "Changing view from id " << this->history[this->history.size() - 1] << " to id " << new_view << std::endl;
+        ret_val = 1;
+        break;
+
+    default:
+        ret_val = -1;
+        break;
     }
 
-    return -1;  // unable to find the correct view
+    return ret_val;
 }
 
 int StateMachine::go_back_to_last_view()
@@ -106,34 +116,135 @@ int StateMachine::go_back_to_last_view()
 
 int StateMachine::process_event_current(sf::Event& event, sf::Time elapsed)
 {
-    for (auto&& element: this->views) {
-        if (element->getId() == this->current_view)
-            return element->process_event(event, elapsed);
+    int ret_val = -1;
+
+    switch(this->current_view)
+    {
+    case DEFAULT_VIEW_ID:
+        ret_val = this->defaultv.process_event(event, elapsed);
+        break;
+
+    case MYCREATURES_VIEW_ID:
+        ret_val = this->creav.process_event(event, elapsed);
+        break;
+
+    case DEX_VIEW_ID:
+        ret_val = this->dexv.process_event(event, elapsed);
+        break;
+
+    case SAVING_VIEW_ID:
+        ret_val = this->savev.process_event(event, elapsed);
+        break;
+
+    case INVENTORY_VIEW_ID:
+        ret_val = this->inventoryv.process_event(event, elapsed);
+        break;
+
+    case MAP_VIEW_ID:
+        ret_val = this->mapv.process_event(event, elapsed);
+        break;
+
+    default:
+        ret_val = -1;
+        break;
     }
-    return -1;
+
+    return ret_val;
 }
 
 void StateMachine::render_current(sf::RenderWindow& window)
 {
-    for (auto&& element: this->views) {
-        if (element->getId() == this->current_view)
-            element->render(window);
+    switch(this->current_view)
+    {
+    case DEFAULT_VIEW_ID:
+        this->defaultv.render(window);
+        break;
+
+    case MYCREATURES_VIEW_ID:
+        this->creav.render(window);
+        break;
+
+    case DEX_VIEW_ID:
+        this->dexv.render(window);
+        break;
+
+    case SAVING_VIEW_ID:
+        this->savev.render(window);
+        break;
+
+    case INVENTORY_VIEW_ID:
+        this->inventoryv.render(window);
+        break;
+
+    case MAP_VIEW_ID:
+        this->mapv.render(window);
+        break;
+
+    default:
+        break;
     }
 }
 
 void StateMachine::update_current(sf::RenderWindow& window, sf::Time elapsed)
 {
-    for (auto&& element: this->views) {
-        if (element->getId() == this->current_view)
-            element->update(window, elapsed);
+    switch(this->current_view)
+    {
+    case DEFAULT_VIEW_ID:
+        this->defaultv.update(window, elapsed);
+        break;
+
+    case MYCREATURES_VIEW_ID:
+        this->creav.update(window, elapsed);
+        break;
+
+    case DEX_VIEW_ID:
+        this->dexv.update(window, elapsed);
+        break;
+
+    case SAVING_VIEW_ID:
+        this->savev.update(window, elapsed);
+        break;
+
+    case INVENTORY_VIEW_ID:
+        this->inventoryv.update(window, elapsed);
+        break;
+
+    case MAP_VIEW_ID:
+        this->mapv.update(window, elapsed);
+        break;
+
+    default:
+        break;
     }
 }
 
-View* StateMachine::get(int id)
+DefaultView* StateMachine::getDefault()
 {
-    for (auto& element: this->views)
-    {
-        if (element->getId() == id)
-            return element.get();
-    }
+    return &this->defaultv;
 }
+
+CreaView* StateMachine::getCrea()
+{
+    return &this->creav;
+}
+
+DexView* StateMachine::getDex()
+{
+    return &this->dexv;
+}
+
+SaveView* StateMachine::getSave()
+{
+    return &this->savev;
+}
+
+InventView* StateMachine::getInventory()
+{
+    return &this->inventoryv;
+}
+
+MapView* StateMachine::getMap()
+{
+    return &this->mapv;
+}
+
