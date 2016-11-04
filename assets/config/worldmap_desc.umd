@@ -1,0 +1,127 @@
+{
+    "chemin": {
+        "name": "c",
+        "used": [
+            "-",
+            "*",
+            "/",
+            "?",
+            "!",
+            "_",
+            "+"
+        ]
+    },
+    "chenal": {
+        "name": "h",
+        "used": [
+            "o",
+            "p"
+        ]
+    },
+    "lieux": {
+        "name": "l",
+        "used": [
+            "#",
+            "&",
+            "@"
+        ]
+    },
+    "ville": {
+        "name": "v",
+        "used": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+        ]
+    },
+    "descriptions": {
+        "*": {
+            "name": "Chemin no 1",
+            "desc": "Un chemin (en haut du podium !)"
+        },
+        "-": {
+            "name": "Chemin no 2",
+            "desc": "Ceci est aussi un chemin (2nd ! GG)"
+        },
+        "/": {
+             "name": "Chemin no 3",
+             "desc": "Voici un chemin"
+        },
+        "?": {
+            "name": "Chemin no 4",
+            "desc": "Encore un chemin (pas sur le podium, il pleure)"
+        },
+        "!": {
+            "name": "Chemin no 5",
+            "desc": "C'est ... un chemin"
+        },
+        "_": {
+            "name": "Chemin no 6",
+            "desc": "Dur de savoir :/ Mais c'est un chemin"
+        },
+        "+": {
+            "name": "Chemin no 7",
+            "desc": "Un chemin (vu de l'extérieur on dirait pas. Oh wait ... un chemin c'est dehors)"
+        },
+
+        "o": {
+            "name": "Chenal no 1",
+            "desc": "Il y a de l'eau"
+        },
+        "p": {
+            "name": "Chenal no 2",
+            "desc": "Il y aussi de l'eau ici"
+        },
+
+        "#": {
+            "name": "Une île",
+            "desc": "Mais attention, faut pas le dire à tout le monde"
+        },
+        "&": {
+            "name": "Tour centrale",
+            "desc": "Une tour, au centre. Après on connait pas bien son usage (radio ? piscine ?)"
+        },
+        "@": {
+            "name": "Port",
+            "desc": "Port d'Unamed (impossible à deviner, bien entendu)"
+        },
+
+        "0": {
+            "name": "Tomat'oh",
+            "desc": "Ketchup !"
+        },
+        "1": {
+            "name": "North'bourn",
+            "desc": "Un bourg. Au nord. Très très l'utilité cette description"
+        },
+        "2": {
+            "name": "Januswi",
+            "desc": "Pas un héroooooos !"
+        },
+        "3": {
+            "name": "Arry'cover",
+            "desc": "En vrai c'est pas mauvais"
+        },
+        "4": {
+            "name": "Pah'tapey",
+            "desc": "Best city du monde"
+        },
+        "5": {
+            "name": "Piderflor",
+            "desc": "Une ville ouverte sur le monde (enfin, sur l'océan)"
+        },
+        "6": {
+            "name": "Muth'ira",
+            "desc": "Mieux dès qu'il sortira de son lit"
+        },
+        "7": {
+            "name": "Silancard",
+            "desc": "Ta MasterCard va pas aimer cette ville"
+        }
+    }
+}

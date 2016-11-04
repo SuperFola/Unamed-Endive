@@ -2,17 +2,26 @@
 #include "pocket.hpp"
 #include "../../abstract/functions.hpp"
 
-Pocket::Pocket(const std::string& name_) :
+Pocket::Pocket(const std::string& name_, bool default_one) :
     name(name_)
+    , default_pocket(default_one)
 {
 
 }
 
 bool Pocket::load(Json::Value& root)
 {
-    for (int i=0; i < root.size(); i++)
+    if (!this->default_one)
     {
-        Object* object = new Object(root[i]["id"], root[i]["quantity"]);
+        for (int i=0; i < root.size(); i++)
+        {
+            Object* object = new Object(root[i]["id"], root[i]["quantity"]);
+            this->add_object(object);
+        }
+    }
+    else
+    {
+        Object* object = new Object(this->name + " object test", 2);
         this->add_object(object);
     }
     return true;
@@ -54,4 +63,9 @@ Json::Value Pocket::serialize()
     }
 
     return value;
+}
+
+std::string& Pocket::getName()
+{
+    return this->name;
 }

@@ -140,6 +140,7 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
                 this->current++;
                 if (this->current > 4)
                     this->current = 0;
+                this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             }
             break;
 

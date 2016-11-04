@@ -11,14 +11,16 @@ class Pocket {
 private:
     std::vector<Object*> objects;
     std::string name;
+    bool default_pocket;
 
 public:
-    Pocket(const std::string&);
+    Pocket(const std::string&, bool default_one=false);
     bool load(Json::Value&);
     void add_object(Object*);
     Object* getObject(int);
     void drop_object(int);
     Json::Value serialize();
+    std::string& getName();
 };
 
 #endif // DEF_POCKET

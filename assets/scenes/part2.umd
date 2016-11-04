@@ -1,0 +1,138 @@
+{
+    "frames_order": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i"
+    ],
+    "musics_folder": "../assets/sons/",
+    "frames_folder": "../assets/cinematiques/part2/",
+    "fade_duration": 1,
+    "frames": {
+        "a": {
+            "duration": 5,
+            "image": "professeur.png",
+            "position": (0, 0),
+            "music": "03.ogg",
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "content": "Maintenant que nous avons fait connaissance, laisse moi détailler un peu plus nos différents jobs."
+            }
+        },
+        "b": {
+            "duration": 5,
+            "image": "professeur.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "content": "Tu es chargé d'arpenter cette île de long en large, de travers en pas-travers, bref d'aller partout. Et ce dans le but de récolter des données sur l'environnement et les créatures y vivant."
+            }
+        },
+        "c": {
+            "duration": 5,
+            "image": "professeur.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "content": "Grâce à toutes ces données, je pourrais améliorer ta carte (très sommaire pour le moment, même les habitants ont peur d'explorer l'île à cause des créatures)."
+            }
+        },
+        "d": {
+            "duration": 5,
+            "image": "professeur.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "content": "Tu vas sûrement rencontrer des créatures sauvages, il va te falloir du courage (ben oui, on est dans un ARPG quand même ! Si t'as pas les boules, je serais pas contente :( ) !"
+            }
+        },
+        "e": {
+            "duration": 5,
+            "image": "ombre.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "color": "green",
+                "content": "... Pardon ? Je comprends plus trop là ... C'est toi, Mirabel, qui me parle là ? Où c'est le zozo qu'a fait ce jeu ?"
+            }
+        },
+        "f": {
+            "duration": 5,
+            "image": "professeur.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "content": "Donc, nous disions ... Ah oui ! Bon, comme à Tanjoh et Ult'af, on soupsonne l'existence des créatures découvertes dans ces 2 régions ici aussi."
+            }
+        },
+        "g": {
+            "duration": 5,
+            "image": "professeur.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "content": "Je pense donc partir sur une sorte de \"Dexeur\", qui fonctionnera comme ceux qu'on a utilisés à Tanjoh et Ult'af. En voilà déjà un, mais je vais l'améliorer par la suite hein ;)"
+            }
+        },
+        "h": {
+            "duration": 4,
+            "image": "ombre.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 3,
+                "type": "plain",
+                "color": "green",
+                "content": "Vous avez reçu un "Dexeur" ! Youpi !"
+            }
+        },
+        "i": {
+            "duration": 4,
+            "image": "ombre.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 3,
+                "type": "plain",
+                "color": "green",
+                "content": "Euh ... Nan mais il va vraiment copier Poké... ?"
+            }
+        }
+    }
+}

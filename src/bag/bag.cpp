@@ -28,10 +28,11 @@ bool Bag::load(const std::string& path)
 
     if (!is_file_existing(path))
     {
+        std::cout << "Can not find the file, creating a default bag" << std::endl;
         // we will create a bag by default
         for (const auto& pname: pockets)
         {
-            Pocket* pocket = new Pocket(pname);
+            Pocket* pocket = new Pocket(pname, true);
             this->add_pocket(pocket);
         }
 

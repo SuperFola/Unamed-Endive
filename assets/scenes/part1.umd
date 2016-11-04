@@ -1,0 +1,95 @@
+{
+    "frames_order": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f"
+    ],
+    "musics_folder": "../assets/sons/",
+    "frames_folder": "../assets/cinematiques/part1/",
+    "fade_duration": 1,
+    "frames": {
+        "a": {
+            "duration": 5,
+            "image": "professeur_ombre.png",
+            "position": (0, 0),
+            "music": "01.ogg",
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "content": "Debout du'ch'mol ! Le voyage s'est bien passé ?"
+            }
+        },
+        "b": {
+            "duration": 3,
+            "image": "ombre.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 2,
+                "type": "plain",
+                "color": "green",
+                "content": "..."
+            }
+        },
+        "c": {
+            "duration": 5,
+            "image": "professeur.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "content": "Allez, secoue toi ! Je suis la prof' Mirabel, on travaille ensemble."
+            }
+        },
+        "d": {
+            "duration": 5,
+            "image": "ombre.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "color": "green",
+                "content": "On travaille ensemble et tu dois me rappeler ton nom ? xD"
+            }
+        },
+        "e": {
+            "duration": 5,
+            "image": "professeur.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 4,
+                "type": "plain",
+                "content": "Oui toi tu connais mon nom puisque tu travailles avec moi mais le gars qui nous observe derrière son écran lui ne le sais pas :P"
+            }
+        },
+        "f": {
+            "duration": 4,
+            "image": "professeur.png",
+            "position": (0, 0),
+            "last_music_continue_here": True,
+            "text": {
+                "with_gui": True,
+                "at_time": 0,
+                "end_at": 3,
+                "type": "plain",
+                "content": "D'ailleurs ... *it's ARPG time !*"
+            }
+        }
+    }
+}
