@@ -113,6 +113,7 @@ void Game::loading()
     sf::Time elapsed;
 
     bool load_sm = false;
+    bool load_musics = false;
 
     sf::Event event;
     while (this->window.isOpen())
@@ -123,9 +124,14 @@ void Game::loading()
             if(this->crea_load.load_next())
                 load_sm = true;
         }
-        else
+        if (load_sm && !load_musics)
         {
             if (this->sm.load())
+                load_musics = true;
+        }
+        if (load_musics)
+        {
+            if (this->mplayer.load())
                 break;
         }
 
@@ -207,7 +213,7 @@ int Game::run()
     int _fps_update = 0;
 
     // musics
-    // this->mplayer.play(this->mplayer.getNext());
+    this->mplayer.play(this->mplayer.getNext());
 
     sf::Event event;
     while (this->window.isOpen())

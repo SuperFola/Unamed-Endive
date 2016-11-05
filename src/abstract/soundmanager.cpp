@@ -7,7 +7,7 @@ SoundManager::SoundManager()
 
 }
 
-bool SoundManager::addSound(const std::string& name, sf::SoundBuffer* buffer)
+bool SoundManager::addSound(const std::string& name, sf::SoundBuffer buffer)
 {
     this->sounds.emplace(name, buffer);
     return true;
@@ -20,5 +20,5 @@ sf::SoundBuffer& SoundManager::getBuffer(const std::string& name)
     if (it == this->sounds.end())
         std::cout << "Can not find sound buffer with name " << name << std::endl;
     else
-        return *(it->second);
+        return it->second;
 }

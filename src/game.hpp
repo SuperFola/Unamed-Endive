@@ -12,7 +12,7 @@
 #include "abstract/creatures_loader.hpp"
 #include "abstract/functions.hpp"
 #include "bag/objectstable.hpp"
-//#include "abstract/musicplayer.hpp"
+#include "abstract/musicplayer.hpp"
 
 class Game {
 private:
@@ -20,7 +20,7 @@ private:
     sf::RenderWindow window;
     sf::Clock clock;
     StateMachine sm;
-    //MusicPlayer mplayer;
+    MusicPlayer mplayer;
     // others utilities
     CreaturesLoader crea_load;
     sf::CircleShape shape;

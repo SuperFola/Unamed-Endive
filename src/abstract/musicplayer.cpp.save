@@ -17,20 +17,19 @@ MusicPlayer::MusicPlayer() :
 bool MusicPlayer::load()
 {
     std::cout << "Loading " << this->sounds_name[this->_current] << std::endl;
-
+    
     sf::SoundBuffer buffer;
-    if (!buffer.loadFromFile("assets/sounds/" + this->sounds_name[this->_current]))
+    if (!buffer.loadFromFile("assets/sounds/" + fname))
         return false;
-    this->sdmgr.addSound(this->sounds_name[this->_current], buffer);
-    this->sounds[this->sounds_name[this->_current]] = sf::Sound();
-    this->sounds[this->sounds_name[this->_current]].setBuffer(this->sdmgr.getBuffer(this->sounds_name[this->_current]));
+    this->sdmgr.addSound(fname, buffer);
+    this->sounds[fname] = sf::Sound();
+    this->sounds[fname].setBuffer(this->sdmgr.getBuffer(fname));
 
-    this->_current++;
+    std::cout << "Loaded " << this->sounds_name[this->_current] << std::endl;
 
-    if (this->_current == this->sounds_name.size())
-        this->loaded = true;
+    this->loaded = true;
 
-    return this->loaded;
+    return true;
 }
 
 void MusicPlayer::play(const std::string name)
@@ -74,8 +73,6 @@ std::string MusicPlayer::getNext()
     int index = 0;
     while (this->sounds_name[index] != this->current)
     {
-        if (index == this->sounds_name.size() - 1)
-            break;
         index++;
     }
     if (index == this->sounds_name.size() - 1)

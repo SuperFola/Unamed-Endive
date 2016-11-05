@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 
-using dict_b = std::map<std::string, sf::SoundBuffer*>;
+using dict_b = std::map<std::string, sf::SoundBuffer>;
 
 class SoundManager
 {
@@ -14,7 +14,7 @@ private:
 
 public:
     SoundManager();
-    bool addSound(const std::string&, sf::SoundBuffer*);
+    bool addSound(const std::string&, sf::SoundBuffer);
     sf::SoundBuffer& getBuffer(const std::string&);
 };
 
