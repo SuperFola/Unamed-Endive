@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="ENDIVE" />
+		<Option title="unamed" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/ENDIVE" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/main" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -17,11 +17,29 @@
 				<Linker>
 					<Add library="sfml-graphics-d" />
 					<Add library="sfml-window-d" />
+					<Add library="sfml-audio-d" />
 					<Add library="sfml-system-d" />
 				</Linker>
 			</Target>
+			<Target title="Test">
+				<Option output="test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Test/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++14" />
+				</Compiler>
+				<Linker>
+					<Add option="-lPython34" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-audio" />
+					<Add library="sfml-system" />
+					<Add library="sfml-main" />
+				</Linker>
+			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/ENDIVE" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/main" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -32,6 +50,7 @@
 					<Add option="-s" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
+					<Add library="sfml-audio" />
 					<Add library="sfml-system" />
 				</Linker>
 			</Target>
@@ -39,12 +58,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-std=c++14" />
-			<Add directory="C:/SFML-2.3/include" />
+			<Add directory="C:/SFML-2.4.1/include" />
 			<Add directory="F:/ENDIVE/src/scripting/Python34/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-lPython34" />
-			<Add directory="C:/SFML-2.3/lib" />
+			<Add directory="C:/SFML-2.4.1/lib" />
 			<Add directory="F:/ENDIVE/src/scripting/Python34/libs" />
 		</Linker>
 		<Unit filename="main.cpp" />
@@ -54,6 +73,7 @@
 		<Unit filename="src/abstract/creatures_loader.hpp" />
 		<Unit filename="src/abstract/equip.cpp" />
 		<Unit filename="src/abstract/equip.hpp" />
+		<Unit filename="src/abstract/functions.cpp" />
 		<Unit filename="src/abstract/functions.hpp" />
 		<Unit filename="src/abstract/point.cpp" />
 		<Unit filename="src/abstract/point.hpp" />
@@ -64,6 +84,8 @@
 		<Unit filename="src/abstract/type.hpp" />
 		<Unit filename="src/bag/bag.cpp" />
 		<Unit filename="src/bag/bag.hpp" />
+		<Unit filename="src/bag/objectstable.cpp" />
+		<Unit filename="src/bag/objectstable.hpp" />
 		<Unit filename="src/bag/pockets/objects/object.cpp" />
 		<Unit filename="src/bag/pockets/objects/object.hpp" />
 		<Unit filename="src/bag/pockets/pocket.cpp" />
@@ -110,11 +132,18 @@
 		<Unit filename="src/views/save.hpp" />
 		<Unit filename="src/views/view.cpp" />
 		<Unit filename="src/views/view.hpp" />
+		<Unit filename="version.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<debugger />
 			<lib_finder disable_auto="1" />
+			<AutoVersioning>
+				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
+				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="1" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
+				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
+				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
+			</AutoVersioning>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
