@@ -162,6 +162,7 @@ namespace PyUnamed
                 goto failed;
                 break;
             }
+            return v;
 
             failed:
             {
