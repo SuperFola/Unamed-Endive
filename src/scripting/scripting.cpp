@@ -97,6 +97,79 @@ namespace PyUnamed
             RETURN_NONE
         }
 
+        static PyObject* createGlobal(PyObject* self, PyObject* args)
+        {
+            const char* name;
+            svar_t gvar;
+
+            if (!PyArg_ParseTuple(args, "si", &name, &gvar.ivar))
+            {
+                if (!PyArg_ParseTuple(args, "sf", &name, &gvar.fvar))
+                {
+                    if (!PyArg_ParseTuple(args, "ss", &name, &gvar.cvar))
+                    {
+                        if (!PyArg_ParseTuple(args, "sp", &name, &gvar.bvar))
+                        {
+                            goto failed;
+                        } else gvar.kind = "p";
+                    } else gvar.kind = "s";
+                } else gvar.kind = "f";
+            } else gvar.kind = "i";
+            // if we are here, we successfully casted the python var into a C/C++ one
+            return PyLong_FromLong(PyScripting::createGlobal(name, svar_t));
+
+            failed:
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need either an int, a float, or a char*");
+                return NULL;
+            }
+        }
+
+        static PyObject* getGlobal(PyObject* self, PyObject* args)
+        {
+            const char* name;
+            if (!PyArg_ParseTuple(args, "s", &name))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need a char* representing the name of the global var to get");
+                return NULL;
+            }
+            svar_t gvar = PyScripting::getGlobal(name);
+            PyObject* v;
+
+            switch (gvar.kind)
+            {
+            case "empty":
+                goto failed;
+                break;
+
+            case "p":
+                v = Py_BuildValue(gvar.kind, gvar.bvar);
+                break;
+
+            case "s":
+                v = Py_BuildValue(gvar.kind, gvar.cvar);
+                break;
+
+            case "f":
+                v = Py_BuildValue(gvar.kind, gvar.fvar);
+                break;
+
+            case "i":
+                v = Py_BuildValue(gvar.kind, gvar.ivar);
+                break;
+
+            default:
+                goto failed;
+                break;
+            }
+
+            failed:
+            {
+                PyErr_SetString(UnamedError, "Could not find the global var named '" + name + "'");
+                return NULL;
+            }
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
@@ -104,6 +177,8 @@ namespace PyUnamed
             {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given"},
             {"loadImage", loadTexture, METH_VARARGS, "Load an image using a given path, and assigne it to a given id"},
             {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
+            {"createGlobal", createGlobal, METH_VARARGS, "Create a global value from a given id (of type char*), with a specified value (int, float and char* are currently supported)"},
+            {"getGlobal", getGlobal, METH_VARARGS, "Return a global value with the name given"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -139,6 +214,8 @@ PyScripting::PyScripting():
     connected(false)
     , program(L"PyScripter engine")
 {
+    this->empty_svar_t.kind = "empty";
+
     Py_SetProgramName(this->program);
 }
 
@@ -287,3 +364,22 @@ int PyScripting::getValue()
  {
      return 0;
  }
+
+ int PyScripting::createGlobal(const char* name, svar_t value)
+ {
+     std::string tname = std::string(name);
+     if (instance.globals_vars.find(tname) != instance.globals_vars.end())
+     {
+         instance.globals_vars[tname] = value;
+         return 1;  // for python consistency
+     }
+     return 0;  // same
+ }
+
+svar_t PyScripting::getGlobal(const char* name)
+{
+    std::string tname = std::string(name);
+    if (instance.globals_vars.find(tname) != instance.globals_vars.end())
+        return instance.globals_vars[tname];
+    return instance.empty_svar_t;
+}
