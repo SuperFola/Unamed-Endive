@@ -40,10 +40,70 @@ namespace PyUnamed
             return Py_BuildValue("i", x);
         }
 
+        static PyObject* registerScript(PyObject* self, PyObject* args)
+        {
+            const char* kind;
+            const char* id;
+            if (!PyArg_ParseTuple(args, "ss", &kind, &id))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need a const char* representing the kind of the script, and a const char* representing the id of the script");
+                return NULL;
+            }
+            if (PyScripting::setModuleKind(kind, id) == -1)
+            {
+                PyErr_SetString(UnamedError, "You have already defined a kind for this script");
+                return NULL;
+            }
+
+            RETURN_NONE
+        }
+
+        static PyObject* loadTexture(PyObject* self, PyObject* args)
+        {
+            const char* name;
+            const char* id;
+
+            if (!PyArg_ParseTuple(args, "ss", &name, &id))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need a const char* representing the path to the image, and a const char* giving the id of the image");
+                return NULL;
+            }
+            if (PyScripting::loadImage(name, id) == -1)
+            {
+                PyErr_SetString(UnamedError, "Can not find the image at '" + name + "'");
+                return NULL;
+            }
+
+            RETURN_NONE
+        }
+
+        static PyObject* displayTexture(PyObject* self, PyObject* args)
+        {
+            const char* id;
+            int x;
+            int y;
+
+            if (!PyArg_ParseTuple(args, "sii", &id, &x, &y))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need a const char* representing the id of the image, and 2 integers representing the position of the image (relative to the upper right corner of the map)");
+                return NULL;
+            }
+            if (PyScripting::displayImage(id, x, y) == -1)
+            {
+                PyErr_SetString(UnamedError, "Can not find the image with id '" + id + "'");
+                return NULL;
+            }
+
+            RETURN_NONE
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
             {"test", test, METH_VARARGS, "Return a number time PyScripting::getValue()"},
+            {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given"},
+            {"loadImage", loadTexture, METH_VARARGS, "Load an image using a given path, and assigne it to a given id"},
+            {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -208,3 +268,22 @@ int PyScripting::getValue()
 {
     return instance.value;
 }
+
+ int PyScripting::setModuleKind(const char* kind, const char* id)
+ {
+     std::string tid = std::string(id);
+     if (instance.modules_kinds.find(tid) != instance.modules_kinds.end())
+        return -1;  // error the key already exists
+     instance.modules_kinds[tid)] = std::string(kind);  // otherwise everything is fine <3
+     return 0;
+ }
+
+ int PyScripting::loadImage(const char* name, const char* id)
+ {
+     return 0;
+ }
+
+ int PyScripting::displayImage(const char* id, int x, int y)
+ {
+     return 0;
+ }

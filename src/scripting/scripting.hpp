@@ -3,6 +3,7 @@
 
 #include <Python.h>
 
+#include <map>
 #include <vector>
 #include <string>
 
@@ -20,6 +21,7 @@ private:
     wchar_t* program;
     std::vector<std::string> modules_names;
     std::vector<std::string> modules_content;
+    std::map<std::string, std::string> modules_kinds;
 
     // methods
     void load_all_modules();
@@ -37,6 +39,10 @@ public:
 
     static void setValue(int);
     static int getValue();
+
+    static int setModuleKind(const char*, const char*);
+    static int loadImage(const char*, const char*);
+    static int displayImage
 };
 
 #endif // DEF_SCRIPTING
