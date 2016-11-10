@@ -238,7 +238,7 @@ void PyScripting::load_all_modules()
     {
         do {
                 if (std::string(File.cFileName) != "." && std::string(File.cFileName) != "..")
-                    this->modules_names.push_back(directory + "/" + std::string(File.cFileName));
+                    this->modules[directory + "/" + std::string(File.cFileName)] = "";
         } while (FindNextFile(hSearch, &File));
 
         FindClose(hSearch);
@@ -254,19 +254,19 @@ void PyScripting::load_all_modules()
 
         while ((ent = readdir(rep)) != NULL)
         {
-            this->modules_names.push_back(directory + std::string(ent->d_name));
+            this->modules[directory + "/" + std::string(ent->d_name)];
         }
 
         closedir(rep);
     }
     #endif // PLATFORM_POSIX
 
-    for (auto& fname: this->modules_names)
+    for (auto& mod: this->modules)
     {
         std::ifstream file;
-        file.open(fname);
+        file.open(mod.first);
 
-        std::cout << "Loading " << fname << std::endl;
+        std::cout << "Loading script : " << mod.first << std::endl;
 
         std::string content;
         while (file)
@@ -280,7 +280,7 @@ void PyScripting::load_all_modules()
 
         file.close();
 
-        this->modules_content.push_back(content);
+        this->modules[mod.first] = content;
     }
 }
 
@@ -326,15 +326,120 @@ int PyScripting::run_all_modules()
 {
     int i = 0;
 
-    for (auto& module_code: instance.modules_content)
+    for (auto& module_code: instance.modules)
     {
-        instance.run_code(module_code.data());
+        instance.run_code(module_code.second.data());
         i++;
     }
 
     std::cout << "Ran " << i << " script(s) one time" << std::endl;
 
     return 1;
+}
+
+int PyScripting::run_on_start_modules()
+{
+    int i = 0;
+
+    for (auto& module_code: instance.modules)
+    {
+        if (instance.modules_kinds[module_code.first] == "runOnceWhenStarting")
+        {
+            instance.run_code(module_code.second.data());
+            i++;
+        }
+    }
+
+    std::cout << "Ran " << i << " script(s) one time" << std::endl;
+
+    return 1;
+}
+
+int PyScripting::run_on_end_modules()
+{
+    int i = 0;
+
+    for (auto& module_code: instance.modules)
+    {
+        if (instance.modules_kinds[module_code.first] == "runOnceWhenClosing")
+        {
+            instance.run_code(module_code.second.data());
+            i++;
+        }
+    }
+
+    std::cout << "Ran " << i << " script(s) one time" << std::endl;
+
+    return 1;
+}
+
+int PyScripting::run_until_end_modules()
+{
+    return 1;
+}
+
+int PyScripting::run_update_modules()
+{
+    int i = 0;
+
+    for (auto& module_code: instance.modules)
+    {
+        if (instance.modules_kinds[module_code.first] == "runWhenUpdatingGame")
+        {
+            instance.run_code(module_code.second.data());
+            i++;
+        }
+    }
+
+    std::cout << "Ran " << i << " script(s) one time" << std::endl;
+
+    return 1;
+}
+
+int PyScripting::run_event_modules()
+{
+    int i = 0;
+
+    for (auto& module_code: instance.modules)
+    {
+        if (instance.modules_kinds[module_code.first] == "runWhenProcessingEvents")
+        {
+            instance.run_code(module_code.second.data());
+            i++;
+        }
+    }
+
+    std::cout << "Ran " << i << " script(s) one time" << std::endl;
+
+    return 1;
+}
+
+int PyScripting::run_drawing_modules()
+{
+    int i = 0;
+
+    for (auto& module_code: instance.modules)
+    {
+        if (instance.modules_kinds[module_code.first] == "runWhenRenderingView")
+        {
+            instance.run_code(module_code.second.data());
+            i++;
+        }
+    }
+
+    std::cout << "Ran " << i << " script(s) one time" << std::endl;
+
+    return 1;
+}
+
+void PyScripting::setEvent(sf::Event& ev)
+{
+    instance.event = ev;
+}
+
+sf::Event PyScripting::getEvent()
+{
+    return instance.event;
 }
 
 void PyScripting::setValue(int val)

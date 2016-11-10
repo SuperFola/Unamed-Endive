@@ -2,6 +2,7 @@
 #define DEF_SCRIPTING
 
 #include <Python.h>
+#include <SFML/Window/Event.hpp>
 
 #include <map>
 #include <vector>
@@ -21,11 +22,11 @@ private:
     // variables
     bool connected;
     wchar_t* program;
-    std::vector<std::string> modules_names;
-    std::vector<std::string> modules_content;
+    std::map<std::string, std::string> modules;
     std::map<std::string, std::string> modules_kinds;
     std::map<std::string, svar_t> globals_vars;
     svar_t empty_svar_t;
+    sf::Event event;
 
     // methods
     void load_all_modules();
@@ -38,8 +39,18 @@ public:
     // methods
     static bool connect();
     static bool disconnect();
+
     static int run_code(const char*);
     static int run_all_modules();
+    static int run_on_start_modules();
+    static int run_on_end_modules();
+    static int run_until_end_modules();
+    static int run_update_modules();
+    static int run_event_modules();
+    static int run_drawing_modules();
+
+    static void setEvent(sf::Event&);
+    static sf::Event getEvent();
 
     static void setValue(int);
     static int getValue();
