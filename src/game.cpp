@@ -14,6 +14,9 @@ void Game::resize_window(int nx, int ny)
 void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 {
     int c_view = this->sm.getId();
+    // we give the current event to the scripting engine if a script need it
+    PyScripting::setEvent(event);
+    PyScripting::run_event_modules();
 
     if (c_view != -1)  // we check if the view exist
     {
@@ -44,6 +47,8 @@ void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 void Game::render()
 {
     int c_view = this->sm.getId();
+    // launch the scripts
+    PyScripting::run_drawing_modules();
 
     if (c_view != -1) // does the view exist ?
     {
@@ -65,6 +70,8 @@ void Game::render_loading()
 void Game::update(sf::Time elapsed)
 {
     int c_view = this->sm.getId();
+    // launch the scripts
+    PyScripting::run_update_modules();
 
     if (c_view != -1) // does the view exist ?
     {
@@ -182,6 +189,8 @@ Game::Game() :
     PyScripting::setValue(10);
     PyScripting::run_all_modules();  // testing
     PyScripting::run_all_modules();  // testing bis
+    // launch the scripts
+    PyScripting::run_on_start_modules();
 
     // shapes
     this->shape.setFillColor(sf::Color(150, 50, 250));
@@ -250,6 +259,9 @@ int Game::run()
         this->render();
         this->window.display();
     }
+
+    // launch the scripts
+    PyScripting::run_on_end_modules();
 
     return 0;
 }

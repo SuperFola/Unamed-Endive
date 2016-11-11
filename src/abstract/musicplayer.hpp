@@ -11,12 +11,12 @@
 class MusicPlayer
 {
 private:
+    bool loaded;
     SoundManager sdmgr;
     std::map<std::string, sf::Sound> sounds;
     std::string current;
     int _current;
     std::vector<std::string> sounds_name;
-    bool loaded;
 
 public:
     MusicPlayer();

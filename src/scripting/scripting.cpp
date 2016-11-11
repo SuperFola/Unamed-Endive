@@ -62,6 +62,7 @@ namespace PyUnamed
         {
             const char* name;
             const char* id;
+            char result[128];
 
             if (!PyArg_ParseTuple(args, "ss", &name, &id))
             {
@@ -70,7 +71,10 @@ namespace PyUnamed
             }
             if (PyScripting::loadImage(name, id) == -1)
             {
-                PyErr_SetString(UnamedError, "Can not find the image at '" + name + "'");
+                strcat(result, "Can not find the image at '");
+                strcat(result, name);
+                strcat(result, "'");
+                PyErr_SetString(UnamedError, result);
                 return NULL;
             }
 
@@ -82,6 +86,7 @@ namespace PyUnamed
             const char* id;
             int x;
             int y;
+            char result[128];
 
             if (!PyArg_ParseTuple(args, "sii", &id, &x, &y))
             {
@@ -90,7 +95,10 @@ namespace PyUnamed
             }
             if (PyScripting::displayImage(id, x, y) == -1)
             {
-                PyErr_SetString(UnamedError, "Can not find the image with id '" + id + "'");
+                strcat(result, "Can not find the image with id '");
+                strcat(result, id);
+                strcat(result, "'");
+                PyErr_SetString(UnamedError, result);
                 return NULL;
             }
 
@@ -110,19 +118,15 @@ namespace PyUnamed
                     {
                         if (!PyArg_ParseTuple(args, "sp", &name, &gvar.bvar))
                         {
-                            goto failed;
+                            PyErr_SetString(UnamedError, "Can not parse argument, need either an int, a float, or a char*");
+                            return NULL;
                         } else gvar.kind = "p";
                     } else gvar.kind = "s";
                 } else gvar.kind = "f";
             } else gvar.kind = "i";
             // if we are here, we successfully casted the python var into a C/C++ one
-            return PyLong_FromLong(PyScripting::createGlobal(name, svar_t));
-
-            failed:
-            {
-                PyErr_SetString(UnamedError, "Can not parse argument, need either an int, a float, or a char*");
-                return NULL;
-            }
+            int v = PyScripting::createGlobal(name, gvar);
+            return PyLong_FromLong(v);
         }
 
         static PyObject* getGlobal(PyObject* self, PyObject* args)
@@ -133,28 +137,29 @@ namespace PyUnamed
                 PyErr_SetString(UnamedError, "Can not parse argument, need a char* representing the name of the global var to get");
                 return NULL;
             }
+            char result[128];
             svar_t gvar = PyScripting::getGlobal(name);
             PyObject* v;
 
-            switch (gvar.kind)
+            switch (*gvar.kind)
             {
-            case "empty":
+            case 'e':
                 goto failed;
                 break;
 
-            case "p":
+            case 'p':
                 v = Py_BuildValue(gvar.kind, gvar.bvar);
                 break;
 
-            case "s":
+            case 's':
                 v = Py_BuildValue(gvar.kind, gvar.cvar);
                 break;
 
-            case "f":
+            case 'f':
                 v = Py_BuildValue(gvar.kind, gvar.fvar);
                 break;
 
-            case "i":
+            case 'i':
                 v = Py_BuildValue(gvar.kind, gvar.ivar);
                 break;
 
@@ -166,7 +171,10 @@ namespace PyUnamed
 
             failed:
             {
-                PyErr_SetString(UnamedError, "Could not find the global var named '" + name + "'");
+                strcat(result, "Could not find the global var named '");
+                strcat(result, name);
+                strcat(result, "'");
+                PyErr_SetString(UnamedError, result);
                 return NULL;
             }
         }
@@ -215,7 +223,7 @@ PyScripting::PyScripting():
     connected(false)
     , program(L"PyScripter engine")
 {
-    this->empty_svar_t.kind = "empty";
+    this->empty_svar_t.kind = "e";
 
     Py_SetProgramName(this->program);
 }
@@ -282,6 +290,8 @@ void PyScripting::load_all_modules()
 
         this->modules[mod.first] = content;
     }
+    PyScripting::run_code(this->modules["register.py"]);
+    this->modules.clear();
 }
 
 // static methods
@@ -308,6 +318,11 @@ bool PyScripting::disconnect()
     {
         instance.connected = false;
         Py_Finalize();
+        for (auto& var: this->modules_kinds)
+        {
+            var.second.clear();
+        }
+        this->modules_kinds.clear();
 
         return true;
     }
@@ -326,49 +341,34 @@ int PyScripting::run_all_modules()
 {
     int i = 0;
 
-    for (auto& module_code: instance.modules)
+    for (auto& kinds: instance.modules_kinds)
     {
-        instance.run_code(module_code.second.data());
-        i++;
+        for (auto& code: kinds)
+        {
+            instance.run_code(code.second.data());
+            i++;
+        }
     }
-
-    std::cout << "Ran " << i << " script(s) one time" << std::endl;
 
     return 1;
 }
 
 int PyScripting::run_on_start_modules()
 {
-    int i = 0;
-
-    for (auto& module_code: instance.modules)
+    for (auto& module_code: instance.modules_kinds["runOnceWhenStarting"])
     {
-        if (instance.modules_kinds[module_code.first] == "runOnceWhenStarting")
-        {
-            instance.run_code(module_code.second.data());
-            i++;
-        }
+        instance.run_code(module_code.second.data());
     }
-
-    std::cout << "Ran " << i << " script(s) one time" << std::endl;
 
     return 1;
 }
 
 int PyScripting::run_on_end_modules()
 {
-    int i = 0;
-
-    for (auto& module_code: instance.modules)
+    for (auto& module_code: instance.modules_kinds["runOnceWhenClosing"])
     {
-        if (instance.modules_kinds[module_code.first] == "runOnceWhenClosing")
-        {
-            instance.run_code(module_code.second.data());
-            i++;
-        }
+        instance.run_code(module_code.second.data());
     }
-
-    std::cout << "Ran " << i << " script(s) one time" << std::endl;
 
     return 1;
 }
@@ -380,54 +380,30 @@ int PyScripting::run_until_end_modules()
 
 int PyScripting::run_update_modules()
 {
-    int i = 0;
-
-    for (auto& module_code: instance.modules)
+    for (auto& module_code: instance.modules_kinds["runWhenUpdatingGame"])
     {
-        if (instance.modules_kinds[module_code.first] == "runWhenUpdatingGame")
-        {
-            instance.run_code(module_code.second.data());
-            i++;
-        }
+        instance.run_code(module_code.second.data());
     }
-
-    std::cout << "Ran " << i << " script(s) one time" << std::endl;
 
     return 1;
 }
 
 int PyScripting::run_event_modules()
 {
-    int i = 0;
-
-    for (auto& module_code: instance.modules)
+    for (auto& module_code: instance.modules_kinds["runWhenProcessingEvents"])
     {
-        if (instance.modules_kinds[module_code.first] == "runWhenProcessingEvents")
-        {
-            instance.run_code(module_code.second.data());
-            i++;
-        }
+        instance.run_code(module_code.second.data());
     }
-
-    std::cout << "Ran " << i << " script(s) one time" << std::endl;
 
     return 1;
 }
 
 int PyScripting::run_drawing_modules()
 {
-    int i = 0;
-
-    for (auto& module_code: instance.modules)
+    for (auto& module_code: instance.modules_kinds["runWhenRenderingView"])
     {
-        if (instance.modules_kinds[module_code.first] == "runWhenRenderingView")
-        {
-            instance.run_code(module_code.second.data());
-            i++;
-        }
+        instance.run_code(module_code.second.data());
     }
-
-    std::cout << "Ran " << i << " script(s) one time" << std::endl;
 
     return 1;
 }
@@ -454,11 +430,26 @@ int PyScripting::getValue()
 
  int PyScripting::setModuleKind(const char* kind, const char* id)
  {
+     std::string tkind = std::string(kind);
      std::string tid = std::string(id);
-     if (instance.modules_kinds.find(tid) != instance.modules_kinds.end())
-        return -1;  // error the key already exists
-     instance.modules_kinds[tid)] = std::string(kind);  // otherwise everything is fine <3
-     return 0;
+     if (instance.modules_kinds.find(tkind) != instance.modules_kinds.end())
+     {
+         if (instance.modules_kinds[tkind].find(tid) != instance.modules_kinds[tkind].end())
+         {
+             instance.modules_kinds[tkind][tid] = instance.modules[tid];
+             return 0;
+         }
+         else
+            return -1;  // error the module already exists
+     }
+     else
+     {
+         instance.modules_kinds[tkind] = {
+             tid,
+             instance.modules[tid]
+         };
+         return 0;
+     }
  }
 
  int PyScripting::loadImage(const char* name, const char* id)
@@ -471,7 +462,7 @@ int PyScripting::getValue()
      return 0;
  }
 
- int PyScripting::createGlobal(const char* name, svar_t value)
+ int PyScripting::createGlobal(const char* name, struct svar_t value)
  {
      std::string tname = std::string(name);
      if (instance.globals_vars.find(tname) != instance.globals_vars.end())
