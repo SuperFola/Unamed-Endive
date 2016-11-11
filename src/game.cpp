@@ -187,10 +187,6 @@ Game::Game() :
     // load scripting module
     PyScripting::connect();
     PyScripting::setValue(10);
-    PyScripting::run_all_modules();  // testing
-    PyScripting::run_all_modules();  // testing bis
-    // launch the scripts
-    PyScripting::run_on_start_modules();
 
     // shapes
     this->shape.setFillColor(sf::Color(150, 50, 250));
@@ -218,6 +214,8 @@ int Game::run()
     // we "add" a default view
     this->sm.change_view(DEFAULT_VIEW_ID);
     this->sm.getInventory()->add_bag(this->sm.getDefault()->getCharacter()->getBag());
+    // launch the scripts
+    PyScripting::run_on_start_modules();
 
     int _fps_update = 0;
 

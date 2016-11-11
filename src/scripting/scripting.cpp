@@ -235,18 +235,19 @@ PyScripting& PyScripting::Instance()
 
 void PyScripting::load_all_modules()
 {
-    std::string directory = "assets/scripts";
+    std::string directory = "assets/scripts/";
+    std::vector<std::string> mods;
 
     #ifdef PLATFORM_WIN
     WIN32_FIND_DATA File;
     HANDLE hSearch;
 
-    hSearch = FindFirstFile((directory + "/*.py").data(), &File);
+    hSearch = FindFirstFile((directory + "*.py").data(), &File);
     if (hSearch != INVALID_HANDLE_VALUE)
     {
         do {
                 if (std::string(File.cFileName) != "." && std::string(File.cFileName) != "..")
-                    this->modules[directory + "/" + std::string(File.cFileName)] = "";
+                    mods.push_back(directory + std::string(File.cFileName));
         } while (FindNextFile(hSearch, &File));
 
         FindClose(hSearch);
@@ -262,19 +263,19 @@ void PyScripting::load_all_modules()
 
         while ((ent = readdir(rep)) != NULL)
         {
-            this->modules[directory + "/" + std::string(ent->d_name)];
+            mods.push_back(directory + std::string(ent->d_name));
         }
 
         closedir(rep);
     }
     #endif // PLATFORM_POSIX
 
-    for (auto& mod: this->modules)
+    for (auto& mod: mods)
     {
         std::ifstream file;
-        file.open(mod.first);
+        file.open(mod);
 
-        std::cout << "Loading script : " << mod.first << std::endl;
+        std::cout << "Loading script : " << mod << std::endl;
 
         std::string content;
         while (file)
@@ -287,10 +288,11 @@ void PyScripting::load_all_modules()
         }
 
         file.close();
+        std::cout << mod << " " << directory << std::endl;
 
-        this->modules[mod.first] = content;
+        this->modules[mod.substr(directory.size())] = content;
     }
-    PyScripting::run_code(this->modules["register.py"]);
+    PyScripting::run_code(this->modules["register.py"].data());
     this->modules.clear();
 }
 
@@ -318,11 +320,11 @@ bool PyScripting::disconnect()
     {
         instance.connected = false;
         Py_Finalize();
-        for (auto& var: this->modules_kinds)
+        for (auto& var: instance.modules_kinds)
         {
             var.second.clear();
         }
-        this->modules_kinds.clear();
+        instance.modules_kinds.clear();
 
         return true;
     }
@@ -343,7 +345,7 @@ int PyScripting::run_all_modules()
 
     for (auto& kinds: instance.modules_kinds)
     {
-        for (auto& code: kinds)
+        for (auto& code: instance.modules_kinds[kinds.first])
         {
             instance.run_code(code.second.data());
             i++;
@@ -355,20 +357,26 @@ int PyScripting::run_all_modules()
 
 int PyScripting::run_on_start_modules()
 {
+    int i = 0;
     for (auto& module_code: instance.modules_kinds["runOnceWhenStarting"])
     {
         instance.run_code(module_code.second.data());
+        i++;
     }
+    std::cout << "Ran " << i << " modules at the start of the game" << std::endl;
 
     return 1;
 }
 
 int PyScripting::run_on_end_modules()
 {
+    int i = 0;
     for (auto& module_code: instance.modules_kinds["runOnceWhenClosing"])
     {
         instance.run_code(module_code.second.data());
+        i++;
     }
+    std::cout << "Ran " << i << " modules at the end of the game" << std::endl;
 
     return 1;
 }
@@ -432,6 +440,9 @@ int PyScripting::getValue()
  {
      std::string tkind = std::string(kind);
      std::string tid = std::string(id);
+
+     std::cout << "Registering " << tid << " as " << tkind << std::endl;
+
      if (instance.modules_kinds.find(tkind) != instance.modules_kinds.end())
      {
          if (instance.modules_kinds[tkind].find(tid) != instance.modules_kinds[tkind].end())
@@ -444,10 +455,7 @@ int PyScripting::getValue()
      }
      else
      {
-         instance.modules_kinds[tkind] = {
-             tid,
-             instance.modules[tid]
-         };
+         instance.modules_kinds[tkind][tid] = instance.modules[tid];
          return 0;
      }
  }
