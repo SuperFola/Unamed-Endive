@@ -62,6 +62,16 @@ The 12 musical themes were composed by Bat' exclusively for this project.
 
 ----
 
+Les sprites de Darth, Vader, et Tress sont des créations de [OceansLugiaSpirit](http://oceanslugiaspirit.deviantart.com/)
+
+The sprites of Darth, Vader, and Tress are creations of [OceansLugiaSpirit](http://oceanslugiaspirit.deviantart.com/)
+
+Minus est une création de [Lightbulb15](http://lightbulb15.deviantart.com)
+
+Minus is creation of [Lightbulb15](http://lightbulb15.deviantart.com)
+
+----
+
 Les différentes conversations que j'ai eu avec ces graphistes m'autorisant à utiliser leurs créations (les messages les plus récents sont les premiers) :
 
 Here are the different conversations I had with these graphists who allowed to use their work (the most recent messages are the first ones) :

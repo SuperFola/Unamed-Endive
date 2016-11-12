@@ -63,7 +63,6 @@ bool CreaturesLoader::load_next()
 
     sf::Image image;
 
-    std::cout << "Loading " << this->folder + "/" + file << std::endl;
     if (!image.loadFromFile(this->folder + "/" + file))
         std::cout << "Unable to open " << this->folder + "/" + file << std::endl;
 
@@ -76,6 +75,8 @@ bool CreaturesLoader::load_next()
 
     if (this->current == this->files.size())
         done = true;  // we tell the caller of this method that we are done
+    if (done)
+        std::cout << "Finished loading all the creatures (images)" << std::endl;
 
     return done;
 }

@@ -1,4 +1,3 @@
-from Unamed import test
+import Unamed
 
-print(test(12))
-# doit etre 12 * 10
+Unamed.displayImage("bulle", 150, 200)

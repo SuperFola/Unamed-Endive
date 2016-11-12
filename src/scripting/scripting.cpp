@@ -24,22 +24,6 @@ namespace PyUnamed
         static PyObject* UnamedError;
 
         // module functions
-        static PyObject* test(PyObject* self, PyObject* args)
-        {
-            int x = 0;
-
-            if (!PyArg_ParseTuple(args, "i", &x))
-            {
-                PyErr_SetString(UnamedError, "Can not parse arguments");
-                return NULL;
-            }
-
-            x *= PyScripting::getValue();
-            PyScripting::setValue(PyScripting::getValue() + 1);
-
-            return Py_BuildValue("i", x);
-        }
-
         static PyObject* registerScript(PyObject* self, PyObject* args)
         {
             const char* kind;
@@ -182,7 +166,6 @@ namespace PyUnamed
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
-            {"test", test, METH_VARARGS, "Return a number time PyScripting::getValue()"},
             {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given"},
             {"loadImage", loadTexture, METH_VARARGS, "Load an image using a given path, and assigne it to a given id"},
             {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
@@ -288,7 +271,6 @@ void PyScripting::load_all_modules()
         }
 
         file.close();
-        std::cout << mod << " " << directory << std::endl;
 
         this->modules[mod.substr(directory.size())] = content;
     }
@@ -305,7 +287,7 @@ bool PyScripting::connect()
 
         PyImport_AppendInittab(PyUnamed::name, PyUnamed::PyInit_Unamed);
         Py_Initialize();
-        Py_SetPythonHome(L"assets/scripts/");
+        // Py_SetPythonHome(L"assets/scripts/");
 
         instance.load_all_modules();
 
@@ -426,14 +408,10 @@ sf::Event PyScripting::getEvent()
     return instance.event;
 }
 
-void PyScripting::setValue(int val)
+void PyScripting::setWindow(sf::RenderWindow* win)
 {
-    instance.value = val;
-}
-
-int PyScripting::getValue()
-{
-    return instance.value;
+    std::cout << "Adding a pointer on the window to the PyScripting singleton" << std::endl;
+    instance.window = win;
 }
 
  int PyScripting::setModuleKind(const char* kind, const char* id)
@@ -462,12 +440,29 @@ int PyScripting::getValue()
 
  int PyScripting::loadImage(const char* name, const char* id)
  {
+     std::string tname = std::string(name);
+     std::string tid = std::string(id);
+
+     std::cout << "Loading an image from the python binding (c++ code here) path: " << tname << ", id: " << tid << std::endl;
+
+     sf::Texture tex;
+     if (!tex.loadFromFile(tname))
+        return -1;
+     instance.textures.addTexture(tid, tex);
+     instance.sprites[tid] = sf::Sprite(instance.textures.getTexture(tid));
+
      return 0;
  }
 
  int PyScripting::displayImage(const char* id, int x, int y)
  {
-     return 0;
+     std::string tid = std::string(id);
+
+     if (instance.sprites[tid].getPosition().x != x || instance.sprites[tid].getPosition().y != y)
+        instance.sprites[tid].setPosition(x, y);
+    instance.window->draw(instance.sprites[tid]);
+
+    return 0;
  }
 
  int PyScripting::createGlobal(const char* name, struct svar_t value)

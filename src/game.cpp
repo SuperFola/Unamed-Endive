@@ -47,8 +47,6 @@ void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 void Game::render()
 {
     int c_view = this->sm.getId();
-    // launch the scripts
-    PyScripting::run_drawing_modules();
 
     if (c_view != -1) // does the view exist ?
     {
@@ -59,6 +57,8 @@ void Game::render()
         // error
         std::cout << "Unable to find the view " << c_view << " to render it" << std::endl;
     }
+    // launch the scripts
+    PyScripting::run_drawing_modules();
 }
 
 void Game::render_loading()
@@ -186,7 +186,7 @@ Game::Game() :
 
     // load scripting module
     PyScripting::connect();
-    PyScripting::setValue(10);
+    PyScripting::setWindow(&this->window);
 
     // shapes
     this->shape.setFillColor(sf::Color(150, 50, 250));

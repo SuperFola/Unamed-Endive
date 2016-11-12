@@ -432,7 +432,7 @@
 	<iostream>
 	"statemachine.hpp"
 
-1478879766 source:f:\endive\src\game.cpp
+1478960623 source:f:\endive\src\game.cpp
 	<iostream>
 	<string>
 	"game.hpp"
@@ -861,7 +861,7 @@
 	<SFML/Graphics.hpp>
 	"texturesmanager.hpp"
 
-1478628411 source:f:\endive\src\abstract\creatures_loader.cpp
+1478959624 source:f:\endive\src\abstract\creatures_loader.cpp
 	<iostream>
 	"creatures_loader.hpp"
 	"../constants.hpp"
@@ -893,7 +893,7 @@
 	"menu.hpp"
 	"../../constants.hpp"
 
-1478343884 source:f:\endive\src\scripting\scripting.cpp
+1478960493 source:f:\endive\src\scripting\scripting.cpp
 	<iostream>
 	<fstream>
 	"scripting.hpp"
@@ -901,14 +901,17 @@
 	<windows.h>
 	<dirent.h>
 
-1478878695 f:\endive\src\scripting\scripting.hpp
+1478962664 f:\endive\src\scripting\scripting.hpp
 	<cmath>
 	<Python.h>
 	<SFML/Window/Event.hpp>
+	<SFML/Graphics.hpp>
 	<map>
 	<vector>
 	<string>
+	<iostream>
 	"types.hpp"
+	"../abstract/texturesmanager.hpp"
 
 1478628419 f:\endive\src\scripting\python34\include\python.h
 	"patchlevel.h"

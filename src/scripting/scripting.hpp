@@ -4,12 +4,16 @@
 #include <cmath>
 #include <Python.h>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics.hpp>
 
 #include <map>
 #include <vector>
 #include <string>
 
+#include <iostream>
+
 #include "types.hpp"
+#include "../abstract/texturesmanager.hpp"
 
 class PyScripting
 {
@@ -28,11 +32,12 @@ private:
     std::map<std::string, svar_t> globals_vars;
     svar_t empty_svar_t;
     sf::Event event;
+    TexturesManager textures;
+    std::map<std::string, sf::Sprite> sprites;
+    sf::RenderWindow* window;
 
     // methods
     void load_all_modules();
-
-    int value;
 
 public:
     static PyScripting& Instance();
@@ -53,9 +58,7 @@ public:
 
     static void setEvent(sf::Event&);
     static sf::Event getEvent();
-
-    static void setValue(int);
-    static int getValue();
+    static void setWindow(sf::RenderWindow*);
 
     static int setModuleKind(const char*, const char*);
     static int loadImage(const char*, const char*);
