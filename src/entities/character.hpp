@@ -26,6 +26,11 @@ enum class ChState {
     running
 };
 
+enum class Sex {
+    Female,
+    Male
+};
+
 class Character {
 private:
     // variables
@@ -37,6 +42,7 @@ private:
     std::vector<sf::Sprite> sprites;
     ChState state;
     MvState anim_cursor;
+    std::string sex;
     std::string path;
     Bag bag;
     sf::Time elapsed_mvt_time;
@@ -50,7 +56,7 @@ private:
 public:
     sf::RectangleShape rectangle {sf::Vector2f(16.0f, 16.0f)};
     // methods
-    Character();
+    Character(Sex sex_=Sex::Male);
     int move(DIR, Map, sf::Time);
     int save();
     sf::Sprite& getCurrentSprite();

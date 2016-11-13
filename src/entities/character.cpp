@@ -70,7 +70,7 @@ void Character::update_run_anim()
 
 void Character::load_character_textures()
 {
-    const std::vector<std::string> chtexfname = {"haut", "bas", "gauche", "droite"};
+    const std::vector<std::string> chtexfname = {"up", "down", "left", "right"};
 
     for (const auto& dir: chtexfname)
     {
@@ -95,16 +95,22 @@ void Character::load_character_textures()
 }
 
 // public
-Character::Character() :
+Character::Character(Sex sex_) :
     name("Someone")
     , pos(16, 16)
     , speed(1.0f / 32.0f)
     , direction(DIR::down)
     , state(ChState::idle)
     , anim_cursor(MvState::idle)
-    , path("assets/players/male/")
+    , sex(sex_)
 {
-    std::cout << "chara loader" << std::endl;
+    std::cout << "Character loader" << std::endl;
+
+    if (this->sex == Sex::Male)
+        this->path = "assets/players/male/";
+    else if (this->sex == Sex::Female)
+        this->path = "assets/players/female";
+
     this->load_character_textures();
 }
 
