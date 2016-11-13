@@ -71,6 +71,7 @@ void Character::update_run_anim()
 void Character::load_character_textures()
 {
     const std::vector<std::string> chtexfname = {"up", "down", "left", "right"};
+    std::cout << "Loading " << this->path << std::endl;
 
     for (const auto& dir: chtexfname)
     {
@@ -78,8 +79,7 @@ void Character::load_character_textures()
         {
             sf::Image image;
 
-            std::cout << "Loading " << this->path << dir << to_string<int>(i) << ".png" << std::endl;
-            if (!image.loadFromFile(path + dir + to_string<int>(i) + ".png"))
+            if (!image.loadFromFile(this->path + dir + to_string<int>(i) + ".png"))
             {
                 std::cout << "Unable to open " << this->path << dir << to_string<int>(i) << ".png" << std::endl;
             }

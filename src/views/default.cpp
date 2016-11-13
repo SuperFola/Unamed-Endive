@@ -2,11 +2,11 @@
 #include <iostream>
 
 #include "default.hpp"
-#include "../constants.hpp"
 
 // public
 DefaultView::DefaultView() :
     View(DEFAULT_VIEW_ID)
+    , pnj("vader", "Je suis Vader, un commander d'El Padrino !", PNJkind::special)
     , level("assets/map/1-1441.umd")
 {
 }
@@ -20,8 +20,19 @@ bool DefaultView::load()
         return false;
     }
 
+    this->pnj.setDisplayName("Vader");
+    if (!this->pnj.load())
+    {
+        std::cout << "An error occured while loading a test pnj" <<std::endl;
+        return false;
+    }
+
     this->player.setName("me");
-    this->player.load();
+    if (!this->player.load())
+    {
+        std::cout << "An error occured while loading the player" <<std::endl;
+        return false;
+    }
 
     return true;
 }
@@ -31,6 +42,7 @@ void DefaultView::render(sf::RenderWindow& window)
     this->level.render(window);
     window.draw(this->player.getCurrentSprite());
     window.draw(this->player.rectangle);
+    this->pnj.render(window);  // testing
     this->level.render_top(window);
     this->menu_hud.render(window);
 }
@@ -38,6 +50,7 @@ void DefaultView::render(sf::RenderWindow& window)
 void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     this->player.update(window, elapsed);
+    this->pnj.update(window, elapsed); // testing
     this->menu_hud.update(window, elapsed);
 }
 
@@ -72,6 +85,10 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
 
         case sf::Keyboard::D:
             this->player.move(DIR::right, this->level, elapsed);
+            break;
+
+        case sf::Keyboard::Space:
+            this->pnj.speak();
             break;
 
         default:

@@ -2,4 +2,4 @@
 import Unamed
 
 print("loading assets from python")
-Unamed.loadImage("assets/gui/bulle.png", "bulle")
+Unamed.loadImage("assets/gui/pnj/bubble.png", "bulle")

@@ -39,4 +39,17 @@ enum class DIR {
     right
 };
 
+enum class MvState {
+    idle,
+    walking,
+    idle2,
+    walking2
+};
+
+enum class ChState {
+    idle,
+    walking,
+    running
+};
+
 #endif // DEF_CONSTANTS

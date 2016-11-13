@@ -6,13 +6,16 @@
 #include "view.hpp"
 #include "../map/map.hpp"
 #include "../entities/character.hpp"
+#include "../entities/pnj.hpp"
 #include "huds/menu.hpp"
+#include "../constants.hpp"
 
 class DefaultView : public View
 {
 private:
     // variables
     Character player;
+    PNJ pnj;
     Map level;
     MenuHUD menu_hud;
 

@@ -13,19 +13,6 @@
 #include "../bag/bag.hpp"
 #include "../abstract/functions.hpp"
 
-enum class MvState {
-    idle,
-    walking,
-    idle2,
-    walking2
-};
-
-enum class ChState {
-    idle,
-    walking,
-    running
-};
-
 enum class Sex {
     Female,
     Male
@@ -42,7 +29,7 @@ private:
     std::vector<sf::Sprite> sprites;
     ChState state;
     MvState anim_cursor;
-    std::string sex;
+    Sex sex;
     std::string path;
     Bag bag;
     sf::Time elapsed_mvt_time;
