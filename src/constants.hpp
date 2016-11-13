@@ -32,7 +32,7 @@
 // #define PLATFORM_POSIX
 
 // directions
-enum class DIR {
+enum class DIRECTION {
     up,
     down,
     left,

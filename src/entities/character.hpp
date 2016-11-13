@@ -24,7 +24,7 @@ private:
     std::string name;
     Point pos;
     float speed;
-    DIR direction;
+    DIRECTION direction;
     TexturesManager textures;
     std::vector<sf::Sprite> sprites;
     ChState state;
@@ -44,7 +44,7 @@ public:
     sf::RectangleShape rectangle {sf::Vector2f(16.0f, 16.0f)};
     // methods
     Character(Sex sex_=Sex::Male);
-    int move(DIR, Map, sf::Time);
+    int move(DIRECTION, Map, sf::Time);
     int save();
     sf::Sprite& getCurrentSprite();
     void update(sf::RenderWindow&, sf::Time);

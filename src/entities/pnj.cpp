@@ -94,7 +94,7 @@ PNJ::PNJ(std::string _name, std::string _text, PNJkind _kind, int x, int y) :
     , pos(x, y)
     , state(ChState::idle)
     , anim_cursor(MvState::idle)
-    , direction(DIR::down)
+    , direction(DIRECTION::down)
     , speaking(false)
     , speed(1.0f / 32.0f)
 {
@@ -161,7 +161,7 @@ bool PNJ::load()
     return true;
 }
 
-int PNJ::move(DIR dir, Map map_, sf::Time elapsed)
+int PNJ::move(DIRECTION dir, Map map_, sf::Time elapsed)
 {
     // update state
     if (this->state == ChState::idle)
@@ -182,22 +182,22 @@ int PNJ::move(DIR dir, Map map_, sf::Time elapsed)
     std::vector<float> vect {0, 0};
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
-    if (dir == DIR::up)
+    if (dir == DIRECTION::up)
     {
         if (this->pos.getY() - speed >= 0.0f)
             vect[1] = -1 * speed;
     }
-    else if (dir == DIR::down)
+    else if (dir == DIRECTION::down)
     {
         if (this->pos.getY() + speed - csprite_size.y < map_.getHeight() * TILE_SIZE)
             vect[1] = 1 * speed;
     }
-    else if (dir == DIR::left)
+    else if (dir == DIRECTION::left)
     {
         if (this->pos.getX() - speed >= 0.0f)
             vect[0] = -1 * speed;
     }
-    else if (dir == DIR::right)
+    else if (dir == DIRECTION::right)
     {
         if (this->pos.getX() + speed - csprite_size.x < map_.getWidth() * TILE_SIZE)
             vect[0] = 1 * speed;
@@ -259,7 +259,7 @@ void PNJ::update(sf::RenderWindow& window, sf::Time elapsed)
         this->state = ChState::idle;
 }
 
-void PNJ::setDir(DIR direc)
+void PNJ::setDir(DIRECTION direc)
 {
     this->direction = direc;
 }

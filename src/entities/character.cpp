@@ -99,7 +99,7 @@ Character::Character(Sex sex_) :
     name("Someone")
     , pos(16, 16)
     , speed(1.0f / 32.0f)
-    , direction(DIR::down)
+    , direction(DIRECTION::down)
     , state(ChState::idle)
     , anim_cursor(MvState::idle)
     , sex(sex_)
@@ -127,7 +127,7 @@ bool Character::load()
     return this->bag.load("saves/" + this->name + "/bag.json");
 }
 
-int Character::move(DIR dir, Map map_, sf::Time elapsed)
+int Character::move(DIRECTION dir, Map map_, sf::Time elapsed)
 {
     // update state
     if (this->state == ChState::idle)
@@ -148,22 +148,22 @@ int Character::move(DIR dir, Map map_, sf::Time elapsed)
     std::vector<float> vect {0, 0};
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
-    if (dir == DIR::up)
+    if (dir == DIRECTION::up)
     {
         if (this->pos.getY() - speed >= 0.0f)
             vect[1] = -1 * speed;
     }
-    else if (dir == DIR::down)
+    else if (dir == DIRECTION::down)
     {
         if (this->pos.getY() + speed - csprite_size.y < map_.getHeight() * TILE_SIZE)
             vect[1] = 1 * speed;
     }
-    else if (dir == DIR::left)
+    else if (dir == DIRECTION::left)
     {
         if (this->pos.getX() - speed >= 0.0f)
             vect[0] = -1 * speed;
     }
-    else if (dir == DIR::right)
+    else if (dir == DIRECTION::right)
     {
         if (this->pos.getX() + speed - csprite_size.x < map_.getWidth() * TILE_SIZE)
             vect[0] = 1 * speed;

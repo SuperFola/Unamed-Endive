@@ -238,7 +238,7 @@ void PyScripting::load_all_modules()
     #endif // PLATFORM_WIN
 
     #ifdef PLATFORM_POSIX
-    DIR* rep = opendir(directory);
+    DIR* rep = opendir(directory.data());
 
     if (rep != NULL)
     {

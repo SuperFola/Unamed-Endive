@@ -72,19 +72,19 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
             break;
 
         case sf::Keyboard::Z:
-            this->player.move(DIR::up, this->level, elapsed);
+            this->player.move(DIRECTION::up, this->level, elapsed);
             break;
 
         case sf::Keyboard::S:
-            this->player.move(DIR::down, this->level, elapsed);
+            this->player.move(DIRECTION::down, this->level, elapsed);
             break;
 
         case sf::Keyboard::Q:
-            this->player.move(DIR::left, this->level, elapsed);
+            this->player.move(DIRECTION::left, this->level, elapsed);
             break;
 
         case sf::Keyboard::D:
-            this->player.move(DIR::right, this->level, elapsed);
+            this->player.move(DIRECTION::right, this->level, elapsed);
             break;
 
         case sf::Keyboard::Space:

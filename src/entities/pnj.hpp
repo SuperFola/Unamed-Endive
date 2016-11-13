@@ -29,7 +29,7 @@ private:
     Point pos;
     ChState state;
     MvState anim_cursor;
-    DIR direction;
+    DIRECTION direction;
     bool speaking;
     float speed;
     std::string path;
@@ -48,13 +48,13 @@ private:
 public:
     PNJ(std::string, std::string, PNJkind, int x=32, int y=32);
     bool load();
-    int move(DIR, Map, sf::Time);
+    int move(DIRECTION, Map, sf::Time);
     void setDisplayName(const std::string&);
     void speak();
     sf::Sprite& getCurrentSprite();
     void render(sf::RenderWindow&);
     void update(sf::RenderWindow&, sf::Time);
-    void setDir(DIR);
+    void setDir(DIRECTION);
 };
 
 #endif // DEF_PNJ

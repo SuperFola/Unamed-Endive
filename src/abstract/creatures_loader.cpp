@@ -32,7 +32,7 @@ std::vector<std::string> list_files(const std::string& directory)
     #endif // PLATFORM_WIN
 
     #ifdef PLATFORM_POSIX
-    DIR* rep = opendir(directory);
+    DIR* rep = opendir(directory.data());
 
     if (rep != NULL)
     {

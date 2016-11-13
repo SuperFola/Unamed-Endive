@@ -42,12 +42,12 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++14" />
 			<Add directory="C:/SFML-2.4.1/include" />
-			<Add directory="F:/ENDIVE/src/scripting/Python34/include" />
+			<Add directory="C:/Python34/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-lPython34" />
 			<Add directory="C:/SFML-2.4.1/lib" />
-			<Add directory="F:/ENDIVE/src/scripting/Python34/libs" />
+			<Add directory="C:/Python34/libs" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Unit filename="src/abstract/competence.cpp" />
@@ -84,6 +84,8 @@
 		<Unit filename="src/entities/creature.hpp" />
 		<Unit filename="src/entities/effects/sort.cpp" />
 		<Unit filename="src/entities/effects/sort.hpp" />
+		<Unit filename="src/entities/pnj.cpp" />
+		<Unit filename="src/entities/pnj.hpp" />
 		<Unit filename="src/entities/states.hpp" />
 		<Unit filename="src/game.cpp" />
 		<Unit filename="src/game.hpp" />
