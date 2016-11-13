@@ -1880,7 +1880,260 @@
 	"../abstract/functions.hpp"
 	"../constants.hpp"
 
-1479045468 source:f:\endive\src\entities\pnj.cpp
+1479046421 source:f:\endive\src\entities\pnj.cpp
 	<iostream>
 	"pnj.hpp"
+
+1385202000 c:\python34\include\python.h
+	"patchlevel.h"
+	"pyconfig.h"
+	"pymacconfig.h"
+	<limits.h>
+	<stdio.h>
+	<string.h>
+	<errno.h>
+	<stdlib.h>
+	<unistd.h>
+	<stddef.h>
+	<assert.h>
+	"pyport.h"
+	"pymacro.h"
+	"pyatomic.h"
+	"pymath.h"
+	"pytime.h"
+	"pymem.h"
+	"object.h"
+	"objimpl.h"
+	"typeslots.h"
+	"pyhash.h"
+	"pydebug.h"
+	"bytearrayobject.h"
+	"bytesobject.h"
+	"unicodeobject.h"
+	"longobject.h"
+	"longintrepr.h"
+	"boolobject.h"
+	"floatobject.h"
+	"complexobject.h"
+	"rangeobject.h"
+	"memoryobject.h"
+	"tupleobject.h"
+	"listobject.h"
+	"dictobject.h"
+	"enumobject.h"
+	"setobject.h"
+	"methodobject.h"
+	"moduleobject.h"
+	"funcobject.h"
+	"classobject.h"
+	"fileobject.h"
+	"pycapsule.h"
+	"traceback.h"
+	"sliceobject.h"
+	"cellobject.h"
+	"iterobject.h"
+	"genobject.h"
+	"descrobject.h"
+	"warnings.h"
+	"weakrefobject.h"
+	"structseq.h"
+	"namespaceobject.h"
+	"codecs.h"
+	"pyerrors.h"
+	"pystate.h"
+	"pyarena.h"
+	"modsupport.h"
+	"pythonrun.h"
+	"ceval.h"
+	"sysmodule.h"
+	"intrcheck.h"
+	"import.h"
+	"abstract.h"
+	"bltinmodule.h"
+	"compile.h"
+	"eval.h"
+	"pyctype.h"
+	"pystrtod.h"
+	"pystrcmp.h"
+	"dtoa.h"
+	"fileutils.h"
+	"pyfpe.h"
+
+1394990186 c:\python34\include\patchlevel.h
+
+1393144454 c:\python34\include\pyconfig.h
+	<io.h>
+	<stdlib.h>
+	<float.h>
+	<basetsd.h>
+	<io.h>
+	<stdio.h>
+
+1332704894 c:\python34\include\pymacconfig.h
+
+1385311968 c:\python34\include\pyport.h
+	"pyconfig.h"
+	<inttypes.h>
+	<stdint.h>
+	<stdlib.h>
+	<ieeefp.h>
+	<math.h>
+	<sys/time.h>
+	<time.h>
+	<sys/time.h>
+	<time.h>
+	<sys/select.h>
+	<sys/stat.h>
+	<stat.h>
+	<sys/types.h>
+	<sys/termio.h>
+	<termios.h>
+	<osreldate.h>
+	<ctype.h>
+	<wctype.h>
+
+1388930310 c:\python34\include\pymacro.h
+
+1332704894 c:\python34\include\pyatomic.h
+	"dynamic_annotations.h"
+
+1332704892 c:\python34\include\dynamic_annotations.h
+
+1343808314 c:\python34\include\pymath.h
+	"pyconfig.h"
+
+1343808314 c:\python34\include\pytime.h
+	"pyconfig.h"
+	"object.h"
+
+1392050040 c:\python34\include\object.h
+
+1388826872 c:\python34\include\pymem.h
+	"pyport.h"
+
+1378658112 c:\python34\include\objimpl.h
+	"pymem.h"
+
+1332704894 c:\python34\include\typeslots.h
+
+1388826872 c:\python34\include\pyhash.h
+
+1378658112 c:\python34\include\pydebug.h
+
+1382285784 c:\python34\include\bytearrayobject.h
+	<stdarg.h>
+
+1378658112 c:\python34\include\bytesobject.h
+	<stdarg.h>
+
+1388826872 c:\python34\include\unicodeobject.h
+	<stdarg.h>
+	<ctype.h>
+	<time.h>
+	<wchar.h>
+
+1388655882 c:\python34\include\longobject.h
+
+1378658112 c:\python34\include\longintrepr.h
+
+1332704892 c:\python34\include\boolobject.h
+
+1343808314 c:\python34\include\floatobject.h
+
+1343808314 c:\python34\include\complexobject.h
+
+1332704894 c:\python34\include\rangeobject.h
+
+1343808314 c:\python34\include\memoryobject.h
+
+1343808314 c:\python34\include\tupleobject.h
+
+1343808314 c:\python34\include\listobject.h
+
+1388826872 c:\python34\include\dictobject.h
+
+1304766234 c:\python34\include\enumobject.h
+
+1380472742 c:\python34\include\setobject.h
+
+1363646852 c:\python34\include\methodobject.h
+
+1394388878 c:\python34\include\moduleobject.h
+
+1343808314 c:\python34\include\funcobject.h
+
+1332704892 c:\python34\include\classobject.h
+
+1382285784 c:\python34\include\fileobject.h
+
+1332704894 c:\python34\include\pycapsule.h
+
+1343808314 c:\python34\include\traceback.h
+	"pystate.h"
+
+1394388878 c:\python34\include\pystate.h
+
+1363646852 c:\python34\include\sliceobject.h
+
+1332704892 c:\python34\include\cellobject.h
+
+1343808314 c:\python34\include\iterobject.h
+
+1378658112 c:\python34\include\genobject.h
+
+1343808314 c:\python34\include\descrobject.h
+
+1388826872 c:\python34\include\warnings.h
+
+1382285786 c:\python34\include\weakrefobject.h
+
+1375559674 c:\python34\include\structseq.h
+
+1343808314 c:\python34\include\namespaceobject.h
+
+1392050040 c:\python34\include\codecs.h
+
+1392050040 c:\python34\include\pyerrors.h
+	<stdarg.h>
+
+1332704894 c:\python34\include\pyarena.h
+
+1390749968 c:\python34\include\modsupport.h
+	<stdarg.h>
+
+1388826872 c:\python34\include\pythonrun.h
+
+1332704892 c:\python34\include\ceval.h
+
+1388826872 c:\python34\include\sysmodule.h
+
+1343808314 c:\python34\include\intrcheck.h
+
+1388655882 c:\python34\include\import.h
+
+1388826872 c:\python34\include\abstract.h
+
+1332704892 c:\python34\include\bltinmodule.h
+
+1385311968 c:\python34\include\compile.h
+	"code.h"
+
+1343808314 c:\python34\include\code.h
+
+1332704892 c:\python34\include\eval.h
+
+1332704894 c:\python34\include\pyctype.h
+
+1332704894 c:\python34\include\pystrtod.h
+
+1332704894 c:\python34\include\pystrcmp.h
+
+1343808314 c:\python34\include\dtoa.h
+
+1388826872 c:\python34\include\fileutils.h
+
+1363646852 c:\python34\include\pyfpe.h
+	<signal.h>
+	<setjmp.h>
+	<math.h>
 
