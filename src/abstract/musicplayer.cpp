@@ -33,10 +33,13 @@ bool MusicPlayer::load()
     return this->loaded;
 }
 
-void MusicPlayer::play(const std::string name)
+bool MusicPlayer::play(const std::string name)
 {
     if (!this->loaded)
         std::cout << "Need to load MusicPlayer !" << std::endl;
+
+    if (this->sounds.find(name) == this->sounds.end())
+        return false;
 
     if (this->current != "")
     {
@@ -52,6 +55,8 @@ void MusicPlayer::play(const std::string name)
     }
     this->current = name;
     this->sounds[name].play();
+
+    return true;
 }
 
 void MusicPlayer::stop()
@@ -81,4 +86,9 @@ std::string MusicPlayer::getNext()
     if (index == this->sounds_name.size() - 1)
         return this->sounds_name[0];
     return this->sounds_name[index + 1];
+}
+
+const std::string& MusicPlayer::getCurrentName()
+{
+    return this->current;
 }

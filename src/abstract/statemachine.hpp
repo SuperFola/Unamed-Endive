@@ -37,6 +37,7 @@ public:
     StateMachine();
     bool load();
     int getId();
+    bool hasActiveHud(int);
     int change_view(int);
     int go_back_to_last_view();
     int process_event_current(sf::Event&, sf::Time);

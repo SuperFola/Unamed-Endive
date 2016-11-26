@@ -12,3 +12,8 @@ int View::getId()
     return this->id;
 }
 
+bool View::hasActiveHud()
+{
+    return false;
+}
+

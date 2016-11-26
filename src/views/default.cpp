@@ -50,6 +50,7 @@ void DefaultView::render(sf::RenderWindow& window)
 void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     this->player.update(window, elapsed);
+    this->level.update(window, elapsed);
     this->pnj.update(window, elapsed); // testing
     this->menu_hud.update(window, elapsed);
 }
@@ -104,6 +105,11 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
     if (!has_triggered_hud) // if we triggered the hud, sending the event to it will cause to close it immediately
         return this->menu_hud.process_event(event, elapsed);
     return -1;  // we didn't triggered the hud so we don't need to change the view
+}
+
+bool DefaultView::hasActiveHud()
+{
+    return this->menu_hud.isTriggered();
 }
 
 Character* DefaultView::getCharacter()

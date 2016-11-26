@@ -163,6 +163,45 @@ namespace PyUnamed
             }
         }
 
+        static PyObject* playMusic(PyObject* self, PyObject* args)
+        {
+            const char* name;
+            if (!PyArg_ParseTuple(args, "s", &name))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need a char* representing the name of the song to play");
+                return NULL;
+            }
+            return Py_BuildValue("i", PyScripting::playMusic(name));
+        }
+
+        static PyObject* stopMusic(PyObject* self, PyObject* args)
+        {
+            PyScripting::stopMusic();
+
+            RETURN_NONE
+        }
+
+        static PyObject* getCurrentMusicName(PyObject* self, PyObject* args)
+        {
+            return Py_BuildValue("s", PyScripting::getCurrentMusicName());
+        }
+
+        static PyObject* getCurrentView(PyObject* self, PyObject* args)
+        {
+            return Py_BuildValue("i", PyScripting::getCurrentView());
+        }
+
+        static PyObject* hasActiveHud(PyObject* self, PyObject* args)
+        {
+            int vid;
+            if (!PyArg_ParseTuple(args, "i", &vid))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need an int representing the id of the view to check");
+                return NULL;
+            }
+            return Py_BuildValue("i", PyScripting::hasActiveHud(vid));
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
@@ -171,6 +210,11 @@ namespace PyUnamed
             {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
             {"createGlobal", createGlobal, METH_VARARGS, "Create a global value from a given id (of type char*), with a specified value (int, float and char* are currently supported)"},
             {"getGlobal", getGlobal, METH_VARARGS, "Return a global value with the name given"},
+            {"getCurrentMusicName", getCurrentMusicName, METH_VARARGS, "Return the name of the current playing music, if one is playing"},
+            {"getCurrentViewId", getCurrentView, METH_VARARGS, "Return the current view id"},
+            {"stopMusic", stopMusic, METH_VARARGS, "Stop the current, if one is playing"},
+            {"playMusic", playMusic, METH_VARARGS, "Start a song from its name"},
+            {"hasActiveHud", hasActiveHud, METH_VARARGS, "Check if a view, with a given id, has currently an active HUD"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -414,6 +458,18 @@ void PyScripting::setWindow(sf::RenderWindow* win)
     instance.window = win;
 }
 
+void PyScripting::setMusicPlayer(MusicPlayer* mp)
+{
+    std::cout << "Adding a pointer on the music player to the PyScripting singleton" << std::endl;
+    instance.music_player = mp;
+}
+
+void PyScripting::setStateMachine(StateMachine* sm)
+{
+    std::cout << "Adding a pointer on the statemachine to the PyScripting singleton" << std::endl;
+    instance.sm = sm;
+}
+
  int PyScripting::setModuleKind(const char* kind, const char* id)
  {
      std::string tkind = std::string(kind);
@@ -482,4 +538,29 @@ svar_t PyScripting::getGlobal(const char* name)
     if (instance.globals_vars.find(tname) != instance.globals_vars.end())
         return instance.globals_vars[tname];
     return instance.empty_svar_t;
+}
+
+const char* PyScripting::getCurrentMusicName()
+{
+    return instance.music_player->getCurrentName().data();
+}
+
+int PyScripting::getCurrentView()
+{
+    return instance.sm->getId();
+}
+
+int PyScripting::hasActiveHud(int vid)
+{
+    return instance.sm->hasActiveHud(instance.sm->getId());
+}
+
+void PyScripting::stopMusic()
+{
+    return instance.music_player->stop();
+}
+
+int PyScripting::playMusic(const char* name)
+{
+    return int(instance.music_player->play(std::string(name)));
 }

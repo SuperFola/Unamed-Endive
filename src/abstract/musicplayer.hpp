@@ -21,9 +21,10 @@ private:
 public:
     MusicPlayer();
     bool load();
-    void play(const std::string);
+    bool play(const std::string);
     void stop();
     std::string getNext();
+    const std::string& getCurrentName();
 };
 
 #endif // DEF_MUSICPLAYER

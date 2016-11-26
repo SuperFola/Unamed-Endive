@@ -56,6 +56,44 @@ int StateMachine::getId()
     return this->current_view;
 }
 
+bool StateMachine::hasActiveHud(int vid)
+{
+    bool ret_val = false;
+
+    switch(vid)
+    {
+    case DEFAULT_VIEW_ID:
+        ret_val = this->defaultv.hasActiveHud();
+        break;
+
+    case MYCREATURES_VIEW_ID:
+        ret_val = this->creav.hasActiveHud();
+        break;
+
+    case DEX_VIEW_ID:
+        ret_val = this->dexv.hasActiveHud();
+        break;
+
+    case SAVING_VIEW_ID:
+        ret_val = this->savev.hasActiveHud();
+        break;
+
+    case INVENTORY_VIEW_ID:
+        ret_val = this->inventoryv.hasActiveHud();
+        break;
+
+    case MAP_VIEW_ID:
+        ret_val = this->mapv.hasActiveHud();
+        break;
+
+    default:
+        ret_val = -1;
+        break;
+    }
+
+    return ret_val;
+}
+
 int StateMachine::change_view(int new_view)
 {
     if (new_view == -1)

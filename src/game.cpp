@@ -187,6 +187,8 @@ Game::Game() :
     // load scripting module
     PyScripting::connect();
     PyScripting::setWindow(&this->window);
+    PyScripting::setMusicPlayer(&this->mplayer);
+    PyScripting::setStateMachine(&this->sm);
 
     // shapes
     this->shape.setFillColor(sf::Color(150, 50, 250));

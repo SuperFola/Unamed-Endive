@@ -1,3 +1,4 @@
 import Unamed
 
-Unamed.displayImage("bulle", 150, 200)
+if Unamed.getCurrentViewId() == 1:
+    Unamed.displayImage("bulle", 150, 200)

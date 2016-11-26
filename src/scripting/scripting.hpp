@@ -14,6 +14,8 @@
 
 #include "types.hpp"
 #include "../abstract/texturesmanager.hpp"
+#include "../abstract/musicplayer.hpp"
+#include "../abstract/statemachine.hpp"
 
 class PyScripting
 {
@@ -34,7 +36,10 @@ private:
     sf::Event event;
     TexturesManager textures;
     std::map<std::string, sf::Sprite> sprites;
+
     sf::RenderWindow* window;
+    MusicPlayer* music_player;
+    StateMachine* sm;
 
     // methods
     void load_all_modules();
@@ -58,13 +63,21 @@ public:
 
     static void setEvent(sf::Event&);
     static sf::Event getEvent();
+
     static void setWindow(sf::RenderWindow*);
+    static void setMusicPlayer(MusicPlayer*);
+    static void setStateMachine(StateMachine*);
 
     static int setModuleKind(const char*, const char*);
     static int loadImage(const char*, const char*);
     static int displayImage(const char*, int, int);
     static int createGlobal(const char*, struct svar_t);
     static svar_t getGlobal(const char*);
+    static const char* getCurrentMusicName();
+    static int getCurrentView();
+    static int hasActiveHud(int);
+    static void stopMusic();
+    static int playMusic(const char*);
 };
 
 #endif // DEF_SCRIPTING
