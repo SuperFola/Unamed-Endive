@@ -6,6 +6,15 @@
 #include <sstream>
 #include <fstream>
 
+#include "../constants.hpp"
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif
+#ifdef PLATFORM_POSIX
+     #include <sys/types.h>
+    #include <sys/stat.h>
+#endif
+
 template<typename T>
 T pop(std::vector<T>* obj, int i) {
     T element {};
@@ -33,5 +42,7 @@ std::string to_string(const T& n)
 }
 
 bool is_file_existing(const std::string& file);
+
+bool create_directory(const std::string& name);
 
 #endif // DEF_ABS_FUNC
