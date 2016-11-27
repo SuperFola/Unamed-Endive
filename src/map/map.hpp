@@ -10,6 +10,7 @@
 #include "../json/json.h"
 #include "../constants.hpp"
 #include "../abstract/functions.hpp"
+#include "../abstract/point.hpp"
 
 class Map
 {
@@ -22,6 +23,7 @@ private:
     Json::Value root;
     std::string tileset_path;
     std::string map_data_path;
+    Point pos;
     // default values for the moment
     int map_width;
     int map_height;
@@ -31,6 +33,7 @@ public:
     int load();
     void render(sf::RenderWindow&);
     void render_top(sf::RenderWindow&);
+    void render_chara(sf::Sprite&, Point&, sf::RenderWindow&);
     void update(sf::RenderWindow&, sf::Time);
     int getWidth();
     int getHeight();

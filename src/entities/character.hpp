@@ -41,7 +41,6 @@ private:
     void load_character_textures();
 
 public:
-    sf::RectangleShape rectangle {sf::Vector2f(16.0f, 16.0f)};
     // methods
     Character(Sex sex_=Sex::Male);
     int move(DIRECTION, Map, sf::Time);
@@ -50,6 +49,7 @@ public:
     void update(sf::RenderWindow&, sf::Time);
     void setName(const std::string);
     bool load();
+    Point& getPos();
     Bag* getBag();
 };
 

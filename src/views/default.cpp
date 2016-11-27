@@ -40,8 +40,7 @@ bool DefaultView::load()
 void DefaultView::render(sf::RenderWindow& window)
 {
     this->level.render(window);
-    window.draw(this->player.getCurrentSprite());
-    window.draw(this->player.rectangle);
+    this->level.render_chara(this->player.getCurrentSprite(), this->player.getPos(), window);
     this->pnj.render(window);  // testing
     this->level.render_top(window);
     this->menu_hud.render(window);

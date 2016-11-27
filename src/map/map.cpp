@@ -6,6 +6,7 @@
 // public
 Map::Map(std::string path) :
     tileset_path {"assets/tileset.png"}
+    , pos(WIN_W / 2, WIN_H / 2)
     , map_width(16)
     , map_height(8)
 {
@@ -35,11 +36,17 @@ void Map::render_top(sf::RenderWindow& window)
     // window.draw(*(this->tmaps[0]));
 }
 
+void Map::render_chara(sf::Sprite& sprite_chara, Point& sprite_pos, sf::RenderWindow& window)
+{
+    sprite_chara.setPosition(this->pos.getX() + sprite_pos.getX(), this->pos.getY() + sprite_pos.getY());
+    window.draw(sprite_chara);
+}
+
 void Map::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     for (int i=0; i < 3; i++)
     {
-        this->tmaps[i]->setPosition((WIN_W) / 2, (WIN_H) / 2);
+        this->tmaps[i]->setPosition(pos.getX(), pos.getY());
     }
 }
 

@@ -2,27 +2,6 @@
 
 #include "pnj.hpp"
 
-namespace Characters
-{
-    std::vector<std::string> specials = {
-        "clemence",
-        "darth",
-        "elpadrino",
-        "euloo",
-        "folaefolc",
-        "minus",
-        "tress",
-        "vader"
-    };
-
-    bool is_special(const std::string& name)
-    {
-        if (std::find(specials.begin(), specials.end(), name) != specials.end())
-            return true;
-        return false;
-    }
-}
-
 void PNJ::update_anim(sf::Time elapsed)
 {
     this->elapsed_mvt_time += elapsed;

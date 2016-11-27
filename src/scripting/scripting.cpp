@@ -202,6 +202,16 @@ namespace PyUnamed
             return Py_BuildValue("i", PyScripting::hasActiveHud(vid));
         }
 
+        static PyObject* getEvent(PyObject* self, PyObject* args)
+        {
+            sf::Event ev = PyScripting::getEvent();
+            PyObject* d = PyDict_New();
+
+            //PyDict_SetItem(d, "type", static_cast<int>(ev.type));
+
+            return d;
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
@@ -215,6 +225,7 @@ namespace PyUnamed
             {"stopMusic", stopMusic, METH_VARARGS, "Stop the current, if one is playing"},
             {"playMusic", playMusic, METH_VARARGS, "Start a song from its name"},
             {"hasActiveHud", hasActiveHud, METH_VARARGS, "Check if a view, with a given id, has currently an active HUD"},
+            {"getEvent", getEvent, METH_VARARGS, "Get the current event and return it using a dict"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };

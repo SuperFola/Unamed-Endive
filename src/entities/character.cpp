@@ -197,19 +197,15 @@ sf::Sprite& Character::getCurrentSprite()
 
 void Character::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-    sf::Vector2f _pos {
-        float(int(this->pos.getX()))
-        , float(int(this->pos.getY()))
-    };
-
-    if (this->getCurrentSprite().getPosition() != _pos)
-        this->getCurrentSprite().setPosition(_pos);
-    this->rectangle.setPosition(sf::Vector2f(int(this->pos.getX()) / TILE_SIZE * TILE_SIZE, int(this->pos.getY()) / TILE_SIZE * TILE_SIZE));
-
     if (this->state != ChState::idle)
         this->not_moving_time += elapsed;
     if (this->not_moving_time.asSeconds() > 1.0f)
         this->state = ChState::idle;
+}
+
+Point& Character::getPos()
+{
+    return this->pos;
 }
 
 Bag* Character::getBag()
