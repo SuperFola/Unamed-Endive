@@ -24,6 +24,7 @@ private:
     std::string tileset_path;
     std::string map_data_path;
     Point pos;
+    int id;
     // default values for the moment
     int map_width;
     int map_height;
@@ -37,6 +38,7 @@ public:
     void update(sf::RenderWindow&, sf::Time);
     int getWidth();
     int getHeight();
+    int getId();
     bool colliding_at(int, int);
 };
 

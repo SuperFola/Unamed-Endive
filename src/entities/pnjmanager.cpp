@@ -16,7 +16,7 @@ void PNJManager::add_pnj_on_map(int mid, PNJ pnj, std::string dname)
     pnj.setDisplayName(dname);
     if (!pnj.load())
         std::cout << "Unable to load " << dname << " PNJ" << std::endl;
-    this->pnjs[mid].push_back(pnj);
+    this->pnjs[mid].emplace(pnj);
 }
 
 int PNJManager::countPNJonMap(int mid)
@@ -29,4 +29,16 @@ int PNJManager::countPNJonMap(int mid)
 PNJ& PNJManager::getPNJonMap(int mid, int pid)
 {
     return this->pnjs[mid][pid];
+}
+
+void PNJManager::update(int mid, sf::RenderWindow& window, sf::Time elapsed)
+{
+    if (this->pnjs.find(mid) == this->pnjs.end())
+        goto _end;
+
+    for (int i=0; i < this->pnjs[mid].size(); i++)
+    {
+        this->pnjs[mid][i].update(window, elapsed);
+    }
+    _end:;
 }

@@ -6,8 +6,7 @@
 // public
 DefaultView::DefaultView() :
     View(DEFAULT_VIEW_ID)
-    , pnj("vader", "Je suis Vader, un commander d'El Padrino !", PNJkind::special)
-    , level("assets/map/1-1441.umd")
+    , level("assets/map/1.umd")
 {
 }
 
@@ -20,10 +19,8 @@ bool DefaultView::load()
         return false;
     }
 
-    this->pnj.setDisplayName("Vader");
-    if (!this->pnj.load())
+    if (!this->pnjmgr.add_pnj_on_map(this->level.getId(), pnj("vader", "Je suis Vader, un commander d'El Padrino !", PNJkind::special), "Vader"))
     {
-        std::cout << "An error occured while loading a test pnj" <<std::endl;
         return false;
     }
 
@@ -41,7 +38,13 @@ void DefaultView::render(sf::RenderWindow& window)
 {
     this->level.render(window);
     this->level.render_chara(this->player.getCurrentSprite(), this->player.getPos(), window);
-    this->pnj.render(window);  // testing
+    for (int i=0; i < this->pnjmgr.countPNJonMap(this->level.getId()); i++)
+    {
+        this->level.render_chara(
+                                 this->pnjmgr.getPNJonMap(this->level.getId(), i).getCurrentSprite()
+                                 , this->pnjmgr.getPNJonMap(this->level.getId(), i).getPos()
+                                 , window);
+    }
     this->level.render_top(window);
     this->menu_hud.render(window);
 }
@@ -50,7 +53,7 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     this->player.update(window, elapsed);
     this->level.update(window, elapsed);
-    this->pnj.update(window, elapsed); // testing
+    this->pnjmgr.update(this->level.getId(), window, elapsed);
     this->menu_hud.update(window, elapsed);
 }
 
@@ -85,10 +88,6 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
 
         case sf::Keyboard::D:
             this->player.move(DIRECTION::right, this->level, elapsed);
-            break;
-
-        case sf::Keyboard::Space:
-            this->pnj.speak();
             break;
 
         default:

@@ -9,14 +9,15 @@
 #include "../entities/pnj.hpp"
 #include "huds/menu.hpp"
 #include "../constants.hpp"
+#include "../entities/pnjmanager.hpp"
 
 class DefaultView : public View
 {
 private:
     // variables
     Character player;
-    PNJ pnj;
     Map level;
+    PNJManager pnjmgr;
     MenuHUD menu_hud;
 
 public:

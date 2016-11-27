@@ -17,6 +17,7 @@ Map::Map(std::string path) :
     std::cout << path << std::endl;
 
     this->map_data_path = path;
+    this->id = int(this->map_data_path.substr("assets/map/".size(), this->map_data_path.size() - ".umd".size()));
 }
 
 int Map::load()
@@ -58,6 +59,11 @@ int Map::getWidth()
 int Map::getHeight()
 {
     return this->map_height;
+}
+
+int Map::getId()
+{
+    return this->id;
 }
 
 bool Map::colliding_at(int tx, int ty)
