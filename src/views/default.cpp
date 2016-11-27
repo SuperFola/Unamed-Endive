@@ -19,10 +19,8 @@ bool DefaultView::load()
         return false;
     }
 
-    if (!this->pnjmgr.add_pnj_on_map(this->level.getId(), pnj("vader", "Je suis Vader, un commander d'El Padrino !", PNJkind::special), "Vader"))
-    {
-        return false;
-    }
+    PNJ pnj = PNJ("vader", "Je suis Vader, un commander d'El Padrino !", PNJkind::special);
+    this->pnjmgr.add_pnj_on_map(this->level.getId(), pnj, "Vader");
 
     this->player.setName("me");
     if (!this->player.load())
@@ -44,6 +42,7 @@ void DefaultView::render(sf::RenderWindow& window)
                                  this->pnjmgr.getPNJonMap(this->level.getId(), i).getCurrentSprite()
                                  , this->pnjmgr.getPNJonMap(this->level.getId(), i).getPos()
                                  , window);
+        this->pnjmgr.getPNJonMap(this->level.getId(), i).render(window);
     }
     this->level.render_top(window);
     this->menu_hud.render(window);

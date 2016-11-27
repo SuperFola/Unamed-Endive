@@ -12,6 +12,9 @@
 #include "../abstract/point.hpp"
 #include "../abstract/functions.hpp"
 #include "../constants.hpp"
+#include "animatedentity.hpp"
+
+#include <algorithm>
 
 enum class PNJkind {
     normal,
@@ -20,41 +23,23 @@ enum class PNJkind {
     me
 };
 
-class PNJ
+class PNJ : public AnimatedEntity
 {
 private:
     std::string name;
     std::string text;
     PNJkind kind;
-    Point pos;
-    ChState state;
-    MvState anim_cursor;
-    DIRECTION direction;
     bool speaking;
-    float speed;
-    std::string path;
-    TexturesManager textures;
-    std::vector<sf::Sprite> sprites;
     sf::Sprite bckg_speak;
     sf::Font font;
     sf::Text render_text;
-    sf::Time elapsed_mvt_time;
-    sf::Time not_moving_time;
-
-    void update_anim(sf::Time);
-    void update_walk_anim();
-    void update_run_anim();
 
 public:
     PNJ(std::string, std::string, PNJkind, int x=32, int y=32);
-    bool load();
-    int move(DIRECTION, Map, sf::Time);
+    void _load() override;
     void setDisplayName(const std::string&);
     void speak();
-    sf::Sprite& getCurrentSprite();
     void render(sf::RenderWindow&);
-    void update(sf::RenderWindow&, sf::Time);
-    void setDir(DIRECTION);
 };
 
 #endif // DEF_PNJ

@@ -17,7 +17,7 @@ Map::Map(std::string path) :
     std::cout << path << std::endl;
 
     this->map_data_path = path;
-    this->id = int(this->map_data_path.substr("assets/map/".size(), this->map_data_path.size() - ".umd".size()));
+    this->id = atoi(this->map_data_path.substr(11, this->map_data_path.size() - 4).data());
 }
 
 int Map::load()

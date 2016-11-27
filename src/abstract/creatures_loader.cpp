@@ -1,7 +1,6 @@
 #include<iostream>
 
 #include "creatures_loader.hpp"
-#include "../constants.hpp"
 
 #ifdef PLATFORM_WIN
 #include <windows.h>

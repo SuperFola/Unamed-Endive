@@ -52,25 +52,4 @@ enum class ChState {
     running
 };
 
-namespace Characters
-{
-    std::vector<std::string> specials = {
-        "clemence",
-        "darth",
-        "elpadrino",
-        "euloo",
-        "folaefolc",
-        "minus",
-        "tress",
-        "vader"
-    };
-
-    bool is_special(const std::string& name)
-    {
-        if (std::find(specials.begin(), specials.end(), name) != specials.end())
-            return true;
-        return false;
-    }
-}
-
 #endif // DEF_CONSTANTS

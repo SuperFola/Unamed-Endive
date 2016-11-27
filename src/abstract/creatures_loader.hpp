@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "texturesmanager.hpp"
+#include "../constants.hpp"
 
 class CreaturesLoader
 {

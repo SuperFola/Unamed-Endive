@@ -9,14 +9,15 @@ PNJManager::PNJManager()
 
 void PNJManager::add_pnj_on_map(int mid, PNJ pnj, std::string dname)
 {
-    if (this->pnjs.find(mid) == this->pnjs.end())
-    {
-        this->pnjs[mid] = std::vector<PNJ>;
-    }
     pnj.setDisplayName(dname);
     if (!pnj.load())
         std::cout << "Unable to load " << dname << " PNJ" << std::endl;
-    this->pnjs[mid].emplace(pnj);
+
+    if (this->pnjs.find(mid) == this->pnjs.end())
+    {
+        this->pnjs[mid] = std::vector<PNJ>();
+    }
+    this->pnjs[mid].push_back(pnj);
 }
 
 int PNJManager::countPNJonMap(int mid)
