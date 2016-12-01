@@ -6,6 +6,32 @@ import functions
 
 
 class Editor:
+    @staticmethod
+    def convert_layer_to_int(lay):
+        if lay == "map":
+            return 0
+        elif lay == "map2":
+            return 1
+        elif lay == "map3":
+            return 2
+
+    @staticmethod
+    def get_next_layer(lay, way=+1):
+        if way == +1:
+            if lay == "map":
+                return "map2"
+            elif lay == "map2":
+                return "map3"
+            elif lay == "map3":
+                return "map"
+        elif way == -1:
+            if lay == "map":
+                return "map3"
+            elif lay == "map2":
+                return "map"
+            elif lay == "map3":
+                return "map2"
+
     def __init__(self):
         self.done = False
         self.map_path = "%i-%s.umd" % (len(glob.glob("maps/*")), time.strftime("%H%M"))
@@ -13,7 +39,8 @@ class Editor:
         self.tmap = functions.create_default()
         self.current_block = 0
         self.clic = 0  # 0 = not clicking ; 1 = left clicking ; 2 = right clicking ; 3 = wheel clicking
-        self.alpha_black, self.win, self.tiles, self.tileset = None, None, None, None
+        self.alpha_black, self.win, self.tiles, self.tileset, self.font = None, None, None, None, None
+        self.texts = []
 
     def resize_tmap(self, nw, nh):
         to_change = []
@@ -64,10 +91,15 @@ class Editor:
         self.alpha_black.set_alpha(90)
 
         print("Loading tileset")
-        self.tileset = pygame.image.load("../assets/tileset.png").convert()
+        self.tileset = pygame.image.load("../../assets/tileset.png").convert()
         print("Cutting in tiles of %i*%i" % (REAL_TS, REAL_TS))
         self.tiles = functions.cut_ts_in_tiles(self.tileset)
         print("Succesfully loaded the tiles")
+
+        self.font = pygame.font.SysFont("arial", 18)
+        self.texts.append(self.font.render("layer 0", True, WHITE))
+        self.texts.append(self.font.render("layer 1", True, WHITE))
+        self.texts.append(self.font.render("layer 2", True, WHITE))
 
     def render(self):
         # background
@@ -83,6 +115,24 @@ class Editor:
                 # to help the mapper identifying them (the non colliding tiles)
                 if not element["colliding"]:
                     self.win.blit(self.alpha_black, (tu * REAL_TS, tv * REAL_TS))
+        self.win.blit(self.texts[Editor.convert_layer_to_int(self.layer)],
+                      (10, self.tmap["height"] * REAL_TS + 10))
+
+        for i, element in enumerate(self.tmap[Editor.get_next_layer(self.layer)]):
+            if element is not None:
+                tu, tv = i % self.tmap["width"], i // self.tmap["width"]
+                self.win.blit(self.tiles[element["id"]], (tu * REAL_TS + self.tmap["width"] * REAL_TS, tv * REAL_TS))
+                # if the block is not colliding, let's draw a semi black thing on it
+                # to help the mapper identifying them (the non colliding tiles)
+                if not element["colliding"]:
+                    self.win.blit(self.alpha_black, (tu * REAL_TS + self.tmap["width"] * REAL_TS, tv * REAL_TS))
+        self.win.blit(self.texts[Editor.convert_layer_to_int(Editor.get_next_layer(self.layer))],
+                      (10 + self.tmap["width"] * REAL_TS, self.tmap["height"] * REAL_TS + 10))
+
+        pygame.draw.line(self.win, RED,
+                         (self.tmap["width"] * REAL_TS, 0),
+                         (self.tmap["width"] * REAL_TS, self.tmap["height"] * REAL_TS),
+                         2)
 
         # current block
         xp, yp = pygame.mouse.get_pos()
@@ -166,32 +216,38 @@ class Editor:
 
             xp, yp = event.pos
             rpos = xp // REAL_TS + yp // REAL_TS * self.tmap["width"]
+            lay = self.layer if xp <= self.tmap["width"] * REAL_TS else Editor.get_next_layer(self.layer)
+            if lay != self.layer:
+                rpos = (xp - self.tmap["width"] * REAL_TS) // REAL_TS + yp // REAL_TS * self.tmap["width"]
 
             if self.clic == 1:
                 # put a block
-                self.tmap[self.layer][rpos]["id"] = self.current_block
+                self.tmap[lay][rpos]["id"] = self.current_block
             elif self.clic == 2:
                 # destroy a block
-                self.tmap[self.layer][rpos]["id"] = None
+                self.tmap[lay][rpos]["id"] = None
             elif self.clic == 3:
                 # pick a chu ... pick a block
-                self.current_block = self.tmap[self.layer][rpos]["id"]
+                self.current_block = self.tmap[lay][rpos]["id"]
         elif event.type == pygame.MOUSEMOTION:
             xp, yp = event.pos
             rpos = xp // REAL_TS + yp // REAL_TS * self.tmap["width"]
+            lay = self.layer if xp <= self.tmap["width"] * REAL_TS else Editor.get_next_layer(self.layer)
+            if lay != self.layer:
+                rpos = (xp - self.tmap["width"] * REAL_TS) // REAL_TS + yp // REAL_TS * self.tmap["width"]
 
-            if rpos < 0 or rpos >= len(self.tmap[self.layer]):
+            if rpos < 0 or rpos >= len(self.tmap[lay]):
                 self.clic = 0
 
             if self.clic == 1:
                 # put a block
-                self.tmap[self.layer][rpos]["id"] = self.current_block
+                self.tmap[lay][rpos]["id"] = self.current_block
             elif self.clic == 2:
                 # destroy a block
-                self.tmap[self.layer][rpos]["id"] = None
+                self.tmap[lay][rpos]["id"] = None
             elif self.clic == 3:
                 # pick a chu ... pick a block
-                self.current_block = self.tmap[self.layer][rpos]["id"]
+                self.current_block = self.tmap[lay][rpos]["id"]
         elif event.type == pygame.MOUSEBUTTONUP:
             self.clic = 0
 

@@ -20,3 +20,5 @@ controls = [
     "up : change the layer",
     "down : change the layer"
 ]
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)

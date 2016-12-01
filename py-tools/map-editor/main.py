@@ -20,3 +20,7 @@ def main():
 
     print("Quitting")
     pygame.quit()
+
+
+if __name__ == '__main__':
+    main()
