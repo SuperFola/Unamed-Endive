@@ -32,7 +32,6 @@ YELLOW = (0, 255, 255)
 BROWN = (255, 255, 0)
 
 COLORS = [
-    BLACK,
     WHITE,
     GREY,
     RED,

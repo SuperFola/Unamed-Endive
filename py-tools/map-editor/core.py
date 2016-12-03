@@ -1,7 +1,6 @@
 import glob
 import time
 import pygame
-import random
 from const import *
 import functions
 
@@ -49,25 +48,32 @@ class Editor:
         to_change = []
         ow = self.tmap["width"]
         oh = self.tmap["height"]
+        print(ow, nw, oh, nh)
         for i, element in enumerate(self.tmap):
             tu, tv = i % ow, i // ow
-            if ((ow != nw) ^ (oh != nw)) and (((tu == nw) & (ow != nw)) ^ ((tv == nh) & (oh != nh))):
-                to_change.append(i)
-
-        to_change = to_change[::-1]
+            if (ow != nw) ^ (oh != nh):
+                if ((tu == nw - 1) & (ow != nw)) ^ ((tv == nh - 1) & (oh != nh)):
+                    to_change.append(i + 1)
 
         if (ow < nw) ^ (oh < nh):
             # insert
+            print("insert")
             for elem in to_change[::-1]:
                 self.tmap["map"].insert(elem, None)
                 self.tmap["map2"].insert(elem, None)
                 self.tmap["map3"].insert(elem, None)
         elif (ow > nw) ^ (oh > nh):
             # pop
+            print("pop")
             for elem in to_change[::-1]:
                 self.tmap["map"].pop(elem)
                 self.tmap["map2"].pop(elem)
                 self.tmap["map3"].pop(elem)
+        else:
+            print("else")
+
+        self.tmap["width"] = nw
+        self.tmap["height"] = nh
 
     def load(self, temp):
         if temp:
@@ -106,10 +112,17 @@ class Editor:
 
         self.tb.append(["set all to collide", self._make_all_colliding])
         self.tb.append(["unset all to collide", self._make_all_uncolliding])
+        self.tb.append(["next layer", lambda: self.change_layer(+1)])
+        self.tb.append(["previous layer", lambda: self.change_layer(-1)])
+        self.tb.append(["save", self.save])
+        self.tb.append(["width + 1", lambda: self.resize_tmap(self.tmap["width"] + 1, self.tmap["height"])])
+        self.tb.append(["width - 1", lambda: self.resize_tmap(self.tmap["width"] - 1, self.tmap["height"])])
+        self.tb.append(["height + 1", lambda: self.resize_tmap(self.tmap["width"], self.tmap["height"] + 1)])
+        self.tb.append(["height - 1", lambda: self.resize_tmap(self.tmap["width"], self.tmap["height"] - 1)])
 
         for i, e in enumerate(self.tb):
             self.tb[i][0] = self.font.render(e[0], True, BLACK)
-            self.tb[i].append(random.choice(COLORS))
+            self.tb[i].append(COLORS[i % len(COLORS)])
 
     def _make_all_colliding(self):
         for elem in self.tmap[self.layer]:
@@ -130,7 +143,7 @@ class Editor:
         # background
         pygame.draw.rect(self.win, (0, 0, 0), (0, 0) + self.win.get_size())
         # a background to visualize mapping errors
-        pygame.draw.rect(self.win, (255, 0, 0), (0, 0, self.tmap["width"] * REAL_TS, self.tmap["height"] * REAL_TS))
+        pygame.draw.rect(self.win, PURPLE, (0, 0, self.tmap["width"] * REAL_TS * 2, self.tmap["height"] * REAL_TS))
 
         for i, element in enumerate(self.tmap[self.layer]):
             if element is not None:
@@ -203,16 +216,16 @@ class Editor:
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_KP7:
                 # width + 1
-                self.resize_tmap(self.tmap["width"] + 1, self.tmap["height"]); self.tmap["width"] += 1
+                self.resize_tmap(self.tmap["width"] + 1, self.tmap["height"])
             elif event.key == pygame.K_KP8:
                 # width - 1
-                self.resize_tmap(self.tmap["width"] - 1, self.tmap["height"]); self.tmap["width"] -= 1
+                self.resize_tmap(self.tmap["width"] - 1, self.tmap["height"])
             elif event.key == pygame.K_KP4:
                 # height + 1
-                self.resize_tmap(self.tmap["width"], self.tmap["height"] + 1); self.tmap["height"] += 1
+                self.resize_tmap(self.tmap["width"], self.tmap["height"] + 1)
             elif event.key == pygame.K_KP5:
                 # height - 1
-                self.resize_tmap(self.tmap["width"], self.tmap["height"] - 1); self.tmap["height"] -= 1
+                self.resize_tmap(self.tmap["width"], self.tmap["height"] - 1)
             elif event.key == pygame.K_s:
                 # save the map
                 self.save()
