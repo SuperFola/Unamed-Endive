@@ -7,15 +7,16 @@ PNJManager::PNJManager()
 
 }
 
-void PNJManager::add_pnj_on_map(int mid, PNJ pnj, std::string dname)
+void PNJManager::add_pnj_on_map(int mid, const std::string& name, const std::string& text, PNJkind kind, const std::string& dname, int x, int y)
 {
-    pnj.setDisplayName(dname);
-    if (!pnj.load())
+    PNJ* pnj = new PNJ(name, text, kind, x, y);
+    pnj->setDisplayName(dname);
+    if (!pnj->load())
         std::cout << "Unable to load " << dname << " PNJ" << std::endl;
 
     if (this->pnjs.find(mid) == this->pnjs.end())
     {
-        this->pnjs[mid] = std::vector<PNJ>();
+        this->pnjs[mid] = std::vector<PNJ*>();
     }
     this->pnjs[mid].push_back(pnj);
 }
@@ -29,7 +30,7 @@ int PNJManager::countPNJonMap(int mid)
 
 PNJ& PNJManager::getPNJonMap(int mid, int pid)
 {
-    return this->pnjs[mid][pid];
+    return *this->pnjs[mid][pid];
 }
 
 void PNJManager::update(int mid, sf::RenderWindow& window, sf::Time elapsed)
@@ -39,7 +40,7 @@ void PNJManager::update(int mid, sf::RenderWindow& window, sf::Time elapsed)
 
     for (int i=0; i < this->pnjs[mid].size(); i++)
     {
-        this->pnjs[mid][i].update(window, elapsed);
+        this->pnjs[mid][i]->update(window, elapsed);
     }
     _end:;
 }

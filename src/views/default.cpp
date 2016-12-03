@@ -19,13 +19,12 @@ bool DefaultView::load()
         return false;
     }
 
-    PNJ pnj = PNJ("vader", "Je suis Vader, un commander d'El Padrino !", PNJkind::special);
-    this->pnjmgr.add_pnj_on_map(this->level.getId(), pnj, "Vader");
+    this->pnjmgr.add_pnj_on_map(this->level.getId(), "vader", "Je suis Vader, un commander d'El Padrino !", PNJkind::special, "Vader");
 
     this->player.setName("me");
     if (!this->player.load())
     {
-        std::cout << "An error occured while loading the player" <<std::endl;
+        std::cout << "An error occured while loading the player" << std::endl;
         return false;
     }
 

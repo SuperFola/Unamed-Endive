@@ -7,6 +7,7 @@
 /assets/.calques_pnj
 /assets/.tiles_buildings
 /assets/.tilesets
+/obj/
 
 # Prerequisites
 *.d
