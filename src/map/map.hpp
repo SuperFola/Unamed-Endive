@@ -16,6 +16,7 @@ class Map
 {
 private:
     // methods
+    int load();
     int load_map(const std::string&);
     // variables
     std::vector<std::vector<Block*>> level;
@@ -25,13 +26,12 @@ private:
     std::string map_data_path;
     Point pos;
     int id;
-    // default values for the moment
     int map_width;
     int map_height;
 
 public:
     Map(std::string);
-    int load();
+    int load_map_at(const std::string& path="default");
     void render(sf::RenderWindow&);
     void render_top(sf::RenderWindow&);
     void render_chara(sf::Sprite&, Point&, sf::RenderWindow&);

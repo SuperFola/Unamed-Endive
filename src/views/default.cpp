@@ -12,10 +12,10 @@ DefaultView::DefaultView() :
 
 bool DefaultView::load()
 {
-    this->level.load();
+    this->level.load_map_at();  // empty will cause to load the map given by default
     if (!this->menu_hud.load())
     {
-        std::cout << "An error occured while loading the menu" <<std::endl;
+        std::cout << "An error occured while loading the menu" << std::endl;
         return false;
     }
 
