@@ -1,6 +1,7 @@
 import glob
 import time
 import pygame
+import random
 from const import *
 import functions
 
@@ -41,6 +42,8 @@ class Editor:
         self.clic = 0  # 0 = not clicking ; 1 = left clicking ; 2 = right clicking ; 3 = wheel clicking
         self.alpha_black, self.win, self.tiles, self.tileset, self.font = None, None, None, None, None
         self.texts = []
+        self.display_tb = True
+        self.tb = []
 
     def resize_tmap(self, nw, nh):
         to_change = []
@@ -101,6 +104,28 @@ class Editor:
         self.texts.append(self.font.render("layer 1", True, WHITE))
         self.texts.append(self.font.render("layer 2", True, WHITE))
 
+        self.tb.append(["set all to collide", self._make_all_colliding])
+        self.tb.append(["unset all to collide", self._make_all_uncolliding])
+
+        for i, e in enumerate(self.tb):
+            self.tb[i][0] = self.font.render(e[0], True, BLACK)
+            self.tb[i].append(random.choice(COLORS))
+
+    def _make_all_colliding(self):
+        for elem in self.tmap[self.layer]:
+            elem["colliding"] = True
+
+    def _make_all_uncolliding(self):
+        for elem in self.tmap[self.layer]:
+            elem["colliding"] = False
+
+    def render_toolbox(self):
+        pygame.draw.rect(self.win, GREY, (W - 200, 0, 200, H))
+
+        for i, e in enumerate(self.tb):
+            pygame.draw.rect(self.win, self.tb[i][2], (W - 200, i * 20, 200, 20))
+            self.win.blit(self.tb[i][0], (W - 180, i * 20))
+
     def render(self):
         # background
         pygame.draw.rect(self.win, (0, 0, 0), (0, 0) + self.win.get_size())
@@ -133,6 +158,9 @@ class Editor:
                          (self.tmap["width"] * REAL_TS, 0),
                          (self.tmap["width"] * REAL_TS, self.tmap["height"] * REAL_TS),
                          2)
+
+        if self.display_tb:
+            self.render_toolbox()
 
         # current block
         xp, yp = pygame.mouse.get_pos()
@@ -200,6 +228,9 @@ class Editor:
             elif event.key == pygame.K_DOWN:
                 # change the layer
                 self.change_layer(-1)
+            elif event.key == pygame.K_h:
+                # display or not the toolbox
+                self.display_tb = not self.display_tb
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button < 4:
                 self.clic = event.button
@@ -220,15 +251,21 @@ class Editor:
             if lay != self.layer:
                 rpos = (xp - self.tmap["width"] * REAL_TS) // REAL_TS + yp // REAL_TS * self.tmap["width"]
 
-            if self.clic == 1:
-                # put a block
-                self.tmap[lay][rpos]["id"] = self.current_block
-            elif self.clic == 2:
-                # destroy a block
-                self.tmap[lay][rpos]["id"] = None
-            elif self.clic == 3:
-                # pick a chu ... pick a block
-                self.current_block = self.tmap[lay][rpos]["id"]
+            if (self.display_tb and xp < W - 200) or not self.display_tb:
+                if self.clic == 1:
+                    # put a block
+                    self.tmap[lay][rpos]["id"] = self.current_block
+                elif self.clic == 2:
+                    # destroy a block
+                    self.tmap[lay][rpos]["id"] = None
+                elif self.clic == 3:
+                    # pick a chu ... pick a block
+                    self.current_block = self.tmap[lay][rpos]["id"]
+            elif self.display_tb and xp >= W - 200:
+                # we clicked in the toolbox
+                ry = yp // 20
+                if 0 <= ry < len(self.tb):
+                    self.tb[ry][1]() if self.tb[ry][1] else None
         elif event.type == pygame.MOUSEMOTION:
             xp, yp = event.pos
             rpos = xp // REAL_TS + yp // REAL_TS * self.tmap["width"]
@@ -239,15 +276,16 @@ class Editor:
             if rpos < 0 or rpos >= len(self.tmap[lay]):
                 self.clic = 0
 
-            if self.clic == 1:
-                # put a block
-                self.tmap[lay][rpos]["id"] = self.current_block
-            elif self.clic == 2:
-                # destroy a block
-                self.tmap[lay][rpos]["id"] = None
-            elif self.clic == 3:
-                # pick a chu ... pick a block
-                self.current_block = self.tmap[lay][rpos]["id"]
+            if (self.display_tb and xp < W - 200) or not self.display_tb:  # no drag and drop in the toolbox
+                if self.clic == 1:
+                    # put a block
+                    self.tmap[lay][rpos]["id"] = self.current_block
+                elif self.clic == 2:
+                    # destroy a block
+                    self.tmap[lay][rpos]["id"] = None
+                elif self.clic == 3:
+                    # pick a chu ... pick a block
+                    self.current_block = self.tmap[lay][rpos]["id"]
         elif event.type == pygame.MOUSEBUTTONUP:
             self.clic = 0
 
