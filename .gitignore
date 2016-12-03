@@ -8,6 +8,7 @@
 /assets/.tiles_buildings
 /assets/.tilesets
 /obj/
+screenshots/
 
 # Prerequisites
 *.d
