@@ -18,6 +18,10 @@ Note | Note
 ---- | ----
 Vous pouvez aussi télécharger un exécutable pour installer le jeu sans devoir installer les dépendances. | You can also download an executable to install the game without installing the dependencies.
 
+Compiler le projet | Compiling the project
+------------------ | ---------------------
+Si vous souhaitez compiler le projet, il vous faut installer la SFML et suivre ces étapes : https://loodoor.github.io/Unamed-Endive/compiling.html | If you want to compile the project, you will need to install the SFML lib and follow these steps : https://loodoor.github.io/Unamed-Endive/compiling.html 
+
 # Crédits - Credits
 
 Un énorme merci à Wesley FG qui a créé toutes les tiles utilisées (uniquement les tiles, pas les personnages), originellement pour le projet `Pokémon Marnian`.
