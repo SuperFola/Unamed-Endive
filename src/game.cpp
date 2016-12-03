@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 #include <string>
 
 #include "game.hpp"
@@ -172,6 +173,34 @@ void Game::loading()
     }
 }
 
+void Game::take_screenshot()
+{
+    time_t t = time(0);
+    struct tm* now = localtime(&t);
+    sf::Vector2u windowSize = this->window.getSize();
+    sf::Texture texture;
+
+    texture.create(windowSize.x, windowSize.y);
+    texture.update(this->window);
+
+    sf::Image screenshot = texture.copyToImage();
+    screenshot.saveToFile(
+                          std::string("screenshots/screenshot-")
+                          + to_string<int>(now->tm_year + 1900)
+                          + std::string("-")
+                          + to_string<int>(now->tm_mon + 1)
+                          + std::string("-")
+                          + to_string<int>(now->tm_mday)
+                          + std::string(" - ")
+                          + to_string<int>(now->tm_hour)
+                          + std::string("-")
+                          + to_string<int>(now->tm_min)
+                          + std::string("-")
+                          + to_string<int>(now->tm_sec)
+                          + std::string(".jpg")
+                        );
+}
+
 // public
 Game::Game() :
     window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titlebar | sf::Style::Close)
@@ -244,6 +273,19 @@ int Game::run()
             {
             case sf::Event::Closed:
                 this->window.close();
+                break;
+
+            case sf::Event::KeyPressed:
+                switch (event.key.code)
+                {
+                case sf::Keyboard::F5:
+                    // take screenshoot
+                    this->take_screenshot();
+                    break;
+
+                default:
+                    break;
+                }
                 break;
 
             default:
