@@ -244,7 +244,10 @@ int Game::run()
     this->loading();
     // we "add" a default view
     this->sm.change_view(DEFAULT_VIEW_ID);
+    // we add the bag to the inventory view from the player
     this->sm.getInventory()->add_bag(this->sm.getDefault()->getCharacter()->getBag());
+    // we add the pnj manager here (very important, otherwise it won't be loaded in the default if we try to add it in the cstr of the class) to the scripting engine
+    PyScripting::setPnjManager(this->sm.getDefault()->getPNJM());
     // launch the scripts
     PyScripting::run_on_start_modules();
 

@@ -212,6 +212,25 @@ namespace PyUnamed
             return d;
         }
 
+        static PyObject* createPNJ(PyObject* self, PyObject* args)
+        {
+            int mid;
+            const char* name;
+            const char* text;
+            int pnjkind_i;
+            const char* dname;
+            int x;
+            int y;
+            if (!PyArg_ParseTuple(args, "issisii", &mid, &name, &text, &pnjkind_i, &dname, &x, &y))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need an int representing the id of the map, a const char* for the filename, a const char* for the text of the pnj, an int representing the kind of pnj, a const char* for its display name and two int for its position (x and y)");
+                return NULL;
+            }
+            PyScripting::createPNJ(mid, name, text, pnjkind_i, dname, x, y);
+
+            RETURN_NONE
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
@@ -226,6 +245,7 @@ namespace PyUnamed
             {"playMusic", playMusic, METH_VARARGS, "Start a song from its name"},
             {"hasActiveHud", hasActiveHud, METH_VARARGS, "Check if a view, with a given id, has currently an active HUD"},
             {"getEvent", getEvent, METH_VARARGS, "Get the current event and return it using a dict"},
+            {"createPNJ", createPNJ, METH_VARARGS, "Create a PNJ (refer to the wiki to learn more about the PNJkind)"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -481,6 +501,12 @@ void PyScripting::setStateMachine(StateMachine* sm)
     instance.sm = sm;
 }
 
+void PyScripting::setPnjManager(PNJManager* pnjm)
+{
+    std::cout << "Adding a pointer on the pnjmanager to the PyScripting singleton" << std::endl;
+    instance.pnjm = pnjm;
+}
+
  int PyScripting::setModuleKind(const char* kind, const char* id)
  {
      std::string tkind = std::string(kind);
@@ -574,4 +600,29 @@ void PyScripting::stopMusic()
 int PyScripting::playMusic(const char* name)
 {
     return int(instance.music_player->play(std::string(name)));
+}
+
+void PyScripting::createPNJ(int mid, const char* name, const char* text, int pnjkind_i, const char* dname, int x, int y)
+{
+    PNJkind kind;
+    switch (pnjkind_i)
+    {
+    case 0:
+        kind = PNJkind::normal;
+        break;
+
+    case 1:
+        kind = PNJkind::special;
+        break;
+
+    case 2:
+        kind = PNJkind::system;
+        break;
+
+    default:
+        kind = PNJkind::normal;
+        break;
+    }
+
+    instance.pnjm->add_pnj_on_map(mid, std::string(name), std::string(text), kind, std::string(dname), x, y);
 }

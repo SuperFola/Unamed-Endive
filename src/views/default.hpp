@@ -29,6 +29,7 @@ public:
     void update(sf::RenderWindow&, sf::Time) override;
     bool hasActiveHud();
     Character* getCharacter();
+    PNJManager* getPNJM();
 };
 
 #endif // DEF_DEFAULT_VIEW

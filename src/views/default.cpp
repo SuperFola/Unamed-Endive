@@ -110,5 +110,10 @@ bool DefaultView::hasActiveHud()
 
 Character* DefaultView::getCharacter()
 {
-    return &(this->player);
+    return &this->player;
+}
+
+PNJManager* DefaultView::getPNJM()
+{
+    return &this->pnjmgr;
 }

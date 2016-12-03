@@ -16,6 +16,7 @@
 #include "../abstract/texturesmanager.hpp"
 #include "../abstract/musicplayer.hpp"
 #include "../abstract/statemachine.hpp"
+#include "../entities/pnjmanager.hpp"
 
 class PyScripting
 {
@@ -40,6 +41,7 @@ private:
     sf::RenderWindow* window;
     MusicPlayer* music_player;
     StateMachine* sm;
+    PNJManager* pnjm;
 
     // methods
     void load_all_modules();
@@ -67,6 +69,7 @@ public:
     static void setWindow(sf::RenderWindow*);
     static void setMusicPlayer(MusicPlayer*);
     static void setStateMachine(StateMachine*);
+    static void setPnjManager(PNJManager*);
 
     static int setModuleKind(const char*, const char*);
     static int loadImage(const char*, const char*);
@@ -78,6 +81,7 @@ public:
     static int hasActiveHud(int);
     static void stopMusic();
     static int playMusic(const char*);
+    static void createPNJ(int, const char*, const char*, int, const char*, int, int);
 };
 
 #endif // DEF_SCRIPTING
