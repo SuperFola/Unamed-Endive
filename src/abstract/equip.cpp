@@ -13,6 +13,9 @@ Equip::Equip() :
 bool Equip::load(const std::string& file)
 {
     // load file from player save
+    std::cout << "Loading equip" << std::endl;
+
+    return true;
 }
 
 bool Equip::add_creature(Creature& crea)

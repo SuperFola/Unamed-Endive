@@ -35,7 +35,7 @@ bool Dex::load(const std::string& path)
         }
         else
         {
-            if (root_player.get(key, -1) != -1)
+            if (root_player.get(key.asString(), -1) != -1)
             {
                 dexi->viewed = root_player[key.asString()]["viewed"].asBool();
                 dexi->captured = root_player[key.asString()]["captured"].asBool();
