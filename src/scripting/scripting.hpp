@@ -17,6 +17,7 @@
 #include "../abstract/musicplayer.hpp"
 #include "../abstract/statemachine.hpp"
 #include "../entities/pnjmanager.hpp"
+#include "../map/map.hpp"
 
 class PyScripting
 {
@@ -42,6 +43,7 @@ private:
     MusicPlayer* music_player;
     StateMachine* sm;
     PNJManager* pnjm;
+    Map* level;
 
     // methods
     void load_all_modules();
@@ -70,6 +72,7 @@ public:
     static void setMusicPlayer(MusicPlayer*);
     static void setStateMachine(StateMachine*);
     static void setPnjManager(PNJManager*);
+    static void setMap(Map*);
 
     static int setModuleKind(const char*, const char*);
     static int loadImage(const char*, const char*);

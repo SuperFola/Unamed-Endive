@@ -30,6 +30,7 @@ public:
     bool hasActiveHud();
     Character* getCharacter();
     PNJManager* getPNJM();
+    Map* getMap();
 };
 
 #endif // DEF_DEFAULT_VIEW

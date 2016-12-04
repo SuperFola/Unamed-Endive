@@ -507,6 +507,12 @@ void PyScripting::setPnjManager(PNJManager* pnjm)
     instance.pnjm = pnjm;
 }
 
+void PyScripting::setMap(Map* level)
+{
+    std::cout << "Adding a pointer on the map to the PyScripting singleton" << std::endl;
+    instance.level = level;
+}
+
  int PyScripting::setModuleKind(const char* kind, const char* id)
  {
      std::string tkind = std::string(kind);

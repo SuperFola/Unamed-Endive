@@ -4,6 +4,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <map>
 
 #include "tilemap.hpp"
 #include "blocks/block.hpp"
@@ -18,9 +19,15 @@ private:
     // methods
     int load();
     int load_map(const std::string&);
+    bool is_spawn(int, int);
+    bool is_tp(int, int);
+    int getSpawnFrom(int);  // return a rpos, take a mid
+    int getMapFromTp(int);  // return a mid, take a rpos
     // variables
     std::vector<std::vector<Block*>> level;
     std::vector<TileMap*> tmaps;
+    std::map<int, int> spawns;
+    std::map<int, int> tp;
     Json::Value root;
     std::string tileset_path;
     std::string map_data_path;

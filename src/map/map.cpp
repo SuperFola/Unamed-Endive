@@ -144,5 +144,65 @@ int Map::load_map(const std::string& map_path)
         if (this->tmaps[i]->load_map(sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level[i], this->map_width, this->map_height))
             return 1;
     }
+
+    for (int i=0; i < this->root["spawns"].size(); i++)
+    {
+        this->spawns[this->root["spawns"][i]["oncase"].asInt()] = this->root["spawns"][i]["frommap"].asInt();
+    }
+
+    for (int i=0; i < this->root["tp"].size(); i++)
+    {
+        this->tp[this->root["tp"][i]["oncase"].asInt()] = this->root["tp"][i]["tomap"].asInt();
+    }
+
     return 0;
 }
+
+bool Map::is_spawn(int x, int y)
+{
+    int rpos = x + y * this->map_width;
+
+    if (this->spawns.find(rpos) != this->spawns.end())
+        return true;
+    return false;
+}
+
+bool Map::is_tp(int x, int y)
+{
+    int rpos = x + y * this->map_width;
+
+    if (this->tp.find(rpos) != this->tp.end())
+        return true;
+    return false;
+}
+
+int Map::getSpawnFrom(int mid)
+{
+    int rpos = -1;
+
+    for (auto& kv: this->spawns)
+    {
+        if (kv.second == mid)
+        {
+            rpos = kv.first;
+            break;
+        }
+    }
+
+    std::cout << "Spawn for map " << mid << " is on " << rpos << std::endl;
+
+    return rpos;
+}
+
+int Map::getMapFromTp(int rpos)
+{
+    int mid;
+
+    if ((mid = this->tp.find(rpos)) == this->tp.end())
+        mid = -1;
+
+    std::cout << "Tp on " << rpos << " go to map " << mid << std::endl;
+
+    return mid;
+}
+

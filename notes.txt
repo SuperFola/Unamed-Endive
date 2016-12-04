@@ -12,3 +12,9 @@
         map / map2 / map3 (layers)
             id: int
             colliding : bool
+        spawns
+            oncase: int
+            frommap: int
+        tp
+            oncase: int
+            tomap: int

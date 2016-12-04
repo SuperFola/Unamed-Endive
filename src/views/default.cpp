@@ -117,3 +117,8 @@ PNJManager* DefaultView::getPNJM()
 {
     return &this->pnjmgr;
 }
+
+Map* DefaultView::getMap()
+{
+    return &this->level;
+}
