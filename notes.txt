@@ -11,10 +11,19 @@
         height
         map / map2 / map3 (layers)
             id: int
-            colliding : bool
+            colliding: bool
         spawns
             oncase: int
             frommap: int
         tp
             oncase: int
             tomap: int
+    
+    dex format :
+        creature name: string
+            struct dex_info =>
+                - viewed: bool
+                - captured: bool
+                - type: Type
+                - stade: int
+                - evolution: string

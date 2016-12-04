@@ -1,0 +1,16 @@
+{
+    "name": {
+        "viewed": false,
+        "captured": false,
+        "type": 0,
+        "stade": 0,
+        "evolution": "name2"
+    },
+    "name2": {
+        "viewed": false,
+        "captured": false,
+        "type": 0,
+        "stade": 0,
+        "evolution": ""
+    }
+}

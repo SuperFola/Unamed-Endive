@@ -41,5 +41,10 @@ int Character::save()
 
 Bag* Character::getBag()
 {
-    return &(this->bag);
+    return &this->bag;
+}
+
+Equip* Character::getEquip()
+{
+    return &this->equip;
 }

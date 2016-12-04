@@ -14,6 +14,7 @@
 #include "../bag/bag.hpp"
 #include "../abstract/functions.hpp"
 #include "animatedentity.hpp"
+#include "../abstract/equip.hpp"
 
 enum class Sex {
     Female,
@@ -27,6 +28,7 @@ private:
     Point pos;
     Sex sex;
     Bag bag;
+    Equip equip;
 
 public:
     // methods
@@ -35,6 +37,7 @@ public:
     void setName(const std::string);
     void _load() override;
     Bag* getBag();
+    Equip* getEquip();
 };
 
 #endif // DEF_CHARACTER
