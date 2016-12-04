@@ -3,6 +3,7 @@ import time
 import pygame
 from const import *
 import functions
+import textentry
 
 
 class Editor:
@@ -43,6 +44,7 @@ class Editor:
         self.texts = []
         self.display_tb = True
         self.tb = []
+        self.entry = textentry.TextBox(self.win, x=(W - 120) // 2, y=20, sx=120)
 
     def resize_tmap(self, nw, nh):
         to_change = []
@@ -244,6 +246,38 @@ class Editor:
             elif event.key == pygame.K_h:
                 # display or not the toolbox
                 self.display_tb = not self.display_tb
+            elif event.key == pygame.K_o:
+                # adding spawn
+                xp, yp = pygame.mouse.get_pos()
+                rpos = xp // REAL_TS + yp // REAL_TS * self.tmap["width"]
+                lay = self.layer if xp <= self.tmap["width"] * REAL_TS else Editor.get_next_layer(self.layer)
+                if lay != self.layer:
+                    rpos = (xp - self.tmap["width"] * REAL_TS) // REAL_TS + yp // REAL_TS * self.tmap["width"]
+                self.entry.reset()
+                self.entry.set_placeholder("frommap(int)")
+                frommap = self.entry.get_text()
+                try:
+                    frommap = int(frommap)
+                except ValueError:
+                    print("Need an integer")
+                else:
+                    self.tmap["spawns"].append({"oncase": rpos, "frommap": frommap})
+            elif event.key == pygame.K_p:
+                # adding tp
+                xp, yp = pygame.mouse.get_pos()
+                rpos = xp // REAL_TS + yp // REAL_TS * self.tmap["width"]
+                lay = self.layer if xp <= self.tmap["width"] * REAL_TS else Editor.get_next_layer(self.layer)
+                if lay != self.layer:
+                    rpos = (xp - self.tmap["width"] * REAL_TS) // REAL_TS + yp // REAL_TS * self.tmap["width"]
+                self.entry.reset()
+                self.entry.set_placeholder("tomap(int)")
+                tomap = self.entry.get_text()
+                try:
+                    tomap = int(tomap)
+                except ValueError:
+                    print("Need an integer")
+                else:
+                    self.tmap["tp"].append({"oncase": rpos, "tomap": tomap})
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button < 4:
                 self.clic = event.button

@@ -15,6 +15,8 @@ controls = [
     "c : the block under the cursor is now colliding",
     "v : the block under the cursor is no longer colliding",
     "h : to show or not the toolbox",
+    "o : add a spawn to the pointed block",
+    "p : add a tp to the pointed block",
     "left clic : put a block",
     "middle clic : pick a bloc",
     "right clic : destroy a block",

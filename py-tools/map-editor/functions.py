@@ -24,5 +24,7 @@ def create_default():
         "map2": [],
         "map3": [],
         "width": DEF_WIDTH,
-        "height": DEF_HEIGHT
+        "height": DEF_HEIGHT,
+        "spawns": [],
+        "tp": []
     }
