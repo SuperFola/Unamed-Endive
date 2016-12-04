@@ -198,8 +198,10 @@ int Map::getMapFromTp(int rpos)
 {
     int mid;
 
-    if ((mid = this->tp.find(rpos)) == this->tp.end())
+    if (this->tp.find(rpos) == this->tp.end())
         mid = -1;
+    else
+        mid = this->tp.find(rpos)->second;
 
     std::cout << "Tp on " << rpos << " go to map " << mid << std::endl;
 

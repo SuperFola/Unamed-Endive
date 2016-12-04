@@ -6,7 +6,7 @@ void AnimatedEntity::update_anim(sf::Time elapsed)
 {
     this->elapsed_mvt_time += elapsed;
 
-    if (this->elapsed_mvt_time.asMilliseconds() % 24 < 3)
+    if (this->elapsed_mvt_time.asMilliseconds() % 24 < 4)
     {
         if (this->state == ChState::walking)
             this->update_walk_anim();
@@ -122,9 +122,10 @@ int AnimatedEntity::move(DIRECTION dir, Map map_, sf::Time elapsed)
     this->not_moving_time = sf::seconds(0.0f);  // reset it
     this->update_anim(elapsed);
 
-    float speed = this->speed * TILE_SIZE * 2;  // * (elapsed.asMilliseconds() / 100.0f);
-    std::vector<float> vect {0, 0};
+    float speed = (this->speed * TILE_SIZE * 4.0f);  // * (elapsed.asSeconds() * 100.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
+
+    std::vector<float> vect {0, 0};
 
     if (dir == DIRECTION::up)
     {
@@ -147,18 +148,14 @@ int AnimatedEntity::move(DIRECTION dir, Map map_, sf::Time elapsed)
             vect[0] = 1 * speed;
     }
 
-    bool pass = !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE)
-                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 1, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE)
-                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 1)
-                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 1, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 1);
-    if (pass)
-    {
-        // we can set the new position
-        this->pos.move(int(vect[0]), int(vect[1]));
+    bool pass =        !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      )
+                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      )
+                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2)
+                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
+    if (!pass)
         return 0;
-    }
-    // we need to recalculate a valid position
-    std::cout << "need to recalculate a valid position " << this->pos.getX() << " " << this->pos.getY() << std::endl;
+    // otherwise we can set the new position
+    this->pos.move(int(vect[0]), int(vect[1]));
     return 0;
 }
 
