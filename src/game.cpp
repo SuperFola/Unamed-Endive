@@ -239,19 +239,31 @@ Game::Game() :
     ObjectsTable::load();
 }
 
-int Game::run()
+void Game::post_load()
 {
-    this->loading();
+    // views
     // we "add" a default view
     this->sm.change_view(DEFAULT_VIEW_ID);
     // we add the bag to the inventory view from the player
     this->sm.getInventory()->add_bag(this->sm.getDefault()->getCharacter()->getBag());
+    // we add the equip to the creatures view from the player
+    this->sm.getCrea()->add_equip(this->sm.getDefault()->getCharacter()->getEquip());
+    // we add the dex to the dex view from the player
+    this->sm.getDex()->add_dex(this->sm.getDefault()->getCharacter()->getDex());
+
+    // scripting
     // we add the pnj manager here (very important, otherwise it won't be loaded in the default if we try to add it in the cstr of the class) to the scripting engine
     PyScripting::setPnjManager(this->sm.getDefault()->getPNJM());
     // same here
     PyScripting::setMap(this->sm.getDefault()->getMap());
     // launch the scripts
     PyScripting::run_on_start_modules();
+}
+
+int Game::run()
+{
+    this->loading();
+    this->post_load();
 
     int _fps_update = 0;
 

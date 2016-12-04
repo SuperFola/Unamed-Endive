@@ -286,7 +286,7 @@ namespace PyUnamed
             }
             int v = v-1;
             if (PyScripting::map_is_tp(x, y))
-                v = PyScripting::map_getMapFromTp(x + y * PyScripting::getMapWidth());
+                v = PyScripting::map_getMapFromTp(x, y);
             return Py_BuildValue("i", v);
         }
 

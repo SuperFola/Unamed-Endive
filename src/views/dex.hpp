@@ -7,6 +7,7 @@
 
 #include "view.hpp"
 #include "../abstract/texturesmanager.hpp"
+#include "../objects/dex.hpp"
 
 class DexView : public View
 {
@@ -17,6 +18,7 @@ private:
     std::map<std::string, sf::Sprite> sprites;
     sf::Font font;
     sf::Text text;
+    Dex* dex;
 
     const std::string BCKG = "background";
     const std::string TYPES_BTN = "types_button";
@@ -32,6 +34,7 @@ public:
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
+    void add_dex(Dex*);
 };
 
 #endif // DEF_DEX_VIEW

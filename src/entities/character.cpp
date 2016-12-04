@@ -24,6 +24,8 @@ void Character::setName(const std::string new_name)
 void Character::_load()
 {
     this->bag.load("saves/" + this->name + "/bag.json");
+    this->equip.load("saves/" + this->name + "/equip.json");
+    this->dex.load("saves/" + this->name + "/dex.json");
 
     #ifdef PLATFORM_WIN
     system((std::string("mkdir saves & cd saves & mkdir ") + this->name).data());
@@ -47,4 +49,9 @@ Bag* Character::getBag()
 Equip* Character::getEquip()
 {
     return &this->equip;
+}
+
+Dex* Character::getDex()
+{
+    return &this->dex;
 }

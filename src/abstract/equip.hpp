@@ -2,6 +2,7 @@
 #define DEF_EQUIP
 
 #include <vector>
+#include <string>
 
 #include "../entities/creature.hpp"
 
@@ -15,6 +16,7 @@ private:
 public:
     // methods
     Equip();
+    bool load(const std::string&);
     bool add_creature(Creature&);
     bool remove_creature(int);
     Creature& getCrea(int);

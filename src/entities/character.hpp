@@ -15,6 +15,7 @@
 #include "../abstract/functions.hpp"
 #include "animatedentity.hpp"
 #include "../abstract/equip.hpp"
+#include "../objects/dex.hpp"
 
 enum class Sex {
     Female,
@@ -29,6 +30,7 @@ private:
     Sex sex;
     Bag bag;
     Equip equip;
+    Dex dex;
 
 public:
     // methods
@@ -38,6 +40,7 @@ public:
     void _load() override;
     Bag* getBag();
     Equip* getEquip();
+    Dex* getDex();
 };
 
 #endif // DEF_CHARACTER

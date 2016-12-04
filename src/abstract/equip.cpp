@@ -10,6 +10,11 @@ Equip::Equip() :
 
 }
 
+bool Equip::load(const std::string& file)
+{
+    // load file from player save
+}
+
 bool Equip::add_creature(Creature& crea)
 {
     this->equip.push_back(crea);

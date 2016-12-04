@@ -7,6 +7,7 @@
 
 #include "view.hpp"
 #include "../abstract/texturesmanager.hpp"
+#include "../abstract/equip.hpp"
 
 class CreaView : public View
 {
@@ -17,6 +18,7 @@ private:
     std::map<std::string, sf::Sprite> sprites;
     sf::Font font;
     sf::Text text;
+    Equip* equip;
 
     const std::string BCKG = "background";
     const std::string BTN_PC = "btn_pc";
@@ -36,6 +38,7 @@ public:
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
+    void add_equip(Equip*);
 };
 
 #endif // DEF_CREA_VIEW

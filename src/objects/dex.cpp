@@ -8,12 +8,19 @@ Dex::Dex()
 
 }
 
-bool Dex::load()
+bool Dex::load(const std::string& path)
 {
     std::cout << "Loading dex" << std::endl;
 
     std::ifstream file("assets/config/dex.json");
     file >> this->root;
+    bool player_save = false;
+    if (is_file_existing(path))
+    {
+        std::ifstream player(path);
+        player >> this->root_player;
+        player_save = true;
+    }
 
     for (Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++)
     {
@@ -21,8 +28,24 @@ bool Dex::load()
         Json::Value key = itr.key();
         Json::Value value = *itr;
 
-        dexi->viewed = value["viewed"].asBool();
-        dexi->captured = value["captured"].asBool();
+        if (!player_save)
+        {
+            dexi->viewed = false;
+            dexi->captured = false;
+        }
+        else
+        {
+            if (root_player.get(key, -1) != -1)
+            {
+                dexi->viewed = root_player[key.asString()]["viewed"].asBool();
+                dexi->captured = root_player[key.asString()]["captured"].asBool();
+            }
+            else
+            {
+                dexi->viewed = false;
+                dexi->captured = false;
+            }
+        }
         switch (value["type"].asInt())
         {
         case 0:
@@ -61,4 +84,6 @@ bool Dex::load()
 
         this->content[key.asString()] = dexi;
     }
+
+    return true;
 }

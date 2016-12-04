@@ -170,3 +170,8 @@ void CreaView::draw_content(sf::RenderWindow& window)
         // ...
     }
 }
+
+void CreaView::add_equip(Equip* equip)
+{
+    this->equip = equip;
+}

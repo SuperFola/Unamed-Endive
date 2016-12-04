@@ -125,3 +125,8 @@ void DexView::draw_content(sf::RenderWindow& window)
         // ...
     }
 }
+
+void DexView::add_dex(Dex* dex)
+{
+    this->dex = dex;
+}

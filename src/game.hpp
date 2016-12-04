@@ -38,6 +38,7 @@ private:
     void update_fps(sf::Time, int&);
     void loading();
     void take_screenshot();
+    void post_load();
 
 public:
     // methods
