@@ -231,6 +231,75 @@ namespace PyUnamed
             RETURN_NONE
         }
 
+        static PyObject* is_spawn(PyObject* self, PyObject* args)
+        {
+            int x;
+            int y;
+            if (!PyArg_ParseTuple(args, "ii", &x, &y))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need two int representing the position of the block to test");
+                return NULL;
+            }
+            return Py_BuildValue("i", PyScripting::map_is_spawn(x, y));
+        }
+
+        static PyObject* is_tp(PyObject* self, PyObject* args)
+        {
+            int x;
+            int y;
+            if (!PyArg_ParseTuple(args, "ii", &x, &y))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need two int representing the position of the block to test");
+                return NULL;
+            }
+            return Py_BuildValue("i", PyScripting::map_is_tp(x, y));
+        }
+
+        static PyObject* getSpawnFrom(PyObject* self, PyObject* args)
+        {
+            int mid;
+            if (!PyArg_ParseTuple(args, "ii", &mid))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need an int representing the map id to find in the spawns list");
+                return NULL;
+            }
+
+            int rpos = PyScripting::map_getSpawnFrom(mid);
+
+            if (rpos == -1)
+                return Py_BuildValue("i", -1);
+
+            int x = rpos % PyScripting::getMapWidth();
+            int y = rpos / PyScripting::getMapHeight();
+
+            return Py_BuildValue("(ii)", x, y);
+        }
+
+        static PyObject* getMapFromTp(PyObject* self, PyObject* args)
+        {
+            int x;
+            int y;
+            if (!PyArg_ParseTuple(args, "ii", &x, &y))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need two int representing the position of the teleporter");
+                return NULL;
+            }
+            int v = v-1;
+            if (PyScripting::map_is_tp(x, y))
+                v = PyScripting::map_getMapFromTp(x + y * PyScripting::getMapWidth());
+            return Py_BuildValue("i", v);
+        }
+
+        static PyObject* map_width(PyObject* self, PyObject* args)
+        {
+            return Py_BuildValue("i", PyScripting::getMapWidth());
+        }
+
+        static PyObject* map_height(PyObject* self, PyObject* args)
+        {
+            return Py_BuildValue("i", PyScripting::getMapHeight());
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
@@ -246,6 +315,12 @@ namespace PyUnamed
             {"hasActiveHud", hasActiveHud, METH_VARARGS, "Check if a view, with a given id, has currently an active HUD"},
             {"getEvent", getEvent, METH_VARARGS, "Get the current event and return it using a dict"},
             {"createPNJ", createPNJ, METH_VARARGS, "Create a PNJ (refer to the wiki to learn more about the PNJkind)"},
+            {"isSpawn", is_spawn, METH_VARARGS, "Return 1 if the block at the pos x y is a spawn, otherwise 0"},
+            {"isTp", is_tp, METH_VARARGS, "Return 1 if the block at the pos x y is a tp, otherwise 0"},
+            {"getSpawnPosFromMapId", getSpawnFrom, METH_VARARGS, "Return a tuple of two int representing the position of the spawn. If the spawn can not be found, return -1"},
+            {"getMapIdFromTpPos", getMapFromTp, METH_VARARGS, "Return a map id from a tp pos. If the tp can not be found, return -1"},
+            {"getMapWidth", map_width, METH_VARARGS, "Return the width of the map (in blocks)"},
+            {"getMapHeight", map_height, METH_VARARGS, "Return the height of the map (in blocks)"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -632,3 +707,34 @@ void PyScripting::createPNJ(int mid, const char* name, const char* text, int pnj
 
     instance.pnjm->add_pnj_on_map(mid, std::string(name), std::string(text), kind, std::string(dname), x, y);
 }
+
+int PyScripting::map_is_spawn(int x, int y)
+{
+    return (instance.level->is_spawn(x, y)) ? 1 : 0;
+}
+
+int PyScripting::map_is_tp(int x, int y)
+{
+    return (instance.level->is_tp(x, y)) ? 1 : 0;
+}
+
+int PyScripting::map_getSpawnFrom(int mid)
+{
+    return instance.level->getSpawnFrom(mid);  // rpos !
+}
+
+int PyScripting::map_getMapFromTp(int x, int y)
+{
+    return instance.level->getMapFromTp(x + y * instance.level->getWidth());
+}
+
+int PyScripting::getMapWidth()
+{
+    return instance.level->getWidth();
+}
+
+int PyScripting::getMapHeight()
+{
+    return instance.level->getHeight();
+}
+

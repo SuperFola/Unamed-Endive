@@ -74,6 +74,13 @@ public:
     static void setPnjManager(PNJManager*);
     static void setMap(Map*);
 
+    static int map_is_spawn(int, int);
+    static int map_is_tp(int, int);
+    static int map_getSpawnFrom(int);
+    static int map_getMapFromTp(int, int);
+    static int getMapWidth();
+    static int getMapHeight();
+
     static int setModuleKind(const char*, const char*);
     static int loadImage(const char*, const char*);
     static int displayImage(const char*, int, int);

@@ -19,10 +19,6 @@ private:
     // methods
     int load();
     int load_map(const std::string&);
-    bool is_spawn(int, int);
-    bool is_tp(int, int);
-    int getSpawnFrom(int);  // return a rpos, take a mid
-    int getMapFromTp(int);  // return a mid, take a rpos
     // variables
     std::vector<std::vector<Block*>> level;
     std::vector<TileMap*> tmaps;
@@ -47,6 +43,10 @@ public:
     int getHeight();
     int getId();
     bool colliding_at(int, int);
+    bool is_spawn(int, int);
+    bool is_tp(int, int);
+    int getSpawnFrom(int);  // return a rpos, take a mid
+    int getMapFromTp(int);  // return a mid, take a rpos
 };
 
 #endif // DEF_MAP
