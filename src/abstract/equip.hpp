@@ -5,6 +5,7 @@
 #include <string>
 
 #include "../entities/creature.hpp"
+#include "../json/json.h"
 
 class Equip {
 private:
@@ -17,6 +18,7 @@ public:
     // methods
     Equip();
     bool load(const std::string&);
+    void save(const std::string&);
     bool add_creature(Creature&);
     bool remove_creature(int);
     Creature& getCrea(int);

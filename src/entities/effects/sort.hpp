@@ -5,12 +5,12 @@
 #include <vector>
 
 #include "../../abstract/type.hpp"
+#include "../../json/json.h"
 
 class Creature;
 
 class Sort {
 private:
-    // methods
     // variables
     SortilegeType type;
     int damages;
@@ -21,10 +21,11 @@ private:
 public:
     // methods
     Sort();
-    bool load(const std::string&);
+    bool load(SortilegeType, int, int, int);
     int getCooldown();
     void update();
     void act(std::vector<Creature>&);
+    Json::Value serialize();
 };
 
 #endif // DEF_SORT

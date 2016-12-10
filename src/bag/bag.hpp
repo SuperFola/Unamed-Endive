@@ -20,7 +20,7 @@ public:
     bool load(const std::string&);
     void add_pocket(Pocket*);
     Pocket* getPocket(int);
-    void serialize(Json::Value&);
+    void save(const std::string&);
 };
 
 #endif // DEF_BAG

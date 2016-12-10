@@ -37,7 +37,11 @@ void Character::_load()
 
 int Character::save()
 {
-    // save to "saves/player_name.umd"
+    // save to "saves/player_name/"
+    this->bag.save("saves/" + this->name + "/bag.json");
+    this->equip.save("saves/" + this->name + "/equip.json");
+    this->dex.save("saves/" + this->name + "/dex.json");
+
     return 0;
 }
 

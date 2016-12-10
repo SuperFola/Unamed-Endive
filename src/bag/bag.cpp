@@ -67,11 +67,15 @@ Pocket* Bag::getPocket(int id)
     }
 }
 
-void Bag::serialize(Json::Value& value)
+void Bag::save(const std::string& path)
 {
-    // modify the reference to the value
+    Json::Value value;
+
     for (int i=0; i < this->pockets.size(); i++)
     {
         value.append(this->pockets[i]->serialize());
     }
+
+    std::ofstream output(path);
+    output << value;
 }

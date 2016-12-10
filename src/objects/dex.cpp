@@ -93,3 +93,16 @@ bool Dex::load(const std::string& path)
 
     return true;
 }
+
+void Dex::save(const std::string& path)
+{
+    Json::Value value;
+
+    for (auto& kv: this->content)
+    {
+        value[kv.first] = kv.second;
+    }
+
+    std::ofstream output(path);
+    output << value;
+}

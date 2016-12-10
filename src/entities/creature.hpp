@@ -10,17 +10,15 @@
 #include "../abstract/competence.hpp"
 #include "effects/sort.hpp"
 #include "states.hpp"
+#include "../json/json.h"
 
 class Creature {
 private:
-    // methods
     // variables
     Type type;
     int life;
     int max_life;
     std::string name;
-    int id;
-    bool revealed;
     Sort sortilege;
     State state;
     std::vector<Competence> tree;
@@ -29,13 +27,10 @@ private:
 public:
     // methods
     Creature();
-    Creature(int);
-    Creature(int, bool);
-    void reveal();
-    bool is_revealed();
     int getLife();
     int getLevel();
     void update(std::vector<Creature>&);
+    Json::Value serialize();
 };
 
 #endif // DEF_CREATURE

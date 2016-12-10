@@ -18,6 +18,7 @@ private:
 public:
     Dex();
     bool load(const std::string&);
+    void save(const std::string&);
 };
 
 #endif // DEF_DEX

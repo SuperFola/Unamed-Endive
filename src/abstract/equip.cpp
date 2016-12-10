@@ -52,4 +52,15 @@ int Equip::getSize()
     return this->max_crea;
 }
 
-// private
+void Equip::save(const std::string& path)
+{
+    Json::Value value;
+
+    for (int i=0; i < this->equip.size(); i++)
+    {
+        value.append(this->equip[i]->serialize());
+    }
+
+    std::ofstream output(path);
+    output << value;
+}
