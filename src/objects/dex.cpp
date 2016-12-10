@@ -100,7 +100,10 @@ void Dex::save(const std::string& path)
 
     for (auto& kv: this->content)
     {
-        value[kv.first] = kv.second;
+        Json::Value content;
+        content["viewed"] = kv.second->viewed;
+        content["captured"] = kv.second->captured;
+        value[kv.first] = content;
     }
 
     std::ofstream output(path);
