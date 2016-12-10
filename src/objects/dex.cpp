@@ -25,69 +25,69 @@ bool Dex::load(const std::string& path)
 
     for (Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++)
     {
-        struct DexInfo* dexi;
+        struct DexInfo dexi;
         Json::Value key = itr.key();
         Json::Value value = *itr;
 
         if (!player_save)
         {
-            dexi->viewed = false;
-            dexi->captured = false;
+            dexi.viewed = false;
+            dexi.captured = false;
         }
         else
         {
             if (root_player.get(key.asString(), -1) != -1)
             {
-                dexi->viewed = root_player[key.asString()]["viewed"].asBool();
-                dexi->captured = root_player[key.asString()]["captured"].asBool();
+                dexi.viewed = root_player[key.asString()]["viewed"].asBool();
+                dexi.captured = root_player[key.asString()]["captured"].asBool();
             }
             else
             {
-                dexi->viewed = false;
-                dexi->captured = false;
+                dexi.viewed = false;
+                dexi.captured = false;
             }
         }
         switch (value["type"].asInt())
         {
         case 0:
-            dexi->type = Type::NORMAL;
+            dexi.type = Type::NORMAL;
             break;
 
         case 1:
-            dexi->type = Type::FIRE;
+            dexi.type = Type::FIRE;
             break;
 
         case 2:
-            dexi->type = Type::WATER;
+            dexi.type = Type::WATER;
             break;
 
         case 3:
-            dexi->type = Type::GRASS;
+            dexi.type = Type::GRASS;
             break;
 
         case 4:
-            dexi->type = Type::FLYING;
+            dexi.type = Type::FLYING;
             break;
 
         case 5:
-            dexi->type = Type::FIGHTING;
+            dexi.type = Type::FIGHTING;
             break;
 
         case 6:
-            dexi->type = Type::POISON;
+            dexi.type = Type::POISON;
             break;
 
         case 7:
-            dexi->type = Type::ELECTRIC;
+            dexi.type = Type::ELECTRIC;
             break;
 
         default:
-            dexi->type = Type::NORMAL;
+            dexi.type = Type::NORMAL;
             break;
         }
-        dexi->stade = value["stade"].asInt();
-        dexi->evolution = value["evolution"].asString();
-        dexi->file = value["file"].asString();
+        dexi.stade = value["stade"].asInt();
+        dexi.evolution = value["evolution"].asString();
+        dexi.file = value["file"].asString();
 
         this->content[key.asString()] = dexi;
     }
@@ -102,8 +102,8 @@ void Dex::save(const std::string& path)
     for (auto& kv: this->content)
     {
         Json::Value content;
-        content["viewed"] = kv.second->viewed;
-        content["captured"] = kv.second->captured;
+        content["viewed"] = kv.second.viewed;
+        content["captured"] = kv.second.captured;
         value[kv.first] = content;
     }
 

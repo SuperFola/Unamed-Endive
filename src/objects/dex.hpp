@@ -13,7 +13,7 @@ class Dex
 private:
     Json::Value root;
     Json::Value root_player;
-    std::map<std::string, struct DexInfo*> content;
+    std::map<std::string, struct DexInfo> content;
 
 public:
     Dex();

@@ -284,7 +284,7 @@ namespace PyUnamed
                 PyErr_SetString(UnamedError, "Can not parse argument, need two int representing the position of the teleporter");
                 return NULL;
             }
-            int v = v-1;
+            int v = -1;
             if (PyScripting::map_is_tp(x, y))
                 v = PyScripting::map_getMapFromTp(x, y);
             return Py_BuildValue("i", v);
