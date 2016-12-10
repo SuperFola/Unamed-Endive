@@ -228,9 +228,15 @@
         "file": "vivorin.png"
     },
     
-    "Aphroxid": {
+    "Oculid": {
         "type": 6,
         "stade": 0,
+        "evolution": "Aphroxid",
+        "file": "oculid.png"
+    },
+    "Aphroxid": {
+        "type": 6,
+        "stade": 1,
         "evolution": "",
         "file": "aphroxid.png"
     },
@@ -311,12 +317,18 @@
     "Niten": {
         "type": 0,
         "stade": 0,
-        "evolution": "Mirinx",
+        "evolution": "Martyx",
         "file": "niten.png"
+    },
+    "Martyx": {
+        "type": 1,
+        "stade": 1,
+        "evolution": "Mirinx",
+        "file": "martyx.png"
     },
     "Mirinx": {
         "type": 5,
-        "stade": 1,
+        "stade": 2,
         "evolution": "",
         "file": "mirinx.png"
     },
@@ -361,11 +373,250 @@
         "file": "surinari.png"
     },
     
-    "name": {
+    "Cactud": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "",
+        "file": "cactud.png"
+    },
+    
+    "Calume": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "calume.png"
+    },
+    
+    "Candelaria": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "candelaria.png"
+    },
+    
+    "Cavea": {
         "type": 0,
         "stade": 0,
         "evolution": "",
-        "file": "name.png"
+        "file": "cavea.png"
+    },
+    
+    "Dororu": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "Kyogame",
+        "file": "dororu.png"
+    },
+    "Kyogame": {
+        "type": 3,
+        "stade": 1,
+        "evolution": "",
+        "file": "kyogame.png"
+    }
+    
+    "Tentalge": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "Chloralge",
+        "file": "tentalge.png"
+    },
+    "Chloralge": {
+        "type": 3,
+        "stade": 1,
+        "evolution": "Hydralge",
+        "file": "chloralge.png"
+    },
+    "Hydralge": {
+        "type": 3,
+        "stade": 2,
+        "evolution": "",
+        "file": "hydralge.png"
+    },
+    
+    "Guractus": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "Gurarbor",
+        "file": "guractus.png"
+    },
+    "Gurarbor": {
+        "type": 7,
+        "stade": 1,
+        "evolution": "",
+        "file": "gurarbor.png"
+    },
+    
+    "Hazmelt": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "Hazmeltos",
+        "file": "hazmelt.png"
+    },
+    "Hazmeltos": {
+        "type": 7,
+        "stade": 1,
+        "evolution": "",
+        "file": "hazmeltos.png"
+    },
+    
+    "Florost": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "",
+        "file": "florost.png"
+    },
+    
+    "Crinch": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "",
+        "file": "crinch.png"
+    },
+    
+    "Draculeech": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "",
+        "file": "draculeech.png"
+    },
+    
+    "Fuirrel": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "Fuenago",
+        "file": "fuirrel.png"
+    },
+    "Fuenago": {
+        "type": 5,
+        "stade": 1,
+        "evolution": "",
+        "file": "fuenago.png"
+    },
+    
+    "Glaviauk": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "glaviauk.png"
+    },
+    
+    "Inferling": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "inferling.png"
+    },
+    
+    "Jether": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "jether.png"
+    },
+    
+    "Tencoal": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "tencoal.png"
+    },
+    
+    "Pyrode": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "Raxplode",
+        "file": "pyrode.png"
+    },
+    "Raxplode": {
+        "type": 1,
+        "stade": 1,
+        "evolution": "",
+        "file": "raxplode.png"
+    },
+    
+    "Purgask": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "Purgasti",
+        "file": "purgask.png"
+    },
+    "Purgasti": {
+        "type": 4,
+        "stade": 1,
+        "evolution": "Purgast",
+        "file": "purgasti.png"
+    },
+    "Purgast": {
+        "type": 4,
+        "stade": 2,
+        "evolution": "",
+        "file": "purgast.png"
+    },
+    
+    "Mirrie": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "Reflectre",
+        "file": "mirrie.png"
+    },
+    "Reflectre": {
+        "type": 0,
+        "stade": 1,
+        "evolution": "",
+        "file": "reflectre.png"
+    },
+    
+    "Nochrome": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "nochrome.png"
+    },
+    
+    "Mizzlet": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "mizzlet.png"
+    },
+    
+    "Morsis": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "Morsosus",
+        "file": "morsis.png"
+    },
+    "Morsosus": {
+        "type": 6,
+        "stade": 1,
+        "evolution": "",
+        "file": "morsosus.png"
+    },
+    
+    "Ophisear": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "ophisear.png"
+    },
+    
+    "Tygloo": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "Mechloo",
+        "file": "tygloo.png"
+    },
+    "Mechloo": {
+        "type": 2,
+        "stade": 1,
+        "evolution": "Mechloois",
+        "file": "mechloo.png"
+    },
+    "Mechloois": {
+        "type": 2,
+        "stade": 2,
+        "evolution": "",
+        "file": "mechloois.png"
     }
 }
 
