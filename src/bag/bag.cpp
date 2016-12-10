@@ -5,26 +5,24 @@
 
 Bag::Bag()
 {
-
-}
-
-bool Bag::load(const std::string& path)
-{
-    std::cout << "Loading bag" << std::endl;
-
-    const std::vector<std::string> pockets = {
+    this->_pockets = {
         "pocket1",
         "pocket2",
         "pocket3",
         "pocket4",
         "pocket5"
     };
+}
+
+bool Bag::load(const std::string& path)
+{
+    std::cout << "Loading bag" << std::endl;
 
     if (!is_file_existing(path))
     {
         std::cout << "Can not find the file, creating a default bag" << std::endl;
         // we will create a bag by default
-        for (const auto& pname: pockets)
+        for (const auto& pname: this->_pockets)
         {
             Pocket* pocket = new Pocket(pname, true);
             this->pockets.push_back(pocket);
@@ -37,7 +35,7 @@ bool Bag::load(const std::string& path)
     std::ifstream file(path);
     file >> this->root;
 
-    for (const auto& pname: pockets)
+    for (const auto& pname: this->_pockets)
     {
         Pocket* pocket = new Pocket(pname);
         if (!pocket->load(this->root[pname]))
@@ -73,7 +71,7 @@ void Bag::save(const std::string& path)
 
     for (int i=0; i < this->pockets.size(); i++)
     {
-        value.append(this->pockets[i]->serialize());
+        value[this->_pockets[i]] = this->pockets[i]->serialize();
     }
 
     std::ofstream output(path);

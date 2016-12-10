@@ -39,6 +39,7 @@ private:
     void loading();
     void take_screenshot();
     void post_load();
+    void on_end();
 
 public:
     // methods

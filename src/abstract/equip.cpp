@@ -15,6 +15,8 @@ bool Equip::load(const std::string& file)
     // load file from player save
     std::cout << "Loading equip" << std::endl;
 
+    // if (!root[i].get("empty", false)) => it's okay
+
     return true;
 }
 
@@ -55,10 +57,18 @@ int Equip::getSize()
 void Equip::save(const std::string& path)
 {
     Json::Value value;
+    value["creatures"] = Json::Value();
 
-    for (int i=0; i < this->equip.size(); i++)
+    int i;
+    for (i=0; i < this->equip.size(); i++)
     {
-        value.append(this->equip[i]->serialize());
+        value["creatures"].append(this->equip[i].serialize());
+    }
+    if (!i)
+    {
+        Json::Value content;
+        content["empty"] = true;
+        value["creatures"].append(content);
     }
 
     std::ofstream output(path);

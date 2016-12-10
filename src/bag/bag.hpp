@@ -12,6 +12,7 @@ class Bag {
 private:
     // variables
     std::vector<Pocket*> pockets;
+    std::vector<std::string> _pockets;
     std::string path;
     Json::Value root;
 

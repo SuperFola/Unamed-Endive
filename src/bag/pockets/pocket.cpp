@@ -12,10 +12,15 @@ bool Pocket::load(Json::Value& root)
 {
     if (!this->default_pocket)
     {
-        for (int i=0; i < root.size(); i++)
+        this->name = root["name"].asString();
+
+        for (int i=0; i < root["objects"].size(); i++)
         {
-            Object* object = new Object(root[i]["id"].asInt(), root[i]["quantity"].asInt());
-            this->add_object(object);
+            if (!root["objects"][i].get("empty", false))
+            {
+                Object* object = new Object(root["objects"][i]["id"].asInt(), root["objects"][i]["quantity"].asInt());
+                this->add_object(object);
+            }
         }
     }
     else
@@ -56,9 +61,16 @@ Json::Value Pocket::serialize()
     value["name"] = this->name;
     value["objects"] = Json::Value();
 
-    for (int i=0; i < this->objects.size(); i++)
+    int i;
+    for (i=0; i < this->objects.size(); i++)
     {
         value["objects"].append(this->objects[i]->serialize());
+    }
+    if (!i)
+    {
+        Json::Value content;
+        content["empty"] = true;
+        value["objects"].append(content);
     }
 
     return value;

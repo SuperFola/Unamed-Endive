@@ -260,6 +260,15 @@ void Game::post_load()
     PyScripting::run_on_start_modules();
 }
 
+void Game::on_end()
+{
+    // launch the scripts
+    PyScripting::run_on_end_modules();
+
+    // testing
+    this->sm.getDefault()->getCharacter()->save();
+}
+
 int Game::run()
 {
     this->loading();
@@ -319,8 +328,7 @@ int Game::run()
         this->window.display();
     }
 
-    // launch the scripts
-    PyScripting::run_on_end_modules();
+    this->on_end();
 
     return 0;
 }

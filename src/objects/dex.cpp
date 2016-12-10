@@ -17,6 +17,7 @@ bool Dex::load(const std::string& path)
     bool player_save = false;
     if (is_file_existing(path))
     {
+        std::cout << "Found the player dex" << std::endl;
         std::ifstream player(path);
         player >> this->root_player;
         player_save = true;
