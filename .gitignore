@@ -9,6 +9,7 @@
 /assets/.tilesets
 /obj/
 screenshots/
+assets/scripts/Lib/
 
 # Prerequisites
 *.d
