@@ -1,16 +1,399 @@
 {
-    "name": {
-        "viewed": false,
-        "captured": false,
-        "type": 0,
+    "Ampar": {
+        "type": 4,
         "stade": 0,
-        "evolution": "name2"
+        "evolution": "Aparai",
+        "file": "ampar.png"
     },
-    "name2": {
-        "viewed": false,
-        "captured": false,
+    "Amparai": {
+        "type": 4,
+        "stade": 1,
+        "evolution": "Amparor",
+        "file": "amparai.png"
+    },
+    "Amparor": {
+        "type": 4,
+        "stade": 2,
+        "evolution": "",
+        "file": "amparor.png"
+    },
+    
+    "Amphalt": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "amphalt.png"
+    },
+    
+    "Amprid": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "amprid.png"
+    },
+    
+    "Ankylore": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "",
+        "file": "ankylore.png"
+    },
+    
+    "Anerami": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "Anerate",
+        "file": "anerami.png"
+    },
+    "Anerate": {
+        "type": 1,
+        "stade": 1,
+        "evolution": "Nemobos",
+        "file": "anerate.png"
+    },
+    "Nemobos": {
+        "type": 1,
+        "stade": 2,
+        "evolution": "Nemobe",
+        "file": "nemobos.png"
+    },
+    "Nemobe": {
+        "type": 1,
+        "stade": 3,
+        "evolution": "",
+        "file": "nemobe.png"
+    },
+    
+    "Arubeum": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "arubeum.png"
+    },
+    
+    "Berrby": {
         "type": 0,
         "stade": 0,
-        "evolution": ""
+        "evolution": "Berrball",
+        "file": "berrby.png"
+    },
+    "Berrball": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "berball.png"
+    },
+    
+    "Arigant": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "",
+        "file": "arigant.png"
+    },
+    
+    "Atroxius": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "atroxius.png"
+    },
+    
+    "Cascus": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "Cascerb",
+        "file": "cascus.png"
+    },
+    "Cascerb": {
+        "type": 2,
+        "stade": 1,
+        "evolution": "",
+        "file": "cascerb.png"
+    },
+    
+    "Corregon": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "corregon.png"
+    },
+    
+    "Crator": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "crator.png"
+    },
+    
+    "Crolig": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "Accologion",
+        "file": "crolig.png"
+    },
+    "Accologion": {
+        "type": 2,
+        "stade": 1,
+        "evolution": "",
+        "file": "accologion.png"
+    },
+    
+    "Creaper": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "Creaperor",
+        "file": "creaper.png"
+    },
+    "Creaperor": {
+        "type": 6,
+        "stade": 1,
+        "evolution": "Creaporor",
+        "file": "creaperor.png"
+    },
+    "Creaporor": {
+        "type": 6,
+        "stade": 2,
+        "evolution": "",
+        "file": "creaperorror.png"
+    },
+    
+    "Dilloom": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "Dillow",
+        "file": "dilloom.png"
+    },
+    "Dillow": {
+        "type": 3,
+        "stade": 1,
+        "evolution": "Dillosus",
+        "file": "dillow.png"
+    },
+    "Dillosus": {
+        "type": 3,
+        "stade": 2,
+        "evolution": "",
+        "file": "dillosus.png"
+    },
+    
+    "Endorr": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "Endrowth",
+        "file": "endorr.png"
+    },
+    "Endrowth": {
+        "type": 2,
+        "stade": 1,
+        "evolution": "Monstratos",
+        "file": "endrowth.png"
+    },
+    "Monstratos": {
+        "type": 2,
+        "stade": 2,
+        "evolution": "",
+        "file": "monstratos.png"
+    },
+    
+    "Emptite": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "emptite.png"
+    },
+    
+    "Eekape": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "eekape.png"
+    },
+    
+    "Vivorinis": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "Vivorus",
+        "file": "vivorinis.png"
+    },
+    "Vivorus": {
+        "type": 3,
+        "stade": 1,
+        "evolution": "Vivorin",
+        "file": "vivorus.png"
+    },
+    "Vivorin": {
+        "type": 3,
+        "stade": 2,
+        "evolution": "",
+        "file": "vivorin.png"
+    },
+    
+    "Aphroxid": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "aphroxid.png"
+    },
+    
+    "Aquary": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "aquary.png"
+    },
+    
+    "Arachage": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "arachage.png"
+    },
+    
+    "Aromerita": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "",
+        "file": "aromerita.png"
+    },
+    
+    "Flasacube": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "flasacube.png"
+    },
+    
+    "Gasmat": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "gasmat.png"
+    },
+    
+    "Geckno": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "Geckelic",
+        "file": "geckno.png"
+    },
+    "Geckelic": {
+        "type": 5,
+        "stade": 1,
+        "evolution": "",
+        "file": "geckelic.png"
+    },
+    
+    "Odwignis": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "Odwig",
+        "file": "odwignis.png"
+    },
+    "Odwig": {
+        "type": 3,
+        "stade": 1,
+        "evolution": "Occlusk",
+        "file": "odwig.png"
+    },
+    "Occlusk": {
+        "type": 3,
+        "stade": 2,
+        "evolution": "Occulusk",
+        "file": "occlusk.png"
+    },
+    "Occulusk": {
+        "type": 3,
+        "stade": 3,
+        "evolution": "",
+        "file": "occulusk.png"
+    },
+    
+    "Niten": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "Mirinx",
+        "file": "niten.png"
+    },
+    "Mirinx": {
+        "type": 5,
+        "stade": 1,
+        "evolution": "",
+        "file": "mirinx.png"
+    },
+    
+    "Tsetronic": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "tsetronic.png"
+    },
+    
+    "Wredator": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "Wredatorus",
+        "file": "wredator.png"
+    },
+    "Wredatorus": {
+        "type": 4,
+        "stade": 1,
+        "evolution": "",
+        "file": "wredatorus.png"
+    },
+    
+    "Succumbra": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "succumbra.png"
+    },
+    
+    "Mianari": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "Surinari",
+        "file": "mianari.png"
+    },
+    "Surinari": {
+        "type": 4,
+        "stade": 1,
+        "evolution": "",
+        "file": "surinari.png"
+    },
+    
+    "name": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "name.png"
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

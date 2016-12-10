@@ -10,7 +10,8 @@ enum Type {
     GRASS,
     FLYING,
     FIGHTING,
-    POISON
+    POISON,
+    ELECTRIC
 };
 
 enum SortilegeType {
@@ -31,6 +32,7 @@ struct DexInfo {
     Type type;
     int stade;
     std::string evolution;
+    std::string file;
 };
 
 #endif // DEF_TYPE

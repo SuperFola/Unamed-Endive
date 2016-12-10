@@ -74,6 +74,11 @@ bool Dex::load(const std::string& path)
 
         case 6:
             dexi->type = Type::POISON;
+            break;
+
+        case 7:
+            dexi->type = Type::ELECTRIC;
+            break;
 
         default:
             dexi->type = Type::NORMAL;
@@ -81,6 +86,7 @@ bool Dex::load(const std::string& path)
         }
         dexi->stade = value["stade"].asInt();
         dexi->evolution = value["evolution"].asString();
+        dexi->file = value["file"].asString();
 
         this->content[key.asString()] = dexi;
     }

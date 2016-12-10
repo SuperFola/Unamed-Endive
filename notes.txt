@@ -27,3 +27,4 @@
                 - type: Type
                 - stade: int
                 - evolution: string
+                - file: string
