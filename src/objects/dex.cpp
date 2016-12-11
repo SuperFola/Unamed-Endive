@@ -47,44 +47,7 @@ bool Dex::load(const std::string& path)
                 dexi.captured = false;
             }
         }
-        switch (value["type"].asInt())
-        {
-        case 0:
-            dexi.type = Type::NORMAL;
-            break;
-
-        case 1:
-            dexi.type = Type::FIRE;
-            break;
-
-        case 2:
-            dexi.type = Type::WATER;
-            break;
-
-        case 3:
-            dexi.type = Type::GRASS;
-            break;
-
-        case 4:
-            dexi.type = Type::FLYING;
-            break;
-
-        case 5:
-            dexi.type = Type::FIGHTING;
-            break;
-
-        case 6:
-            dexi.type = Type::POISON;
-            break;
-
-        case 7:
-            dexi.type = Type::ELECTRIC;
-            break;
-
-        default:
-            dexi.type = Type::NORMAL;
-            break;
-        }
+        dexi.type = static_cast<Type>(value["type"].asInt() % 8);
         dexi.stade = value["stade"].asInt();
         dexi.evolution = value["evolution"].asString();
         dexi.file = value["file"].asString();

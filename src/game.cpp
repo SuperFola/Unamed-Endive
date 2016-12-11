@@ -309,6 +309,12 @@ int Game::run()
                     this->take_screenshot();
                     break;
 
+                // testing
+                case sf::Keyboard::C:
+                    std::cout << "test" << std::endl;
+                    this->sm.getDefault()->getCharacter()->getEquip()->getCrea(0)->print();
+                    break;
+
                 default:
                     break;
                 }

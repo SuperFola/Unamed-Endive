@@ -21,15 +21,17 @@ private:
     std::string name;
     Sort sortilege;
     State state;
-    std::vector<Competence> tree;
     int level;
+    std::vector<Competence> tree;
 
 public:
     // methods
     Creature();
+    bool load(Type&, int, int, std::string, State&, int, SortilegeType&, int, int, int);
     int getLife();
     int getLevel();
     void update(std::vector<Creature>&);
+    void print();
     Json::Value serialize();
 };
 

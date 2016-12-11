@@ -6,13 +6,15 @@
 
 #include "../entities/creature.hpp"
 #include "../json/json.h"
+#include "functions.hpp"
+#include "../entities/states.hpp"
 
 class Equip {
 private:
-    // methods
     // variables
     int max_crea;
-    std::vector<Creature> equip;
+    std::vector<Creature*> equip;
+    Json::Value root;
 
 public:
     // methods
@@ -21,7 +23,7 @@ public:
     void save(const std::string&);
     bool add_creature(Creature&);
     bool remove_creature(int);
-    Creature& getCrea(int);
+    Creature* getCrea(int);
     void increase_size();
     int getSize();
 };

@@ -35,8 +35,8 @@ enum SortilegeType {
 };
 
 enum ActionType {
-    Equipment = 0,
-    OnCrea = 1
+    Equipment,
+    OnCrea
 };
 
 struct DexInfo {

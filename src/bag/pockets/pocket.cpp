@@ -16,7 +16,7 @@ bool Pocket::load(Json::Value& root)
 
         for (int i=0; i < root["objects"].size(); i++)
         {
-            if (!root["objects"][i].get("empty", false))
+            if (!root["objects"][i].get("empty", false).asBool())
             {
                 Object* object = new Object(root["objects"][i]["id"].asInt(), root["objects"][i]["quantity"].asInt());
                 this->add_object(object);
