@@ -29,7 +29,54 @@ void Sort::update()
 
 void Sort::act(std::vector<Creature>& board)
 {
+    switch (this->type)
+    {
+    // unique adv
+    case SortilegeType::UniqueTargetAdvDamage:
+        break;
 
+    case SortilegeType::UniqueTargetAdvPoison:
+        break;
+
+    case SortilegeType::UniqueTargetAdvBurn:
+        break;
+
+    case SortilegeType::UniqueTargetAdvParalize:
+        break;
+
+    case SortilegeType::UniqueTargetAdvNerfCooldown:
+        break;
+
+    // unique us
+    case SortilegeType::UniqueTargetUsHeal:
+        break;
+
+    case SortilegeType::UniqueTargetUsBuffCooldown:
+        break;
+
+    // multiple adv
+    case SortilegeType::MultipleAdvDamage:
+        break;
+
+    case SortilegeType::MultipleAdvPoison:
+        break;
+
+    case SortilegeType::MultipleAdvBurn:
+        break;
+
+    case SortilegeType::MultipleAdvParalize:
+        break;
+
+    case SortilegeType::MultipleAdvNerfCooldown:
+        break;
+
+    // multiple us
+    case SortilegeType::MultipleUsHeal:
+        break;
+
+    case SortilegeType::MultipleUsBuffCooldown:
+        break;
+    }
 }
 
 Json::Value Sort::serialize()

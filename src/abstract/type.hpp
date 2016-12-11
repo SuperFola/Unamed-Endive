@@ -15,10 +15,23 @@ enum Type {
 };
 
 enum SortilegeType {
-    UniqueTargetAdv,
-    UniqueTargetUs,
-    MultipleAdv,
-    MultipleUs
+    UniqueTargetAdvDamage,
+    UniqueTargetAdvPoison,
+    UniqueTargetAdvBurn,
+    UniqueTargetAdvParalize,
+    UniqueTargetAdvNerfCooldown,
+
+    UniqueTargetUsHeal,
+    UniqueTargetUsBuffCooldown,
+
+    MultipleAdvDamage,
+    MultipleAdvPoison,
+    MultipleAdvBurn,
+    MultipleAdvParalize,
+    MultipleAdvNerfCooldown,
+
+    MultipleUsHeal,
+    MultipleUsBuffCooldown
 };
 
 enum ActionType {
