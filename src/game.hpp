@@ -13,6 +13,7 @@
 #include "abstract/functions.hpp"
 #include "bag/objectstable.hpp"
 #include "abstract/musicplayer.hpp"
+#include "abstract/types_table.hpp"
 
 class Game {
 private:
@@ -21,6 +22,7 @@ private:
     sf::Clock clock;
     StateMachine sm;
     MusicPlayer mplayer;
+    TypesTable ttable;
     // others utilities
     CreaturesLoader crea_load;
     sf::CircleShape shape;

@@ -237,6 +237,7 @@ Game::Game() :
     this->loading_text.setPosition(5.0f, 5.0f);
 
     ObjectsTable::load();
+    this->ttable.load();
 }
 
 void Game::post_load()

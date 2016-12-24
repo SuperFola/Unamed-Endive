@@ -28,3 +28,9 @@
                 - stade: int
                 - evolution: string
                 - file: string
+    
+    types table format :
+        array of arrays containing :
+            8 elements, 1 for each type
+                => float representing the resistance/weakness against a type
+        # array[attack type][defending type] => coeff
