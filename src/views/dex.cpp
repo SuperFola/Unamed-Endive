@@ -272,4 +272,61 @@ void DexView::load_dex_content()
         current = this->dex->getNext();
         id++;
     }
+
+    std::string type_c;
+    std::vector<Type> t = {
+        Type::NORMAL,
+        Type::FIRE,
+        Type::WATER,
+        Type::GRASS,
+        Type::FLYING,
+        Type::FIGHTING,
+        Type::POISON,
+        Type::ELECTRIC
+    };
+
+    for (auto& type : t)
+    {
+        switch(type)
+        {
+        case Type::NORMAL:
+            type_c = "Normal";
+            break;
+
+        case Type::FIRE:
+            type_c = "Feu";
+            break;
+
+        case Type::WATER:
+            type_c = "Eau";
+            break;
+
+        case Type::GRASS:
+            type_c = "Plante";
+            break;
+
+        case Type::FLYING:
+            type_c = "Vol";
+            break;
+
+        case Type::FIGHTING:
+            type_c = "Combat";
+            break;
+
+        case Type::POISON:
+            type_c = "Poison";
+            break;
+
+        case Type::ELECTRIC:
+            type_c = "Electrique";
+            break;
+        }
+        sf::Text text_type;
+        text_type.setCharacterSize(20);
+        text_type.setColor(sf::Color::Black);
+        text_type.setFont(this->font);
+        text_type.setString(type_c);
+
+        this->types_content.push_back(text_type);
+    }
 }

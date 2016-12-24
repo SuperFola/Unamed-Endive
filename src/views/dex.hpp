@@ -20,6 +20,7 @@ private:
     TexturesManager textures;
     std::map<std::string, sf::Sprite> sprites;
     std::vector<std::tuple<sf::Text, sf::Sprite, std::string>> dex_content;
+    std::vector<sf::Text> types_content;
     sf::Font font;
     sf::Text text;
     Dex* dex;
