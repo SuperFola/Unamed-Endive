@@ -10,6 +10,7 @@
 #define MYCREATURES_VIEW_ID 4
 #define DEX_VIEW_ID 5
 #define SAVING_VIEW_ID 6
+#define FIGHT_VIEW_ID 7
 
 // HUD
 #define MENU_VIEW_ID 2

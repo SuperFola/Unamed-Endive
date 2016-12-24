@@ -44,11 +44,16 @@ bool StateMachine::load()
         id = this->mapv.getId();
         this->mapv.load();
         break;
+
+    case 6:
+        id = this->fightv.getId();
+        this->fightv.load();
+        break;
     }
     std::cout << "Loading view " << id << std::endl;
     this->loaded++;
 
-    return this->loaded == 6;
+    return this->loaded == 7;
 }
 
 int StateMachine::getId()
@@ -86,6 +91,10 @@ bool StateMachine::hasActiveHud(int vid)
         ret_val = this->mapv.hasActiveHud();
         break;
 
+    case FIGHT_VIEW_ID:
+        ret_val = this->fightv.hasActiveHud();
+        break;
+
     default:
         ret_val = -1;
         break;
@@ -99,19 +108,14 @@ int StateMachine::change_view(int new_view)
     if (new_view == -1)
         return 0;
 
-    if (new_view == 0)
-    {
-        int v = this->go_back_to_last_view();
-        if (v == 0)
-            return 1;
-        else if (v == -1)
-            return -1;
-    }
-
     int ret_val = -1;
 
     switch(new_view)
     {
+    case LAST_VIEW_ID:
+        ret_val = (!this->go_back_to_last_view()) ? 1 : -1;
+        break;
+
     case DEFAULT_VIEW_ID:
     case MYCREATURES_VIEW_ID:
     case DEX_VIEW_ID:
@@ -121,6 +125,13 @@ int StateMachine::change_view(int new_view)
         this->history.push_back(this->current_view);
         this->current_view = new_view;
         std::cout << "Changing view from id " << this->history[this->history.size() - 1] << " to id " << new_view << std::endl;
+        ret_val = 1;
+        break;
+
+    case FIGHT_VIEW_ID:
+        // note that here, we don't log that we were in a fight to avoid going back with the use of LAST_VIEW_ID
+        this->current_view = new_view;
+        std::cout << "Changing view (fight)  to id " << new_view << std::endl;
         ret_val = 1;
         break;
 
@@ -181,6 +192,10 @@ int StateMachine::process_event_current(sf::Event& event, sf::Time elapsed)
         ret_val = this->mapv.process_event(event, elapsed);
         break;
 
+    case FIGHT_VIEW_ID:
+        ret_val = this->fightv.process_event(event, elapsed);
+        break;
+
     default:
         ret_val = -1;
         break;
@@ -217,6 +232,10 @@ void StateMachine::render_current(sf::RenderWindow& window)
         this->mapv.render(window);
         break;
 
+    case FIGHT_VIEW_ID:
+        this->fightv.render(window);
+        break;
+
     default:
         break;
     }
@@ -248,6 +267,10 @@ void StateMachine::update_current(sf::RenderWindow& window, sf::Time elapsed)
 
     case MAP_VIEW_ID:
         this->mapv.update(window, elapsed);
+        break;
+
+    case FIGHT_VIEW_ID:
+        this->fightv.update(window, elapsed);
         break;
 
     default:
@@ -283,5 +306,10 @@ InventView* StateMachine::getInventory()
 MapView* StateMachine::getMap()
 {
     return &this->mapv;
+}
+
+FightView* StateMachine::getFight()
+{
+    return &this->fightv;
 }
 
