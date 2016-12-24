@@ -3,6 +3,7 @@
 *.depend
 *.iss
 *.cbp
+*.backup
 .vs
 /assets/.calques_pnj
 /assets/.tiles_buildings

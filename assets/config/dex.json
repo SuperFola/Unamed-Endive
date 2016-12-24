@@ -81,7 +81,7 @@
         "type": 0,
         "stade": 0,
         "evolution": "",
-        "file": "berball.png"
+        "file": "berrball.png"
     },
     
     "Arigant": {
@@ -570,7 +570,7 @@
         "type": 7,
         "stade": 0,
         "evolution": "",
-        "file": "nochrome.png"
+        "file": "nocrome.png"
     },
     
     "Mizzlet": {

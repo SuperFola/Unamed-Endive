@@ -32,6 +32,7 @@ private:
 
     // methods
     void draw_content(sf::RenderWindow&);
+    int index_of(const std::string&);
 
 public:
     // methods
