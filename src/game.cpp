@@ -250,6 +250,8 @@ void Game::post_load()
     this->sm.getCrea()->add_equip(this->sm.getDefault()->getCharacter()->getEquip());
     // we add the dex to the dex view from the player
     this->sm.getDex()->add_dex(this->sm.getDefault()->getCharacter()->getDex());
+    // we add a pointer on the creatures loader to the dex
+    this->sm.getDex()->add_crealoader(&this->crea_load);
 
     // scripting
     // we add the pnj manager here (very important, otherwise it won't be loaded in the default if we try to add it in the cstr of the class) to the scripting engine

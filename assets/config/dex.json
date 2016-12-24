@@ -412,7 +412,7 @@
         "stade": 1,
         "evolution": "",
         "file": "kyogame.png"
-    }
+    },
     
     "Tentalge": {
         "type": 3,
@@ -617,6 +617,153 @@
         "stade": 2,
         "evolution": "",
         "file": "mechloois.png"
+    },
+    
+    "Tekagon": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "Tekagonis",
+        "file": "tekagon.png"
+    },
+    "Tekagonis": {
+        "type": 5,
+        "stade": 1,
+        "evolution": "",
+        "file": "tekagonis.png"
+    },
+    
+    "Pyrozoid": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "Pyrovolos",
+        "file": "pyrozoid.png"
+    },
+    "Pyrovolos": {
+        "type": 6,
+        "stade": 1,
+        "evolution": "",
+        "file": "pyrovolos.png"
+    },
+    
+    "Oblock": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "Monolit",
+        "file": "oblock.png"
+    },
+    "Monolit": {
+        "type": 0,
+        "stade": 1,
+        "evolution": "Trilight",
+        "file": "monolit.png"
+    },
+    "Trilight": {
+        "type": 0,
+        "stade": 2,
+        "evolution": "",
+        "file": "trilight.png"
+    },
+    
+    "Crescelis": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "crescelis.png"
+    },
+    
+    "Carnital": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "",
+        "file": "carnital.png"
+    },
+    
+    "Carchirin": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "carchirin.png"
+    },
+    
+    "Dredrickis": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "Dredrock",
+        "file": "dredrickis.png"
+    },
+    "Dredrock": {
+        "type": 5,
+        "stade": 1,
+        "evolution": "",
+        "file": "dredrock.png"
+    },
+    
+    "Dreek": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "Dreekos",
+        "file": "dreek.png"
+    },
+    "Dreekos": {
+        "type": 0,
+        "stade": 1,
+        "evolution": "",
+        "file": "dreekos.png"
+    },
+    
+    "Nuphore": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "",
+        "file": "nuphore.png"
+    },
+    
+    "Malwire": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "malwire.png"
+    },
+    
+    "Korabo": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "korabo.png"
+    },
+    
+    "Lollipunch": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "lollipunch.png"
+    },
+    
+    "Kasaiake": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "",
+        "file": "kasaiake.png"
+    },
+    
+    "Silpher": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "Silvorr",
+        "file": "silpher.png"
+    },
+    "Silvorr": {
+        "type": 7,
+        "stade": 1,
+        "evolution": "",
+        "file": "silvorr.png"
+    },
+    
+    "name": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "name.png"
     }
 }
 

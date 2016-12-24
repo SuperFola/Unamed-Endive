@@ -3,7 +3,8 @@
 
 #include "dex.hpp"
 
-Dex::Dex()
+Dex::Dex() :
+    _current(0)
 {
 
 }
@@ -53,7 +54,18 @@ bool Dex::load(const std::string& path)
         dexi.file = value["file"].asString();
 
         this->content[key.asString()] = dexi;
+        this->names.push_back(key.asString());
     }
+
+    struct DexInfo default_inf;
+    default_inf.viewed = false;
+    default_inf.captured = false;
+    default_inf.type = Type::NORMAL;
+    default_inf.stade = 99;
+    default_inf.evolution = "";
+    default_inf.file = "";
+
+    this->content["default"] = default_inf;
 
     return true;
 }
@@ -72,4 +84,21 @@ void Dex::save(const std::string& path)
 
     std::ofstream output(path);
     output << value;
+}
+
+std::string Dex::getNext()
+{
+    if (this->_current != this->names.size())
+        return this->names[this->_current++];
+    this->_current = 0;
+    return "";
+}
+
+DexInfo Dex::getInfo(const std::string& name)
+{
+    if (this->content.find(name) != this->content.end())
+        return this->content[name];
+    std::cout << "Can not find creature with name '" << name << "', returning a default one" << std::endl;
+
+    return this->content["default"];
 }
