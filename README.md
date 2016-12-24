@@ -129,11 +129,9 @@ It's totally normal that some bugs persist in the code (I'm not God ahah), and i
 
 # Liens - Links
 
-* [CommunityScriptProject](http://communityscriptproject.com/forum/index.php?topic=1529.0)
+* [CommunityScriptProject](http://pokemonworkshop.com/forum/index.php?topic=3314.0)
 
-* [ZesteDeSavoir](https://zestedesavoir.com/forums/sujet/4155/unamed/)
-
-* [OpenClassrooms](https://openclassrooms.com/forum/sujet/arpg-pygame-2d-unamed)
+* [ZesteDeSavoir](https://zestedesavoir.com/forums/sujet/7064/unamed-rebirth/)
 
 * [Trello](https://trello.com/b/JdzEnDJf)
 
