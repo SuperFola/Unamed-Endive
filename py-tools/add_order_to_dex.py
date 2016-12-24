@@ -16,7 +16,7 @@ else:
     n = "f:/endive/assets/config/dex2.json"
 
 f = json.JSONDecoder(object_pairs_hook=OrderedDict).decode(open(c).read())
-open(c+".backup", "w").write(open(c).read()) if n == c else None
+open(c + ".backup", "w").write(open(c).read()) if n == c else None
 f["order"] = []
 for k in f.keys():
     f["order"].append(k) if k != "order" else None
