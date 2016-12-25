@@ -62,7 +62,7 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
     this->pnjmgr.update(this->level.getId(), window, elapsed);
     this->menu_hud.update(window, elapsed);
 
-    if (!this->hasActiveHud())
+    if (!this->hasActiveHud() && this->level.smaller_than_window())
         this->set_view(window);
 }
 

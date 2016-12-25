@@ -170,3 +170,8 @@ int Map::getMapFromTp(int rpos)
     return mid;
 }
 
+bool Map::smaller_than_window()
+{
+    return this->map_width <= WIN_W && this->map_height <= WIN_H;
+}
+

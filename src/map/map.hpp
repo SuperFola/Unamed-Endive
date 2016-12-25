@@ -43,6 +43,7 @@ public:
     bool is_tp(int, int);
     int getSpawnFrom(int);  // return a rpos, take a mid
     int getMapFromTp(int);  // return a mid, take a rpos
+    bool smaller_than_window();
 };
 
 #endif // DEF_MAP
