@@ -3,9 +3,20 @@
 
 #include "default.hpp"
 
-// public
+void DefaultView::set_view(sf::RenderWindow& window)
+{
+    this->view.setCenter(this->player.getPos().getX() + TILE_SIZE, this->player.getPos().getY() + TILE_SIZE);
+    window.setView(this->view);
+}
+
+void DefaultView::unset_view(sf::RenderWindow& window)
+{
+    window.setView(window.getDefaultView());
+}
+
 DefaultView::DefaultView() :
     View(DEFAULT_VIEW_ID)
+    , view(sf::FloatRect(0, 0, WIN_W, WIN_H))
     , level("assets/map/1.umd")
 {
 }
@@ -34,13 +45,10 @@ bool DefaultView::load()
 void DefaultView::render(sf::RenderWindow& window)
 {
     this->level.render(window);
-    this->level.render_chara(this->player.getCurrentSprite(), this->player.getPos(), window);
+    window.draw(this->player.getCurrentSprite());
     for (int i=0; i < this->pnjmgr.countPNJonMap(this->level.getId()); i++)
     {
-        this->level.render_chara(
-                                 this->pnjmgr.getPNJonMap(this->level.getId(), i).getCurrentSprite()
-                                 , this->pnjmgr.getPNJonMap(this->level.getId(), i).getPos()
-                                 , window);
+        window.draw(this->pnjmgr.getPNJonMap(this->level.getId(), i).getCurrentSprite());
         this->pnjmgr.getPNJonMap(this->level.getId(), i).render(window);
     }
     this->level.render_top(window);
@@ -53,9 +61,12 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
     this->level.update(window, elapsed);
     this->pnjmgr.update(this->level.getId(), window, elapsed);
     this->menu_hud.update(window, elapsed);
+
+    if (!this->hasActiveHud())
+        this->set_view(window);
 }
 
-int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
+int DefaultView::process_event(sf::RenderWindow& window, sf::Event& event, sf::Time elapsed)
 {
     bool has_triggered_hud = false;
 

@@ -162,14 +162,14 @@ int StateMachine::go_back_to_last_view()
     return -1; // history is empty
 }
 
-int StateMachine::process_event_current(sf::Event& event, sf::Time elapsed)
+int StateMachine::process_event_current(sf::RenderWindow& window, sf::Event& event, sf::Time elapsed)
 {
     int ret_val = -1;
 
     switch(this->current_view)
     {
     case DEFAULT_VIEW_ID:
-        ret_val = this->defaultv.process_event(event, elapsed);
+        ret_val = this->defaultv.process_event(window, event, elapsed);
         break;
 
     case MYCREATURES_VIEW_ID:
@@ -243,6 +243,9 @@ void StateMachine::render_current(sf::RenderWindow& window)
 
 void StateMachine::update_current(sf::RenderWindow& window, sf::Time elapsed)
 {
+    // set sf::view as default
+    window.setView(window.getDefaultView());
+
     switch(this->current_view)
     {
     case DEFAULT_VIEW_ID:

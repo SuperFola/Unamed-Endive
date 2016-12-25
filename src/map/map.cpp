@@ -6,7 +6,6 @@
 // public
 Map::Map(std::string path) :
     tileset_path {"assets/tileset.png"}
-    , pos(WIN_W / 2, WIN_H / 2)
     , map_width(16)
     , map_height(8)
 {
@@ -27,35 +26,7 @@ int Map::load_map_at(const std::string& path)
         this->map_data_path = path;
         this->id = atoi(this->map_data_path.substr(11, this->map_data_path.size() - 4).data());
     }
-    return this->load();
-}
-
-int Map::load()
-{
-    int state = this->load_map(this->map_data_path);
-
-    if (this->map_width * TILE_SIZE <= WIN_W && this->map_height * TILE_SIZE <= WIN_H)
-    {
-        // we will center the map
-        this->pos.set((WIN_W - this->map_width * TILE_SIZE) / 2.0f, (WIN_H - this->map_height * TILE_SIZE) / 2.0f);
-    }
-    else if (this->map_width * TILE_SIZE <= WIN_W && this->map_height * TILE_SIZE > WIN_H)
-    {
-        // the map is smaller or equal than the width of the window but longer
-        this->pos.set((WIN_W - this->map_width * TILE_SIZE) / 2.0f, (WIN_H - this->map_height * TILE_SIZE) / 2.0f);
-    }
-    else if (this->map_width * TILE_SIZE > WIN_W && this->map_height * TILE_SIZE <= WIN_H)
-    {
-        // the map is smaller or equal than the height of the window but larger
-        this->pos.set((WIN_W - this->map_width * TILE_SIZE) / 2.0f, (WIN_H - this->map_height * TILE_SIZE) / 2.0f);
-    }
-    else
-    {
-        // the map is larger and longer than the window
-        this->pos.set((WIN_W - this->map_width * TILE_SIZE) / 2.0f, (WIN_H - this->map_height * TILE_SIZE) / 2.0f);
-    }
-
-    return state;
+    return this->load_map(this->map_data_path);
 }
 
 void Map::render(sf::RenderWindow& window)
@@ -70,18 +41,9 @@ void Map::render_top(sf::RenderWindow& window)
     // window.draw(*(this->tmaps[0]));
 }
 
-void Map::render_chara(sf::Sprite& sprite_chara, Point& sprite_pos, sf::RenderWindow& window)
-{
-    sprite_chara.setPosition(this->pos.getX() + sprite_pos.getX(), this->pos.getY() + sprite_pos.getY());
-    window.draw(sprite_chara);
-}
-
 void Map::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-    for (int i=0; i < 3; i++)
-    {
-        this->tmaps[i]->setPosition(this->pos.getX(), this->pos.getY());
-    }
+
 }
 
 int Map::getWidth()

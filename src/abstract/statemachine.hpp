@@ -42,7 +42,7 @@ public:
     bool hasActiveHud(int);
     int change_view(int);
     int go_back_to_last_view();
-    int process_event_current(sf::Event&, sf::Time);
+    int process_event_current(sf::RenderWindow&, sf::Event&, sf::Time);
     void render_current(sf::RenderWindow&);
     void update_current(sf::RenderWindow&, sf::Time);
     DefaultView* getDefault();

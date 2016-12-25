@@ -171,6 +171,8 @@ void AnimatedEntity::update(sf::RenderWindow& window, sf::Time elapsed)
         , float(int(this->pos.getY()))
     };
 
+    this->getCurrentSprite().setPosition(_pos);
+
     if (this->state != ChState::idle)
         this->not_moving_time += elapsed;
     if (this->not_moving_time.asSeconds() > 1.0f)
