@@ -31,14 +31,14 @@ int Map::load_map_at(const std::string& path)
 
 void Map::render(sf::RenderWindow& window)
 {
-    window.draw(*(this->tmaps[2]));
-    window.draw(*(this->tmaps[1]));
+    window.draw(*this->tmaps[2]);
+    window.draw(*this->tmaps[1]);
 }
 
 void Map::render_top(sf::RenderWindow& window)
 {
     // temp
-    // window.draw(*(this->tmaps[0]));
+    // window.draw(*this->tmaps[0]);
 }
 
 void Map::update(sf::RenderWindow& window, sf::Time elapsed)

@@ -64,6 +64,11 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
 
     if (!this->hasActiveHud() && !this->level.smaller_than_window())
         this->set_view(window);
+    else if (!this->hasActiveHud())
+    {
+        this->view.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
+        window.setView(this->view);
+    }
 }
 
 int DefaultView::process_event(sf::RenderWindow& window, sf::Event& event, sf::Time elapsed)
