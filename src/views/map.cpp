@@ -15,12 +15,15 @@ MapView::MapView() :
 
 bool MapView::load()
 {
+    if (!mr.load())
+        return false;
+
     return true;
 }
 
 void MapView::render(sf::RenderWindow& window)
 {
-
+    window.draw(this->mr);
 }
 
 int MapView::process_event(sf::Event& event, sf::Time elapsed)
@@ -45,6 +48,7 @@ int MapView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
+            this->mr.clic(int(__X), int(__Y));
             break;
 
         default:

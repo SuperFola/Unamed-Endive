@@ -7,11 +7,13 @@
 
 #include "view.hpp"
 #include "../abstract/texturesmanager.hpp"
+#include "../map/reader.hpp"
 
 class MapView : public View
 {
 private:
     // variables
+    MapReader mr;
 
 public:
     // methods
