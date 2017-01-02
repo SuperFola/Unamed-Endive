@@ -54,7 +54,7 @@
         },
         "+": {
             "name": "Chemin no 7",
-            "desc": "Un chemin (vu de l'extÃ©rieur on dirait pas. Oh wait ... un chemin c'est dehors)"
+            "desc": "Un chemin (vu de l'extérieur on dirait pas. Oh wait ... un chemin c'est dehors)"
         },
 
         "o": {
@@ -67,16 +67,16 @@
         },
 
         "#": {
-            "name": "Une Ã®le",
-            "desc": "Mais attention, faut pas le dire Ã  tout le monde"
+            "name": "Une île",
+            "desc": "Mais attention, faut pas le dire à tout le monde"
         },
         "&": {
             "name": "Tour centrale",
-            "desc": "Une tour, au centre. AprÃ¨s on connait pas bien son usage (radio ? piscine ?)"
+            "desc": "Une tour, au centre. Après on connait pas bien son usage (radio ? piscine ?)"
         },
         "@": {
             "name": "Port",
-            "desc": "Port d'Unamed (impossible Ã  deviner, bien entendu)"
+            "desc": "Port d'Unamed (impossible à deviner, bien entendu)"
         },
 
         "0": {
@@ -85,11 +85,11 @@
         },
         "1": {
             "name": "North'bourn",
-            "desc": "Un bourg. Au nord. TrÃ¨s trÃ¨s l'utilitÃ© cette description"
+            "desc": "Un bourg. Au nord. Très très l'utilité cette description"
         },
         "2": {
             "name": "Januswi",
-            "desc": "Pas un hÃ©roooooos !"
+            "desc": "Pas un héroooooos !"
         },
         "3": {
             "name": "Arry'cover",
@@ -101,11 +101,11 @@
         },
         "5": {
             "name": "Piderflor",
-            "desc": "Une ville ouverte sur le monde (enfin, sur l'ocÃ©an)"
+            "desc": "Une ville ouverte sur le monde (enfin, sur l'océan)"
         },
         "6": {
             "name": "Muth'ira",
-            "desc": "Mieux dÃ¨s qu'il sortira de son lit"
+            "desc": "Mieux dès qu'il sortira de son lit"
         },
         "7": {
             "name": "Silancard",

@@ -28,7 +28,7 @@ bool MapReader::load()
     this->text.setFont(this->font);
     this->text.setColor(sf::Color::Black);
     this->text.setCharacterSize(20);
-    this->text.setPosition(10, 10);
+    this->text.setPosition(10, 5);
 
     if (!this->tileset.loadFromFile("assets/minimap.png"))
         return false;
@@ -89,10 +89,10 @@ void MapReader::clic(int x, int y)
 {
     this->selected = (x / TILE_SIZE) + (y / TILE_SIZE) * 40;
 
-    if (this->content[y][x].asString() != ".")
+    if (this->content[y / TILE_SIZE][x / TILE_SIZE].asString() != ".")
     {
-        Json::Value node = this->root["descriptions"][this->content[y][x].asString()];
-        std::string str = node["name"].asString() + "\n" + node["desc"].asString();
+        Json::Value node = this->root["descriptions"][this->content[y / TILE_SIZE][x / TILE_SIZE].asString()];
+        std::string str = node["name"].asString() + "\n\n" + node["desc"].asString();
         this->text.setString(str);
     }
     else
