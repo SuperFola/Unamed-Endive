@@ -41,3 +41,16 @@
         create a new id in constants.hpp, section Views id
         add all the case YOURVIEWID needed in src/abstract/statemachine.cpp (update view, renderv iew, process ev view)
         add an instance of your view in src/abstract/statemachine.hpp, do not forget to create the getter (returning a pointer)
+    
+    (IDEA)
+    adding namespace in python scripting :
+        class namespace: pass
+        
+        def update(*args, **kwargs):
+            # code ...
+            pass
+        
+        namespace.update = update
+        
+        we will get a reference to a namespace in a file by checking the values in __namespaces__ (must be a list) in the python file assets/scripts/init.py
+        we will check the existence of a method by using hasattr(namespace, "update") => True|False

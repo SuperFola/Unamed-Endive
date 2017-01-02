@@ -54,6 +54,7 @@ public:
     // methods
     static bool connect();
     static bool disconnect();
+    static void reload_all();
 
     static int run_code(const char*);
     static int run_all_modules();

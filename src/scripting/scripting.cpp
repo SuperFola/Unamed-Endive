@@ -403,6 +403,9 @@ void PyScripting::load_all_modules()
     }
     #endif // PLATFORM_POSIX
 
+    // just to be sure to start from nothing
+    this->modules = std::map<std::string, std::string>();
+
     for (auto& mod: mods)
     {
         std::ifstream file;
@@ -461,6 +464,11 @@ bool PyScripting::disconnect()
         return true;
     }
     return false;  // already disconnected
+}
+
+void PyScripting::reload_all()
+{
+    instance.load_all_modules();
 }
 
 int PyScripting::run_code(const char* code)
