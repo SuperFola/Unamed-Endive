@@ -44,8 +44,6 @@ bool DefaultView::load()
     if (!this->minimap.create(MINIMAP_X, MINIMAP_Y))
         return false;
 
-    this->minimap.setView(sf::View(sf::FloatRect(0, 0, 1000, 600)));
-
     this->offsprite.setTexture(this->offscreen.getTexture());
     this->minisprite.setTexture(this->minimap.getTexture());
 
@@ -54,7 +52,7 @@ bool DefaultView::load()
 
 void DefaultView::render(sf::RenderWindow& window)
 {
-    // setting the view
+    // setting the views
     if (!this->level.smaller_than_window())
         this->set_view(window);
     else
@@ -62,6 +60,7 @@ void DefaultView::render(sf::RenderWindow& window)
         this->view.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
         window.setView(this->view);
     }
+    this->minimap.setView(sf::View(sf::FloatRect(0, 0, this->level.getWidth() / MINIMAP_X, this->level.getWidth() / MINIMAP_X * this->level.getHeight())));
 
     // rendering on RenderTextures
     this->offscreen.clear(sf::Color::Transparent);
@@ -88,7 +87,7 @@ void DefaultView::render(sf::RenderWindow& window)
     this->offsprite.setPosition(p);
     window.draw(this->offsprite);
 
-    sf::Vector2f p2 = window.mapPixelToCoords(sf::Vector2i(WIN_W - MINIMAP_X - 4, WIN_H - MINIMAP_Y - 4));
+    sf::Vector2f p2 = window.mapPixelToCoords(sf::Vector2i(WIN_W - MINIMAP_X - 4, 0));
     this->minisprite.setPosition(p2);
     window.draw(this->minisprite);
 }
