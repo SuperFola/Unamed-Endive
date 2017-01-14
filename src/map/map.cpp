@@ -35,6 +35,12 @@ void Map::render(sf::RenderWindow& window)
     window.draw(*this->tmaps[1]);
 }
 
+void Map::micro_render(sf::RenderTexture& window)
+{
+    window.draw(*this->tmaps[2]);
+    window.draw(*this->tmaps[1]);
+}
+
 void Map::render_top(sf::RenderWindow& window)
 {
     // temp

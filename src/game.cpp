@@ -21,7 +21,7 @@ void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 
     if (c_view != -1)  // we check if the view exist
     {
-        int new_view = this->sm.process_event_current(this->window, event, elapsed);
+        int new_view = this->sm.process_event_current(event, elapsed);
 
         switch (this->sm.change_view(new_view))
         {

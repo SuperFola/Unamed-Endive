@@ -47,7 +47,7 @@ public:
     // methods
     MenuHUD();
     bool load() override;
-    void render(sf::RenderWindow&) override;
+    void render(sf::RenderTexture&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
 };

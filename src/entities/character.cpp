@@ -23,16 +23,16 @@ void Character::setName(const std::string new_name)
 
 void Character::_load()
 {
-    this->bag.load("saves/" + this->name + "/bag.json");
-    this->equip.load("saves/" + this->name + "/equip.json");
-    this->dex.load("saves/" + this->name + "/dex.json");
-
     #ifdef PLATFORM_WIN
     system((std::string("mkdir saves & cd saves & mkdir ") + this->name).data());
     #endif // PLATFORM_WIN
     #ifdef PLATFORM_POSIX
     system("mkdir -p saves/" + this->name.data());
     #endif // PLATFORM_POSIX
+
+    this->bag.load("saves/" + this->name + "/bag.json");
+    this->equip.load("saves/" + this->name + "/equip.json");
+    this->dex.load("saves/" + this->name + "/dex.json");
 }
 
 int Character::save()
@@ -43,6 +43,12 @@ int Character::save()
     this->dex.save("saves/" + this->name + "/dex.json");
 
     return 0;
+}
+
+void Character::speak(int mid, PNJManager* pnjm)
+{
+    std::cout << "Speaking" << std::endl;
+    pnjm->getPNJonMap(mid, 0).speak();
 }
 
 Bag* Character::getBag()

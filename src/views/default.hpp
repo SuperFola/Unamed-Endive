@@ -16,6 +16,10 @@ class DefaultView : public View
 private:
     // variables
     sf::View view;
+    sf::RenderTexture offscreen;
+    sf::RenderTexture minimap;
+    sf::Sprite offsprite;
+    sf::Sprite minisprite;
     Character player;
     Map level;
     PNJManager pnjmgr;
@@ -29,9 +33,7 @@ public:
     DefaultView();
     bool load() override;
     void render(sf::RenderWindow&) override;
-    int process_event(sf::RenderWindow&, sf::Event&, sf::Time);
-        // unused
-        int process_event(sf::Event&, sf::Time) override {}
+    int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
     bool hasActiveHud();
     Character* getCharacter();

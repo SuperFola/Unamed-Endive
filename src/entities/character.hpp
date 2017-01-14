@@ -16,6 +16,7 @@
 #include "animatedentity.hpp"
 #include "../abstract/equip.hpp"
 #include "../objects/dex.hpp"
+#include "pnjmanager.hpp"
 
 enum class Sex {
     Female,
@@ -38,6 +39,7 @@ public:
     int save();
     void setName(const std::string);
     void _load() override;
+    void speak(int, PNJManager*);
     Bag* getBag();
     Equip* getEquip();
     Dex* getDex();

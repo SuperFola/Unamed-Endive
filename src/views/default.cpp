@@ -39,20 +39,58 @@ bool DefaultView::load()
         return false;
     }
 
+    if (!this->offscreen.create(WIN_W, WIN_H))
+        return false;
+    if (!this->minimap.create(MINIMAP_X, MINIMAP_Y))
+        return false;
+
+    this->minimap.setView(sf::View(sf::FloatRect(0, 0, 1000, 600)));
+
+    this->offsprite.setTexture(this->offscreen.getTexture());
+    this->minisprite.setTexture(this->minimap.getTexture());
+
     return true;
 }
 
 void DefaultView::render(sf::RenderWindow& window)
 {
+    // setting the view
+    if (!this->level.smaller_than_window())
+        this->set_view(window);
+    else
+    {
+        this->view.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
+        window.setView(this->view);
+    }
+
+    // rendering on RenderTextures
+    this->offscreen.clear(sf::Color::Transparent);
+    this->minimap.clear();
+    this->menu_hud.render(this->offscreen);
+    this->level.micro_render(this->minimap);
+    this->minimap.display();
+
+    // normal rendering (level and chara)
     this->level.render(window);
     window.draw(this->player.getCurrentSprite());
+
+    // pnj rendering
+    int mid = this->level.getId();
     for (int i=0; i < this->pnjmgr.countPNJonMap(this->level.getId()); i++)
     {
-        window.draw(this->pnjmgr.getPNJonMap(this->level.getId(), i).getCurrentSprite());
-        this->pnjmgr.getPNJonMap(this->level.getId(), i).render(window);
+        window.draw(this->pnjmgr.getPNJonMap(mid, i).getCurrentSprite());
+        this->pnjmgr.getPNJonMap(mid, i).render(this->offscreen);
     }
     this->level.render_top(window);
-    this->menu_hud.render(window);
+
+    this->offscreen.display();
+    sf::Vector2f p = window.mapPixelToCoords(sf::Vector2i(0, 0));
+    this->offsprite.setPosition(p);
+    window.draw(this->offsprite);
+
+    sf::Vector2f p2 = window.mapPixelToCoords(sf::Vector2i(WIN_W - MINIMAP_X - 4, WIN_H - MINIMAP_Y - 4));
+    this->minisprite.setPosition(p2);
+    window.draw(this->minisprite);
 }
 
 void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
@@ -61,17 +99,9 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
     this->level.update(window, elapsed);
     this->pnjmgr.update(this->level.getId(), window, elapsed);
     this->menu_hud.update(window, elapsed);
-
-    if (!this->hasActiveHud() && !this->level.smaller_than_window())
-        this->set_view(window);
-    else if (!this->hasActiveHud())
-    {
-        this->view.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
-        window.setView(this->view);
-    }
 }
 
-int DefaultView::process_event(sf::RenderWindow& window, sf::Event& event, sf::Time elapsed)
+int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
 {
     bool has_triggered_hud = false;
 
@@ -102,6 +132,10 @@ int DefaultView::process_event(sf::RenderWindow& window, sf::Event& event, sf::T
 
         case sf::Keyboard::D:
             this->player.move(DIRECTION::right, this->level, elapsed);
+            break;
+
+        case sf::Keyboard::Space:
+            this->player.speak(this->level.getId(), &this->pnjmgr);
             break;
 
         default:

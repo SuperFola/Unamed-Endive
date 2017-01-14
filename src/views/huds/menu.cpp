@@ -165,7 +165,7 @@ bool MenuHUD::load()
     return true;
 }
 
-void MenuHUD::render(sf::RenderWindow& window)
+void MenuHUD::render(sf::RenderTexture& window)
 {
     if (!this->isTriggered())
         goto dont;

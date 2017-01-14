@@ -33,6 +33,7 @@ public:
     Map(std::string);
     int load_map_at(const std::string& path="default");
     void render(sf::RenderWindow&);
+    void micro_render(sf::RenderTexture&);
     void render_top(sf::RenderWindow&);
     void update(sf::RenderWindow&, sf::Time);
     int getWidth();

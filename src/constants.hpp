@@ -28,6 +28,9 @@
 #define WIN_W 640
 #define WIN_H 640
 
+#define MINIMAP_X 64
+#define MINIMAP_Y 64
+
 #define COLLIDING_LAYER 1
 
 // platform (useful for some functions)

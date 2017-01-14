@@ -39,7 +39,7 @@ public:
     void _load() override;
     void setDisplayName(const std::string&);
     void speak();
-    void render(sf::RenderWindow&);
+    void render(sf::RenderTexture&);
 };
 
 #endif // DEF_PNJ

@@ -75,7 +75,7 @@ void PNJ::speak()
     this->speaking = !this->speaking;
 }
 
-void PNJ::render(sf::RenderWindow& window)
+void PNJ::render(sf::RenderTexture& window)
 {
     if (this->speaking)
     {
