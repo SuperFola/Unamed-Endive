@@ -38,6 +38,7 @@ public:
     Character(Sex sex_=Sex::Male);
     int save();
     void setName(const std::string);
+    std::string getName();
     void _load() override;
     void speak(int, PNJManager*);
     Bag* getBag();

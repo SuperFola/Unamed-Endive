@@ -344,6 +344,11 @@ namespace PyUnamed
             RETURN_NONE
         }
 
+        static PyObject* getPlayerName(PyObject* self, PyObject* args)
+        {
+            return Py_BuildValue("s", PyScripting::getPlayerName());
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
@@ -368,6 +373,7 @@ namespace PyUnamed
             {"getMapHeight", map_height, METH_VARARGS, "Return the height of the map (in blocks)"},
             {"getMapId", getMapId, METH_VARARGS, "Return the id of the map (int)"},
             {"changeBlockAttribute", changeBlockAttrib, METH_VARARGS, "To change attributes of a specified block on the current map"},
+            {"getPlayerName", getPlayerName, METH_VARARGS, "Return the name of the player"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -649,6 +655,12 @@ void PyScripting::setTriggsMgr(TriggersManager* triggs)
     instance.triggsmgr = triggs;
 }
 
+void PyScripting::setPlayer(Character* player)
+{
+    std::cout << "Adding a pointer on the player to the PyScripting singleton" << std::endl;
+    instance.player = player;
+}
+
  int PyScripting::setModuleKind(const char* kind, const char* id)
  {
      std::string tkind = std::string(kind);
@@ -821,5 +833,10 @@ int PyScripting::getMapId()
 void PyScripting::changeBlockAttrib(int rid, const char* identifier, int value)
 {
     instance.level->setBlockAttrib(rid, std::string(identifier), bool(value));
+}
+
+const char* PyScripting::getPlayerName()
+{
+    return instance.player->getName().data();
 }
 

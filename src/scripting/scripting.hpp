@@ -17,6 +17,7 @@
 #include "../abstract/musicplayer.hpp"
 #include "../abstract/statemachine.hpp"
 #include "../entities/pnjmanager.hpp"
+#include "../entities/character.hpp"
 #include "../map/map.hpp"
 #include "../abstract/triggersmanager.hpp"
 
@@ -46,6 +47,7 @@ private:
     PNJManager* pnjm;
     Map* level;
     TriggersManager* triggsmgr;
+    Character* player;
 
     // methods
     void load_all_modules();
@@ -77,6 +79,7 @@ public:
     static void setPnjManager(PNJManager*);
     static void setMap(Map*);
     static void setTriggsMgr(TriggersManager*);
+    static void setPlayer(Character*);
 
     static int map_is_spawn(int, int);
     static int map_is_tp(int, int);
@@ -88,17 +91,24 @@ public:
     static void changeBlockAttrib(int, const char*, int);
 
     static int setModuleKind(const char*, const char*);
+
     static int loadImage(const char*, const char*);
     static int displayImage(const char*, int, int);
     static int displayImageWithView(const char*, int, int);
+
     static int createGlobal(const char*, struct svar_t);
     static svar_t getGlobal(const char*);
-    static const char* getCurrentMusicName();
+
     static int getCurrentView();
     static int hasActiveHud(int);
+
+    static const char* getCurrentMusicName();
     static void stopMusic();
     static int playMusic(const char*);
+
     static void createPNJ(int, const char*, const char*, int, const char*, int, int);
+
+    static const char* getPlayerName();
 };
 
 #endif // DEF_SCRIPTING

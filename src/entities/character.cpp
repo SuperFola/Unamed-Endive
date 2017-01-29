@@ -21,6 +21,11 @@ void Character::setName(const std::string new_name)
     this->name = new_name;
 }
 
+std::string Character::getName()
+{
+    return this->name;
+}
+
 void Character::_load()
 {
     #ifdef PLATFORM_WIN
