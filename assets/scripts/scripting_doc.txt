@@ -1,0 +1,83 @@
+changeBlockAttribute
+--------------------
+To change attributes of a specified block on the current map
+
+createGlobal
+------------
+Create a global value from a given id (of type char*), with a specified value (int, float and char* are currently supported)
+
+createPNJ
+---------
+Create a PNJ (refer to the wiki to learn more about the PNJkind)
+
+displayImage
+------------
+Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)
+
+displayWithView
+---------------
+Display an image loaded before, relative to the top left corner of the view. Need the same argument as displayImage(...)
+
+getCurrentMusicName
+-------------------
+Return the name of the current playing music, if one is playing
+
+getCurrentViewId
+----------------
+Return the current view id
+
+getEvent
+--------
+Get the current event and return it using a dict
+
+getGlobal
+---------
+Return a global value with the name given
+
+getMapHeight
+------------
+Return the height of the map (in blocks)
+
+getMapId
+--------
+Return the id of the map (int)
+
+getMapIdFromTpPos
+-----------------
+Return a map id from a tp pos. If the tp can not be found, return -1
+
+getMapWidth
+-----------
+Return the width of the map (in blocks)
+
+getSpawnPosFromMapId
+--------------------
+Return a tuple of two int representing the position of the spawn. If the spawn can not be found, return -1
+
+hasActiveHud
+------------
+Check if a view, with a given id, has currently an active HUD
+
+isSpawn
+-------
+Return 1 if the block at the pos x y is a spawn, otherwise 0
+
+isTp
+----
+Return 1 if the block at the pos x y is a tp, otherwise 0
+
+loadImage
+---------
+Load an image using a given path, and assigne it to a given id
+
+playMusic
+---------
+Start a song from its name
+
+registerScript
+--------------
+Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given
+
+stopMusic
+---------
+Stop the current, if one is playing

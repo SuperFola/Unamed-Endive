@@ -45,6 +45,7 @@ public:
     int getSpawnFrom(int);  // return a rpos, take a mid
     int getMapFromTp(int);  // return a mid, take a rpos
     bool smaller_than_window();
+    void setBlockAttrib(int, std::string, bool);
 };
 
 #endif // DEF_MAP

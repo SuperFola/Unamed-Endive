@@ -181,3 +181,11 @@ bool Map::smaller_than_window()
     return this->map_width <= WIN_W && this->map_height <= WIN_H;
 }
 
+void Map::setBlockAttrib(int rid, std::string identifier, bool value)
+{
+    if (identifier.compare("solid") != 0)
+    {
+        this->level[COLLIDING_LAYER][rid]->setSolid(value);
+    }
+}
+

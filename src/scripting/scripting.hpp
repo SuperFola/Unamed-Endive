@@ -18,6 +18,7 @@
 #include "../abstract/statemachine.hpp"
 #include "../entities/pnjmanager.hpp"
 #include "../map/map.hpp"
+#include "../abstract/triggersmanager.hpp"
 
 class PyScripting
 {
@@ -44,6 +45,7 @@ private:
     StateMachine* sm;
     PNJManager* pnjm;
     Map* level;
+    TriggersManager* triggsmgr;
 
     // methods
     void load_all_modules();
@@ -74,6 +76,7 @@ public:
     static void setStateMachine(StateMachine*);
     static void setPnjManager(PNJManager*);
     static void setMap(Map*);
+    static void setTriggsMgr(TriggersManager*);
 
     static int map_is_spawn(int, int);
     static int map_is_tp(int, int);
@@ -81,10 +84,13 @@ public:
     static int map_getMapFromTp(int, int);
     static int getMapWidth();
     static int getMapHeight();
+    static int getMapId();
+    static void changeBlockAttrib(int, const char*, int);
 
     static int setModuleKind(const char*, const char*);
     static int loadImage(const char*, const char*);
     static int displayImage(const char*, int, int);
+    static int displayImageWithView(const char*, int, int);
     static int createGlobal(const char*, struct svar_t);
     static svar_t getGlobal(const char*);
     static const char* getCurrentMusicName();

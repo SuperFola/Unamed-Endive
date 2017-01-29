@@ -14,6 +14,7 @@
 #include "bag/objectstable.hpp"
 #include "abstract/musicplayer.hpp"
 #include "abstract/types_table.hpp"
+#include "abstract/triggersmanager.hpp"
 
 class Game {
 private:
@@ -23,8 +24,9 @@ private:
     StateMachine sm;
     MusicPlayer mplayer;
     TypesTable ttable;
-    // others utilities
     CreaturesLoader crea_load;
+    TriggersManager triggsmgr;
+    // others utilities
     sf::CircleShape shape;
     int shape_outline_sickness;
     bool shape_increasing;

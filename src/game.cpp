@@ -259,6 +259,7 @@ void Game::post_load()
     PyScripting::setPnjManager(this->sm.getDefault()->getPNJM());
     // same here
     PyScripting::setMap(this->sm.getDefault()->getMap());
+    PyScripting::setTriggsMgr(&this->triggsmgr);
     // launch the scripts
     PyScripting::run_on_start_modules();
 }

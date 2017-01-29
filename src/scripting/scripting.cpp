@@ -28,6 +28,7 @@ namespace PyUnamed
         {
             const char* kind;
             const char* id;
+            char result[256];
             if (!PyArg_ParseTuple(args, "ss", &kind, &id))
             {
                 PyErr_SetString(UnamedError, "Can not parse argument, need a const char* representing the kind of the script, and a const char* representing the id of the script");
@@ -35,7 +36,9 @@ namespace PyUnamed
             }
             if (PyScripting::setModuleKind(kind, id) == -1)
             {
-                PyErr_SetString(UnamedError, "You have already defined a kind for this script");
+                strcpy(result, "You have already defined a kind for this script : ");
+                strcat(result, id);
+                PyErr_SetString(UnamedError, result);
                 return NULL;
             }
 
@@ -55,9 +58,8 @@ namespace PyUnamed
             }
             if (PyScripting::loadImage(name, id) == -1)
             {
-                strcat(result, "Can not find the image at '");
+                strcpy(result, "Can not find the image at ");
                 strcat(result, name);
-                strcat(result, "'");
                 PyErr_SetString(UnamedError, result);
                 return NULL;
             }
@@ -79,9 +81,31 @@ namespace PyUnamed
             }
             if (PyScripting::displayImage(id, x, y) == -1)
             {
-                strcat(result, "Can not find the image with id '");
+                strcpy(result, "Can not find the image with id ");
                 strcat(result, id);
-                strcat(result, "'");
+                PyErr_SetString(UnamedError, result);
+                return NULL;
+            }
+
+            RETURN_NONE
+        }
+
+        static PyObject* display_with_view(PyObject* self, PyObject* args)
+        {
+            const char* id;
+            int x;
+            int y;
+            char result[128];
+
+            if (!PyArg_ParseTuple(args, "sii", &id, &x, &y))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need a const char* representing the id of the image, and 2 integers representing the position of the image (relative to the upper right corner of the map)");
+                return NULL;
+            }
+            if (PyScripting::displayImageWithView(id, x, y) == -1)
+            {
+                strcpy(result, "Can not find the image with id ");
+                strcat(result, id);
                 PyErr_SetString(UnamedError, result);
                 return NULL;
             }
@@ -155,9 +179,8 @@ namespace PyUnamed
 
             failed:
             {
-                strcat(result, "Could not find the global var named '");
+                strcpy(result, "Could not find the global var named ");
                 strcat(result, name);
-                strcat(result, "'");
                 PyErr_SetString(UnamedError, result);
                 return NULL;
             }
@@ -300,12 +323,34 @@ namespace PyUnamed
             return Py_BuildValue("i", PyScripting::getMapHeight());
         }
 
+        static PyObject* getMapId(PyObject* self, PyObject* args)
+        {
+            return Py_BuildValue("i", PyScripting::getMapId());
+        }
+
+        static PyObject* changeBlockAttrib(PyObject* self, PyObject* args)
+        {
+            int rid;
+            const char* id;
+            int v;
+            if (!PyArg_ParseTuple(args, "isp", &rid, &id, &v))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need an int representing the case (rpos), a string representing the attribute to change, and an int for the value (0 | 1)");
+                return NULL;
+            }
+
+            PyScripting::changeBlockAttrib(rid, id, v);
+
+            RETURN_NONE
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
             {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given"},
             {"loadImage", loadTexture, METH_VARARGS, "Load an image using a given path, and assigne it to a given id"},
             {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
+            {"displayWithView", display_with_view, METH_VARARGS, "Display an image loaded before, relative to the top left corner of the view. Need the same argument as displayImage(...)"},
             {"createGlobal", createGlobal, METH_VARARGS, "Create a global value from a given id (of type char*), with a specified value (int, float and char* are currently supported)"},
             {"getGlobal", getGlobal, METH_VARARGS, "Return a global value with the name given"},
             {"getCurrentMusicName", getCurrentMusicName, METH_VARARGS, "Return the name of the current playing music, if one is playing"},
@@ -321,6 +366,8 @@ namespace PyUnamed
             {"getMapIdFromTpPos", getMapFromTp, METH_VARARGS, "Return a map id from a tp pos. If the tp can not be found, return -1"},
             {"getMapWidth", map_width, METH_VARARGS, "Return the width of the map (in blocks)"},
             {"getMapHeight", map_height, METH_VARARGS, "Return the height of the map (in blocks)"},
+            {"getMapId", getMapId, METH_VARARGS, "Return the id of the map (int)"},
+            {"changeBlockAttribute", changeBlockAttrib, METH_VARARGS, "To change attributes of a specified block on the current map"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -596,6 +643,12 @@ void PyScripting::setMap(Map* level)
     instance.level = level;
 }
 
+void PyScripting::setTriggsMgr(TriggersManager* triggs)
+{
+    std::cout << "Adding a pointer on the triggers manager to the PyScripting singleton" << std::endl;
+    instance.triggsmgr = triggs;
+}
+
  int PyScripting::setModuleKind(const char* kind, const char* id)
  {
      std::string tkind = std::string(kind);
@@ -605,7 +658,7 @@ void PyScripting::setMap(Map* level)
 
      if (instance.modules_kinds.find(tkind) != instance.modules_kinds.end())
      {
-         if (instance.modules_kinds[tkind].find(tid) != instance.modules_kinds[tkind].end())
+         if (instance.modules_kinds[tkind].find(tid) == instance.modules_kinds[tkind].end())
          {
              instance.modules_kinds[tkind][tid] = instance.modules[tid];
              return 0;
@@ -642,6 +695,20 @@ void PyScripting::setMap(Map* level)
 
      if (instance.sprites[tid].getPosition().x != x || instance.sprites[tid].getPosition().y != y)
         instance.sprites[tid].setPosition(x, y);
+    instance.window->draw(instance.sprites[tid]);
+
+    return 0;
+ }
+
+ int PyScripting::displayImageWithView(const char* id, int x, int y)
+ {
+     std::string tid = std::string(id);
+
+     if (instance.sprites[tid].getPosition().x != x || instance.sprites[tid].getPosition().y != y)
+     {
+        sf::Vector2f p2 = instance.window->mapPixelToCoords(sf::Vector2i(x, y));
+        instance.sprites[tid].setPosition(x, y);
+     }
     instance.window->draw(instance.sprites[tid]);
 
     return 0;
@@ -744,5 +811,15 @@ int PyScripting::getMapWidth()
 int PyScripting::getMapHeight()
 {
     return instance.level->getHeight();
+}
+
+int PyScripting::getMapId()
+{
+    return instance.level->getId();
+}
+
+void PyScripting::changeBlockAttrib(int rid, const char* identifier, int value)
+{
+    instance.level->setBlockAttrib(rid, std::string(identifier), bool(value));
 }
 
