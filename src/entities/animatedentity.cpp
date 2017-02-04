@@ -102,6 +102,14 @@ bool AnimatedEntity::load()
     }
     this->_load();
 
+    // essentially for th pnj, otherwise the static ones won't be at the correct position
+    sf::Vector2f _pos {
+        float(int(this->pos.getX()))
+        , float(int(this->pos.getY()))
+    };
+
+    this->getCurrentSprite().setPosition(_pos);
+
     return true;
 }
 
