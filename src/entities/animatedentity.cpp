@@ -156,6 +156,14 @@ int AnimatedEntity::move(DIRECTION dir, Map map_, sf::Time elapsed)
         return 0;
     // otherwise we can set the new position
     this->pos.move(int(vect[0]), int(vect[1]));
+
+    sf::Vector2f _pos {
+        float(int(this->pos.getX()))
+        , float(int(this->pos.getY()))
+    };
+
+    this->getCurrentSprite().setPosition(_pos);
+
     return 0;
 }
 
@@ -166,13 +174,6 @@ sf::Sprite& AnimatedEntity::getCurrentSprite()
 
 void AnimatedEntity::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-    sf::Vector2f _pos {
-        float(int(this->pos.getX()))
-        , float(int(this->pos.getY()))
-    };
-
-    this->getCurrentSprite().setPosition(_pos);
-
     if (this->state != ChState::idle)
         this->not_moving_time += elapsed;
     if (this->not_moving_time.asSeconds() > 1.0f)

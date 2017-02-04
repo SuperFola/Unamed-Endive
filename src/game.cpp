@@ -216,6 +216,8 @@ Game::Game() :
     // scripting module
     PyScripting::connect();
 
+    this->window.setFramerateLimit(FRAMERATE_LIM);
+
     // shapes
     this->shape.setFillColor(sf::Color(150, 50, 250));
     this->shape.setOutlineThickness(10);

@@ -28,6 +28,8 @@
 #define WIN_W 640
 #define WIN_H 640
 
+#define FRAMERATE_LIM 120
+
 #define MINIMAP_X 64
 #define MINIMAP_Y 64
 
