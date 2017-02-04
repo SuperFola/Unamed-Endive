@@ -1,7 +1,6 @@
 # Project folders and files
 *.layout
 *.depend
-*.iss
 *.cbp
 *.backup
 .vs
@@ -10,7 +9,6 @@
 /assets/.tilesets
 /obj/
 screenshots/
-publisher.py
 
 # Prerequisites
 *.d
