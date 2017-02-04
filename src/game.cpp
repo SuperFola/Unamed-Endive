@@ -213,11 +213,8 @@ Game::Game() :
     system("mkdir saves");
     system("mkdir screenshots");
 
-    // load scripting module
+    // scripting module
     PyScripting::connect();
-    PyScripting::setWindow(&this->window);
-    PyScripting::setMusicPlayer(&this->mplayer);
-    PyScripting::setStateMachine(&this->sm);
 
     // shapes
     this->shape.setFillColor(sf::Color(150, 50, 250));
@@ -255,11 +252,17 @@ void Game::post_load()
     this->sm.getDex()->add_crealoader(&this->crea_load);
 
     // scripting
+    PyScripting::setWindow(&this->window);
+    PyScripting::setMusicPlayer(&this->mplayer);
+    PyScripting::setStateMachine(&this->sm);
     // we add the pnj manager here (very important, otherwise it won't be loaded in the default if we try to add it in the cstr of the class) to the scripting engine
     PyScripting::setPnjManager(this->sm.getDefault()->getPNJM());
     // same here
     PyScripting::setMap(this->sm.getDefault()->getMap());
     PyScripting::setTriggsMgr(&this->triggsmgr);
+    PyScripting::setPlayer(this->sm.getDefault()->getCharacter());
+    // load them all (the scripts)
+    PyScripting::load();
     // launch the scripts
     PyScripting::run_on_start_modules();
 }
@@ -311,6 +314,14 @@ int Game::run()
                 case sf::Keyboard::F5:
                     // take screenshoot
                     this->take_screenshot();
+                    break;
+
+                case sf::Keyboard::F6:
+                    // shut the music (or unshut it if it has already been used)
+                    if (this->mplayer.getState())
+                        this->mplayer.stop();
+                    else
+                        this->mplayer.play(this->mplayer.getCurrentName());
                     break;
 
                 #ifdef DEV_MODE

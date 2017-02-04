@@ -57,6 +57,7 @@ public:
 
     // methods
     static bool connect();
+    static void load();
     static bool disconnect();
     static void reload_all();
 

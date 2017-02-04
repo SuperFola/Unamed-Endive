@@ -492,14 +492,17 @@ bool PyScripting::connect()
         instance.connected = true;
 
         PyImport_AppendInittab(PyUnamed::name, PyUnamed::PyInit_Unamed);
-        Py_Initialize();
         // Py_SetPythonHome(L"assets/scripts/");
-
-        instance.load_all_modules();
+        Py_Initialize();
 
         return true;
     }
     return false;  // already running
+}
+
+void PyScripting::load()
+{
+    instance.load_all_modules();
 }
 
 bool PyScripting::disconnect()

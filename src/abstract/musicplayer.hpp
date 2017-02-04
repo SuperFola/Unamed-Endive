@@ -12,6 +12,7 @@ class MusicPlayer
 {
 private:
     bool loaded;
+    bool state;
     SoundManager sdmgr;
     std::map<std::string, sf::Sound> sounds;
     std::string current;
@@ -21,6 +22,7 @@ private:
 public:
     MusicPlayer();
     bool load();
+    bool getState();
     bool play(const std::string);
     void stop();
     std::string getNext();

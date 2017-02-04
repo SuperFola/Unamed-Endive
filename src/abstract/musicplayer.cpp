@@ -4,6 +4,7 @@
 
 MusicPlayer::MusicPlayer() :
     loaded(false)
+    , state(false)
     , current("")
     , _current(0)
 {
@@ -33,6 +34,11 @@ bool MusicPlayer::load()
     return this->loaded;
 }
 
+bool MusicPlayer::getState()
+{
+    return this->state;
+}
+
 bool MusicPlayer::play(const std::string name)
 {
     if (!this->loaded)
@@ -40,6 +46,8 @@ bool MusicPlayer::play(const std::string name)
 
     if (this->sounds.find(name) == this->sounds.end())
         return false;
+
+    this->state = true;
 
     if (this->current != "")
     {
@@ -66,6 +74,7 @@ void MusicPlayer::stop()
 
     if (this->current != "")
     {
+        this->state = false;
         this->sounds[this->current].stop();
         this->current = "";
     }
