@@ -16,7 +16,7 @@ Character::Character(Sex sex_) :
         this->path = "assets/players/female";
 }
 
-int Character::move(Map map_, std::vector<float> vect)
+int Character::chara_move(Map map_, std::vector<float> vect)
 {
     // checking all edges and returning the first one to be like != -1
     // which means that it is on a tp, and we got a new rpos

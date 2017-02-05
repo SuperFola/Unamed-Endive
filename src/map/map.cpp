@@ -67,7 +67,7 @@ int Map::getId()
     return this->id;
 }
 
-bool Map::colliding_at(int tx, int ty, AnimatedEntity* character)
+bool Map::colliding_at(int tx, int ty)
 {
     int rpos = tx + ty * this->map_width;
     bool ret_val = true;
@@ -88,7 +88,7 @@ int Map::post_colliding_test_to_check_tp(int tx, int ty)
 
     if (_tp)
     {
-        this->load_map_at("assets/map/" + std::string(this->getMapFromTp(rpos) + ".umd"));
+        this->load_map_at("assets/map/" + std::string(this->getMapFromTp(nrpos) + ".umd"));
         // assuming we loaded a new map, this->getId() will return the id of the new current map
         nrpos = this->getSpawnFromMap(this->getId());
     }

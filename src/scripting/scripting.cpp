@@ -352,7 +352,7 @@ namespace PyUnamed
         static PyObject* getTrigger(PyObject* self, PyObject* args)
         {
             int mid;
-            int rid
+            int rid;
             if (!PyArg_ParseTuple(args, "ii", &mid, &rid))
             {
                 PyErr_SetString(UnamedError, "Can not parse argument, need an int representing the map (mid), and a integer representing the position of the case (rid)");
@@ -929,7 +929,7 @@ void PyScripting::addTrigger(int mid, int rid, const char* identifier)
     instance.triggsmgr->add_trigger(mid, rid, std::string(identifier));
 }
 
-int PyScripting::is_notrigger(const char* identifer)
+int PyScripting::is_notrigger(const char* identifier)
 {
     return (instance.triggsmgr->is_notrigger(std::string(identifier))) ? 1 : 0;
 }
@@ -939,9 +939,11 @@ void PyScripting::map_tpPlayerOnSpawn(int mid, int sid)
     if (instance.level->getId() != mid)
     {
         // we need to load this new map
-        instance.level->load_map_at("assets/map/" + std::string(mid) + ".umd");
+        std::stringstream ss;
+        ss << "assets/map/" << mid << ".umd";
+        instance.level->load_map_at(ss.str());
     }
-    int rpos = instance.level->getSpawnPosFromMap(sid);
+    int rpos = instance.level->getSpawnFromMap(sid);
     instance.player->setPos(
                             rpos % instance.level->getWidth()
                             , rpos / instance.level->getWidth()

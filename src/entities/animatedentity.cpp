@@ -169,8 +169,8 @@ int AnimatedEntity::move(DIRECTION dir, Map map_, sf::Time elapsed)
     {
         // one the new rpos returned by post_colliding_test_to_check_tp(..) is not -1, our character is on a tp, let's change the map
         this->pos.set(
-                      nrpos % this->getWidth()
-                      , nrpos / this->getWidth()
+                      nrpos % map_.getWidth()
+                      , nrpos / map_.getWidth()
                       );
     }
     else
