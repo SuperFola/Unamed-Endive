@@ -30,8 +30,8 @@
 
 #define FRAMERATE_LIM 120
 
-#define MINIMAP_X 64
-#define MINIMAP_Y 64
+#define MINIMAP_X 128
+#define MINIMAP_Y 128
 
 #define COLLIDING_LAYER 1
 

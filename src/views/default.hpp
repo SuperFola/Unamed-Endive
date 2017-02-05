@@ -26,6 +26,7 @@ private:
     PNJManager pnjmgr;
     MenuHUD menu_hud;
     TriggersManager triggsmgr;
+    bool display_mmap;
     // methods
     void set_view(sf::RenderWindow&);
     void unset_view(sf::RenderWindow&);
@@ -42,6 +43,8 @@ public:
     PNJManager* getPNJM();
     Map* getMap();
     TriggersManager* getTriggsMgr();
+    void change_display_mmap(bool);
+    bool get_display_mmap();
 };
 
 #endif // DEF_DEFAULT_VIEW

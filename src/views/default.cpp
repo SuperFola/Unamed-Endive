@@ -18,6 +18,7 @@ DefaultView::DefaultView() :
     View(DEFAULT_VIEW_ID)
     , view(sf::FloatRect(0, 0, WIN_W, WIN_H))
     , level("assets/map/1.umd")
+    , display_mmap(true)
 {
 }
 
@@ -62,12 +63,12 @@ void DefaultView::render(sf::RenderWindow& window)
     }
     sf::View mview = sf::View(sf::FloatRect(0 , 0 , MINIMAP_X,  MINIMAP_Y));
     mview.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
-    mview.zoom(0.125f);//float(MINIMAP_X) / float(this->level.getWidth()));
+    mview.zoom(0.5f * float(MINIMAP_X) / float(this->level.getWidth()));
     this->minimap.setView(mview);
 
     // rendering on RenderTextures
     this->offscreen.clear(sf::Color::Transparent);
-    this->minimap.clear(sf::Color::Red);
+    this->minimap.clear();
     this->menu_hud.render(this->offscreen);
     this->level.micro_render(this->minimap);
     this->minimap.display();
@@ -90,9 +91,12 @@ void DefaultView::render(sf::RenderWindow& window)
     this->offsprite.setPosition(p);
     window.draw(this->offsprite);
 
-    sf::Vector2f p2 = window.mapPixelToCoords(sf::Vector2i(WIN_W - MINIMAP_X - 4, 4));
-    this->minisprite.setPosition(p2);
-    window.draw(this->minisprite);
+    if (this->display_mmap)
+    {
+        sf::Vector2f p2 = window.mapPixelToCoords(sf::Vector2i(WIN_W - MINIMAP_X - 4, 4));
+        this->minisprite.setPosition(p2);
+        window.draw(this->minisprite);
+    }
 }
 
 void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
@@ -178,4 +182,14 @@ Map* DefaultView::getMap()
 TriggersManager* DefaultView::getTriggsMgr()
 {
     return &this->triggsmgr;
+}
+
+void DefaultView::change_display_mmap(bool value)
+{
+    this->display_mmap = value;
+}
+
+bool DefaultView::get_display_mmap()
+{
+    return this->display_mmap;
 }

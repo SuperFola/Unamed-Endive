@@ -328,6 +328,11 @@ int Game::run()
                         this->mplayer.play(this->mplayer.getCurrentName());
                     break;
 
+                case sf::Keyboard::M:
+                    // display or not the mini map
+                    this->sm.getDefault()->change_display_mmap(!this->sm.getDefault()->get_display_mmap());
+                    break;
+
                 #ifdef DEV_MODE
                 case sf::Keyboard::C:
                     std::cout << "test" << std::endl;
