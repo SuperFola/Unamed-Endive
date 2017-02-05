@@ -12,6 +12,8 @@
 #include "../constants.hpp"
 #include "../abstract/functions.hpp"
 
+class AnimatedEntity;
+
 class Map
 {
 private:
@@ -39,12 +41,11 @@ public:
     int getWidth();
     int getHeight();
     int getId();
-    bool colliding_at(int, int);
+    bool colliding_at(int, int, AnimatedEntity*);
     bool is_spawn(int, int);
     bool is_tp(int, int);
     int getSpawnFromMap(int);  // return a rpos, take a mid
     int getMapFromTp(int);  // return a mid, take a rpos
-    int getSpawnPosFromId(int);  // take a spawn id, return a rpos
     bool smaller_than_window();
     void setBlockAttrib(int, std::string, bool);
 };

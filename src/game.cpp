@@ -261,7 +261,7 @@ void Game::post_load()
     PyScripting::setPnjManager(this->sm.getDefault()->getPNJM());
     // same here
     PyScripting::setMap(this->sm.getDefault()->getMap());
-    PyScripting::setTriggsMgr(&this->triggsmgr);
+    PyScripting::setTriggsMgr(this->sm.getDefault()->getTriggsMgr());
     PyScripting::setPlayer(this->sm.getDefault()->getCharacter());
     // load them all (the scripts)
     PyScripting::load();

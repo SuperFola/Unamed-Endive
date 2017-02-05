@@ -941,7 +941,7 @@ void PyScripting::map_tpPlayerOnSpawn(int mid, int sid)
         // we need to load this new map
         instance.level->load_map_at("assets/map/" + std::string(mid) + ".umd");
     }
-    int rpos = instance.level->getSpawnPosFromId(sid);
+    int rpos = instance.level->getSpawnPosFromMap(sid);
     instance.player->setPos(
                             rpos % instance.level->getWidth()
                             , rpos / instance.level->getWidth()

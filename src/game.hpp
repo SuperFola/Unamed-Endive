@@ -25,7 +25,6 @@ private:
     MusicPlayer mplayer;
     TypesTable ttable;
     CreaturesLoader crea_load;
-    TriggersManager triggsmgr;
     // others utilities
     sf::CircleShape shape;
     int shape_outline_sickness;

@@ -67,13 +67,30 @@ int Map::getId()
     return this->id;
 }
 
-bool Map::colliding_at(int tx, int ty)
+bool Map::colliding_at(int tx, int ty, AnimatedEntity* character)
 {
     int rpos = tx + ty * this->map_width;
+    bool ret_val = true;
+    bool _tp = this->is_tp(tx, ty);
 
     if (rpos < this->map_height * this->map_width)
-        return this->level[COLLIDING_LAYER][rpos]->is_solid();
-    return true;
+    {
+        if (!_tp)
+            ret_val = this->level[COLLIDING_LAYER][rpos]->is_solid();
+        else
+        {
+            this->load_map_at("assets/map/" + std::string(this->getMapFromTp(rpos) + ".umd"));
+            // assuming we loaded a new map, this->getId() will return the id of the new current map
+            rpos = this->getSpawnFromMap(this->getId());
+            character->setPos(
+                              rpos % this->getWidth()
+                              , rpos / this->getWidth()
+                              );
+            ret_val = true;  // just to ensure the character won't move by itself,
+                                     // for example on another tp to go back on the previous map and etc ...
+        }
+    }
+    return ret_val;
 }
 
 // private
@@ -188,12 +205,3 @@ void Map::setBlockAttrib(int rid, std::string identifier, bool value)
         this->level[COLLIDING_LAYER][rid]->setSolid(value);
     }
 }
-
-int Map::getSpawnPosFromId(int sid)
-{
-    int rpos = -1;
-    
-    return rpos;
-}
-
-

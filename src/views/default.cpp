@@ -171,3 +171,8 @@ Map* DefaultView::getMap()
 {
     return &this->level;
 }
+
+TriggersManager* DefaultView::getTriggsMgr()
+{
+    return &this->triggsmgr;
+}

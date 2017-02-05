@@ -10,6 +10,7 @@
 #include "huds/menu.hpp"
 #include "../constants.hpp"
 #include "../entities/pnjmanager.hpp"
+#include "../abstract/triggersmanager.hpp"
 
 class DefaultView : public View
 {
@@ -24,6 +25,7 @@ private:
     Map level;
     PNJManager pnjmgr;
     MenuHUD menu_hud;
+    TriggersManager triggsmgr;
     // methods
     void set_view(sf::RenderWindow&);
     void unset_view(sf::RenderWindow&);
@@ -39,6 +41,7 @@ public:
     Character* getCharacter();
     PNJManager* getPNJM();
     Map* getMap();
+    TriggersManager* getTriggsMgr();
 };
 
 #endif // DEF_DEFAULT_VIEW
