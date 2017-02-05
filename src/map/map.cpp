@@ -77,20 +77,23 @@ bool Map::colliding_at(int tx, int ty, AnimatedEntity* character)
     {
         if (!_tp)
             ret_val = this->level[COLLIDING_LAYER][rpos]->is_solid();
-        else
-        {
-            this->load_map_at("assets/map/" + std::string(this->getMapFromTp(rpos) + ".umd"));
-            // assuming we loaded a new map, this->getId() will return the id of the new current map
-            rpos = this->getSpawnFromMap(this->getId());
-            character->setPos(
-                              rpos % this->getWidth()
-                              , rpos / this->getWidth()
-                              );
-            ret_val = true;  // just to ensure the character won't move by itself,
-                                     // for example on another tp to go back on the previous map and etc ...
-        }
     }
     return ret_val;
+}
+
+int Map::post_colliding_test_to_check_tp(int tx, int ty)
+{
+    int nrpos = -1;
+    bool _tp = this->is_tp(tx, ty);
+
+    if (_tp)
+    {
+        this->load_map_at("assets/map/" + std::string(this->getMapFromTp(rpos) + ".umd"));
+        // assuming we loaded a new map, this->getId() will return the id of the new current map
+        nrpos = this->getSpawnFromMap(this->getId());
+    }
+
+    return nrpos;
 }
 
 // private

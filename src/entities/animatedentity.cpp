@@ -156,14 +156,28 @@ int AnimatedEntity::move(DIRECTION dir, Map map_, sf::Time elapsed)
             vect[0] = 1 * speed;
     }
 
-    bool pass =        !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      , this)
-                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      , this)
-                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2, this)
-                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2, this);
+    bool pass =        !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      )
+                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      )
+                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2)
+                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
     if (!pass)
         return 0;
-    // otherwise we can set the new position
-    this->pos.move(int(vect[0]), int(vect[1]));
+
+    // check for tp on a new map
+    int nrpos = this->chara_move(map_, vect);
+    if (nrpos != -1)
+    {
+        // one the new rpos returned by post_colliding_test_to_check_tp(..) is not -1, our character is on a tp, let's change the map
+        this->pos.set(
+                      nrpos % this->getWidth()
+                      , nrpos / this->getWidth()
+                      );
+    }
+    else
+    {
+        // otherwise we can set the new position, it is not blocking and there is not any tp
+        this->pos.move(int(vect[0]), int(vect[1]));
+    }
 
     sf::Vector2f _pos {
         float(int(this->pos.getX()))
@@ -173,6 +187,12 @@ int AnimatedEntity::move(DIRECTION dir, Map map_, sf::Time elapsed)
     this->getCurrentSprite().setPosition(_pos);
 
     return 0;
+}
+
+int AnimatedEntity::chara_move(Map, std::vector<float>)
+{
+    // not implemented for basic entity such as PNJ(npc)
+    return -1;
 }
 
 sf::Sprite& AnimatedEntity::getCurrentSprite()

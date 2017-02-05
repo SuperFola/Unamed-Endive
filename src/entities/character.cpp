@@ -16,6 +16,27 @@ Character::Character(Sex sex_) :
         this->path = "assets/players/female";
 }
 
+int Character::move(Map map_, std::vector<float> vect)
+{
+    // checking all edges and returning the first one to be like != -1
+    // which means that it is on a tp, and we got a new rpos
+    // so we return it
+    int nrp1 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      );
+    if (nrp1 != -1) return nrp1;
+
+    int nrp2 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      );
+    if (nrp2 != -1) return nrp2;
+
+    int nrp3 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
+    if (nrp3 != -1) return nrp3;
+
+    int nrp4 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
+    if (nrp4 != -1) return nrp4;
+
+    // nothing was != -1 so we return -1 to tell that we are not on some tp
+    return -1;
+}
+
 void Character::setName(const std::string new_name)
 {
     this->name = new_name;

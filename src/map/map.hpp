@@ -12,8 +12,6 @@
 #include "../constants.hpp"
 #include "../abstract/functions.hpp"
 
-class AnimatedEntity;
-
 class Map
 {
 private:
@@ -41,7 +39,8 @@ public:
     int getWidth();
     int getHeight();
     int getId();
-    bool colliding_at(int, int, AnimatedEntity*);
+    bool colliding_at(int, int);
+    int post_colliding_test_to_check_tp(int, int);
     bool is_spawn(int, int);
     bool is_tp(int, int);
     int getSpawnFromMap(int);  // return a rpos, take a mid

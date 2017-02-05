@@ -36,6 +36,7 @@ public:
     bool load();
     virtual void _load() = 0;
     int move(DIRECTION, Map, sf::Time);
+    int chara_move(Map, std::vector<float>);
     sf::Sprite& getCurrentSprite();
     void update(sf::RenderWindow&, sf::Time);
     void setDir(DIRECTION);
