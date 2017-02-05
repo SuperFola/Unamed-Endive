@@ -144,7 +144,7 @@ bool Map::is_tp(int x, int y)
     return false;
 }
 
-int Map::getSpawnFrom(int mid)
+int Map::getSpawnFromMap(int mid)
 {
     int rpos = -1;
 
@@ -188,4 +188,12 @@ void Map::setBlockAttrib(int rid, std::string identifier, bool value)
         this->level[COLLIDING_LAYER][rid]->setSolid(value);
     }
 }
+
+int Map::getSpawnPosFromId(int sid)
+{
+    int rpos = -1;
+    
+    return rpos;
+}
+
 

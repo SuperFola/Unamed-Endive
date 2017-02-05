@@ -42,8 +42,9 @@ public:
     bool colliding_at(int, int);
     bool is_spawn(int, int);
     bool is_tp(int, int);
-    int getSpawnFrom(int);  // return a rpos, take a mid
+    int getSpawnFromMap(int);  // return a rpos, take a mid
     int getMapFromTp(int);  // return a mid, take a rpos
+    int getSpawnPosFromId(int);  // take a spawn id, return a rpos
     bool smaller_than_window();
     void setBlockAttrib(int, std::string, bool);
 };

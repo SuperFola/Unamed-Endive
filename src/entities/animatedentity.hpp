@@ -40,6 +40,7 @@ public:
     void update(sf::RenderWindow&, sf::Time);
     void setDir(DIRECTION);
     Point& getPos();
+    void setPos(int, int);
 };
 
 #endif // DEF_ANIMATED_ENTITY

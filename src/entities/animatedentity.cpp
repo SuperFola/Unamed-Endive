@@ -197,3 +197,8 @@ Point& AnimatedEntity::getPos()
 {
     return this->pos;
 }
+
+void AnimatedEntity::setPos(int x, int y)
+{
+    this->pos.set(x, y);
+}

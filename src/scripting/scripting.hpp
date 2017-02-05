@@ -86,8 +86,8 @@ public:
     static int map_is_tp(int, int);
     static int map_getSpawnFrom(int);
     static int map_getMapFromTp(int, int);
-    static int map_tpPlayerOnSpawn(int, int);  // need to implement this one
-    static int map_tpPlayerOn(int);  // need to implement. take a rid
+    static void map_tpPlayerOnSpawn(int, int);
+    static void map_tpPlayerOn(int);
     static int getMapWidth();
     static int getMapHeight();
     static int getMapId();

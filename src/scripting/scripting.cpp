@@ -390,6 +390,36 @@ namespace PyUnamed
             RETURN_NONE
         }
 
+        static PyObject* tpPlayerOnSpawn(PyObject* self, PyObject* args)
+        {
+            int mid;
+            int sid;
+            if (!PyArg_ParseTuple(args, "ii", &mid, &sid))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need two integers (mid and sid)");
+                return NULL;
+            }
+
+            PyScripting::map_tpPlayerOnSpawn(mid, sid);
+
+            RETURN_NONE
+        }
+
+        static PyObject* tpPlayerOn(PyObject* self, PyObject* args)
+        {
+            int x;
+            int y;
+            if (!PyArg_ParseTuple(args, "ii", &x, &y))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need two integers (x, y)");
+                return NULL;
+            }
+
+            PyScripting::map_tpPlayerOn(x + y * PyScripting::getMapWidth());
+
+            RETURN_NONE
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
@@ -418,6 +448,8 @@ namespace PyUnamed
             {"getTrigger", getTrigger, METH_VARARGS, "Take two integers, mid and rid, and return a string representing the identifier of a trigger. Remember to check if the trigger is valid using is_notrigger(id)"},
             {"is_notrigger", is_notrigger, METH_VARARGS, "Take a string, given by getTrigger(..), and return True or False whether the id represents a valid trigger or not"},
             {"addTrigger", addTrigger, METH_VARARGS, "Take two integers (mid and rid) and a string representing the id of your new trigger"},
+            {"tpPlayerOnSpawn", tpPlayerOnSpawn, METH_VARARGS, "Take a map id and a spawn id (integer and string). Will teleport the player to this map (can be the actual map), on the position of the spawn"},
+            {"tpPlayerOn", tpPlayerOn, METH_VARARGS, "Take two integers (x, y). Will teleport the player on this position, on the current map"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -854,7 +886,7 @@ int PyScripting::map_is_tp(int x, int y)
 
 int PyScripting::map_getSpawnFrom(int mid)
 {
-    return instance.level->getSpawnFrom(mid);  // rpos !
+    return instance.level->getSpawnFromMap(mid);  // rpos !
 }
 
 int PyScripting::map_getMapFromTp(int x, int y)
@@ -900,5 +932,27 @@ void PyScripting::addTrigger(int mid, int rid, const char* identifier)
 int PyScripting::is_notrigger(const char* identifer)
 {
     return (instance.triggsmgr->is_notrigger(std::string(identifier))) ? 1 : 0;
+}
+
+void PyScripting::map_tpPlayerOnSpawn(int mid, int sid)
+{
+    if (instance.level->getId() != mid)
+    {
+        // we need to load this new map
+        instance.level->load_map_at("assets/map/" + std::string(mid) + ".umd");
+    }
+    int rpos = instance.level->getSpawnPosFromId(sid);
+    instance.player->setPos(
+                            rpos % instance.level->getWidth()
+                            , rpos / instance.level->getWidth()
+                            );
+}
+
+void PyScripting::map_tpPlayerOn(int rid)
+{
+    instance.player->setPos(
+                            rid % instance.level->getWidth()
+                            , rid / instance.level->getWidth()
+                            );
 }
 
