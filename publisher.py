@@ -25,4 +25,6 @@ with open('inno_build.iss') as base:
         new.write("".join(formatted))
 
 r = os.popen('"C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe" build.iss').read()
+os.remove("build.iss")
+
 input('\n'.join(r.split('\n')[-3:-1]))

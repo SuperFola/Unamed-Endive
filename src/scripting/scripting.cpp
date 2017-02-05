@@ -349,6 +349,47 @@ namespace PyUnamed
             return Py_BuildValue("s", PyScripting::getPlayerName());
         }
 
+        static PyObject* getTrigger(PyObject* self, PyObject* args)
+        {
+            int mid;
+            int rid
+            if (!PyArg_ParseTuple(args, "ii", &mid, &rid))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need an int representing the map (mid), and a integer representing the position of the case (rid)");
+                return NULL;
+            }
+
+            return Py_BuildValue("s", PyScripting::getTrigger(mid, rid));
+        }
+
+        static PyObject* is_notrigger(PyObject* self, PyObject* args)
+        {
+            const char* id;
+            if (!PyArg_ParseTuple(args, "s", &id))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need a string representing the id of a trigger given by getTrigger(..)");
+                return NULL;
+            }
+
+            return Py_BuildValue("p", PyScripting::is_notrigger(id));
+        }
+
+        static PyObject* addTrigger(PyObject* self, PyObject* args)
+        {
+            int mid;
+            int rid;
+            const char* id;
+            if (!PyArg_ParseTuple(args, "iis", &mid, &rid, &id))
+            {
+                PyErr_SetString(UnamedError, "Can not parse argument, need two integers (mid and rid), and a string representing a new id for your trigger");
+                return NULL;
+            }
+
+            PyScripting::addTrigger(mid, rid, id);
+
+            RETURN_NONE
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
@@ -374,6 +415,9 @@ namespace PyUnamed
             {"getMapId", getMapId, METH_VARARGS, "Return the id of the map (int)"},
             {"changeBlockAttribute", changeBlockAttrib, METH_VARARGS, "To change attributes of a specified block on the current map"},
             {"getPlayerName", getPlayerName, METH_VARARGS, "Return the name of the player"},
+            {"getTrigger", getTrigger, METH_VARARGS, "Take two integers, mid and rid, and return a string representing the identifier of a trigger. Remember to check if the trigger is valid using is_notrigger(id)"},
+            {"is_notrigger", is_notrigger, METH_VARARGS, "Take a string, given by getTrigger(..), and return True or False whether the id represents a valid trigger or not"},
+            {"addTrigger", addTrigger, METH_VARARGS, "Take two integers (mid and rid) and a string representing the id of your new trigger"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -841,5 +885,20 @@ void PyScripting::changeBlockAttrib(int rid, const char* identifier, int value)
 const char* PyScripting::getPlayerName()
 {
     return instance.player->getName().data();
+}
+
+const char* PyScripting::getTrigger(int mid, int rid)
+{
+    return instance.triggsmgr->get_trigg(mid, rid).data();
+}
+
+void PyScripting::addTrigger(int mid, int rid, const char* identifier)
+{
+    instance.triggsmgr->add_trigger(mid, rid, std::string(identifier));
+}
+
+int PyScripting::is_notrigger(const char* identifer)
+{
+    return (instance.triggsmgr->is_notrigger(std::string(identifier))) ? 1 : 0;
 }
 

@@ -86,10 +86,16 @@ public:
     static int map_is_tp(int, int);
     static int map_getSpawnFrom(int);
     static int map_getMapFromTp(int, int);
+    static int map_tpPlayerOnSpawn(int, int);  // need to implement this one
+    static int map_tpPlayerOn(int);  // need to implement. take a rid
     static int getMapWidth();
     static int getMapHeight();
     static int getMapId();
     static void changeBlockAttrib(int, const char*, int);
+
+    static const char* getTrigger(int, int);
+    static void addTrigger(int, int, const char*);
+    static int is_notrigger(const char*);
 
     static int setModuleKind(const char*, const char*);
 
