@@ -1,4 +1,5 @@
 import os
+import sys
 
 os.chdir("F:\\ENDIVE")
 
@@ -15,12 +16,21 @@ def read_version():
     return v
 
 
+if sys.argv[1:]:
+    mode = sys.argv[1]
+else:
+    mode = 'd'
+
 with open('inno_build.iss') as base:
     with open('build.iss', 'w') as new:
         formatted = base.readlines()
         formatted[4] = formatted[4][:-1] + '"{version}"\n'.format(version=read_version())
         formatted[5] = formatted[5][:-1] + '"{publisher}"\n'.format(publisher="Kubiangle (c) (r) tm")
         formatted[6] = formatted[6][:-1] + '"{website}"\n'.format(website='https://loodoor.github.io/Unamed-Endive')
+        if mode == 'd':
+            formatted[52] = ';; ' + formatted[52]
+        else:
+            formatted[51] = ';; ' + formatted[51]
         
         new.write("".join(formatted))
 

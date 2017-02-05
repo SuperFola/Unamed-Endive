@@ -4,6 +4,10 @@ Please do not delete the script 'register.py'. If you need to add a script to th
 
 Also, if you need to import files, use the lambda include, and not import (changing the current working directory via os.chdir will also change the cwd for the game and so it won't be able to load its resources !)
 
+addTrigger
+----------
+Take two integers (mid and rid) and a string representing the id of your new trigger
+
 changeBlockAttribute
 --------------------
 To change attributes of a specified block on the current map
@@ -64,6 +68,10 @@ getSpawnPosFromMapId
 --------------------
 Return a tuple of two int representing the position of the spawn. If the spawn can not be found, return -1
 
+getTrigger
+----------
+Take two integers, mid and rid, and return a string representing the identifier of a trigger. Remember to check if the trigger is valid using is_notrigger(id)
+
 hasActiveHud
 ------------
 Check if a view, with a given id, has currently an active HUD
@@ -75,6 +83,10 @@ Return 1 if the block at the pos x y is a spawn, otherwise 0
 isTp
 ----
 Return 1 if the block at the pos x y is a tp, otherwise 0
+
+is_notrigger
+------------
+Take a string, given by getTrigger(..), and return True or False whether the id represents a valid trigger or not
 
 loadImage
 ---------
@@ -91,3 +103,11 @@ Register a script in the PyScripting singleton, as a specific kind given as an a
 stopMusic
 ---------
 Stop the current, if one is playing
+
+tpPlayerOn
+----------
+Take two integers (x, y). Will teleport the player on this position, on the current map
+
+tpPlayerOnSpawn
+---------------
+Take a map id and a spawn id (integer and string). Will teleport the player to this map (can be the actual map), on the position of the spawn

@@ -15,6 +15,7 @@
 class Creature {
 private:
     // variables
+    int id;
     Type type;
     int life;
     int max_life;
@@ -27,7 +28,7 @@ private:
 public:
     // methods
     Creature();
-    bool load(Type&, int, int, std::string, State&, int, SortilegeType&, int, int, int);
+    bool load(int, Type&, int, int, std::string, State&, int, SortilegeType&, int, int, int);
     int getLife();
     int getLevel();
     void update(std::vector<Creature>&);

@@ -60,11 +60,14 @@ void DefaultView::render(sf::RenderWindow& window)
         this->view.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
         window.setView(this->view);
     }
-    this->minimap.setView(sf::View(sf::FloatRect(0, 0, this->level.getWidth() / MINIMAP_X, this->level.getWidth() / MINIMAP_X * this->level.getHeight())));
+    sf::View mview = sf::View(sf::FloatRect(0 , 0 , MINIMAP_X,  MINIMAP_Y));
+    mview.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
+    mview.zoom(0.125f);//float(MINIMAP_X) / float(this->level.getWidth()));
+    this->minimap.setView(mview);
 
     // rendering on RenderTextures
     this->offscreen.clear(sf::Color::Transparent);
-    this->minimap.clear();
+    this->minimap.clear(sf::Color::Red);
     this->menu_hud.render(this->offscreen);
     this->level.micro_render(this->minimap);
     this->minimap.display();
@@ -87,7 +90,7 @@ void DefaultView::render(sf::RenderWindow& window)
     this->offsprite.setPosition(p);
     window.draw(this->offsprite);
 
-    sf::Vector2f p2 = window.mapPixelToCoords(sf::Vector2i(WIN_W - MINIMAP_X - 4, 0));
+    sf::Vector2f p2 = window.mapPixelToCoords(sf::Vector2i(WIN_W - MINIMAP_X - 4, 4));
     this->minisprite.setPosition(p2);
     window.draw(this->minisprite);
 }

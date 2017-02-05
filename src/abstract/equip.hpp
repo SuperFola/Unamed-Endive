@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <random>
 
 #include "../entities/creature.hpp"
 #include "../json/json.h"

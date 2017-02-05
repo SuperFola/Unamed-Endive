@@ -4,7 +4,8 @@
 
 // public
 Creature::Creature() :
-    type(Type::NORMAL)
+    id(0)
+    , type(Type::NORMAL)
     , life(DEFAULT_LIFE)
     , max_life(DEFAULT_LIFE)
     , sortilege()
@@ -14,9 +15,10 @@ Creature::Creature() :
 
 }
 
-bool Creature::load(Type& t, int life, int mlife, std::string name, State& s, int level, SortilegeType& stype, int sdmg, int scd, int stargets)
+bool Creature::load(int id, Type& t, int life, int mlife, std::string name, State& s, int level, SortilegeType& stype, int sdmg, int scd, int stargets)
 {
     std::cout << "Loading creature '" << name << "'" << std::endl;
+    this->id = id;
     this->type = t;
     this->life = life;
     this->max_life = mlife;
@@ -28,18 +30,13 @@ bool Creature::load(Type& t, int life, int mlife, std::string name, State& s, in
 
 void Creature::print()
 {
-    std::cout << "type: "
-                    << static_cast<int>(this->type)
-                    << " life: "
-                    << this->life
-                    << " max life: "
-                    << this->max_life
-                    << " name : "
-                    << this->name
-                    << " state : "
-                    << static_cast<int>(this->state)
-                    << " level : "
-                    << this->level
+    std::cout << "id: " << this->id
+                    << "type: " << static_cast<int>(this->type)
+                    << " life: " << this->life
+                    << " max life: " << this->max_life
+                    << " name : " << this->name
+                    << " state : " << static_cast<int>(this->state)
+                    << " level : " << this->level
                     << std::endl;
 }
 
@@ -61,6 +58,7 @@ Json::Value Creature::serialize()
 {
     Json::Value value;
 
+    value["id"] = this->id;
     value["type"] = static_cast<int>(this->type);
     value["life"] = this->life;
     value["max_life"] = this->max_life;
