@@ -36,8 +36,13 @@
 #define COLLIDING_LAYER 1
 
 // platform (useful for some functions)
-#define PLATFORM_WIN
-// #define PLATFORM_POSIX
+#if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
+    #define PLATFORM_WIN
+#endif
+#if defined(__unix__) || defined(__linux__) || defined(__APPLE__) && defined(__MACH__)
+    // linux, unix and apple systems should be recognized this way
+    #define PLATFORM_POSIX
+#endif
 
 // directions
 enum class DIRECTION {
