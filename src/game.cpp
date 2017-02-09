@@ -216,7 +216,12 @@ Game::Game() :
     // scripting module
     PyScripting::connect();
 
+    // window
     this->window.setFramerateLimit(FRAMERATE_LIM);
+    this->window.setTitle(WIN_TITLE);
+    sf::Image ico;
+    ico.loadFromFile("assets/unamedlogo.png");
+    this->window.setIcon(ICO_X, ICO_Y, ico.getPixelsPtr());
 
     // shapes
     this->shape.setFillColor(sf::Color(150, 50, 250));

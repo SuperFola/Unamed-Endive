@@ -27,6 +27,9 @@
 // window
 #define WIN_W 640
 #define WIN_H 640
+#define WIN_TITLE "Unamed Rebirth"
+#define ICO_X 32
+#define ICO_Y 32
 
 #define FRAMERATE_LIM 120
 
