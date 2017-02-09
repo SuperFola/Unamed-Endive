@@ -68,7 +68,7 @@ void DefaultView::render(sf::RenderWindow& window)
 
     // rendering on RenderTextures
     this->offscreen.clear(sf::Color::Transparent);
-    this->minimap.clear();
+    this->minimap.clear(sf::Color::Transparent);
     this->menu_hud.render(this->offscreen);
     this->level.micro_render(this->minimap);
     this->minimap.display();
@@ -91,7 +91,7 @@ void DefaultView::render(sf::RenderWindow& window)
     this->offsprite.setPosition(p);
     window.draw(this->offsprite);
 
-    if (this->display_mmap)
+    if (this->display_mmap && !this->menu_hud.isTriggered())
     {
         sf::Vector2f p2 = window.mapPixelToCoords(sf::Vector2i(WIN_W - MINIMAP_X - 4, 4));
         this->minisprite.setPosition(p2);
