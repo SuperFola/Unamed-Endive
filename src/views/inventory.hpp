@@ -33,6 +33,9 @@ private:
     const std::string POCKET3 = "pocket3";
     const std::string POCKET4 = "pocket4";
     const std::string POCKET5 = "pocket5";
+    const std::string VID = "btn_vider";
+    const std::string USE = "btn_use";
+    const std::string DROP = "btn_drop";
 
     // methods
     void draw_content(sf::RenderWindow&);

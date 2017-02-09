@@ -56,6 +56,21 @@ bool InventView::load()
         return false;
     this->textures.addTexture("pocket5", p5);
 
+    sf::Texture drop;
+    if (!drop.loadFromFile("assets/gui/fd_bouton_jeter.png"))
+        return false;
+    this->textures.addTexture("btn_drop", drop);
+
+    sf::Texture vid;
+    if (!vid.loadFromFile("assets/gui/fd_bouton_vider.png"))
+        return false;
+    this->textures.addTexture("btn_vide", vid);
+
+    sf::Texture use;
+    if (!use.loadFromFile("assets/gui/fd_bouton_utiliser.png"))
+        return false;
+    this->textures.addTexture("btn_use", use);
+
     // setting sprites
     this->sprites[this->BCKG] = sf::Sprite(this->textures.getTexture("background"));
     this->sprites[this->LARROW] = sf::Sprite(this->textures.getTexture("larrow"));
@@ -65,6 +80,9 @@ bool InventView::load()
     this->sprites[this->POCKET3] = sf::Sprite(this->textures.getTexture("pocket3"));
     this->sprites[this->POCKET4] = sf::Sprite(this->textures.getTexture("pocket4"));
     this->sprites[this->POCKET5] = sf::Sprite(this->textures.getTexture("pocket5"));
+    this->sprites[this->DROP] = sf::Sprite(this->textures.getTexture("btn_drop"));
+    this->sprites[this->VID] = sf::Sprite(this->textures.getTexture("btn_vide"));
+    this->sprites[this->USE] = sf::Sprite(this->textures.getTexture("btn_use"));
 
     // setting pos
     this->sprites[this->BCKG].setPosition(20.0f, 20.0f);
@@ -75,6 +93,9 @@ bool InventView::load()
     this->sprites[this->POCKET3].setPosition(30.0f, 30.0f);
     this->sprites[this->POCKET4].setPosition(30.0f, 30.0f);
     this->sprites[this->POCKET5].setPosition(30.0f, 30.0f);
+    this->sprites[this->DROP].setPosition(430.0f, 30.0f);
+    this->sprites[this->VID].setPosition(490.0f, 30.0f);
+    this->sprites[this->USE].setPosition(550.0f, 30.0f);
 
     // texts
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
@@ -86,7 +107,7 @@ bool InventView::load()
     this->text.setPosition(WIN_W / 2 - this->text.getGlobalBounds().width / 2, 30.0f);
 
     this->current_pocket_name.setFont(this->font);
-    this->current_pocket_name.setString("Pocket0");
+    this->current_pocket_name.setString("Pocket");
     this->current_pocket_name.setCharacterSize(24);
     this->current_pocket_name.setColor(sf::Color::White);
     this->current_pocket_name.setPosition(75.0f - this->current_pocket_name.getGlobalBounds().width / 2 + 50.0f, 240.0f);
@@ -107,6 +128,9 @@ void InventView::render(sf::RenderWindow& window)
     window.draw(this->current_pocket_name);
     window.draw(this->sprites[this->LARROW]);
     window.draw(this->sprites[this->RARROW]);
+    window.draw(this->sprites[this->DROP]);
+    window.draw(this->sprites[this->VID]);
+    window.draw(this->sprites[this->USE]);
     this->draw_content(window);
 }
 
@@ -147,6 +171,21 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
                 if (this->current > 4)
                     this->current = 0;
                 this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
+            }
+            else if (__X >= 430 && __X <= 475 && __Y >= 30 && __Y <= 50)
+            {
+                // drop
+                std::cout << "drop" << std::endl;
+            }
+            else if (__X >= 490 && __X <= 535 && __Y >= 30 && __Y <= 50)
+            {
+                // dropping all
+                std::cout << "dropping all" << std::endl;
+            }
+            else if (__X >= 550 && __X <= 595 && __Y >= 30 && __Y <= 50)
+            {
+                // use
+                std::cout << "use" << std::endl;
             }
             break;
 
