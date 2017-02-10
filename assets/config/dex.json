@@ -928,6 +928,238 @@
         "evolution": "",
         "file": "windora.png"
     },
+    
+    "Byoxic": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "byoxic.png"
+    },
+    
+    "Chargell": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "chargell.png"
+    },
+    
+    "Chromion": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "",
+        "file": "chromion.png"
+    },
+    
+    "Criminiac": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "criminiac.png"
+    },
+    
+    "Deember": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "deember.png"
+    },
+    
+    "Gorott": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "gorott.png"
+    },
+    
+    "Exorierr": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "exorierr.png"
+    },
+    
+    "Solary": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "solary.png"
+    },
+    
+    "Terrnip": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "terrnip.png"
+    },
+    
+    "Speck": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "Pecule",
+        "file": "speck.png"
+    },
+    "Pecule": {
+        "type": 4,
+        "stade": 1,
+        "evolution": "",
+        "file": "pecule.png"
+    },
+    
+    "Spirit": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "spirit.png"
+    },
+    
+    "Staryal": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "staryal.png"
+    },
+    
+    "Inkamini": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "Inkami",
+        "file": "inkamini.png"
+    },
+    "Inkami": {
+        "type": 0,
+        "stade": 1,
+        "evolution": "",
+        "file": "inkami.png"
+    },
+    
+    "Toojee": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "toojee.png"
+    },
+    
+    "Sprike": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "sprike.png"
+    },
+    
+    "Mintol": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "mintol.png"
+    },
+    
+    "Corpsicle": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "Thermille",
+        "file": "corpsicle.png"
+    },
+    "Thermille": {
+        "type": 2,
+        "stade": 1,
+        "evolution": "",
+        "file": "thermille.png"
+    },
+    
+    "Reven": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "reven.png"
+    },
+    
+    "Vermander": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "vermander.png"
+    },
+    
+    "Buruchu": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "buruchu.png"
+    },
+    
+    "Dynamouse": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "dynamouse.png"
+    },
+    
+    "Roboe": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "Fenhex",
+        "file": "roboe.png"
+    },
+    "Fenhex": {
+        "type": 1,
+        "stade": 1,
+        "evolution": "",
+        "file": "fenhex.png"
+    },
+    
+    "Redhandit": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "redhandit.png"
+    },
+    
+    "Gremini": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "gremini.png"
+    },
+    
+    "Marubeum": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "marubeum.png"
+    },
+    
+    "Frauglacier": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "frauglacier.png"
+    },
+    
+    "Bleech": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "Vampara",
+        "file": "bleech.png"
+    },
+    "Vamapara": {
+        "type": 6,
+        "stade": 1,
+        "evolution": "",
+        "file": "vampara.png"
+    },
+    
+    "Tarkid": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "Chryvern",
+        "file": "tarkid.png"
+    },
+    "Chryvern": {
+        "type": 6,
+        "stade": 1,
+        "evolution": "",
+        "file": "chryvern.png"
+    },
 }
 
 
