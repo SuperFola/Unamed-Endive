@@ -31,10 +31,10 @@ bool ObjectsTable::load()
 
         for (int i=0; i < instance.root["objects"].size(); i++)
         {
-            struct ObjType* obj;
-            obj->id = instance.root["object"][i]["id"].asInt();
-            obj->name = instance.root["objects"][i]["name"].asString();
-            obj->desc = instance.root["objects"][i].get("desc", "");
+            struct ObjType obj;
+            obj.id = instance.root["object"][i]["id"].asInt();
+            obj.name = instance.root["objects"][i]["name"].asString();
+            obj.desc = instance.root["objects"][i].get("desc", "").asString();
             instance.objects_name[instance.root["object"][i]["id"].asInt()] = obj;
         }
 
@@ -47,13 +47,13 @@ bool ObjectsTable::load()
 std::string ObjectsTable::getName(Object* object)
 {
     if (instance.loaded)
-        return instance.objects_name[object->getId()]->name;
+        return instance.objects_name[object->getId()].name;
     return "empty";
 }
 
 std::string ObjectsTable::getDesc(Object* object)
 {
     if (instance.loaded)
-        return instance.objects_name[object->getId()]->desc;
+        return instance.objects_name[object->getId()].desc;
     return "";
 }

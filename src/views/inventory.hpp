@@ -2,6 +2,7 @@
 #define DEF_INVENT_VIEW
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System/String.hpp>
 #include <string>
 #include <map>
 
@@ -17,12 +18,15 @@ class InventView : public View
 private:
     // variables
     int current;
+    int selected;
+    int offset;
     TexturesManager textures;
     std::map<std::string, sf::Sprite> sprites;
     sf::Font font;
     sf::Text text;
     sf::Text current_pocket_name;
     sf::Text object_name;
+    sf::Text object_desc;
     Bag* bag;
 
     const std::string BCKG = "backgroud";
@@ -40,6 +44,7 @@ private:
 
     // methods
     void draw_content(sf::RenderWindow&);
+    void change_pocket();
 
 public:
     // methods

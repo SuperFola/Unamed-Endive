@@ -13,7 +13,7 @@ class ObjectsTable
 {
 private:
     // variables
-    std::map<int, struct ObjType*> objects_name;
+    std::map<int, struct ObjType> objects_name;
     static class ObjectsTable instance;
     Json::Value root;
     bool loaded;

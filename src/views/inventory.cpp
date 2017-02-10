@@ -9,6 +9,8 @@
 InventView::InventView() :
     View(INVENTORY_VIEW_ID)
     , current(0)
+    , selected(-1)
+    , offset(0)
 {
 
 }
@@ -106,6 +108,7 @@ bool InventView::load()
     // texts
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
         return false;
+
     this->text.setFont(this->font);
     this->text.setString("Inventaire");
     this->text.setCharacterSize(24);
@@ -122,7 +125,15 @@ bool InventView::load()
     this->object_name.setString("object0");
     this->object_name.setCharacterSize(18);
     this->object_name.setColor(sf::Color::White);
-    this->object_name.setPosition(250.0f, 40.0f);
+    this->object_name.setPosition(260.0f, 60.0f);
+
+    this->object_desc.setFont(this->font);
+    this->object_desc.setString("");
+    this->object_desc.setCharacterSize(18);
+    this->object_desc.setColor(sf::Color::White);
+    this->object_desc.setPosition(40.0f, 270.0f);
+
+    this->sprites[this->OBJ_BASE].setPosition(240.0f, 64.0f);
 
     return true;
 }
@@ -166,16 +177,14 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
             {
                 // previous
                 this->current--;
-                if (this->current < 0)
-                    this->current = 4;
+                this->change_pocket();
                 this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             }
             else if (__X >= 180 && __X <= 200 && __Y >= 240 && __Y <= 260)
             {
                 // next
                 this->current++;
-                if (this->current > 4)
-                    this->current = 0;
+                this->change_pocket();
                 this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             }
             else if (__X >= 430 && __X <= 475 && __Y >= 30 && __Y <= 50)
@@ -192,6 +201,16 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
             {
                 // use
                 std::cout << "use" << std::endl;
+            }
+            else if (__X >= 240 && __X <= 620 && __Y >= 40 && __Y <= 620)
+            {
+                // clic in the objects list, need to find which one was picked
+                int r = (__Y - 60) / (this->object_name.getCharacterSize() + 4) + this->offset;
+
+                if (0 <= r && r <= bag->getPocket(this->current)->getSize())
+                    this->selected = r;
+                else
+                    this->selected = -1;
             }
             break;
 
@@ -210,6 +229,20 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
 void InventView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
 
+}
+
+void InventView::change_pocket()
+{
+    // checking if the current pocket is correct
+    if (this->current < 0)
+        this->current = 4;
+    else if (this->current > 4)
+        this->current = 0;
+
+    // reset current offset
+    this->offset = 0;
+
+    this->selected = -1;
 }
 
 void InventView::draw_content(sf::RenderWindow& window)
@@ -237,11 +270,39 @@ void InventView::draw_content(sf::RenderWindow& window)
         break;
     }
 
-    for (int i=0; i < this->bag->getPocket(this->current)->getSize(); i++)
+    std::string name;
+    for (int i=this->offset; i < this->bag->getPocket(this->current)->getSize(); i++)
     {
+        // object name
         Object* obj = this->bag->getPocket(this->current)->getObject(i);
-        this->object_name.setString(ObjectsTable::getName(obj) + " (" + to_string(obj->getQuantity()) + ")");
+        name = ObjectsTable::getName(obj) + " (" + to_string(obj->getQuantity()) + ")";
+        if (i == this->selected)
+            name = "> " + name;
+        this->object_name.setString(name);
+
+        // image
+        this->sprites[this->OBJ_BASE].setPosition(this->sprites[this->OBJ_BASE].getPosition().x, this->object_name.getPosition().y + 4.0f);
+
+        // description is selected (regarding to the index i)
+        if (i == this->selected)
+        {
+            this->object_desc.setString(wrapText(sf::String(ObjectsTable::getDesc(obj)), 200, this->font, this->object_desc.getCharacterSize()));
+            window.draw(this->object_desc);
+        }
+
+        // drawing
+        window.draw(this->object_name);
+        window.draw(this->sprites[this->OBJ_BASE]);
+
+        // change the position for the next object name
+        this->object_name.setPosition(this->object_name.getPosition().x, this->object_name.getPosition().y + this->object_name.getCharacterSize() + 4.0f);
+
+        // stop if we have displayed max items
+        if (i == this->offset + 28)
+            break;
     }
+    this->object_name.setPosition(this->object_name.getPosition().x, 60.0f);
+    this->sprites[this->OBJ_BASE].setPosition(this->sprites[this->OBJ_BASE].getPosition().x, this->object_name.getPosition().y + 4.0f);
 }
 
 void InventView::add_bag(Bag* bag)
