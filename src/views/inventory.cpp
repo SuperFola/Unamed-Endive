@@ -190,17 +190,20 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
             else if (__X >= 430 && __X <= 475 && __Y >= 30 && __Y <= 50)
             {
                 // drop
-                std::cout << "drop" << std::endl;
+                if (this->selected != -1)
+                    this->bag->getPocket(this->current)->drop_object(this->selected);
             }
             else if (__X >= 490 && __X <= 535 && __Y >= 30 && __Y <= 50)
             {
                 // dropping all
-                std::cout << "dropping all" << std::endl;
+                if (this->selected != -1)
+                    this->bag->getPocket(this->current)->dropall_object(this->selected);
             }
             else if (__X >= 550 && __X <= 595 && __Y >= 30 && __Y <= 50)
             {
                 // use
-                std::cout << "use" << std::endl;
+                if (this->selected != -1)
+                    this->bag.getPocket(this->current)->useObject(this->selected);
             }
             else if (__X >= 240 && __X <= 620 && __Y >= 40 && __Y <= 620)
             {

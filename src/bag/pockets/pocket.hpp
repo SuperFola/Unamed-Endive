@@ -19,7 +19,9 @@ public:
     bool load(Json::Value&);
     void add_object(Object*);
     Object* getObject(int);
+    void useObject(int);
     void drop_object(int);
+    void dropall_object(int);
     Json::Value serialize();
     std::string& getName();
     int getSize();

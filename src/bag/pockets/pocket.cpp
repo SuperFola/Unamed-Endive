@@ -47,7 +47,32 @@ Object* Pocket::getObject(int id)
     }
 }
 
+void Pocket::useObject(int id)
+{
+    if (0 <= id && id < this->objects.size())
+    {
+        if (this->objects[id]->getQuantity() > 0)
+        {
+            this->objects[id];
+        }
+    }
+    else
+    {
+        std::cout << "Can not find the object with the id " << id << std::endl;
+    }
+}
+
 void Pocket::drop_object(int id)
+{
+    if (0 <= id && id < this->objects.size())
+    {
+        this->objects[id]->drop(1);
+    }
+    else
+        std::cout << "Can not find the object with the id " << id << std::endl;
+}
+
+void Pocket::dropall_object(int id)
 {
     if (0 <= id && id < this->objects.size())
         pop<Object*>(&(this->objects), id);

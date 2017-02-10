@@ -759,12 +759,175 @@
         "file": "silvorr.png"
     },
     
-    "name": {
+    "Infinity": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "infinity.png"
+    },
+    
+    "Incikhtes": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "incikhtes.png"
+    },
+    
+    "Baulder": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "baulder.png"
+    },
+    
+    "Cryptise": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "Cremortus",
+        "file": "cryptise.png"
+    },
+    "Cremortus": {
+        "type": 4,
+        "stade": 1,
+        "evolution": "Duscre",
+        "file": "cremortus.png"
+    },
+    "Duscre": {
+        "type": 5,
+        "stade": 2,
+        "evolution": "",
+        "file": "duscre.png"
+    },
+    
+    "Lectrobe": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "Wrektric",
+        "file": "lectrobe.png"
+    },
+    "Wrektric": {
+        "type": 7,
+        "stade": 1,
+        "evolution": "",
+        "file": "wrektric.png"
+    },
+    
+    "Mediera": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "Maidieval",
+        "file": "mediera.png"
+    },
+    "Maidieval": {
+        "type": 4,
+        "stade": 1,
+        "evolution": "Auregal",
+        "file": "maidieval.png"
+    },
+    "Auregal": {
+        "type": 4,
+        "stade": 2,
+        "evolution": "",
+        "file": "auregal.png"
+    },
+    
+    "Liscious": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "Diliscious",
+        "file": "liscious.png"
+    },
+    "Diliscious": {
+        "type": 2,
+        "stade": 1,
+        "evolution": "Maliscious",
+        "file": "diliscious.png"
+    },
+    "Maliscious": {
+        "type": 2,
+        "stade": 1,
+        "evolution": "",
+        "file": "maliscious.png"
+    },
+    
+    "Moldec": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "Dehedra",
+        "file": "moldec.png"
+    },
+    "Dehedra": {
+        "type": 6,
+        "stade": 1,
+        "evolution": "",
+        "file": "dehedra.png"
+    },
+    
+    "Permegeonez": {
         "type": 0,
         "stade": 0,
         "evolution": "",
-        "file": "name.png"
-    }
+        "file": "permegeonez.png"
+    },
+    
+    "Orgoul": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "",
+        "file": "orgoul.png"
+    },
+    
+    "Snew": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "Neow",
+        "file": "snew.png"
+    },
+    "Neow": {
+        "type": 7,
+        "stade": 1,
+        "evolution": "",
+        "file": "neow.png"
+    },
+    
+    "Macascerb": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "macascerb.png"
+    },
+    
+    "Loceam": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "Inferail",
+        "file": "loceam.png"
+    },
+    "Inferail": {
+        "type": 6,
+        "stade": 1,
+        "evolution": "",
+        "file": "inferail.png"
+    },
+    
+    "Pudde": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "Yumee",
+        "file": "pudde.png"
+    },
+    "Yumee": {
+        "type": 2,
+        "stade": 1,
+        "evolution": "Windora",
+        "file": "yumee.png"
+    },
+    "Windora": {
+        "type": 4,
+        "stade": 2,
+        "evolution": "",
+        "file": "windora.png"
+    },
 }
 
 
