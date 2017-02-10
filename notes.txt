@@ -35,6 +35,14 @@
                 => float representing the resistance/weakness against a type
         # array[attack type][defending type] => coeff
     
+    objects table format :
+        objects: string
+            array =>
+                dict describing the object :
+                    - id: int
+                    - name: string
+                    - desc: string (optionnal)
+    
     adding a new view :
         create two new files in src/views/ (.hpp, .cpp)
         heritate from View (public)

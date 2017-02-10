@@ -1,7 +1,6 @@
 # publishing script for Unamed-Endive
 # copyright Loodoor (alias Folaefolc sometime)
 # only to create the iss script and build it, defining specials values (such as the game version)
-
 import os
 import sys
 

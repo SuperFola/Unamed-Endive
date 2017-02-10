@@ -1,3 +1,5 @@
+# script to format the attack file in a correct format
+# copyright Loodoor (alias Folaefolc sometime)
 import sys
 
 

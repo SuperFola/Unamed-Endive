@@ -36,6 +36,7 @@ private:
     const std::string VID = "btn_vider";
     const std::string USE = "btn_use";
     const std::string DROP = "btn_drop";
+    const std::string OBJ_BASE = "obj_base";
 
     // methods
     void draw_content(sf::RenderWindow&);

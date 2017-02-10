@@ -71,6 +71,11 @@ bool InventView::load()
         return false;
     this->textures.addTexture("btn_use", use);
 
+    sf::Texture obj_base;
+    if (!obj_base.loadFromFile("assets/inventory/objects/basealpha.png"))
+        return false;
+    this->textures.addTexture("obj_base", obj_base);
+
     // setting sprites
     this->sprites[this->BCKG] = sf::Sprite(this->textures.getTexture("background"));
     this->sprites[this->LARROW] = sf::Sprite(this->textures.getTexture("larrow"));
@@ -83,6 +88,7 @@ bool InventView::load()
     this->sprites[this->DROP] = sf::Sprite(this->textures.getTexture("btn_drop"));
     this->sprites[this->VID] = sf::Sprite(this->textures.getTexture("btn_vide"));
     this->sprites[this->USE] = sf::Sprite(this->textures.getTexture("btn_use"));
+    this->sprites[this->OBJ_BASE] = sf::Sprite(this->textures.getTexture("obj_base"));
 
     // setting pos
     this->sprites[this->BCKG].setPosition(20.0f, 20.0f);
