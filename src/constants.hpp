@@ -1,7 +1,7 @@
 #ifndef DEF_CONSTANTS
 #define DEF_CONSTANTS
 
-#define DEV_MODE  // delete this line before sending in production
+#define DEV_MODE
 
 // views id
 #define UNREACHABLE_VIEW_ID -1

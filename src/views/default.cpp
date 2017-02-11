@@ -22,7 +22,9 @@ DefaultView::DefaultView() :
 {
 }
 
-bool DefaultView::load()
+bool DefaultView::load() { }
+
+bool DefaultView::load(sf::String playername)
 {
     this->level.load_map_at();  // empty will cause to load the map given by default
     if (!this->menu_hud.load())
@@ -33,7 +35,7 @@ bool DefaultView::load()
 
     this->pnjmgr.add_pnj_on_map(this->level.getId(), "vader", "Je suis Vader, un commander d'El Padrino !", PNJkind::special, "Vader");
 
-    this->player.setName("me");
+    this->player.setName(playername.toAnsiString());
     if (!this->player.load())
     {
         std::cout << "An error occured while loading the player" << std::endl;

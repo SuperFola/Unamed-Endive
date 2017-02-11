@@ -2,6 +2,7 @@
 #define DEF_DEFAULT_VIEW
 
 #include <string>
+#include <SFML/System/String.hpp>
 
 #include "view.hpp"
 #include "../map/map.hpp"
@@ -34,7 +35,9 @@ private:
 public:
     // methods
     DefaultView();
-    bool load() override;
+    bool load(sf::String);
+      // we are overriding it but not using it
+      bool load() override;
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;

@@ -10,14 +10,14 @@ StateMachine::StateMachine() :
     this->history.reserve(MAX_HISTORY);
 }
 
-bool StateMachine::load()
+bool StateMachine::load(sf::String playername)
 {
     int id = -1;
     switch(this->loaded)
     {
     case 0:
         id = this->defaultv.getId();
-        this->defaultv.load();
+        this->defaultv.load(playername);
         break;
 
     case 1:

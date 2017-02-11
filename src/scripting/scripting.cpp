@@ -839,7 +839,7 @@ void PyScripting::setPlayer(Character* player)
      if (instance.sprites[tid].getPosition().x != x || instance.sprites[tid].getPosition().y != y)
      {
         sf::Vector2f p2 = instance.window->mapPixelToCoords(sf::Vector2i(x, y));
-        instance.sprites[tid].setPosition(x, y);
+        instance.sprites[tid].setPosition(p2);
      }
     instance.window->draw(instance.sprites[tid]);
 

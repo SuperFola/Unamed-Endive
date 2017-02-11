@@ -4,6 +4,56 @@
 
 #include "game.hpp"
 
+#define __X event.mouseButton.x
+#define __Y event.mouseButton.y
+
+#ifdef PLATFORM_WIN
+#include <windows.h>
+#endif // PLATFORM_WIN
+
+#ifdef PLATFORM_POSIX
+#include <dirent.h>
+#endif // PLATFORM_POSIX
+
+std::vector<std::string> glob(const std::string& directory)
+{
+    std::vector<std::string> files;
+
+    #ifdef PLATFORM_WIN
+    WIN32_FIND_DATA File;
+    HANDLE hSearch;
+
+    hSearch = FindFirstFile((directory + "/*").data(), &File);
+    if (hSearch != INVALID_HANDLE_VALUE)
+    {
+        do {
+                if (std::string(File.cFileName) != "." && std::string(File.cFileName) != "..")
+                    files.push_back(std::string(File.cFileName));
+        } while (FindNextFile(hSearch, &File));
+
+        FindClose(hSearch);
+    }
+    #endif // PLATFORM_WIN
+
+    #ifdef PLATFORM_POSIX
+    DIR* rep = opendir(directory.data());
+
+    if (rep != NULL)
+    {
+        struct dirent* ent;
+
+        while ((ent = readdir(rep)) != NULL)
+        {
+            files.push_back(ent->d_name);
+        }
+
+        closedir(rep);
+    }
+    #endif // PLATFORM_POSIX
+
+    return files;
+}
+
 // private
 void Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 {
@@ -133,7 +183,7 @@ void Game::loading()
         }
         if (load_sm && !load_musics)
         {
-            if (this->sm.load())
+            if (this->sm.load(this->menu_userentry))
                 load_musics = true;
         }
         if (load_musics)
@@ -158,6 +208,7 @@ void Game::loading()
             {
             case sf::Event::Closed:
                 this->window.close();
+                this->has_requested_quit = true;
                 break;
 
             default:
@@ -169,6 +220,111 @@ void Game::loading()
         this->window.clear();
         this->render_loading();
         this->window.display();
+    }
+}
+
+void Game::update_menu(sf::Time elapsed, int s)
+{
+    // centering text
+    if (s == 0)
+        this->menu_user.setPosition(WIN_W / 2.0f - this->menu_user.getLocalBounds().width / 2.0f, this->menu_user.getPosition().y);
+}
+
+void Game::render_menu(const std::vector<std::string>& s)
+{
+    if (s.size() == 0)
+        this->window.draw(this->menu_user);
+    else
+    {
+        int i = 0;
+        for (const auto& elem : s)
+        {
+            this->menu_text.setString(elem);
+            this->menu_text.setPosition(this->menu_text.getPosition().x, 150.0f + i * (this->menu_text.getCharacterSize() + 4.0f));
+
+            this->window.draw(this->menu_text);
+
+            i++;
+        }
+    }
+}
+
+void Game::menu()
+{
+    int _fps_update = 0;
+    sf::Time elapsed;
+    bool quit = false;
+
+    std::vector<std::string> saves = glob("saves/");
+
+    sf::Event event;
+    while (this->window.isOpen())
+    {
+        // get deltatime
+        sf::Time dt = this->clock.restart();
+
+        // update FPS and display
+        this->update_fps(dt, _fps_update);
+        elapsed += dt;
+        this->update_menu(elapsed, saves.size());
+
+        // dispatch events using a loop
+        while (this->window.pollEvent(event))
+        {
+            // default events
+            switch(event.type)
+            {
+            case sf::Event::TextEntered:
+                if (saves.size() == 0)
+                {
+                    if (event.text.unicode == '\b' && this->menu_userentry.getSize() > 0)
+                        this->menu_userentry.erase(this->menu_userentry.getSize() - 1, 1);
+                    else if (event.text.unicode == 13)  // validate
+                        quit = true;
+                    else
+                        this->menu_userentry.insert(this->menu_userentry.getSize(), event.text.unicode);
+                    this->menu_user.setString(this->menu_userentry);
+                }
+                break;
+
+            case sf::Event::MouseButtonPressed:
+                switch(event.mouseButton.button)
+                {
+                case sf::Mouse::Button::Left:
+                    if (__X >= WIN_W / 2.0f - 200.0f && __X <= WIN_W / 2.0f + 200.0f && __Y >= 150.0f && __Y <= 150.0f + saves.size() * (4.0f + this->menu_text.getCharacterSize()))
+                    {
+                        int ry = (__Y - 150) / (4.0f + this->menu_text.getCharacterSize());
+
+                        if (0 <= ry && ry <= saves.size() - 1)
+                        {
+                            this->menu_userentry = saves[ry];
+                            quit = true;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+                }
+                break;
+
+            case sf::Event::Closed:
+                this->window.close();
+                this->has_requested_quit = true;
+                break;
+
+            default:
+                break;
+            }
+        }
+
+        // rendering
+        this->window.clear();
+        this->render_menu(saves);
+        this->window.display();
+
+        if (quit)
+            break;
     }
 }
 
@@ -204,6 +360,7 @@ void Game::take_screenshot()
 Game::Game() :
     window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titlebar | sf::Style::Close)
     , crea_load()
+    , has_requested_quit(false)
     , shape(50)
     , shape_outline_sickness(10)
     , shape_increasing(true)
@@ -245,6 +402,16 @@ Game::Game() :
     this->cmd.setCharacterSize(24);
     this->cmd.setPosition(10.0f, 10.0f);
     this->cmd.setColor(sf::Color::White);
+
+    this->menu_user.setFont(this->font);
+    this->menu_user.setCharacterSize(24);
+    this->menu_user.setPosition(0.0f, WIN_H / 2 - 12);
+    this->menu_user.setColor(sf::Color::White);
+
+    this->menu_text.setFont(this->font);
+    this->menu_text.setCharacterSize(24);
+    this->menu_text.setPosition(WIN_W / 2.0f - 200.0f, 0.0f);
+    this->menu_text.setColor(sf::Color::White);
 
     ObjectsTable::load();
     this->ttable.load();
@@ -291,8 +458,11 @@ void Game::on_end()
 
 int Game::run()
 {
-    this->loading();
-    this->post_load();
+    this->menu();
+    if (!this->has_requested_quit)
+        this->loading();
+    if (!this->has_requested_quit)
+        this->post_load();
 
     int _fps_update = 0;
 
@@ -302,6 +472,10 @@ int Game::run()
     #endif
 
     sf::Event event;
+
+    if (this->has_requested_quit)
+        goto hell;
+
     while (this->window.isOpen())
     {
         // get deltatime
@@ -426,5 +600,6 @@ int Game::run()
 
     this->on_end();
 
+    hell:
     return 0;
 }

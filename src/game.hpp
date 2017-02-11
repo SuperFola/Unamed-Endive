@@ -23,24 +23,39 @@ private:
     MusicPlayer mplayer;
     TypesTable ttable;
     CreaturesLoader crea_load;
+    bool has_requested_quit;
     // others utilities
+      // loading
     sf::CircleShape shape;
     int shape_outline_sickness;
     bool shape_increasing;
-    sf::Font font;
     sf::Text loading_text;
+      // global
+    sf::Font font;
+      // cheats
     bool cheat_on;
     bool _got_coderet;
     sf::Text cmd;
     sf::String cmd_str;
+      // menu
+    sf::Text menu_user;
+    sf::Text menu_text;
+    sf::String menu_userentry;
     // methods
+      // commons methods
     void dispatch_events(sf::Event&, sf::Time);
     void render();
-    void render_loading();
     void update(sf::Time);
-    void update_loading(sf::Time);
     void update_fps(sf::Time, int&);
+      // loading interface methods
+    void update_loading(sf::Time);
+    void render_loading();
     void loading();
+      // menu interface methods
+    void update_menu(sf::Time, int);
+    void render_menu(const std::vector<std::string>&);
+    void menu();
+      // others methods
     void take_screenshot();
     void post_load();
     void on_end();
