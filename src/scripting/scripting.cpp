@@ -45,6 +45,11 @@ namespace PyUnamed
             RETURN_NONE
         }
 
+        static PyObject* print(PyObject* self, PyObject* args)
+        {
+            const char
+        }
+
         static PyObject* loadTexture(PyObject* self, PyObject* args)
         {
             const char* name;
@@ -423,6 +428,7 @@ namespace PyUnamed
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
+            {"print", print, METH_VARARGS, "Print function using std::cout"},
             {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given"},
             {"loadImage", loadTexture, METH_VARARGS, "Load an image using a given path, and assigne it to a given id"},
             {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
@@ -558,6 +564,8 @@ void PyScripting::load_all_modules()
     }
     PyScripting::run_code(this->modules["register.py"].data());
     this->modules.clear();
+
+    PyScripting::run_code("import sys, io; oldstdout = sys.stdout; newstdout = io.StringIO()");
 }
 
 // static methods
@@ -609,6 +617,21 @@ int PyScripting::run_code(const char* code)
         return PyRun_SimpleString(code);
     std::cout << "You need to connect your PyScripting instance to Python before using it !" << std::endl;
     return -1;
+}
+
+const char* PyScripting::run_code_and_get_out(const char* code)
+{
+    if (instance.connected)
+    {
+        const char* cs;
+        std::string ncode = "sys.stdout = newstdout; " + std::string(code) + "\nsys.stdout = oldstdout;r = newstdout.getvalue();newstdout.truncate(0)\n";
+
+        PyRun_SimpleString(code);
+
+        return cs;
+    }
+    std::cout << "You need to connect your PyScripting instance to Python before using it !" << std::endl;
+    return "None";
 }
 
 int PyScripting::run_all_modules()
@@ -916,12 +939,12 @@ void PyScripting::changeBlockAttrib(int rid, const char* identifier, int value)
 
 const char* PyScripting::getPlayerName()
 {
-    return instance.player->getName().data();
+    return instance.player->getName().c_str();
 }
 
 const char* PyScripting::getTrigger(int mid, int rid)
 {
-    return instance.triggsmgr->get_trigg(mid, rid).data();
+    return instance.triggsmgr->get_trigg(mid, rid).c_str();
 }
 
 void PyScripting::addTrigger(int mid, int rid, const char* identifier)

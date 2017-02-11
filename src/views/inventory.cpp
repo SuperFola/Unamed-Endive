@@ -203,7 +203,7 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
             {
                 // use
                 if (this->selected != -1)
-                    this->bag.getPocket(this->current)->useObject(this->selected);
+                    this->bag->getPocket(this->current)->useObject(this->selected);
             }
             else if (__X >= 240 && __X <= 620 && __Y >= 40 && __Y <= 620)
             {

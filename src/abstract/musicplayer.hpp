@@ -23,7 +23,7 @@ public:
     MusicPlayer();
     bool load();
     bool getState();
-    bool play(const std::string);
+    bool play(const std::string&);
     void stop();
     std::string getNext();
     const std::string& getCurrentName();

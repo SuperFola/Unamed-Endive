@@ -9,6 +9,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <sstream>
 
 #include <iostream>
 
@@ -62,6 +63,7 @@ public:
     static void reload_all();
 
     static int run_code(const char*);
+    static const char* run_code_and_get_out(const char*);
     static int run_all_modules();
     // specific runners
     static int run_on_start_modules();

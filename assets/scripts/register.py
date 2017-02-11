@@ -4,6 +4,7 @@
 # PLEASE DO NOT DELETE THIS FILE
 import os
 import Unamed
+from Unamed import print
 
 ###############################################################################
 # game stuff                                                                  #
@@ -46,6 +47,6 @@ Unamed.registerScript("runWhenRenderingView", "script.py")
 ###############################################################################
 
 load_prgs()
-print(os.environ.get("PYTHONHOME"))
-print(os.environ.get("HOME"))
+print("PYTHONHOME", os.environ.get("PYTHONHOME"))
+print("HOME", os.environ.get("HOME"))
 

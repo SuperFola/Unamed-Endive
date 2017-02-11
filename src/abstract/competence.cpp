@@ -1,7 +1,8 @@
 #include "competence.hpp"
 
 // public
-Competence::Competence()
+Competence::Competence() :
+    id(0)
 {
 
 }

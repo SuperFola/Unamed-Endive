@@ -27,7 +27,6 @@ class Character : public AnimatedEntity {
 private:
     // variables
     std::string name;
-    Point pos;
     Sex sex;
     Bag bag;
     Equip equip;

@@ -5,23 +5,19 @@
 #include "game.hpp"
 
 // private
-void Game::resize_window(int nx, int ny)
-{
-    // do some stuff, like resizing tiles / player ...
-    // ...
-    this->window.setSize(sf::Vector2u(nx, ny));
-}
-
 void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 {
     int c_view = this->sm.getId();
     // we give the current event to the scripting engine if a script need it
-    PyScripting::setEvent(event);
+    if (!this->cheat_on)
+        PyScripting::setEvent(event);
     PyScripting::run_event_modules();
 
     if (c_view != -1)  // we check if the view exist
     {
-        int new_view = this->sm.process_event_current(event, elapsed);
+        int new_view = UNREACHABLE_VIEW_ID;
+        if (!this->cheat_on)
+            new_view = this->sm.process_event_current(event, elapsed);
 
         switch (this->sm.change_view(new_view))
         {
@@ -60,6 +56,9 @@ void Game::render()
     }
     // launch the scripts
     PyScripting::run_drawing_modules();
+
+    if (this->cheat_on)
+        window.draw(this->cmd);
 }
 
 void Game::render_loading()
@@ -208,6 +207,8 @@ Game::Game() :
     , shape(50)
     , shape_outline_sickness(10)
     , shape_increasing(true)
+    , cheat_on(false)
+    , _got_coderet(false)
 {
     // creating base folders
     system("mkdir saves");
@@ -239,6 +240,11 @@ Game::Game() :
     this->loading_text.setString("Chargement ...");
     this->loading_text.setCharacterSize(24);
     this->loading_text.setPosition(5.0f, 5.0f);
+
+    this->cmd.setFont(this->font);
+    this->cmd.setCharacterSize(24);
+    this->cmd.setPosition(10.0f, 10.0f);
+    this->cmd.setColor(sf::Color::White);
 
     ObjectsTable::load();
     this->ttable.load();
@@ -317,6 +323,41 @@ int Game::run()
                 this->window.close();
                 break;
 
+            #ifdef DEV_MODE
+            case sf::Event::TextEntered:
+                if (this->cheat_on)
+                {
+                    if (event.text.unicode == '\b' && this->cmd_str.getSize() > 0)
+                    {
+                        this->cmd_str.erase(this->cmd_str.getSize() - 1, 1);
+                    }
+                    else if (event.text.unicode == 13)  // return
+                    {
+                        if (!this->_got_coderet)
+                        {
+                            this->cmd_str = sf::String(PyScripting::run_code_and_get_out(this->cmd_str.toAnsiString().c_str()));
+                            this->_got_coderet = true;
+                        }
+                        else
+                        {
+                            this->cmd_str.clear();
+                            this->_got_coderet = false;
+                        }
+                    }
+                    else
+                    {
+                        if (this->_got_coderet)
+                        {
+                            this->cmd_str.clear();
+                            this->_got_coderet = false;
+                        }
+                        this->cmd_str.insert(this->cmd_str.getSize(), event.text.unicode);
+                    }
+                    this->cmd.setString(this->cmd_str);
+                }
+                break;
+            #endif // DEV_MODE
+
             case sf::Event::KeyPressed:
                 switch (event.key.code)
                 {
@@ -335,7 +376,8 @@ int Game::run()
 
                 case sf::Keyboard::M:
                     // display or not the mini map
-                    this->sm.getDefault()->change_display_mmap(!this->sm.getDefault()->get_display_mmap());
+                    if (!this->cheat_on)
+                        this->sm.getDefault()->change_display_mmap(!this->sm.getDefault()->get_display_mmap());
                     break;
 
                 #ifdef DEV_MODE
@@ -345,8 +387,21 @@ int Game::run()
                     break;
 
                 case sf::Keyboard::F8:
-                    std::cout << "Realoding scripts" << std::endl;
+                    std::cout << "Reloading scripts" << std::endl;
                     PyScripting::reload_all();
+                    break;
+
+                case sf::Keyboard::F4:
+                    this->cheat_on = !this->cheat_on;
+                    if (this->cheat_on)
+                    {
+                        std::cout << "Cheats on" << std::endl;
+                        this->cmd.setPosition(0.0f, 0.0f);
+                    }
+                    else
+                    {
+                        std::cout << "Cheats off" << std::endl;
+                    }
                     break;
                 #endif
 

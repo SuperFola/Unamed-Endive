@@ -29,9 +29,12 @@ private:
     bool shape_increasing;
     sf::Font font;
     sf::Text loading_text;
+    bool cheat_on;
+    bool _got_coderet;
+    sf::Text cmd;
+    sf::String cmd_str;
     // methods
     void dispatch_events(sf::Event&, sf::Time);
-    void resize_window(int, int);
     void render();
     void render_loading();
     void update(sf::Time);

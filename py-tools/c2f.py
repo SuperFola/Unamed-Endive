@@ -1,7 +1,4 @@
 import pygame
-import random
-import string
-import glob
 import sys
 import os
 
