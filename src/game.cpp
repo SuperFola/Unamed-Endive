@@ -5,7 +5,7 @@
 #include "game.hpp"
 
 // private
-void  Game::dispatch_events(sf::Event& event, sf::Time elapsed)
+void Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 {
     int c_view = this->sm.getId();
     // we give the current event to the scripting engine if a script need it
@@ -45,6 +45,9 @@ void Game::render()
 {
     int c_view = this->sm.getId();
 
+    if (this->cheat_on && c_view == DEFAULT_VIEW_ID)
+        this->sm.getDefault()->draw_on_offscreen(this->cmd);
+
     if (c_view != -1) // does the view exist ?
     {
         this->sm.render_current(this->window);
@@ -56,9 +59,6 @@ void Game::render()
     }
     // launch the scripts
     PyScripting::run_drawing_modules();
-
-    if (this->cheat_on)
-        window.draw(this->cmd);
 }
 
 void Game::render_loading()
@@ -396,7 +396,7 @@ int Game::run()
                     if (this->cheat_on)
                     {
                         std::cout << "Cheats on" << std::endl;
-                        this->cmd.setPosition(0.0f, 0.0f);
+                        this->cmd.setPosition(10.0f, 10.0f);
                     }
                     else
                     {

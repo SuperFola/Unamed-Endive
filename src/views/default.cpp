@@ -67,8 +67,6 @@ void DefaultView::render(sf::RenderWindow& window)
     this->minimap.setView(mview);
 
     // rendering on RenderTextures
-    this->offscreen.clear(sf::Color::Transparent);
-    this->minimap.clear(sf::Color::Transparent);
     this->menu_hud.render(this->offscreen);
     this->level.micro_render(this->minimap);
     this->minimap.display();
@@ -105,6 +103,9 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
     this->level.update(window, elapsed);
     this->pnjmgr.update(this->level.getId(), window, elapsed);
     this->menu_hud.update(window, elapsed);
+
+    this->offscreen.clear(sf::Color::Transparent);
+    this->minimap.clear(sf::Color::Transparent);
 }
 
 int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
@@ -192,4 +193,9 @@ void DefaultView::change_display_mmap(bool value)
 bool DefaultView::get_display_mmap()
 {
     return this->display_mmap;
+}
+
+void DefaultView::draw_on_offscreen(const sf::Drawable& drawable)
+{
+    this->offscreen.draw(drawable);
 }

@@ -39,7 +39,7 @@ bool MusicPlayer::getState()
     return this->state;
 }
 
-bool MusicPlayer::play(const std::string name&)
+bool MusicPlayer::play(const std::string& name)
 {
     if (!this->loaded)
         std::cout << "Need to load MusicPlayer !" << std::endl;

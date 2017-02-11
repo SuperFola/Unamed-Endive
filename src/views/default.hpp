@@ -45,6 +45,7 @@ public:
     TriggersManager* getTriggsMgr();
     void change_display_mmap(bool);
     bool get_display_mmap();
+    void draw_on_offscreen(const sf::Drawable&);
 };
 
 #endif // DEF_DEFAULT_VIEW

@@ -4,7 +4,7 @@
 # PLEASE DO NOT DELETE THIS FILE
 import os
 import Unamed
-from Unamed import print
+from Unamed import upr
 
 ###############################################################################
 # game stuff                                                                  #

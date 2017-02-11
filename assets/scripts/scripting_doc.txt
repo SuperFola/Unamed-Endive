@@ -111,3 +111,7 @@ Take two integers (x, y). Will teleport the player on this position, on the curr
 tpPlayerOnSpawn
 ---------------
 Take a map id and a spawn id (integer and string). Will teleport the player to this map (can be the actual map), on the position of the spawn
+
+upr
+---
+Print function using std::cout

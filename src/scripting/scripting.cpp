@@ -47,7 +47,21 @@ namespace PyUnamed
 
         static PyObject* print(PyObject* self, PyObject* args)
         {
-            const char
+            PyObject* content;
+            char result[256];
+            if (!PyArg_ParseTuple(args, "O", &content))
+            {
+                strcpy(result, "Can not parse argument : need a single argument, of any type");
+                PyErr_SetString(UnamedError, result);
+                return NULL;
+            }
+            PyObject* objectsRepresentation = PyObject_Repr(content);
+            const char* parsed = PyUnicode_AsUTF8(objectsRepresentation);
+            Py_XDECREF(objectsRepresentation);
+
+            PyScripting::print(parsed);
+
+            RETURN_NONE
         }
 
         static PyObject* loadTexture(PyObject* self, PyObject* args)
@@ -428,7 +442,7 @@ namespace PyUnamed
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
-            {"print", print, METH_VARARGS, "Print function using std::cout"},
+            {"upr", print, METH_VARARGS, "Print function using std::cout"},
             {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given"},
             {"loadImage", loadTexture, METH_VARARGS, "Load an image using a given path, and assigne it to a given id"},
             {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
@@ -623,12 +637,16 @@ const char* PyScripting::run_code_and_get_out(const char* code)
 {
     if (instance.connected)
     {
-        const char* cs;
-        std::string ncode = "sys.stdout = newstdout; " + std::string(code) + "\nsys.stdout = oldstdout;r = newstdout.getvalue();newstdout.truncate(0)\n";
+        std::stringstream ss;
+        auto oldout = std::cout.rdbuf(ss.rdbuf());
 
+        // running code
         PyRun_SimpleString(code);
 
-        return cs;
+        // setting back the old stdout
+        std::cout.rdbuf(oldout);
+
+        return ss.str().c_str();
     }
     std::cout << "You need to connect your PyScripting instance to Python before using it !" << std::endl;
     return "None";
@@ -979,5 +997,10 @@ void PyScripting::map_tpPlayerOn(int rid)
                             rid % instance.level->getWidth()
                             , rid / instance.level->getWidth()
                             );
+}
+
+void PyScripting::print(const char* thing)
+{
+    std::cout << thing << std::endl;
 }
 
