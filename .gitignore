@@ -8,9 +8,10 @@
 /assets/.tiles_buildings
 /assets/.tilesets
 /obj/
-screenshots/
-dlls/Lib/*
-assets/creatures/.orginals/*
+/screenshots/
+/dlls/Lib/*
+/assets/creatures/.orginals/*
+/saves/
 
 # Prerequisites
 *.d
