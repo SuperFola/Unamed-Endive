@@ -10,7 +10,7 @@
 DexView::DexView() :
     View(DEX_VIEW_ID)
     , displaying_crea(true)
-    , selected(-1)
+    , selected(0)
 {
 
 }
@@ -49,7 +49,7 @@ bool DexView::load()
     this->text.setFont(this->font);
     this->text.setString("Dexeur: Créatures");
     this->text.setCharacterSize(24);
-    this->text.setColor(sf::Color::White);
+    this->text.setColor(sf::Color::Black);
     this->text.setPosition(WIN_W / 2 - this->text.getGlobalBounds().width / 2, 30.0f);
 
     return true;
@@ -98,14 +98,14 @@ int DexView::process_event(sf::Event& event, sf::Time elapsed)
                     this->text.setString("Dexeur: Types");
             }
             // selecting a creature
-            if (__X >= 30 && __X <= WIN_W - 30 && __Y >= this->text.getPosition().y + 20.0f && __Y <= WIN_H - 30)
+            if (__X >= 30 && __X <= WIN_W - 30 && __Y >= this->text.getPosition().y + 84.0f && __Y <= WIN_H - 30)
             {
-                int ry = (__Y - (this->text.getPosition().y + 20.0f)) / 64;
-                if (ry >= this->selected && ry < this->selected + 9)
+                int ry = (__Y - (this->text.getPosition().y + 84.0f)) / 64;
+                if (ry >= 0 && ry < 8)
                 {
                     // ok the selected creature is in range
-                    bool ev = this->dex->getInfo(std::get<2>(this->dex_content[(this->selected + ry) % this->dex_content.size()])).evolution != "";
-                    this->selected = ev ? this->index_of(this->dex->getInfo(std::get<2>(this->dex_content[(this->selected + ry) % this->dex_content.size()])).evolution) : this->selected + ry;
+                    this->selected += ry;
+                    this->selected %= this->dex_content.size();
                 }
             }
             break;
@@ -116,7 +116,7 @@ int DexView::process_event(sf::Event& event, sf::Time elapsed)
         break;
 
     case sf::Event::MouseWheelScrolled:
-        this->selected += event.mouseWheelScroll.delta;
+        this->selected -= event.mouseWheelScroll.delta;
         if (this->selected < -1)
             this->selected = -1;
         if (this->selected > this->dex_content.size())
@@ -154,7 +154,7 @@ void DexView::draw_content(sf::RenderWindow& window)
     {
         for (int i=this->selected; i < this->selected + 9; i++)
         {
-            std::get<0>(this->dex_content[i % this->dex_content.size()]).setPosition(30.0f, this->text.getPosition().y + 20.0f + (i - this->selected) * 64.0f);
+            std::get<0>(this->dex_content[i % this->dex_content.size()]).setPosition(30.0f, this->text.getPosition().y + 84.0f + (i - this->selected) * 64.0f);
             window.draw(std::get<0>(this->dex_content[i % this->dex_content.size()]));
             if (i == this->selected && this->dex->getInfo(std::get<2>(this->dex_content[i % this->dex_content.size()])).viewed)
                 window.draw(std::get<1>(this->dex_content[i % this->dex_content.size()]));
@@ -207,7 +207,7 @@ void DexView::load_dex_content()
 
         sf::Sprite _sprite;
         _sprite.setTexture(this->crealoader->get(crea.file));
-        float factor = 200.0f / this->crealoader->get(crea.file).getSize().y;
+        float factor = 180.0f / this->crealoader->get(crea.file).getSize().y;
         _sprite.setScale(factor, factor);
 
         switch (crea.type)
@@ -261,7 +261,7 @@ void DexView::load_dex_content()
 
         _text.setString(stext);
 
-        _sprite.setPosition(WIN_W - 20.0f - _sprite.getGlobalBounds().width, this->text.getPosition().y + 40.0f);
+        _sprite.setPosition(WIN_W - 30.0f - _sprite.getGlobalBounds().width, this->text.getPosition().y + 104.0f);
 
         std::get<0>(content) = _text;
         std::get<1>(content) = _sprite;

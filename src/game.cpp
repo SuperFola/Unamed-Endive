@@ -223,16 +223,30 @@ void Game::loading()
     }
 }
 
-void Game::update_menu(sf::Time elapsed, int s)
+void Game::update_menu(sf::Time elapsed, int s, bool new_game)
 {
     // centering text
-    if (s == 0)
+    if (s == 0 || new_game)
         this->menu_user.setPosition(WIN_W / 2.0f - this->menu_user.getLocalBounds().width / 2.0f, this->menu_user.getPosition().y);
 }
 
-void Game::render_menu(const std::vector<std::string>& s)
+void Game::render_menu(const std::vector<std::string>& s, bool new_game)
 {
-    if (s.size() == 0)
+    this->window.draw(this->menu_bckg_s);
+    this->window.draw(this->menu_logo_s);
+    this->window.draw(this->menu_btn_start_s);
+    if (s.size() != 0 && !new_game)
+        this->window.draw(this->menu_btn_new_s);
+    else
+    {
+        this->window.draw(this->menu_ask_user);
+    }
+    if (this->menu_game_selected != -1 && !new_game)
+    {
+        this->window.draw(this->menu_btn_del_s);
+    }
+
+    if (s.size() == 0 || new_game)
         this->window.draw(this->menu_user);
     else
     {
@@ -241,6 +255,11 @@ void Game::render_menu(const std::vector<std::string>& s)
         {
             this->menu_text.setString(elem);
             this->menu_text.setPosition(this->menu_text.getPosition().x, 150.0f + i * (this->menu_text.getCharacterSize() + 4.0f));
+
+            if (i == this->menu_game_selected)
+                this->menu_text.setColor(sf::Color::Green);
+            else
+                this->menu_text.setColor(sf::Color::White);
 
             this->window.draw(this->menu_text);
 
@@ -254,6 +273,7 @@ void Game::menu()
     int _fps_update = 0;
     sf::Time elapsed;
     bool quit = false;
+    bool new_game = false;
 
     std::vector<std::string> saves = glob("saves/");
 
@@ -266,7 +286,7 @@ void Game::menu()
         // update FPS and display
         this->update_fps(dt, _fps_update);
         elapsed += dt;
-        this->update_menu(elapsed, saves.size());
+        this->update_menu(elapsed, saves.size(), new_game);
 
         // dispatch events using a loop
         while (this->window.pollEvent(event))
@@ -274,8 +294,34 @@ void Game::menu()
             // default events
             switch(event.type)
             {
+            case sf::Event::KeyPressed:
+                switch(event.key.code)
+                {
+                case sf::Keyboard::Up:
+                    if (saves.size() > 0)
+                    {
+                        this->menu_game_selected--;
+                        if (this->menu_game_selected < 0)
+                            this->menu_game_selected = saves.size() - 1;
+                    }
+                    break;
+
+                case sf::Keyboard::Down:
+                    if (saves.size() > 0)
+                    {
+                        this->menu_game_selected++;
+                        if (this->menu_game_selected > saves.size() - 1)
+                            this->menu_game_selected = 0;
+                    }
+                    break;
+
+                default:
+                    break;
+                }
+                break;
+
             case sf::Event::TextEntered:
-                if (saves.size() == 0)
+                if (saves.size() == 0 || new_game)
                 {
                     if (event.text.unicode == '\b' && this->menu_userentry.getSize() > 0)
                         this->menu_userentry.erase(this->menu_userentry.getSize() - 1, 1);
@@ -291,15 +337,38 @@ void Game::menu()
                 switch(event.mouseButton.button)
                 {
                 case sf::Mouse::Button::Left:
-                    if (__X >= WIN_W / 2.0f - 200.0f && __X <= WIN_W / 2.0f + 200.0f && __Y >= 150.0f && __Y <= 150.0f + saves.size() * (4.0f + this->menu_text.getCharacterSize()))
+                    if (saves.size() > 0)
                     {
-                        int ry = (__Y - 150) / (4.0f + this->menu_text.getCharacterSize());
-
-                        if (0 <= ry && ry <= saves.size() - 1)
+                        if (__X >= WIN_W / 2.0f - 200.0f && __X <= WIN_W / 2.0f + 200.0f && __Y >= 150.0f && __Y <= 150.0f + saves.size() * (4.0f + this->menu_text.getCharacterSize()))
                         {
-                            this->menu_userentry = saves[ry];
-                            quit = true;
+                            // clic on an existing save
+                            int ry = (__Y - 150) / (4.0f + this->menu_text.getCharacterSize());
+
+                            if (0 <= ry && ry <= saves.size() - 1)
+                            {
+                                this->menu_userentry = saves[ry];
+                                this->menu_game_selected = ry;
+                            }
                         }
+                        if (__X >= this->menu_btn_new_s.getPosition().x && __X <= this->menu_btn_new_s.getPosition().x + this->menu_btn_new_s.getLocalBounds().width &&
+                             __Y >= this->menu_btn_new_s.getPosition().y && __Y <= this->menu_btn_new_s.getPosition().y + this->menu_btn_new_s.getLocalBounds().height)
+                        {
+                            // clic on button new
+                            new_game = true;
+                            this->menu_userentry.clear();
+                        }
+                        if (__X >= this->menu_btn_del_s.getPosition().x && __X <= this->menu_btn_del_s.getPosition().x + this->menu_btn_del_s.getLocalBounds().width &&
+                             __Y >= this->menu_btn_del_s.getPosition().y && __Y <= this->menu_btn_del_s.getPosition().y + this->menu_btn_del_s.getLocalBounds().height)
+                        {
+                            // clic on button delete
+                            std::cout << "delete game" << std::endl;
+                        }
+                    }
+                    if (__X >= this->menu_btn_start_s.getPosition().x && __X <= this->menu_btn_start_s.getPosition().x + this->menu_btn_start_s.getLocalBounds().width &&
+                         __Y >= this->menu_btn_start_s.getPosition().y && __Y <= this->menu_btn_start_s.getPosition().y + this->menu_btn_start_s.getLocalBounds().height)
+                    {
+                        // clic on button start
+                        quit = true;
                     }
                     break;
 
@@ -320,7 +389,7 @@ void Game::menu()
 
         // rendering
         this->window.clear();
-        this->render_menu(saves);
+        this->render_menu(saves, new_game);
         this->window.display();
 
         if (quit)
@@ -366,6 +435,7 @@ Game::Game() :
     , shape_increasing(true)
     , cheat_on(false)
     , _got_coderet(false)
+    , menu_game_selected(-1)
 {
     // creating base folders
     system("mkdir saves");
@@ -388,6 +458,36 @@ Game::Game() :
     this->shape.setOrigin(25.0f, 25.0f);
     this->shape.setPosition(int(WIN_W / 2 - 25), int(WIN_H / 2 - 25));
 
+    // images
+      // textures
+    sf::Texture menu_bckg;
+    menu_bckg.loadFromFile("assets/menu/background.png");
+    sf::Texture menu_logo;
+    menu_logo.loadFromFile("assets/menu/logo_alpha.png");
+    sf::Texture btn_del;
+    btn_del.loadFromFile("assets/menu/btn_delete_game.png");
+    sf::Texture btn_new;
+    btn_new.loadFromFile("assets/menu/btn_new_game.png");
+    sf::Texture btn_start;
+    btn_start.loadFromFile("assets/menu/btn_start_game.png");
+      // saving them
+    this->textures.addTexture("bckg", menu_bckg);
+    this->textures.addTexture("logo", menu_logo);
+    this->textures.addTexture("btn_new", btn_new);
+    this->textures.addTexture("btn_del", btn_del);
+    this->textures.addTexture("btn_start", btn_start);
+      // creating the sprites
+    this->menu_bckg_s.setTexture(this->textures.getTexture("bckg"));
+    this->menu_bckg_s.setPosition(0.0f, 0.0f);
+    this->menu_logo_s.setTexture(this->textures.getTexture("logo"));
+    this->menu_logo_s.setPosition(WIN_W / 3.0f - this->textures.getTexture("logo").getSize().x / 2.0f, 20.0f);
+    this->menu_btn_new_s.setTexture(this->textures.getTexture("btn_new"));
+    this->menu_btn_new_s.setPosition(WIN_H - 10.0f - this->textures.getTexture("btn_new").getSize().x, 10.0f);
+    this->menu_btn_del_s.setTexture(this->textures.getTexture("btn_del"));
+    this->menu_btn_del_s.setPosition(WIN_H - 10.0f - this->textures.getTexture("btn_del").getSize().x, 20.0f + this->textures.getTexture("btn_new").getSize().y);
+    this->menu_btn_start_s.setTexture(this->textures.getTexture("btn_start"));
+    this->menu_btn_start_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("btn_start").getSize().x / 2.0f, WIN_H - 50.0f);
+
     // font
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
         std::cout << "Missing font at assets/fonts/pkmnemn.ttf" << std::endl;
@@ -405,13 +505,19 @@ Game::Game() :
 
     this->menu_user.setFont(this->font);
     this->menu_user.setCharacterSize(24);
-    this->menu_user.setPosition(0.0f, WIN_H / 2 - 12);
+    this->menu_user.setPosition(0.0f, WIN_H / 2.0f - 12.0f);
     this->menu_user.setColor(sf::Color::White);
 
     this->menu_text.setFont(this->font);
     this->menu_text.setCharacterSize(24);
     this->menu_text.setPosition(WIN_W / 2.0f - 200.0f, 0.0f);
     this->menu_text.setColor(sf::Color::White);
+
+    this->menu_ask_user.setFont(this->font);
+    this->menu_ask_user.setCharacterSize(24);
+    this->menu_ask_user.setString("Quel est votre nom ?");
+    this->menu_ask_user.setPosition(WIN_W / 2.0f - this->menu_ask_user.getLocalBounds().width / 2.0f, WIN_H / 2.0f - 36.0f);
+    this->menu_ask_user.setColor(sf::Color::White);
 
     ObjectsTable::load();
     this->ttable.load();

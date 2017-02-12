@@ -9,7 +9,7 @@
 InventView::InventView() :
     View(INVENTORY_VIEW_ID)
     , current(0)
-    , selected(-1)
+    , selected(0)
     , offset(0)
 {
 
@@ -145,12 +145,9 @@ void InventView::render(sf::RenderWindow& window)
     window.draw(this->current_pocket_name);
     window.draw(this->sprites[this->LARROW]);
     window.draw(this->sprites[this->RARROW]);
-    if (this->selected != -1)
-    {
-        window.draw(this->sprites[this->DROP]);
-        window.draw(this->sprites[this->VID]);
-        window.draw(this->sprites[this->USE]);
-    }
+    window.draw(this->sprites[this->DROP]);
+    window.draw(this->sprites[this->VID]);
+    window.draw(this->sprites[this->USE]);
     this->draw_content(window);
 }
 
@@ -193,36 +190,39 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
             else if (__X >= 430 && __X <= 475 && __Y >= 30 && __Y <= 50)
             {
                 // drop
-                if (this->selected != -1)
-                    this->bag->getPocket(this->current)->drop_object(this->selected);
+                this->bag->getPocket(this->current)->drop_object(this->selected + this->offset);
             }
             else if (__X >= 490 && __X <= 535 && __Y >= 30 && __Y <= 50)
             {
                 // dropping all
-                if (this->selected != -1)
-                    this->bag->getPocket(this->current)->dropall_object(this->selected);
+                this->bag->getPocket(this->current)->dropall_object(this->selected + this->offset);
             }
             else if (__X >= 550 && __X <= 595 && __Y >= 30 && __Y <= 50)
             {
                 // use
-                if (this->selected != -1)
-                    this->bag->getPocket(this->current)->useObject(this->selected);
+                this->bag->getPocket(this->current)->useObject(this->selected + this->offset);
             }
             else if (__X >= 240 && __X <= 620 && __Y >= 40 && __Y <= 620)
             {
                 // clic in the objects list, need to find which one was picked
-                int r = (__Y - 60) / (this->object_name.getCharacterSize() + 4) + this->offset;
+                int r = (__Y - 60) / (this->object_name.getCharacterSize() + 4);
 
-                if (0 <= r && r <= bag->getPocket(this->current)->getSize())
+                if (0 <= r + this->offset && r + this->offset <= bag->getPocket(this->current)->getSize())
                     this->selected = r;
-                else
-                    this->selected = -1;
             }
             break;
 
         default:
             break;
         }
+        break;
+
+    case sf::Event::MouseWheelScrolled:
+        this->offset -= event.mouseWheelScroll.delta;
+        if (this->offset < -1)
+            this->offset = 0;
+        if (this->offset > this->bag->getPocket(this->current)->getSize());
+            this->offset = this->bag->getPocket(this->current)->getSize() - 1;
         break;
 
     default:
@@ -248,7 +248,7 @@ void InventView::change_pocket()
     // reset current offset
     this->offset = 0;
 
-    this->selected = -1;
+    this->selected = 0;
 }
 
 void InventView::draw_content(sf::RenderWindow& window)
@@ -282,7 +282,7 @@ void InventView::draw_content(sf::RenderWindow& window)
         // object name
         Object* obj = this->bag->getPocket(this->current)->getObject(i);
         name = ObjectsTable::getName(obj) + " (" + to_string(obj->getQuantity()) + ")";
-        if (i == this->selected)
+        if (i == this->selected + this->offset)
             name = "> " + name;
         this->object_name.setString(name);
 
@@ -290,7 +290,7 @@ void InventView::draw_content(sf::RenderWindow& window)
         this->sprites[this->OBJ_BASE].setPosition(this->sprites[this->OBJ_BASE].getPosition().x, this->object_name.getPosition().y + 4.0f);
 
         // description is selected (regarding to the index i)
-        if (i == this->selected)
+        if (i == this->selected + this->offset)
         {
             this->object_desc.setString(wrapText(sf::String(ObjectsTable::getDesc(obj)), 200, this->font, this->object_desc.getCharacterSize()));
             window.draw(this->object_desc);

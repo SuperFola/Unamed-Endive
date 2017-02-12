@@ -49,11 +49,12 @@ std::string Character::getName()
 
 void Character::_load()
 {
+    std::cout << "creating \"saves/" << this->name << "\"" << std::endl;
     #ifdef PLATFORM_WIN
-    system((std::string("mkdir saves & cd saves & mkdir ") + this->name).data());
+    system((std::string("mkdir saves & cd saves & mkdir \"") + this->name + "\"").c_str());
     #endif // PLATFORM_WIN
     #ifdef PLATFORM_POSIX
-    system("mkdir -p saves/" + this->name.data());
+    system((std::string("mkdir -p \"saves/") + this->name + "\"").c_str());
     #endif // PLATFORM_POSIX
 
     this->bag.load("saves/" + this->name + "/bag.json");

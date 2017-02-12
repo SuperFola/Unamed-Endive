@@ -13,6 +13,7 @@
 #include "abstract/musicplayer.hpp"
 #include "abstract/types_table.hpp"
 #include "abstract/triggersmanager.hpp"
+#include "abstract/texturesmanager.hpp"
 
 class Game {
 private:
@@ -23,6 +24,7 @@ private:
     MusicPlayer mplayer;
     TypesTable ttable;
     CreaturesLoader crea_load;
+    TexturesManager textures;
     bool has_requested_quit;
     // others utilities
       // loading
@@ -41,6 +43,13 @@ private:
     sf::Text menu_user;
     sf::Text menu_text;
     sf::String menu_userentry;
+    sf::Text menu_ask_user;
+    sf::Sprite menu_bckg_s;
+    sf::Sprite menu_logo_s;
+    sf::Sprite menu_btn_del_s;
+    sf::Sprite menu_btn_new_s;
+    sf::Sprite menu_btn_start_s;
+    int menu_game_selected;
     // methods
       // commons methods
     void dispatch_events(sf::Event&, sf::Time);
@@ -52,8 +61,8 @@ private:
     void render_loading();
     void loading();
       // menu interface methods
-    void update_menu(sf::Time, int);
-    void render_menu(const std::vector<std::string>&);
+    void update_menu(sf::Time, int, bool);
+    void render_menu(const std::vector<std::string>&, bool);
     void menu();
       // others methods
     void take_screenshot();
