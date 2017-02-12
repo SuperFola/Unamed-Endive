@@ -73,11 +73,6 @@ bool InventView::load()
         return false;
     this->textures.addTexture("btn_use", use);
 
-    sf::Texture obj_base;
-    if (!obj_base.loadFromFile("assets/inventory/objects/basealpha.png"))
-        return false;
-    this->textures.addTexture("obj_base", obj_base);
-
     // setting sprites
     this->sprites[this->BCKG] = sf::Sprite(this->textures.getTexture("background"));
     this->sprites[this->LARROW] = sf::Sprite(this->textures.getTexture("larrow"));
@@ -90,20 +85,19 @@ bool InventView::load()
     this->sprites[this->DROP] = sf::Sprite(this->textures.getTexture("btn_drop"));
     this->sprites[this->VID] = sf::Sprite(this->textures.getTexture("btn_vide"));
     this->sprites[this->USE] = sf::Sprite(this->textures.getTexture("btn_use"));
-    this->sprites[this->OBJ_BASE] = sf::Sprite(this->textures.getTexture("obj_base"));
 
     // setting pos
     this->sprites[this->BCKG].setPosition(0.0f, 0.0f);
-    this->sprites[this->LARROW].setPosition(30.0f, 240.0f);
-    this->sprites[this->RARROW].setPosition(180.0f, 240.0f);
-    this->sprites[this->POCKET1].setPosition(30.0f, 30.0f);
-    this->sprites[this->POCKET2].setPosition(30.0f, 30.0f);
-    this->sprites[this->POCKET3].setPosition(30.0f, 30.0f);
-    this->sprites[this->POCKET4].setPosition(30.0f, 30.0f);
-    this->sprites[this->POCKET5].setPosition(30.0f, 30.0f);
-    this->sprites[this->DROP].setPosition(430.0f, 30.0f);
-    this->sprites[this->VID].setPosition(490.0f, 30.0f);
-    this->sprites[this->USE].setPosition(550.0f, 30.0f);
+    this->sprites[this->LARROW].setPosition(115.0f, 589.0f);
+    this->sprites[this->RARROW].setPosition(500.0f, 589.0f);
+    this->sprites[this->POCKET1].setPosition(28.0f, 37.0f);
+    this->sprites[this->POCKET2].setPosition(28.0f, 37.0f);
+    this->sprites[this->POCKET3].setPosition(28.0f, 37.0f);
+    this->sprites[this->POCKET4].setPosition(28.0f, 37.0f);
+    this->sprites[this->POCKET5].setPosition(28.0f, 37.0f);
+    this->sprites[this->DROP].setPosition(97.0f, 508.0f);
+    this->sprites[this->VID].setPosition(165.0f, 508.0f);
+    this->sprites[this->USE].setPosition(29.0f, 508.0f);
 
     // texts
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
@@ -113,21 +107,19 @@ bool InventView::load()
     this->current_pocket_name.setString("Pocket");
     this->current_pocket_name.setCharacterSize(24);
     this->current_pocket_name.setColor(sf::Color::Black);
-    this->current_pocket_name.setPosition(75.0f - this->current_pocket_name.getGlobalBounds().width / 2 + 50.0f, 240.0f);
+    this->current_pocket_name.setPosition(310.0f - this->current_pocket_name.getLocalBounds().width / 2.0f, 599.0f - this->current_pocket_name.getLocalBounds().height);
 
     this->object_name.setFont(this->font);
     this->object_name.setString("object0");
     this->object_name.setCharacterSize(18);
     this->object_name.setColor(sf::Color::Black);
-    this->object_name.setPosition(260.0f, 60.0f);
+    this->object_name.setPosition(265.0f, 37.0f);
 
     this->object_desc.setFont(this->font);
     this->object_desc.setString("");
     this->object_desc.setCharacterSize(18);
     this->object_desc.setColor(sf::Color::Black);
     this->object_desc.setPosition(30.0f, 300.0f);
-
-    this->sprites[this->OBJ_BASE].setPosition(240.0f, 64.0f);
 
     return true;
 }
@@ -166,39 +158,39 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            if (__X >= 30 && __X <= 50 && __Y >= 240 && __Y <= 260)
+            if (__X >= 115 && __X <= 135 && __Y >= 589 && __Y <= 609)
             {
                 // previous
                 this->current--;
                 this->change_pocket();
                 this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             }
-            else if (__X >= 180 && __X <= 200 && __Y >= 240 && __Y <= 260)
+            else if (__X >= 500 && __X <= 520 && __Y >= 589 && __Y <= 609)
             {
                 // next
                 this->current++;
                 this->change_pocket();
                 this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             }
-            else if (__X >= 430 && __X <= 475 && __Y >= 30 && __Y <= 50)
+            else if (__X >= 97 && __X <= 149 && __Y >= 508 && __Y <= 560)
             {
                 // drop
                 this->bag->getPocket(this->current)->drop_object(this->selected + this->offset);
             }
-            else if (__X >= 490 && __X <= 535 && __Y >= 30 && __Y <= 50)
+            else if (__X >= 165 && __X <= 217 && __Y >= 508 && __Y <= 560)
             {
                 // dropping all
                 this->bag->getPocket(this->current)->dropall_object(this->selected + this->offset);
             }
-            else if (__X >= 550 && __X <= 595 && __Y >= 30 && __Y <= 50)
+            else if (__X >= 29 && __X <= 81 && __Y >= 508 && __Y <= 560)
             {
                 // use
                 this->bag->getPocket(this->current)->useObject(this->selected + this->offset);
             }
-            else if (__X >= 240 && __X <= 620 && __Y >= 40 && __Y <= 620)
+            else if (__X >= 258 && __X <= 619 && __Y >= 30 && __Y <= 554)
             {
                 // clic in the objects list, need to find which one was picked
-                int r = (__Y - 60) / (this->object_name.getCharacterSize() + 4);
+                int r = (__Y - 37) / (this->object_name.getCharacterSize() + 4);
 
                 if (0 <= r + this->offset && r + this->offset <= bag->getPocket(this->current)->getSize())
                     this->selected = r;
@@ -279,9 +271,6 @@ void InventView::draw_content(sf::RenderWindow& window)
             name = "> " + name;
         this->object_name.setString(name);
 
-        // image
-        this->sprites[this->OBJ_BASE].setPosition(this->sprites[this->OBJ_BASE].getPosition().x, this->object_name.getPosition().y + 4.0f);
-
         // description is selected (regarding to the index i)
         if (i == this->selected + this->offset)
         {
@@ -291,17 +280,15 @@ void InventView::draw_content(sf::RenderWindow& window)
 
         // drawing
         window.draw(this->object_name);
-        window.draw(this->sprites[this->OBJ_BASE]);
 
         // change the position for the next object name
         this->object_name.setPosition(this->object_name.getPosition().x, this->object_name.getPosition().y + this->object_name.getCharacterSize() + 4.0f);
 
         // stop if we have displayed max items
-        if (i == this->offset + 28)
+        if (i == this->offset + 23)
             break;
     }
-    this->object_name.setPosition(this->object_name.getPosition().x, 60.0f);
-    this->sprites[this->OBJ_BASE].setPosition(this->sprites[this->OBJ_BASE].getPosition().x, this->object_name.getPosition().y + 4.0f);
+    this->object_name.setPosition(this->object_name.getPosition().x, 37.0f);
 }
 
 void InventView::add_bag(Bag* bag)
