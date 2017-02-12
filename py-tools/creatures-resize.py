@@ -15,10 +15,10 @@ def main():
     if not os.path.exists("assets/creatures/resized"):
         os.mkdir("assets/creatures/resized")
     
-    for file in glob.glob("assets/creatures/*.png") + glob.glob("assets/creatures/à traiter/*.png"):
+    for file in glob.glob("assets/creatures/*.png"):
         img = pygame.image.load(file).convert_alpha()
         x = 512
-        y = (x / img.get_width()) * img.get_height()
+        y = int((x / img.get_width()) * img.get_height())
         new = pygame.transform.scale(img, (x, y))
         pygame.image.save(new, "assets/creatures/resized/" + os.path.basename(file))
     
