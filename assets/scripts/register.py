@@ -47,6 +47,7 @@ Unamed.registerScript("runWhenRenderingView", "script.py")
 ###############################################################################
 
 load_prgs()
+print("cwd", os.getcwd())
 print("PYTHONHOME", os.environ.get("PYTHONHOME"))
 print("HOME", os.environ.get("HOME"))
 

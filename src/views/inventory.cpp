@@ -145,9 +145,12 @@ void InventView::render(sf::RenderWindow& window)
     window.draw(this->current_pocket_name);
     window.draw(this->sprites[this->LARROW]);
     window.draw(this->sprites[this->RARROW]);
-    window.draw(this->sprites[this->DROP]);
-    window.draw(this->sprites[this->VID]);
-    window.draw(this->sprites[this->USE]);
+    if (this->selected != -1)
+    {
+        window.draw(this->sprites[this->DROP]);
+        window.draw(this->sprites[this->VID]);
+        window.draw(this->sprites[this->USE]);
+    }
     this->draw_content(window);
 }
 
