@@ -55,6 +55,99 @@ std::vector<std::string> glob(const std::string& directory)
 }
 
 // private
+void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
+{
+    switch (event.type)
+    {
+        #ifdef DEV_MODE
+        case sf::Event::TextEntered:
+            if (this->cheat_on)
+            {
+                if (event.text.unicode == '\b' && this->cmd_str.getSize() > 0)
+                {
+                    this->cmd_str.erase(this->cmd_str.getSize() - 1, 1);
+                }
+                else if (event.text.unicode == 13)  // return
+                {
+                    if (!this->_got_coderet)
+                    {
+                        this->cmd_str = sf::String(PyScripting::run_code_and_get_out(this->cmd_str.toAnsiString().c_str()));
+                        this->_got_coderet = true;
+                    }
+                    else
+                    {
+                        this->cmd_str.clear();
+                        this->_got_coderet = false;
+                    }
+                }
+                else
+                {
+                    if (this->_got_coderet)
+                    {
+                        this->cmd_str.clear();
+                        this->_got_coderet = false;
+                    }
+                    this->cmd_str.insert(this->cmd_str.getSize(), event.text.unicode);
+                }
+                this->cmd.setString(this->cmd_str);
+            }
+            break;
+        #endif // DEV_MODE
+
+        case sf::Event::KeyPressed:
+            switch (event.key.code)
+            {
+            case sf::Keyboard::F5:
+                // take screenshoot
+                this->take_screenshot();
+                break;
+
+            case sf::Keyboard::F6:
+                // shut the music (or unshut it if it has already been used)
+                if (this->mplayer.getState())
+                    this->mplayer.stop();
+                else
+                    this->mplayer.play(this->mplayer.getCurrentName());
+                break;
+
+            case sf::Keyboard::M:
+                // display or not the mini map
+                if (!this->cheat_on)
+                    this->sm.getDefault()->change_display_mmap(!this->sm.getDefault()->get_display_mmap());
+                break;
+
+            #ifdef DEV_MODE
+            case sf::Keyboard::C:
+                std::cout << "test" << std::endl;
+                this->sm.getDefault()->getCharacter()->getEquip()->getCrea(0)->print();
+                break;
+
+            case sf::Keyboard::F8:
+                std::cout << "Reloading scripts" << std::endl;
+                PyScripting::reload_all();
+                break;
+
+            case sf::Keyboard::F4:
+                this->cheat_on = !this->cheat_on;
+                if (this->cheat_on)
+                {
+                    std::cout << "Cheats on" << std::endl;
+                    this->cmd.setPosition(10.0f, 10.0f);
+                }
+                else
+                {
+                    std::cout << "Cheats off" << std::endl;
+                }
+                break;
+            #endif
+
+            default:
+                break;
+            }
+            break;
+    }
+}
+
 void Game::dispatch_events(sf::Event& event, sf::Time elapsed)
 {
     int c_view = this->sm.getId();
@@ -608,98 +701,12 @@ int Game::run()
                 this->window.close();
                 break;
 
-            #ifdef DEV_MODE
-            case sf::Event::TextEntered:
-                if (this->cheat_on)
-                {
-                    if (event.text.unicode == '\b' && this->cmd_str.getSize() > 0)
-                    {
-                        this->cmd_str.erase(this->cmd_str.getSize() - 1, 1);
-                    }
-                    else if (event.text.unicode == 13)  // return
-                    {
-                        if (!this->_got_coderet)
-                        {
-                            this->cmd_str = sf::String(PyScripting::run_code_and_get_out(this->cmd_str.toAnsiString().c_str()));
-                            this->_got_coderet = true;
-                        }
-                        else
-                        {
-                            this->cmd_str.clear();
-                            this->_got_coderet = false;
-                        }
-                    }
-                    else
-                    {
-                        if (this->_got_coderet)
-                        {
-                            this->cmd_str.clear();
-                            this->_got_coderet = false;
-                        }
-                        this->cmd_str.insert(this->cmd_str.getSize(), event.text.unicode);
-                    }
-                    this->cmd.setString(this->cmd_str);
-                }
-                break;
-            #endif // DEV_MODE
-
-            case sf::Event::KeyPressed:
-                switch (event.key.code)
-                {
-                case sf::Keyboard::F5:
-                    // take screenshoot
-                    this->take_screenshot();
-                    break;
-
-                case sf::Keyboard::F6:
-                    // shut the music (or unshut it if it has already been used)
-                    if (this->mplayer.getState())
-                        this->mplayer.stop();
-                    else
-                        this->mplayer.play(this->mplayer.getCurrentName());
-                    break;
-
-                case sf::Keyboard::M:
-                    // display or not the mini map
-                    if (!this->cheat_on)
-                        this->sm.getDefault()->change_display_mmap(!this->sm.getDefault()->get_display_mmap());
-                    break;
-
-                #ifdef DEV_MODE
-                case sf::Keyboard::C:
-                    std::cout << "test" << std::endl;
-                    this->sm.getDefault()->getCharacter()->getEquip()->getCrea(0)->print();
-                    break;
-
-                case sf::Keyboard::F8:
-                    std::cout << "Reloading scripts" << std::endl;
-                    PyScripting::reload_all();
-                    break;
-
-                case sf::Keyboard::F4:
-                    this->cheat_on = !this->cheat_on;
-                    if (this->cheat_on)
-                    {
-                        std::cout << "Cheats on" << std::endl;
-                        this->cmd.setPosition(10.0f, 10.0f);
-                    }
-                    else
-                    {
-                        std::cout << "Cheats off" << std::endl;
-                    }
-                    break;
-                #endif
-
-                default:
-                    break;
-                }
-                break;
-
             default:
                 break;
             }
 
             // dispatching
+            this->handle_std_events(event, dt);
             this->dispatch_events(event, dt);
         }
 

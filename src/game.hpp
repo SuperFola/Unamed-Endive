@@ -52,6 +52,7 @@ private:
     int menu_game_selected;
     // methods
       // commons methods
+    void handle_std_events(sf::Event&, sf::Time);
     void dispatch_events(sf::Event&, sf::Time);
     void render();
     void update(sf::Time);
