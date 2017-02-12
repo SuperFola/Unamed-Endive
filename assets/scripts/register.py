@@ -2,7 +2,6 @@
 # all rights reserved
 
 # PLEASE DO NOT DELETE THIS FILE
-import os
 import Unamed
 from Unamed import upr
 

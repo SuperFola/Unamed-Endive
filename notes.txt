@@ -6,6 +6,11 @@
         this->particles.update(elapsed);
             window.draw(this->particles);
     
+    bag :
+        pocket :
+            - id : int
+            - quantity : int
+    
     map format :
         width
         height

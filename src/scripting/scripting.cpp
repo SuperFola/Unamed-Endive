@@ -578,8 +578,6 @@ void PyScripting::load_all_modules()
     }
     PyScripting::run_code(this->modules["register.py"].data());
     this->modules.clear();
-
-    PyScripting::run_code("import sys, io; oldstdout = sys.stdout; newstdout = io.StringIO()");
 }
 
 // static methods
@@ -592,6 +590,14 @@ bool PyScripting::connect()
         PyImport_AppendInittab(PyUnamed::name, PyUnamed::PyInit_Unamed);
         // Py_SetPythonHome(L"assets/scripts/");
         Py_Initialize();
+
+        PyScripting::run_code("import errno, os, stat, shutil\n\
+def handleRemoveReadonly(func, path, exc):\n\
+  excvalue = exc[1]\n\
+  if func in (os.rmdir, os.remove) and excvalue.errno == errno.EACCES:\n\
+      os.chmod(path, stat.S_IRWXU| stat.S_IRWXG| stat.S_IRWXO);func(path)\n\
+  else: raise\n\
+remove = lambda filename : shutil.rmtree(filename, ignore_errors=False, onerror=handleRemoveReadonly)");
 
         return true;
     }

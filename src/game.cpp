@@ -362,6 +362,10 @@ void Game::menu()
                         {
                             // clic on button delete
                             std::cout << "delete game" << std::endl;
+                            pop<std::string>(&saves, this->menu_game_selected);
+                            PyScripting::run_code((std::string("remove(\"saves/") + this->menu_userentry.toAnsiString() + "\")").c_str());
+                            this->menu_userentry.clear();
+                            this->menu_game_selected = -1;
                         }
                     }
                     if (__X >= this->menu_btn_start_s.getPosition().x && __X <= this->menu_btn_start_s.getPosition().x + this->menu_btn_start_s.getLocalBounds().width &&

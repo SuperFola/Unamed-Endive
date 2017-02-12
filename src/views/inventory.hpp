@@ -23,7 +23,6 @@ private:
     TexturesManager textures;
     std::map<std::string, sf::Sprite> sprites;
     sf::Font font;
-    sf::Text text;
     sf::Text current_pocket_name;
     sf::Text object_name;
     sf::Text object_desc;
