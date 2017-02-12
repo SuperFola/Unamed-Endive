@@ -234,7 +234,8 @@ void Game::render_menu(const std::vector<std::string>& s, bool new_game)
 {
     this->window.draw(this->menu_bckg_s);
     this->window.draw(this->menu_logo_s);
-    this->window.draw(this->menu_btn_start_s);
+    if (((s.size() == 0 || new_game) && !this->menu_userentry.isEmpty()) || this->menu_game_selected != -1)
+        this->window.draw(this->menu_btn_start_s);
     if (s.size() != 0 && !new_game)
         this->window.draw(this->menu_btn_new_s);
     else
@@ -361,7 +362,6 @@ void Game::menu()
                              __Y >= this->menu_btn_del_s.getPosition().y && __Y <= this->menu_btn_del_s.getPosition().y + this->menu_btn_del_s.getLocalBounds().height)
                         {
                             // clic on button delete
-                            std::cout << "delete game" << std::endl;
                             pop<std::string>(&saves, this->menu_game_selected);
                             PyScripting::run_code((std::string("remove(\"saves/") + this->menu_userentry.toAnsiString() + "\")").c_str());
                             this->menu_userentry.clear();
@@ -369,7 +369,8 @@ void Game::menu()
                         }
                     }
                     if (__X >= this->menu_btn_start_s.getPosition().x && __X <= this->menu_btn_start_s.getPosition().x + this->menu_btn_start_s.getLocalBounds().width &&
-                         __Y >= this->menu_btn_start_s.getPosition().y && __Y <= this->menu_btn_start_s.getPosition().y + this->menu_btn_start_s.getLocalBounds().height)
+                         __Y >= this->menu_btn_start_s.getPosition().y && __Y <= this->menu_btn_start_s.getPosition().y + this->menu_btn_start_s.getLocalBounds().height &&
+                         (((saves.size() == 0 || new_game) && !this->menu_userentry.isEmpty()) || this->menu_game_selected != -1))
                     {
                         // clic on button start
                         quit = true;
