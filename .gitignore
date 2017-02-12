@@ -10,6 +10,7 @@
 /obj/
 screenshots/
 dlls/Lib/*
+assets/creatures/.orginals/*
 
 # Prerequisites
 *.d
