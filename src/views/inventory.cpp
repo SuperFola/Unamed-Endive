@@ -285,7 +285,7 @@ void InventView::draw_content(sf::RenderWindow& window)
         this->object_name.setPosition(this->object_name.getPosition().x, this->object_name.getPosition().y + this->object_name.getCharacterSize() + 4.0f);
 
         // stop if we have displayed max items
-        if (i == this->offset + 23)
+        if (i == this->offset + 22)
             break;
     }
     this->object_name.setPosition(this->object_name.getPosition().x, 37.0f);
