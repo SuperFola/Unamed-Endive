@@ -1160,6 +1160,380 @@
         "evolution": "",
         "file": "chryvern.png"
     },
+    
+    "Larvio": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "Oravio",
+        "file": "larvio.png"
+    },
+    "Oravio": {
+        "type": 3,
+        "stade": 1,
+        "evolution": "",
+        "file": "oravio.png"
+    },
+    
+    "Lepolar": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "lepolar.png"
+    },
+    
+    "Osorochi": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "osorochi.png"
+    },
+    
+    "Chujin": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "chujin.png"
+    },
+    
+    "Cobwing": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "Darinet",
+        "file": "cobwing.png"
+    },
+    "Darinet": {
+        "type": 3,
+        "stade": 1,
+        "evolution": "",
+        "file": "darinet.png"
+    },
+    
+    "Gadavian": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "gadavian.png"
+    },
+    
+    "Frezard": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "frezard.png"
+    },
+    
+    "Dracobra": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "dracobra.png"
+    },
+    
+    "Guruguru": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "Giguru",
+        "file": "guruguru.png"
+    },
+    "Giguru": {
+        "type": 6,
+        "stade": 1,
+        "evolution": "",
+        "file": "giguru.png"
+    },
+    
+    "Moonatic": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "moonatic.png"
+    },
+    
+    "Sandrought": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "sandrought.png"
+    },
+    
+    "Satelle": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "satelle.png"
+    },
+    
+    "Mertage": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "Orcane",
+        "file": "mertage.png"
+    },
+    "Orcane": {
+        "type": 7,
+        "stade": 1,
+        "evolution": "",
+        "file": "orcane.png"
+    },
+    
+    "Dorscythe": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "Minescyss",
+        "file": "dorscythe.png"
+    },
+    "Minescyss": {
+        "type": 7,
+        "stade": 1,
+        "evolution": "",
+        "file": "minescyss.png"
+    },
+    
+    "Shrapuill": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "Quillster",
+        "file": "shrapuill.png"
+    },
+    "Quillster": {
+        "type": 4,
+        "stade": 1,
+        "evolution": "",
+        "file": "quillster.png"
+    },
+    
+    "Squake": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "squake.png"
+    },
+    
+    "Tiefee": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "tiefee.png"
+    },
+    
+    "Wivirn": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "Wyvern",
+        "file": "wivirn.png"
+    },
+    "Wyvern": {
+        "type": 2,
+        "stade": 1,
+        "evolution": "",
+        "file": "wyvern.png"
+    },
+    
+    "Tamagold": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "tamagold.png"
+    },
+    
+    "Pebblit": {
+        "type": 3,
+        "stade": 0,
+        "evolution": "Slitopps",
+        "file": "pebblit.png"
+    },
+    "Slitopps": {
+        "type": 3,
+        "stade": 1,
+        "evolution": "",
+        "file": "slitopps.png"
+    },
+    
+    "Meteorus": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "meteorus.png"
+    },
+    
+    "Millacial": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "millacial.png"
+    },
+    
+    "Putridius": {
+        "type": 6,
+        "stade": 0,
+        "evolution": "",
+        "file": "putridius.png"
+    },
+    
+    "Keradon": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "keradon.png"
+    },
+    
+    "Cobrus": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "cobrus.png"
+    },
+    
+    "Ghoulver": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "ghoulver.png"
+    },
+    
+    "Diplovern": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "diplovern.png"
+    },
+    
+    "Iciken": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "iciken.png"
+    },
+    
+    "Moduzagon": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "",
+        "file": "moduzagon.png"
+    },
+    
+    "Mothlas": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "",
+        "file": "mothlas.png"
+    },
+    
+    "Rasaur": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "rasaur.png"
+    },
+    
+    "Qairel": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "qairel.png"
+    },
+    
+    "Snoshroom": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "Mizumi",
+        "file": "snoshroom.png"
+    },
+    "Mizumi": {
+        "type": 1,
+        "stade": 1,
+        "evolution": "",
+        "file": "mizumi.png"
+    },
+    
+    "Nymbi": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "",
+        "file": "nymbi.png"
+    },
+    
+    "Sygnil": {
+        "type": 7,
+        "stade": 0,
+        "evolution": "Ventalius",
+        "file": "sygnil.png"
+    },
+    "Ventalius": {
+        "type": 7,
+        "stade": 1,
+        "evolution": "",
+        "file": "ventalius.png"
+    },
+    
+    "Nijuteri": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "nijuteri.png"
+    },
+    
+    "Oreneko": {
+        "type": 1,
+        "stade": 0,
+        "evolution": "",
+        "file": "oreneko.png"
+    },
+    
+    "Omnom": {
+        "type": 5,
+        "stade": 0,
+        "evolution": "",
+        "file": "omnom.png"
+    },
+    
+    "Puremu": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "",
+        "file": "puremu.png"
+    },
+    
+    "Maquary": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "maquary.png"
+    },
+    
+    "Nephiler": {
+        "type": 0,
+        "stade": 0,
+        "evolution": "",
+        "file": "nephiler.png"
+    },
+    
+    "Noosis": {
+        "type": 2,
+        "stade": 0,
+        "evolution": "",
+        "file": "noosis.png"
+    },
+    
+    "Sectera": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "Silvyx",
+        "file": "sectera.png"
+    },
+    "Silvyx": {
+        "type": 4,
+        "stade": 1,
+        "evolution": "",
+        "file": "silvyx.png"
+    },
+    
+    "Togetsu": {
+        "type": 4,
+        "stade": 0,
+        "evolution": "",
+        "file": "togetsu.png"
+    }
 }
 
 
