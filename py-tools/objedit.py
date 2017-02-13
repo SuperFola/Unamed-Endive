@@ -100,10 +100,25 @@ def main():
     
     vars = {}
     
+    
     ################################################################
     # Frame to select which object to edit
     ################################################################
-    frame = tk.Frame(win, borderwidth=2, relief=tk.GROOVE)
+    menu = tk.Menu(win)
+    win.config(menu=menu)
+    
+    fmenu = tk.Menu(menu)
+    menu.add_cascade(label="Fichier", menu=fmenu)
+    fmenu.add_command(label="Ouvrir", command=lambda: None)
+    ################################################################
+    # end
+    ################################################################
+    
+    
+    ################################################################
+    # Frame to select which object to edit
+    ################################################################
+    frame = tk.Frame(win, borderwidth=2, relief=tk.GROOVE, bg="blue")
     
     sframe = tk.Frame(frame)
     tk.Label(sframe, text="Objets :").pack(side=tk.LEFT, padx=20)
@@ -148,7 +163,7 @@ def main():
     ################################################################
     # Frame to modify the selected object
     ################################################################
-    frame_mod = tk.Frame(win, borderwidth=2, relief=tk.GROOVE)
+    frame_mod = tk.Frame(win, borderwidth=2, relief=tk.GROOVE, bg="red")
     
     tk.Label(frame_mod, text="Modification").pack(side=tk.TOP)
     
@@ -228,7 +243,7 @@ def main():
     ################################################################
     # Frame to create a new object
     ################################################################
-    frame_new = tk.Frame(win, borderwidth=2, relief=tk.GROOVE)
+    frame_new = tk.Frame(win, borderwidth=2, relief=tk.GROOVE, bg="green")
     
     tk.Label(frame_new, text="Ajout").pack(side=tk.TOP)
     
