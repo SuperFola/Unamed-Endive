@@ -1,14 +1,1 @@
-{
-    "objects": [
-        {
-            "id": 0,
-            "name": "test objet",
-            "desc": "this the description of an object. this description is pretty long and we hope that it will be wrap by a special algorithm",
-            "price": 10,
-            "limited_use": false,
-            "throwaway": true,
-            "value": 5,
-            "type": 0
-        }
-    ]
-}
+{'objects': [{'type': 0, 'desc': 'this the description of an object. this description is pretty long and we hope that it will be wrap by a special algorithm', 'limited_use': false, 'price': 10, 'throwaway': true, 'id': 0, 'value': 5, 'name': 'test objet'}]}

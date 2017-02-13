@@ -55,7 +55,7 @@ WIN32 is still required for the locale module.
 
 /* Windows CE does not have these */
 #ifndef MS_WINCE
-//#define HAVE_IO_H
+#define HAVE_IO_H
 #define HAVE_SYS_UTIME_H
 #define HAVE_TEMPNAM
 #define HAVE_TMPFILE

@@ -353,7 +353,7 @@ void Game::render_menu(const std::vector<std::string>& s, bool new_game)
             if (i == this->menu_game_selected)
                 this->menu_text.setColor(sf::Color::Green);
             else
-                this->menu_text.setColor(sf::Color::White);
+                this->menu_text.setColor(sf::Color::Black);
 
             this->window.draw(this->menu_text);
 
@@ -578,13 +578,13 @@ Game::Game() :
     this->menu_bckg_s.setTexture(this->textures.getTexture("bckg"));
     this->menu_bckg_s.setPosition(0.0f, 0.0f);
     this->menu_logo_s.setTexture(this->textures.getTexture("logo"));
-    this->menu_logo_s.setPosition(WIN_W / 3.0f - this->textures.getTexture("logo").getSize().x / 2.0f, 20.0f);
+    this->menu_logo_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("logo").getSize().x / 2.0f, 20.0f);
     this->menu_btn_new_s.setTexture(this->textures.getTexture("btn_new"));
-    this->menu_btn_new_s.setPosition(WIN_H - 10.0f - this->textures.getTexture("btn_new").getSize().x, 10.0f);
+    this->menu_btn_new_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("btn_new").getSize().x / 2.0f, WIN_H - 3 * (this->textures.getTexture("btn_new").getSize().y + 20.0f));
     this->menu_btn_del_s.setTexture(this->textures.getTexture("btn_del"));
-    this->menu_btn_del_s.setPosition(WIN_H - 10.0f - this->textures.getTexture("btn_del").getSize().x, 20.0f + this->textures.getTexture("btn_new").getSize().y);
+    this->menu_btn_del_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("btn_del").getSize().x / 2.0f, WIN_H - 2 * (this->textures.getTexture("btn_del").getSize().y + 20.0f));
     this->menu_btn_start_s.setTexture(this->textures.getTexture("btn_start"));
-    this->menu_btn_start_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("btn_start").getSize().x / 2.0f, WIN_H - 50.0f);
+    this->menu_btn_start_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("btn_start").getSize().x / 2.0f, WIN_H - (this->textures.getTexture("btn_start").getSize().y + 20.0f));
 
     // font
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
@@ -603,19 +603,19 @@ Game::Game() :
 
     this->menu_user.setFont(this->font);
     this->menu_user.setCharacterSize(24);
-    this->menu_user.setPosition(0.0f, WIN_H / 2.0f - 12.0f);
-    this->menu_user.setColor(sf::Color::White);
+    this->menu_user.setPosition(0.0f, WIN_H / 2.0f - 72.0f);
+    this->menu_user.setColor(sf::Color::Black);
 
     this->menu_text.setFont(this->font);
     this->menu_text.setCharacterSize(24);
     this->menu_text.setPosition(WIN_W / 2.0f - 200.0f, 0.0f);
-    this->menu_text.setColor(sf::Color::White);
+    this->menu_text.setColor(sf::Color::Black);
 
     this->menu_ask_user.setFont(this->font);
     this->menu_ask_user.setCharacterSize(24);
     this->menu_ask_user.setString("Quel est votre nom ?");
-    this->menu_ask_user.setPosition(WIN_W / 2.0f - this->menu_ask_user.getLocalBounds().width / 2.0f, WIN_H / 2.0f - 36.0f);
-    this->menu_ask_user.setColor(sf::Color::White);
+    this->menu_ask_user.setPosition(WIN_W / 2.0f - this->menu_ask_user.getLocalBounds().width / 2.0f, WIN_H / 2.0f - 100.0f);
+    this->menu_ask_user.setColor(sf::Color::Black);
 
     ObjectsTable::load();
     this->ttable.load();
