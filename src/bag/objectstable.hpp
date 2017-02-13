@@ -13,7 +13,7 @@ class ObjectsTable
 {
 private:
     // variables
-    std::map<int, struct ObjType> objects_name;
+    std::map<int, struct ObjData> objects_name;
     static class ObjectsTable instance;
     Json::Value root;
     bool loaded;
@@ -25,6 +25,11 @@ public:
     static bool load();
     static std::string getName(Object*);
     static std::string getDesc(Object*);
+    static int getPrice(Object*);
+    static bool isLimitedInUse(Object*);
+    static bool isThrowable(Object*);
+    static int getValue(Object*);
+    static ObjType getType(Object*);
 };
 
 #endif // DEF_OBJECTSTABLE

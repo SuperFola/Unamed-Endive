@@ -3,7 +3,12 @@
         {
             "id": 0,
             "name": "test objet",
-            "desc": "this the description of an object. this description is pretty long and we hope that it will be wrap by a special algorithm"
+            "desc": "this the description of an object. this description is pretty long and we hope that it will be wrap by a special algorithm",
+            "price": 10,
+            "limited_use": false,
+            "throwaway": true,
+            "value": 5,
+            "type": 0
         }
     ]
 }

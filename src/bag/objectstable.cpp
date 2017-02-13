@@ -31,10 +31,16 @@ bool ObjectsTable::load()
 
         for (int i=0; i < instance.root["objects"].size(); i++)
         {
-            struct ObjType obj;
-            obj.id = instance.root["object"][i]["id"].asInt();
+            struct ObjData obj;
+            obj.id = instance.root["objects"][i]["id"].asInt();
             obj.name = instance.root["objects"][i]["name"].asString();
             obj.desc = instance.root["objects"][i].get("desc", "").asString();
+            obj.price = instance.root["objects"][i]["price"].asInt();
+            obj.limited_use = instance.root["objects"][i]["limited_use"].asBool();
+            obj.throwaway = instance.root["objects"][i]["throwaway"].asBool();
+            obj.value = instance.root["objects"][i]["value"].asInt();
+            obj.type = static_cast<ObjType>(instance.root["objects"][i]["type"].asInt() % 8);
+
             instance.objects_name[instance.root["object"][i]["id"].asInt()] = obj;
         }
 
@@ -57,3 +63,64 @@ std::string ObjectsTable::getDesc(Object* object)
         return instance.objects_name[object->getId()].desc;
     return "";
 }
+
+int ObjectsTable::getPrice(Object* object)
+{
+    if (instance.loaded)
+        return instance.objects_name[object->getId()].price;
+    return -1;
+}
+
+bool ObjectsTable::isLimitedInUse(Object* object)
+{
+    if (instance.loaded)
+        return instance.objects_name[object->getId()].limited_use;
+    return false;
+}
+
+bool ObjectsTable::isThrowable(Object* object)
+{
+    if (instance.loaded)
+        return instance.objects_name[object->getId()].throwaway;
+    return true;
+}
+
+int ObjectsTable::getValue(Object* object)
+{
+    if (instance.loaded)
+        return instance.objects_name[object->getId()].value;
+    return 0;
+}
+
+ObjType ObjectsTable::getType(Object* object)
+{
+    if (instance.loaded)
+        return instance.objects_name[object->getId()].type;
+    return ObjType::none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -47,6 +47,19 @@
                     - id: int
                     - name: string
                     - desc: string (optionnal)
+                    - price: int (0 = can not be sold)
+                    - limited_use: bool (if false, we do not count its uses ; eg: running shoes)
+                    - throwaway: bool (useful for the rare object)
+                    - value: int
+                    - type: int
+                        - 0 => player
+                        - 1 => healpv
+                        - 2 => healpp
+                        - 3 => healstatus
+                        - 4 => capture
+                        - 5 => levelup
+                        - 6 => lowercooldown
+                        - 7 => none
     
     adding a new view :
         create two new files in src/views/ (.hpp, .cpp)
