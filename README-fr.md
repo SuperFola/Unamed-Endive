@@ -31,6 +31,8 @@ Crédits
 =======
 * tiles d'extérieur : WesleyFG (à la base pour le projet Marnian)
 * tiles d'intérieur : Slahs
+* interface graphique (inventaire, dex, équipe/PC) : vulvoch
+* interface grpahique (menu) : Eurons ??
 * créatures : Smiley-Fakemon
 * carte du monde : Sansonic
 * noms des villes `Piderflor`, `Muth'ira`, `Silancard` : ShootingStarD
