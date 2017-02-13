@@ -7,4 +7,7 @@ before_install:
 - sudo apt-get update -qq
 - sudo apt-get install -qq python3
 - sudo apt-get install -qq libsfml-dev
-script: make -f makefiles/make.unix && mv bin/Debug/main main && main
+- sudo apt-get install -qq g++
+script:
+- make -f makefiles/make.unix
+- bin/Debug/main
