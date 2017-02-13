@@ -10,5 +10,6 @@ before_install:
 - sudo apt-get install -qq gcc
 - sudo apt-get install -qq g++
 script:
+- g++ -v
 - make -f makefiles/make.unix
 - bin/Debug/main
