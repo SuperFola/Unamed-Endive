@@ -39,10 +39,10 @@ def main():
             new.write("".join(formatted))
 
     r = os.popen('"C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe" build.iss').read()
-    print(r.split('\n')[:-3])
     os.remove("build.iss")
+    return r
 
 
 if __name__ == '__main__':
-    main()
+    r = main()
     input('\n'.join(r.split('\n')[-3:-1]))
