@@ -12,7 +12,7 @@ LD = g++.exe
 WINDRES = windres.exe
 
 INC = -IC:\\SFML-2.4.1\\include -Isrc\\scripting\\Python34\\include
-CFLAGS = -Wall -std=c++1y
+CFLAGS = -Wall -std=c++14
 RESINC = 
 LIBDIR = -LC:\\SFML-2.4.1\\lib -Lsrc\\scripting\\Python34\\libs -LF:\\ENDIVE\\dlls\
 LIB = 
