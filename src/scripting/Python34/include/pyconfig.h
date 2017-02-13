@@ -65,7 +65,7 @@ WIN32 is still required for the locale module.
 #endif
 
 #ifdef HAVE_IO_H
-#include <io.h>
+#include "/usr/include/sys/io.h"
 #endif
 
 #define HAVE_HYPOT
