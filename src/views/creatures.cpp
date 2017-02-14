@@ -63,16 +63,17 @@ bool CreaView::load()
 
 void CreaView::render(sf::RenderWindow& window)
 {
-    window.draw(this->sprites[this->BCKG]);
-    window.draw(this->text);
     if (!this->displaying_crea)
     {
         window.draw(this->sprites[this->BTN_CREA]);
+        window.draw(this->sprites[this->BCKG]);
     }
     else
     {
         window.draw(this->sprites[this->BTN_PC]);
+        window.draw(this->sprites[this->BCKG_PC]);
     }
+    window.draw(this->text);
     this->draw_content(window);
 }
 

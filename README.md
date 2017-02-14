@@ -33,6 +33,7 @@ Credits
 * inside tiles : Slahs
 * graphical interface (inventory, dex, equip/PC) : vulvoch
 * graphical interface (menu) : Eurons ??
+* fights' backgrounds : WesleyFG
 * creatures : Smiley-Fakemon
 * world map : Sansonic
 * cities' name `Piderflor`, `Muth'ira`, `Silancard` : ShootingStarD

@@ -12,6 +12,7 @@
 /dlls/Lib/*
 /assets/creatures/.orginals/*
 /saves/
+.temp/
 
 # Prerequisites
 *.d
