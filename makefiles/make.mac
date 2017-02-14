@@ -5,16 +5,18 @@
 
 WORKDIR = `pwd`
 
+SFML_VERSION = 2.4.2
+
 CC = gcc
 CXX = g++
 AR = ar
 LD = g++
 WINDRES = windres
 
-INC = -IC:/SFML-2.4.1/include -Isrc/scripting/Python34/include
-CFLAGS = -Wall -std=c++14
+INC = -IC:/SFML-\$\$SFML_VERSION/include -Isrc/scripting/Python34/include
+CFLAGS = -Wall -std=c++1y
 RESINC = 
-LIBDIR = -LC:/SFML-2.4.1/lib -Lsrc/scripting/Python34/libs -LF:/ENDIVE/dlls/
+LIBDIR = -LC:/SFML-\$\$SFML_VERSION/lib -Lsrc/scripting/Python34/libs -Ldlls/
 LIB = 
 LDFLAGS = -lPython34
 
@@ -44,9 +46,14 @@ OBJ_DEBUG = $(OBJDIR_DEBUG)/src/scripting/scripting.o $(OBJDIR_DEBUG)/src/partic
 
 OBJ_RELEASE = $(OBJDIR_RELEASE)/src/scripting/scripting.o $(OBJDIR_RELEASE)/src/particles/particles.o $(OBJDIR_RELEASE)/src/objects/dex.o $(OBJDIR_RELEASE)/src/map/tilemap.o $(OBJDIR_RELEASE)/src/map/reader.o $(OBJDIR_RELEASE)/src/map/map.o $(OBJDIR_RELEASE)/src/map/blocks/block.o $(OBJDIR_RELEASE)/src/jsoncpp.o $(OBJDIR_RELEASE)/src/game.o $(OBJDIR_RELEASE)/src/entities/pnjmanager.o $(OBJDIR_RELEASE)/src/views/view.o $(OBJDIR_RELEASE)/src/views/save.o $(OBJDIR_RELEASE)/src/views/map.o $(OBJDIR_RELEASE)/src/views/inventory.o $(OBJDIR_RELEASE)/src/views/huds/menu.o $(OBJDIR_RELEASE)/src/views/huds/hud.o $(OBJDIR_RELEASE)/src/views/fight.o $(OBJDIR_RELEASE)/src/views/dex.o $(OBJDIR_RELEASE)/src/views/default.o $(OBJDIR_RELEASE)/src/views/creatures.o $(OBJDIR_RELEASE)/src/abstract/triggersmanager.o $(OBJDIR_RELEASE)/src/abstract/texturesmanager.o $(OBJDIR_RELEASE)/src/abstract/statemachine.o $(OBJDIR_RELEASE)/src/abstract/soundmanager.o $(OBJDIR_RELEASE)/src/abstract/point.o $(OBJDIR_RELEASE)/src/abstract/musicplayer.o $(OBJDIR_RELEASE)/src/abstract/functions.o $(OBJDIR_RELEASE)/src/abstract/equip.o $(OBJDIR_RELEASE)/src/abstract/creatures_loader.o $(OBJDIR_RELEASE)/src/abstract/competence.o $(OBJDIR_RELEASE)/resource.o $(OBJDIR_RELEASE)/main.o $(OBJDIR_RELEASE)/src/entities/pnj.o $(OBJDIR_RELEASE)/src/entities/effects/sort.o $(OBJDIR_RELEASE)/src/entities/creature.o $(OBJDIR_RELEASE)/src/entities/character.o $(OBJDIR_RELEASE)/src/entities/animatedentity.o $(OBJDIR_RELEASE)/src/constants.o $(OBJDIR_RELEASE)/src/bag/pockets/pocket.o $(OBJDIR_RELEASE)/src/bag/pockets/objects/object.o $(OBJDIR_RELEASE)/src/bag/objectstable.o $(OBJDIR_RELEASE)/src/bag/bag.o $(OBJDIR_RELEASE)/src/abstract/types_table.o
 
-all: debug release
+all: before_build build_debug build_release after_build
 
 clean: clean_debug clean_release
+
+before_build: 
+
+after_build: 
+	"..\tools\genmakefile.bat"
 
 before_debug: 
 	test -d bin/Debug || mkdir -p bin/Debug
@@ -68,7 +75,9 @@ before_debug:
 
 after_debug: 
 
-debug: before_debug out_debug after_debug
+build_debug: before_debug out_debug after_debug
+
+debug: before_build build_debug after_build
 
 out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
 	$(LD) $(LIBDIR_DEBUG) -o $(OUT_DEBUG) $(OBJ_DEBUG)  $(LDFLAGS_DEBUG) $(LIB_DEBUG)
@@ -225,7 +234,9 @@ before_release:
 
 after_release: 
 
-release: before_release out_release after_release
+build_release: before_release out_release after_release
+
+release: before_build build_release after_build
 
 out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
 	$(LD) $(LIBDIR_RELEASE) -o $(OUT_RELEASE) $(OBJ_RELEASE)  $(LDFLAGS_RELEASE) $(LIB_RELEASE)
@@ -362,5 +373,5 @@ $(OBJDIR_RELEASE)/src/abstract/types_table.o: src/abstract/types_table.cpp
 clean_release: 
 	rm -f $(OBJ_RELEASE) $(OUT_RELEASE)
 
-.PHONY: before_debug after_debug clean_debug before_release after_release clean_release
+.PHONY: before_build after_build before_debug after_debug clean_debug before_release after_release clean_release
 

@@ -9,7 +9,6 @@
 // public
 DexView::DexView() :
     View(DEX_VIEW_ID)
-    , displaying_crea(true)
     , selected(0)
 {
 
@@ -23,31 +22,17 @@ bool DexView::load()
         return false;
     this->textures.addTexture("background", background);
 
-    sf::Texture button;
-    if (!button.loadFromFile("assets/gui/fd_bouton_types_indexeur.png"))
-        return false;
-    this->textures.addTexture("btn_types", button);
-
-    sf::Texture crea_btn;
-    if (!crea_btn.loadFromFile("assets/gui/fd_bouton_creatures_indexeur.png"))
-        return false;
-    this->textures.addTexture("btn_crea", crea_btn);
-
     // setting sprites
     this->sprites[this->BCKG] = sf::Sprite(this->textures.getTexture("background"));
-    this->sprites[this->TYPES_BTN] = sf::Sprite(this->textures.getTexture("btn_types"));
-    this->sprites[this->CREA_BTN] = sf::Sprite(this->textures.getTexture("btn_crea"));
 
     // setting pos
     this->sprites[this->BCKG].setPosition(20.0f, 20.0f);
-    this->sprites[this->TYPES_BTN].setPosition(529.0f, 30.0f);
-    this->sprites[this->CREA_BTN].setPosition(529.0f, 30.0f);
 
     // texts
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
         return false;
     this->text.setFont(this->font);
-    this->text.setString("Dexeur: Créatures");
+    this->text.setString("Dexeur");
     this->text.setCharacterSize(24);
     this->text.setColor(sf::Color::Black);
     this->text.setPosition(WIN_W / 2 - this->text.getGlobalBounds().width / 2, 30.0f);
@@ -59,10 +44,6 @@ void DexView::render(sf::RenderWindow& window)
 {
     window.draw(this->sprites[this->BCKG]);
     window.draw(this->text);
-    if (this->displaying_crea)
-        window.draw(this->sprites[this->TYPES_BTN]);
-    else
-        window.draw(this->sprites[this->CREA_BTN]);
     this->draw_content(window);
 }
 
@@ -88,15 +69,6 @@ int DexView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            // change current view
-            if (__X >= 529 && __X <= 610 && __Y >= 30 && __Y <= 53)
-            {
-                this->displaying_crea = !this->displaying_crea;
-                if (this->displaying_crea)
-                    this->text.setString("Dexeur: Créatures");
-                else
-                    this->text.setString("Dexeur: Types");
-            }
             // selecting a creature
             if (__X >= 30 && __X <= WIN_W - 30 && __Y >= this->text.getPosition().y + 84.0f && __Y <= WIN_H - 30)
             {
@@ -150,19 +122,12 @@ int DexView::index_of(const std::string& name)
 
 void DexView::draw_content(sf::RenderWindow& window)
 {
-    if (this->displaying_crea)
+    for (int i=this->selected; i < this->selected + 9; i++)
     {
-        for (int i=this->selected; i < this->selected + 9; i++)
-        {
-            std::get<0>(this->dex_content[i % this->dex_content.size()]).setPosition(30.0f, this->text.getPosition().y + 84.0f + (i - this->selected) * 64.0f);
-            window.draw(std::get<0>(this->dex_content[i % this->dex_content.size()]));
-            if (i == this->selected && this->dex->getInfo(std::get<2>(this->dex_content[i % this->dex_content.size()])).viewed)
-                window.draw(std::get<1>(this->dex_content[i % this->dex_content.size()]));
-        }
-    }
-    else
-    {
-        // ...
+        std::get<0>(this->dex_content[i % this->dex_content.size()]).setPosition(30.0f, this->text.getPosition().y + 84.0f + (i - this->selected) * 64.0f);
+        window.draw(std::get<0>(this->dex_content[i % this->dex_content.size()]));
+        if (i == this->selected && this->dex->getInfo(std::get<2>(this->dex_content[i % this->dex_content.size()])).viewed)
+            window.draw(std::get<1>(this->dex_content[i % this->dex_content.size()]));
     }
 }
 

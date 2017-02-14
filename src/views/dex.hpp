@@ -16,7 +16,6 @@ class DexView : public View
 {
 private:
     // variables
-    bool displaying_crea;
     TexturesManager textures;
     std::map<std::string, sf::Sprite> sprites;
     std::vector<std::tuple<sf::Text, sf::Sprite, std::string>> dex_content;
@@ -28,8 +27,6 @@ private:
     int selected;
 
     const std::string BCKG = "background";
-    const std::string TYPES_BTN = "types_button";
-    const std::string CREA_BTN = "crea_btn";
 
     // methods
     void draw_content(sf::RenderWindow&);

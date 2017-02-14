@@ -19,17 +19,17 @@ bool InventView::load()
 {
     // loading textures
     sf::Texture background;
-    if (!background.loadFromFile("assets/gui/fd_inventaire.png"))
+    if (!background.loadFromFile("assets/gui/inventory/fd_inventaire.png"))
         return false;
     this->textures.addTexture("background", background);
 
     sf::Texture larrow;
-    if (!larrow.loadFromFile("assets/gui/fd_bouton_previous.png"))
+    if (!larrow.loadFromFile("assets/gui/inventory/fd_bouton_previous.png"))
         return false;
     this->textures.addTexture("larrow", larrow);
 
     sf::Texture rarrow;
-    if (!rarrow.loadFromFile("assets/gui/fd_bouton_next.png"))
+    if (!rarrow.loadFromFile("assets/gui/inventory/fd_bouton_next.png"))
         return false;
     this->textures.addTexture("rarrow", rarrow);
 
@@ -59,17 +59,17 @@ bool InventView::load()
     this->textures.addTexture("pocket5", p5);
 
     sf::Texture drop;
-    if (!drop.loadFromFile("assets/gui/fd_bouton_jeter.png"))
+    if (!drop.loadFromFile("assets/gui/inventory/fd_bouton_jeter.png"))
         return false;
     this->textures.addTexture("btn_drop", drop);
 
     sf::Texture vid;
-    if (!vid.loadFromFile("assets/gui/fd_bouton_vider.png"))
+    if (!vid.loadFromFile("assets/gui/inventory/fd_bouton_vider.png"))
         return false;
     this->textures.addTexture("btn_vide", vid);
 
     sf::Texture use;
-    if (!use.loadFromFile("assets/gui/fd_bouton_utiliser.png"))
+    if (!use.loadFromFile("assets/gui/inventory/fd_bouton_utiliser.png"))
         return false;
     this->textures.addTexture("btn_use", use);
 

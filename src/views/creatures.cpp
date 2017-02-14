@@ -18,61 +18,42 @@ bool CreaView::load()
 {
     // loading textures
     sf::Texture background;
-    if (!background.loadFromFile("assets/gui/fd_creatures.png"))
+    if (!background.loadFromFile("assets/gui/equip/fd_equip.png"))
         return false;
     this->textures.addTexture("background", background);
 
+    sf::Texture bckg_pc;
+    if (!bckg_pc.loadFromFile("assets/gui/equip/fd_pc.png"))
+        return false;
+    this->textures.addTexture("background_pc", bckg_pc);
+
     sf::Texture btn_pc;
-    if (!btn_pc.loadFromFile("assets/gui/fd_bouton_pc.png"))
+    if (!btn_pc.loadFromFile("assets/gui/equip/pc.png"))
         return false;
     this->textures.addTexture("btn_pc", btn_pc);
 
-    sf::Texture btn_to_pc;
-    if (!btn_to_pc.loadFromFile("assets/gui/fd_bouton_to_pc.png"))
-        return false;
-    this->textures.addTexture("btn_to_pc", btn_to_pc);
-
     sf::Texture btn_crea;
-    if (!btn_crea.loadFromFile("assets/gui/fd_bouton_poche_creatures.png"))
+    if (!btn_crea.loadFromFile("assets/gui/equip/team.png"))
         return false;
     this->textures.addTexture("btn_crea", btn_crea);
 
-    sf::Texture btn_to_crea;
-    if (!btn_to_crea.loadFromFile("assets/gui/fd_bouton_to_poche_creatures.png"))
-        return false;
-    this->textures.addTexture("btn_to_crea", btn_to_crea);
-
-    sf::Texture case_crea;
-    if (!case_crea.loadFromFile("assets/gui/fd_case_creature.png"))
-        return false;
-    this->textures.addTexture("bcg_crea", case_crea);
-
-    sf::Texture case_crea_sel;
-    if (!case_crea_sel.loadFromFile("assets/gui/fd_case_creature_selected.png"))
-        return false;
-    this->textures.addTexture("bcg_crea_sel", case_crea_sel);
-
     // setting sprites
     this->sprites[this->BCKG] = sf::Sprite(this->textures.getTexture("background"));
+    this->sprites[this->BCKG_PC] = sf::Sprite(this->textures.getTexture("background_pc"));
     this->sprites[this->BTN_PC] = sf::Sprite(this->textures.getTexture("btn_pc"));
-    this->sprites[this->BTN_TO_PC] = sf::Sprite(this->textures.getTexture("btn_to_pc"));
     this->sprites[this->BTN_CREA] = sf::Sprite(this->textures.getTexture("btn_crea"));
-    this->sprites[this->BTN_TO_CREA] = sf::Sprite(this->textures.getTexture("btn_to_crea"));
-    this->sprites[this->BCG_CREA] = sf::Sprite(this->textures.getTexture("bcg_crea"));
-    this->sprites[this->BCG_SEL_CREA] = sf::Sprite(this->textures.getTexture("bcg_crea_sel"));
 
     // setting pos
-    this->sprites[this->BCKG].setPosition(20.0f, 20.0f);
-    this->sprites[this->BTN_PC].setPosition(540.0f, 30.0f);
-    this->sprites[this->BTN_TO_PC].setPosition(450.0f, 30.0f);
-    this->sprites[this->BTN_CREA].setPosition(540.0f, 30.0f);
-    this->sprites[this->BTN_TO_CREA].setPosition(450.0f, 30.0f);
+    this->sprites[this->BCKG].setPosition(0.0f, 0.0f);
+    this->sprites[this->BCKG_PC].setPosition(0.0f, 0.0f);
+    this->sprites[this->BTN_PC].setPosition(238.0f, 10.0f);
+    this->sprites[this->BTN_CREA].setPosition(238.0f, 10.0f);
 
     // texts
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
         return false;
     this->text.setFont(this->font);
-    this->text.setString("Equipe");
+    this->text.setString("");
     this->text.setCharacterSize(24);
     this->text.setColor(sf::Color::White);
     this->text.setPosition(WIN_W / 2 - this->text.getGlobalBounds().width / 2, 30.0f);
@@ -87,12 +68,10 @@ void CreaView::render(sf::RenderWindow& window)
     if (!this->displaying_crea)
     {
         window.draw(this->sprites[this->BTN_CREA]);
-        window.draw(this->sprites[this->BTN_TO_CREA]);
     }
     else
     {
         window.draw(this->sprites[this->BTN_PC]);
-        window.draw(this->sprites[this->BTN_TO_PC]);
     }
     this->draw_content(window);
 }
@@ -119,18 +98,12 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            if (__X >= 540 && __X <= 610 && __Y >= 30 && __Y <= 50)
+            if (__X >= 238 && __X <= 393 && __Y >= 10 && __Y <= 90)
             {
-                std::cout << "clic" << std::endl;
                 this->displaying_crea = !this->displaying_crea;
-                if (this->displaying_crea)
-                    this->text.setString("Equipe");
-                else
-                    this->text.setString("PC");
             }
-            else if (__X >= 450 && __X <= 530 && __Y >= 30 && __Y <= 50)
+            else if (__X >= 0 && __X <= 0 && __Y >= 0 && __Y <= 0)
             {
-                std::cout << "clic 2" << std::endl;
                 if (this->displaying_crea)
                 {
                     // send selected crea to pc

@@ -5,6 +5,7 @@
 import os
 import tkinter as tk
 import tkinter.ttk as ttk
+import tkinter.messagebox as tkMB
 
 
 def load_objlb(objlb, vars):
@@ -60,7 +61,7 @@ def save(vars, types, txmod):
     })
     with open("assets/inventory/objects.json", "w") as file:
         file.write(
-            str(vars["objects"]).replace("True", "true").replace("False", "false").replace("None", "null")
+            str(vars["objects"]).replace("True", "true").replace("False", "false").replace("None", "null").replace("'", "\"")
         )
     clear(vars, types, "new")
 
@@ -77,7 +78,7 @@ def modify(vars, types):
     o["type"] = int(types.index(vars["typemodsel"]))
     with open("assets/inventory/objects.json", "w") as file:
         file.write(
-            str(vars["objects"]).replace("True", "true").replace("False", "false").replace("None", "null")
+            str(vars["objects"]).replace("True", "true").replace("False", "false").replace("None", "null").replace("'", "\"")
         )
     clear(vars, types, "mod")
 
@@ -87,7 +88,7 @@ def delete(vars):
         del vars["objects"]["objects"][vars["objectselected"]]
         with open("assets/inventory/objects.json", "w") as file:
             file.write(
-                str(vars["objects"]).replace("True", "true").replace("False", "false").replace("None", "null")
+                str(vars["objects"]).replace("True", "true").replace("False", "false").replace("None", "null").replace("'", "\"")
             )
 
 
@@ -100,6 +101,12 @@ def main():
     
     vars = {}
     
+    start_info_prix = lambda: tkMB.showinfo(message="test1")
+    start_info_use = lambda: tkMB.showinfo(message="test2")
+    start_info_drop = lambda: tkMB.showinfo(message="test3")
+    start_info_type = lambda: tkMB.showinfo(message="test4")
+    start_info_val = lambda: tkMB.showinfo(message="test5")
+    
     
     ################################################################
     # Frame to select which object to edit
@@ -108,8 +115,12 @@ def main():
     win.config(menu=menu)
     
     fmenu = tk.Menu(menu)
-    menu.add_cascade(label="Fichier", menu=fmenu)
-    fmenu.add_command(label="Ouvrir", command=lambda: None)
+    menu.add_cascade(label="Aide", menu=fmenu)
+    fmenu.add_command(label="Prix", command=lambda: start_info_prix())
+    fmenu.add_command(label="Usage limité", command=lambda: start_info_use())
+    fmenu.add_command(label="Jetable", command=lambda: start_info_drop())
+    fmenu.add_command(label="Type", command=lambda: start_info_type())
+    fmenu.add_command(label="Valeur", command=lambda: start_info_val())
     ################################################################
     # end
     ################################################################

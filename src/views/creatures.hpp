@@ -21,12 +21,9 @@ private:
     Equip* equip;
 
     const std::string BCKG = "background";
+    const std::string BCKG_PC = "background_pc";
     const std::string BTN_PC = "btn_pc";
-    const std::string BTN_TO_PC = "btn_to_pc";
     const std::string BTN_CREA = "btn_crea";
-    const std::string BTN_TO_CREA = "btn_to_crea";
-    const std::string BCG_CREA = "background_crea";
-    const std::string BCG_SEL_CREA = "background_selected_crea";
 
     // methods
     void draw_content(sf::RenderWindow&);
