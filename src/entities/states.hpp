@@ -3,8 +3,8 @@
 
 enum State {
     BURNED,
-    PARALIZED,
-    POISONNED,
+    PARALYSED,
+    POISONED,
     STD
 };
 
