@@ -101,11 +101,7 @@ def main():
     
     vars = {}
     
-    start_info_prix = lambda: tkMB.showinfo(message="test1")
-    start_info_use = lambda: tkMB.showinfo(message="test2")
-    start_info_drop = lambda: tkMB.showinfo(message="test3")
-    start_info_type = lambda: tkMB.showinfo(message="test4")
-    start_info_val = lambda: tkMB.showinfo(message="test5")
+    start_info = lambda: os.popen("notepad objects-defining.md")  # tkMB.showinfo(message="test1")
     
     
     ################################################################
@@ -116,11 +112,7 @@ def main():
     
     fmenu = tk.Menu(menu)
     menu.add_cascade(label="Aide", menu=fmenu)
-    fmenu.add_command(label="Prix", command=lambda: start_info_prix())
-    fmenu.add_command(label="Usage limité", command=lambda: start_info_use())
-    fmenu.add_command(label="Jetable", command=lambda: start_info_drop())
-    fmenu.add_command(label="Type", command=lambda: start_info_type())
-    fmenu.add_command(label="Valeur", command=lambda: start_info_val())
+    fmenu.add_command(label="Ouvrir", command=lambda: start_info())
     ################################################################
     # end
     ################################################################
