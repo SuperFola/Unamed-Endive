@@ -59,6 +59,7 @@ void Character::_load()
 
     this->bag.load("saves/" + this->name + "/bag.json");
     this->equip.load("saves/" + this->name + "/equip.json");
+    this->pc.load("saves/" + this->name + "/pc.json");
     this->dex.load("saves/" + this->name + "/dex.json");
 }
 
@@ -67,6 +68,7 @@ int Character::save()
     // save to "saves/player_name/"
     this->bag.save("saves/" + this->name + "/bag.json");
     this->equip.save("saves/" + this->name + "/equip.json");
+    this->pc.save("saves/" + this->name + "/pc.json");
     this->dex.save("saves/" + this->name + "/dex.json");
 
     return 0;
@@ -86,6 +88,11 @@ Bag* Character::getBag()
 Equip* Character::getEquip()
 {
     return &this->equip;
+}
+
+Equip* Character::getPC()
+{
+    return &this->pc;
 }
 
 Dex* Character::getDex()

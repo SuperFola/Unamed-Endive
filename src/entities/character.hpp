@@ -30,6 +30,7 @@ private:
     Sex sex;
     Bag bag;
     Equip equip;
+    Equip pc;
     Dex dex;
 
 public:
@@ -43,6 +44,7 @@ public:
     void speak(int, PNJManager*);
     Bag* getBag();
     Equip* getEquip();
+    Equip* getPC();
     Dex* getDex();
 };
 

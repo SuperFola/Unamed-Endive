@@ -39,7 +39,7 @@ bool Equip::load(const std::string& fpath)
         State s = static_cast<State>(_s % 4);
         SortilegeType st = static_cast<SortilegeType>(_st % 14);
 
-        crea->load(id, t, atk, def, life, life, "", s, level, st, sdmg, scd, stargets);
+        crea->load(id, t, atk, def, life, life, "first creature", s, level, st, sdmg, scd, stargets);
         this->equip.push_back(crea);
     }
     else

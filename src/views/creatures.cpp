@@ -11,6 +11,7 @@ CreaView::CreaView() :
     View(MYCREATURES_VIEW_ID)
     , displaying_crea(true)
     , selected(0)
+    , offset(0)
 {
 
 }
@@ -56,8 +57,8 @@ bool CreaView::load()
 
     this->cnam.setFont(this->font);
     this->cnam.setColor(sf::Color::Black);
-    this->cnam.setCharacterSize(24);
-    this->cnam.setPosition(388.0f, 150.0f);
+    this->cnam.setCharacterSize(18);
+    this->cnam.setPosition(388.0f, 155.0f);
 
     this->clev.setFont(this->font);
     this->clev.setColor(sf::Color::Black);
@@ -67,12 +68,12 @@ bool CreaView::load()
     this->ctyp.setFont(this->font);
     this->ctyp.setColor(sf::Color::Black);
     this->ctyp.setCharacterSize(18);
-    this->ctyp.setPosition(428.0f, 339.0f);
+    this->ctyp.setPosition(428.0f, 342.0f);
 
     this->csta.setFont(this->font);
     this->csta.setColor(sf::Color::Black);
     this->csta.setCharacterSize(18);
-    this->csta.setPosition(505.0f, 339.0f);
+    this->csta.setPosition(505.0f, 342.0f);
 
     this->catk.setFont(this->font);
     this->catk.setColor(sf::Color::Black);
@@ -91,14 +92,14 @@ bool CreaView::load()
 
     this->lsdata.setFont(this->font);
     this->lsdata.setColor(sf::Color::White);
-    this->lsdata.setCharacterSize(24);
+    this->lsdata.setCharacterSize(20);
 
     return true;
 }
 
 void CreaView::render(sf::RenderWindow& window)
 {
-    if (!this->displaying_crea)
+    if (this->displaying_crea)
     {
         window.draw(this->sprites[this->BCKG]);
         window.draw(this->sprites[this->BTN_CREA]);
@@ -139,6 +140,8 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             }
             else if (__X >= 464 && __X <= 531 && __Y >= 523 && __Y <= 588)
             {
+                this->selected = 0;
+
                 if (this->displaying_crea)
                 {
                     // send selected crea to pc
@@ -169,115 +172,126 @@ void CreaView::update(sf::RenderWindow& window, sf::Time elapsed)
 
 void CreaView::draw_content(sf::RenderWindow& window)
 {
-    this->lsdata.setPosition(25.0f, 150.0f);
+    this->lsdata.setPosition(30.0f, 150.0f);
+
+    Creature* crea;
+    std::string type, statut;
+    int i, sz;
 
     if (this->displaying_crea)
     {
-        Creature* crea;
-        std::string type, statut;
-
-        for (int i=0; i < this->equip->getSize(); i++)
-        {
-            crea = this->equip->getCrea(i);
-
-            switch (crea->getType())
-            {
-            case Type::NORMAL:
-                type = "Normal";
-                break;
-
-            case Type::FIRE:
-                type = "Feu";
-                break;
-
-            case Type::WATER:
-                type = "Eau";
-                break;
-
-            case Type::GRASS:
-                type = "Plante";
-                break;
-
-            case Type::FLYING:
-                type = "Vol";
-                break;
-
-            case Type::FIGHTING:
-                type = "Combat";
-                break;
-
-            case Type::POISON:
-                type = "Poison";
-                break;
-
-            case Type::ELECTRIC:
-                type = "Electrique";
-                break;
-
-            default:
-                type = "null";
-                break;
-            }
-
-            switch (crea->getState())
-            {
-            case State::BURNED:
-                statut = "Brûlé";
-                break;
-
-            case State::PARALYSED:
-                statut = "Paralysé";
-                break;
-
-            case State::POISONED:
-                statut = "Empoisonné";
-                break;
-
-            case State::STD:
-                statut = "Normal";
-                break;
-
-            default:
-                statut = "null";
-                break;
-            }
-
-            if (this->selected == i)
-            {
-                this->cnam.setString(crea->getName());
-                this->clev.setString(to_string<int>(crea->getLevel()));
-                this->ctyp.setString(type);
-                this->csta.setString(statut);
-                this->catk.setString(to_string<int>(crea->getAtk()));
-                this->cdef.setString(to_string<int>(crea->getDef()));
-                this->clif.setString(to_string<int>(crea->getLife()));
-
-                window.draw(this->cnam);
-                window.draw(this->clev);
-                window.draw(this->ctyp);
-                window.draw(this->csta);
-                window.draw(this->catk);
-                window.draw(this->cdef);
-                window.draw(this->clif);
-                //window.draw(this->cimg);
-
-                this->lsdata.setColor(sf::Color::Green);
-            }
-
-            this->lsdata.setColor(sf::Color::White);
-            this->lsdata.setString(crea->getName() + "\n\n" + type + ", niveau: " + to_string<int>(crea->getLevel()));
-            window.draw(this->lsdata);
-
-            this->lsdata.setPosition(this->lsdata.getPosition().x, this->lsdata.getPosition().y + 79.0f);
-        }
+        i = 0;
+        sz = this->equip->getSize();
     }
     else
     {
-        // ...
+        i = this->offset;
+        sz = this->pc.getSize();
+    }
+
+    for (i; i < sz; i++)
+    {
+        crea = this->equip->getCrea(i);
+
+        switch (crea->getType())
+        {
+        case Type::NORMAL:
+            type = "Normal";
+            break;
+
+        case Type::FIRE:
+            type = "Feu";
+            break;
+
+        case Type::WATER:
+            type = "Eau";
+            break;
+
+        case Type::GRASS:
+            type = "Plante";
+            break;
+
+        case Type::FLYING:
+            type = "Vol";
+            break;
+
+        case Type::FIGHTING:
+            type = "Combat";
+            break;
+
+        case Type::POISON:
+            type = "Poison";
+            break;
+
+        case Type::ELECTRIC:
+            type = "Electrique";
+            break;
+
+        default:
+            type = "null";
+            break;
+        }
+
+        switch (crea->getState())
+        {
+        case State::BURNED:
+            statut = "Brûlé";
+            break;
+
+        case State::PARALYSED:
+            statut = "Paralysé";
+            break;
+
+        case State::POISONED:
+            statut = "Empoisonné";
+            break;
+
+        case State::STD:
+            statut = "Normal";
+            break;
+
+        default:
+            statut = "null";
+            break;
+        }
+
+        if (this->selected == i)
+        {
+            this->cnam.setString(crea->getName());
+            this->clev.setString(to_string<int>(crea->getLevel()));
+            this->ctyp.setString(type);
+            this->csta.setString(statut);
+            this->catk.setString(to_string<int>(crea->getAtk()));
+            this->cdef.setString(to_string<int>(crea->getDef()));
+            this->clif.setString(to_string<int>(crea->getLife()));
+
+            window.draw(this->cnam);
+            window.draw(this->clev);
+            window.draw(this->ctyp);
+            window.draw(this->csta);
+            window.draw(this->catk);
+            window.draw(this->cdef);
+            window.draw(this->clif);
+            //window.draw(this->cimg);
+
+            this->lsdata.setColor(sf::Color::Green);
+        }
+        else
+            this->lsdata.setColor(sf::Color::White);
+
+        this->lsdata.setString(crea->getName() + "\n\n" + type + ", niveau: " + to_string<int>(crea->getLevel()));
+        window.draw(this->lsdata);
+
+        this->lsdata.setPosition(this->lsdata.getPosition().x, this->lsdata.getPosition().y + 79.0f);
     }
 }
 
 void CreaView::add_equip(Equip* equip)
 {
     this->equip = equip;
+}
+
+void CreaView::add_pc(Equip* pc)
+{
+    this->pc = pc;
 }
