@@ -169,7 +169,7 @@ void CreaView::draw_content(sf::RenderWindow& window)
         Creature* crea;
         std::string type, statut;
 
-        for (int i=0; i < this->equip->getSize())
+        for (int i=0; i < this->equip->getSize(); i++)
         {
             crea = this->equip->getCrea(i);
 
@@ -243,14 +243,14 @@ void CreaView::draw_content(sf::RenderWindow& window)
             this->cdef.setString(to_string<int>(crea->getDef()));
             this->clif.setString(to_string<int>(crea->getLife()));
 
-            window.display(this->cnam);
-            window.display(this->clev);
-            window.display(this->ctyp);
-            window.display(this->csta);
-            window.display(this->catk);
-            window.display(this->cdef);
-            window.display(this->clif);
-            window.display(this->cimg);
+            window.draw(this->cnam);
+            window.draw(this->clev);
+            window.draw(this->ctyp);
+            window.draw(this->csta);
+            window.draw(this->catk);
+            window.draw(this->cdef);
+            window.draw(this->clif);
+            window.draw(this->cimg);
         }
     }
     else
