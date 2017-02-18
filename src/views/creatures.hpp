@@ -9,6 +9,7 @@
 #include "../abstract/texturesmanager.hpp"
 #include "../abstract/equip.hpp"
 #include "../abstract/functions.hpp"
+#include "../abstract/creatures_loader.hpp"
 
 class CreaView : public View
 {
@@ -20,6 +21,7 @@ private:
     sf::Font font;
     Equip* equip;
     Equip* pc;
+    CreaturesLoader* creaload;
 
     sf::Text lsdata;
     sf::Text cnam, clev, ctyp, csta, catk, cdef, clif;
@@ -35,6 +37,7 @@ private:
 
     // methods
     void draw_content(sf::RenderWindow&);
+    void send_to(int);
 
 public:
     // methods
@@ -45,6 +48,7 @@ public:
     void update(sf::RenderWindow&, sf::Time) override;
     void add_equip(Equip*);
     void add_pc(Equip*);
+    void add_creaload(CreaturesLoader*);
 };
 
 #endif // DEF_CREA_VIEW

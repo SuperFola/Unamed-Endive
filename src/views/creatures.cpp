@@ -140,16 +140,8 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             }
             else if (__X >= 464 && __X <= 531 && __Y >= 523 && __Y <= 588)
             {
-                this->selected = 0;
-
-                if (this->displaying_crea)
-                {
-                    // send selected crea to pc
-                }
-                else
-                {
-                    // send selected crea to the pc
-                }
+                this->send_to(this->selected);
+                this->selected = 0;  // to avoid problem and always have a creature selected
             }
             break;
 
@@ -186,12 +178,15 @@ void CreaView::draw_content(sf::RenderWindow& window)
     else
     {
         i = this->offset;
-        sz = this->pc.getSize();
+        sz = this->pc->getSize();
     }
 
     for (i; i < sz; i++)
     {
-        crea = this->equip->getCrea(i);
+        if (this->displaying_crea)
+            crea = this->equip->getCrea(i);
+        else
+            crea = this->pc->getCrea(i);
 
         switch (crea->getType())
         {
@@ -294,4 +289,24 @@ void CreaView::add_equip(Equip* equip)
 void CreaView::add_pc(Equip* pc)
 {
     this->pc = pc;
+}
+
+void CreaView::send_to(int id)
+{
+    // if this->displaying_crea == true, then send to pc
+    // otherwise send to equip
+
+    if (this->displaying_crea)
+    {
+        // send selected crea to pc
+    }
+    else
+    {
+        // send selected crea to the pc
+    }
+}
+
+void CreaView::add_creaload(CreaturesLoader* creaload)
+{
+    this->creaload = creaload;
 }

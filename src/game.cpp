@@ -628,9 +628,10 @@ void Game::post_load()
     this->sm.change_view(DEFAULT_VIEW_ID);
     // we add the bag to the inventory view from the player
     this->sm.getInventory()->add_bag(this->sm.getDefault()->getCharacter()->getBag());
-    // we add the equip to the creatures view from the player
+    // we add the equip/pc/crealoader to the creatures view from the player
     this->sm.getCrea()->add_equip(this->sm.getDefault()->getCharacter()->getEquip());
-    this->sm.getCrea()->add_pc(this->sm.getDefault()->getCharacter()->getPC())
+    this->sm.getCrea()->add_pc(this->sm.getDefault()->getCharacter()->getPC());
+    this->sm.getCrea()->add_creaload(&this->crea_load);
     // we add the dex to the dex view from the player
     this->sm.getDex()->add_dex(this->sm.getDefault()->getCharacter()->getDex());
     // we add a pointer on the creatures loader to the dex /!/
