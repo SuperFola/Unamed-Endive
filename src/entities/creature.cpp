@@ -6,6 +6,8 @@
 Creature::Creature() :
     id(0)
     , type(Type::NORMAL)
+    , atk(1)
+    , def(1)
     , life(DEFAULT_LIFE)
     , max_life(DEFAULT_LIFE)
     , sortilege()
@@ -15,11 +17,13 @@ Creature::Creature() :
 
 }
 
-bool Creature::load(int id, Type& t, int life, int mlife, std::string name, State& s, int level, SortilegeType& stype, int sdmg, int scd, int stargets)
+bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, std::string name, State& s, int level, SortilegeType& stype, int sdmg, int scd, int stargets)
 {
     std::cout << "Loading creature '" << name << "'" << std::endl;
     this->id = id;
     this->type = t;
+    this->atk = atk;
+    this->def = def;
     this->life = life;
     this->max_life = mlife;
     this->name = name;
@@ -45,6 +49,41 @@ int Creature::getLife()
     return this->life;
 }
 
+int Creature::getLevel()
+{
+    return this->level;
+}
+
+std::string& Creature::getName()
+{
+    return this->name;
+}
+
+int Creature::getId()
+{
+    return this->id;
+}
+
+State Creature::getState()
+{
+    return this->state;
+}
+
+Type Creature::getType()
+{
+    return this->type;
+}
+
+int Creature::getAtk()
+{
+    return this->atk;
+}
+
+int Creature::getDef()
+{
+    return this->def;
+}
+
 void Creature::update(std::vector<Creature>& board)
 {
     if (!this->sortilege.getCooldown())
@@ -66,6 +105,8 @@ Json::Value Creature::serialize()
     value["state"] = static_cast<int>(this->state);
     value["level"] = this->level;
     value["sort"] = this->sortilege.serialize();
+    value["atk"] = this->atk;
+    value["def"] = this->def;
 
     return value;
 }

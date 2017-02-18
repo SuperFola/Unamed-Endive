@@ -52,11 +52,41 @@ bool CreaView::load()
     // texts
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
         return false;
-    this->text.setFont(this->font);
-    this->text.setString("");
-    this->text.setCharacterSize(24);
-    this->text.setColor(sf::Color::White);
-    this->text.setPosition(WIN_W / 2 - this->text.getGlobalBounds().width / 2, 30.0f);
+
+    this->cnam.setFont(this->font);
+    this->cnam.setColor(sf::Color::Black);
+    this->cnam.setCharacterSize(24);
+    this->cnam.setPosition(388.0f, 156.0f);
+
+    this->clev.setFont(this->font);
+    this->clev.setColor(sf::Color::Black);
+    this->clev.setCharacterSize(24);
+    this->clev.setPosition(565.0f, 156.0f);
+
+    this->ctyp.setFont(this->font);
+    this->ctyp.setColor(sf::Color::Black);
+    this->ctyp.setCharacterSize(18);
+    this->ctyp.setPosition(424.0f, 345.0f);
+
+    this->csta.setFont(this->font);
+    this->csta.setColor(sf::Color::Black);
+    this->csta.setCharacterSize(18);
+    this->csta.setPosition(501.0f, 345.0f);
+
+    this->catk.setFont(this->font);
+    this->catk.setColor(sf::Color::Black);
+    this->catk.setCharacterSize(24);
+    this->catk.setPosition(423.0f, 386.0f);
+
+    this->cdef.setFont(this->font);
+    this->cdef.setColor(sf::Color::Black);
+    this->cdef.setCharacterSize(24);
+    this->cdef.setPosition(423.0f, 433.0f);
+
+    this->clif.setFont(this->font);
+    this->clif.setColor(sf::Color::Black);
+    this->clif.setCharacterSize(24);
+    this->clif.setPosition(423.0f, 480.0f);
 
     return true;
 }
@@ -73,7 +103,6 @@ void CreaView::render(sf::RenderWindow& window)
         window.draw(this->sprites[this->BTN_PC]);
         window.draw(this->sprites[this->BCKG_PC]);
     }
-    window.draw(this->text);
     this->draw_content(window);
 }
 
@@ -103,7 +132,7 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             {
                 this->displaying_crea = !this->displaying_crea;
             }
-            else if (__X >= 0 && __X <= 0 && __Y >= 0 && __Y <= 0)
+            else if (__X >= 464 && __X <= 531 && __Y >= 523 && __Y <= 588)
             {
                 if (this->displaying_crea)
                 {
@@ -137,7 +166,92 @@ void CreaView::draw_content(sf::RenderWindow& window)
 {
     if (this->displaying_crea)
     {
-        // ...
+        Creature* crea;
+        std::string type, statut;
+
+        for (int i=0; i < this->equip->getSize())
+        {
+            crea = this->equip->getCrea(i);
+
+            switch (crea->getType())
+            {
+            case Type::NORMAL:
+                type = "Normal";
+                break;
+
+            case Type::FIRE:
+                type = "Feu";
+                break;
+
+            case Type::WATER:
+                type = "Eau";
+                break;
+
+            case Type::GRASS:
+                type = "Plante";
+                break;
+
+            case Type::FLYING:
+                type = "Vol";
+                break;
+
+            case Type::FIGHTING:
+                type = "Combat";
+                break;
+
+            case Type::POISON:
+                type = "Poison";
+                break;
+
+            case Type::ELECTRIC:
+                type = "Electrique";
+                break;
+
+            default:
+                type = "null";
+                break;
+            }
+
+            switch (crea->getState())
+            {
+            case State::BURNED:
+                statut = "Brûlé";
+                break;
+
+            case State::PARALYSED:
+                statut = "Paralysé";
+                break;
+
+            case State::POISONED:
+                statut = "Empoisonné";
+                break;
+
+            case State::STD:
+                statut = "Normal";
+                break;
+
+            default:
+                statut = "null";
+                break;
+            }
+
+            this->cnam.setString(crea->getName());
+            this->clev.setString(to_string<int>(crea->getLevel()));
+            this->ctyp.setString(type);
+            this->csta.setString(statut);
+            this->catk.setString(to_string<int>(crea->getAtk()));
+            this->cdef.setString(to_string<int>(crea->getDef()));
+            this->clif.setString(to_string<int>(crea->getLife()));
+
+            window.display(this->cnam);
+            window.display(this->clev);
+            window.display(this->ctyp);
+            window.display(this->csta);
+            window.display(this->catk);
+            window.display(this->cdef);
+            window.display(this->clif);
+            window.display(this->cimg);
+        }
     }
     else
     {

@@ -17,6 +17,8 @@ private:
     // variables
     int id;
     Type type;
+    int atk;
+    int def;
     int life;
     int max_life;
     std::string name;
@@ -28,9 +30,15 @@ private:
 public:
     // methods
     Creature();
-    bool load(int, Type&, int, int, std::string, State&, int, SortilegeType&, int, int, int);
+    bool load(int, Type&, int, int, int, int, std::string, State&, int, SortilegeType&, int, int, int);
     int getLife();
     int getLevel();
+    std::string& getName();
+    int getId();
+    State getState();
+    Type getType();
+    int getAtk();
+    int getDef();
     void update(std::vector<Creature>&);
     void print();
     Json::Value serialize();

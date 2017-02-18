@@ -8,6 +8,7 @@
 #include "view.hpp"
 #include "../abstract/texturesmanager.hpp"
 #include "../abstract/equip.hpp"
+#include "../abstract/functions.hpp"
 
 class CreaView : public View
 {
@@ -17,8 +18,10 @@ private:
     TexturesManager textures;
     std::map<std::string, sf::Sprite> sprites;
     sf::Font font;
-    sf::Text text;
     Equip* equip;
+
+    sf::Text cnam, clev, ctyp, csta, catk, cdef, clif;
+    sf::Sprite cimg;
 
     const std::string BCKG = "background";
     const std::string BCKG_PC = "background_pc";

@@ -31,13 +31,15 @@ bool Equip::load(const std::string& fpath)
               , level = 1
               , sdmg = 5  // damages for the sortilege
               , scd = 4  // cooldown for the sortilege
-              , stargets = 1;  // targets for the sortilege
+              , stargets = 1  // targets for the sortilege
+              , atk = 10  // attack of the creature
+              , def = 10;  // defense
 
         Type t = static_cast<Type>(_t % 8);
         State s = static_cast<State>(_s % 4);
         SortilegeType st = static_cast<SortilegeType>(_st % 14);
 
-        crea->load(id, t, life, life, "", s, level, st, sdmg, scd, stargets);
+        crea->load(id, t, atk, def, life, life, "", s, level, st, sdmg, scd, stargets);
         this->equip.push_back(crea);
     }
     else
@@ -60,13 +62,15 @@ bool Equip::load(const std::string& fpath)
                       , level = this->root["creatures"][i]["level"].asInt()
                       , sdmg = this->root["creatures"][i]["sort"]["damages"].asInt()
                       , scd = this->root["creatures"][i]["sort"]["cooldown"].asInt()
-                      , stargets = this->root["creatures"][i]["sort"]["targets"].asInt();
+                      , stargets = this->root["creatures"][i]["sort"]["targets"].asInt()
+                      , atk = this->root["creatures"][i]["atk"].asInt()
+                      , def = this->root["creatures"][i]["def"].asInt();
 
                 Type t = static_cast<Type>(_t % 8);
                 State s = static_cast<State>(_s % 4);
                 SortilegeType st = static_cast<SortilegeType>(_st % 14);
 
-                crea->load(id, t, life, mlife, this->root["creatures"][i]["name"].asString(), s, level, st, sdmg, scd, stargets);
+                crea->load(id, t, atk, def, life, mlife, this->root["creatures"][i]["name"].asString(), s, level, st, sdmg, scd, stargets);
                 this->equip.push_back(crea);
 
                 std::cout << "Loaded creature " << i << std::endl;
