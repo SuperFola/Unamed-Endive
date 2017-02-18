@@ -20,8 +20,11 @@ private:
     sf::Font font;
     Equip* equip;
 
+    sf::Text lsdata;
     sf::Text cnam, clev, ctyp, csta, catk, cdef, clif;
     sf::Sprite cimg;
+
+    int selected;
 
     const std::string BCKG = "background";
     const std::string BCKG_PC = "background_pc";

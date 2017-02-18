@@ -10,6 +10,7 @@
 CreaView::CreaView() :
     View(MYCREATURES_VIEW_ID)
     , displaying_crea(true)
+    , selected(0)
 {
 
 }
@@ -56,37 +57,41 @@ bool CreaView::load()
     this->cnam.setFont(this->font);
     this->cnam.setColor(sf::Color::Black);
     this->cnam.setCharacterSize(24);
-    this->cnam.setPosition(388.0f, 156.0f);
+    this->cnam.setPosition(388.0f, 150.0f);
 
     this->clev.setFont(this->font);
     this->clev.setColor(sf::Color::Black);
     this->clev.setCharacterSize(24);
-    this->clev.setPosition(565.0f, 156.0f);
+    this->clev.setPosition(565.0f, 150.0f);
 
     this->ctyp.setFont(this->font);
     this->ctyp.setColor(sf::Color::Black);
     this->ctyp.setCharacterSize(18);
-    this->ctyp.setPosition(424.0f, 345.0f);
+    this->ctyp.setPosition(428.0f, 339.0f);
 
     this->csta.setFont(this->font);
     this->csta.setColor(sf::Color::Black);
     this->csta.setCharacterSize(18);
-    this->csta.setPosition(501.0f, 345.0f);
+    this->csta.setPosition(505.0f, 339.0f);
 
     this->catk.setFont(this->font);
     this->catk.setColor(sf::Color::Black);
     this->catk.setCharacterSize(24);
-    this->catk.setPosition(423.0f, 386.0f);
+    this->catk.setPosition(423.0f, 380.0f);
 
     this->cdef.setFont(this->font);
     this->cdef.setColor(sf::Color::Black);
     this->cdef.setCharacterSize(24);
-    this->cdef.setPosition(423.0f, 433.0f);
+    this->cdef.setPosition(423.0f, 427.0f);
 
     this->clif.setFont(this->font);
     this->clif.setColor(sf::Color::Black);
     this->clif.setCharacterSize(24);
-    this->clif.setPosition(423.0f, 480.0f);
+    this->clif.setPosition(423.0f, 474.0f);
+
+    this->lsdata.setFont(this->font);
+    this->lsdata.setColor(sf::Color::White);
+    this->lsdata.setCharacterSize(24);
 
     return true;
 }
@@ -95,13 +100,13 @@ void CreaView::render(sf::RenderWindow& window)
 {
     if (!this->displaying_crea)
     {
-        window.draw(this->sprites[this->BTN_CREA]);
         window.draw(this->sprites[this->BCKG]);
+        window.draw(this->sprites[this->BTN_CREA]);
     }
     else
     {
-        window.draw(this->sprites[this->BTN_PC]);
         window.draw(this->sprites[this->BCKG_PC]);
+        window.draw(this->sprites[this->BTN_PC]);
     }
     this->draw_content(window);
 }
@@ -164,6 +169,8 @@ void CreaView::update(sf::RenderWindow& window, sf::Time elapsed)
 
 void CreaView::draw_content(sf::RenderWindow& window)
 {
+    this->lsdata.setPosition(25.0f, 150.0f);
+
     if (this->displaying_crea)
     {
         Creature* crea;
@@ -235,22 +242,33 @@ void CreaView::draw_content(sf::RenderWindow& window)
                 break;
             }
 
-            this->cnam.setString(crea->getName());
-            this->clev.setString(to_string<int>(crea->getLevel()));
-            this->ctyp.setString(type);
-            this->csta.setString(statut);
-            this->catk.setString(to_string<int>(crea->getAtk()));
-            this->cdef.setString(to_string<int>(crea->getDef()));
-            this->clif.setString(to_string<int>(crea->getLife()));
+            if (this->selected == i)
+            {
+                this->cnam.setString(crea->getName());
+                this->clev.setString(to_string<int>(crea->getLevel()));
+                this->ctyp.setString(type);
+                this->csta.setString(statut);
+                this->catk.setString(to_string<int>(crea->getAtk()));
+                this->cdef.setString(to_string<int>(crea->getDef()));
+                this->clif.setString(to_string<int>(crea->getLife()));
 
-            window.draw(this->cnam);
-            window.draw(this->clev);
-            window.draw(this->ctyp);
-            window.draw(this->csta);
-            window.draw(this->catk);
-            window.draw(this->cdef);
-            window.draw(this->clif);
-            window.draw(this->cimg);
+                window.draw(this->cnam);
+                window.draw(this->clev);
+                window.draw(this->ctyp);
+                window.draw(this->csta);
+                window.draw(this->catk);
+                window.draw(this->cdef);
+                window.draw(this->clif);
+                //window.draw(this->cimg);
+
+                this->lsdata.setColor(sf::Color::Green);
+            }
+
+            this->lsdata.setColor(sf::Color::White);
+            this->lsdata.setString(crea->getName() + "\n\n" + type + ", niveau: " + to_string<int>(crea->getLevel()));
+            window.draw(this->lsdata);
+
+            this->lsdata.setPosition(this->lsdata.getPosition().x, this->lsdata.getPosition().y + 79.0f);
         }
     }
     else

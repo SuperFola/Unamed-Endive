@@ -101,7 +101,7 @@ bool Equip::remove_creature(int id)
 
 Creature* Equip::getCrea(int id)
 {
-    if (0 <= id && id < this->max_crea)
+    if (0 <= id && id < this->equip.size())
     {
         return this->equip[id];
     }
@@ -115,7 +115,7 @@ void Equip::increase_size()
 
 int Equip::getSize()
 {
-    return this->max_crea;
+    return this->equip.size();
 }
 
 void Equip::save(const std::string& path)
