@@ -90,9 +90,14 @@ bool CreaView::load()
     this->clif.setCharacterSize(24);
     this->clif.setPosition(423.0f, 474.0f);
 
+    this->cimg = sf::Sprite();
+    this->cimg.setPosition(416.0f, 194.0f);
+
     this->lsdata.setFont(this->font);
     this->lsdata.setColor(sf::Color::White);
     this->lsdata.setCharacterSize(20);
+
+    this->set_cimg(0);
 
     return true;
 }
@@ -110,6 +115,15 @@ void CreaView::render(sf::RenderWindow& window)
         window.draw(this->sprites[this->BTN_PC]);
     }
     this->draw_content(window);
+}
+
+void CreaView::set_cimg(int ry)
+{
+    this->cimg.setTexture((this->displaying_crea) ? this->creaload->get(this->dex->getInfo(this->equip->getCrea(ry)->getId()).file) : this->creaload->get(this->dex->getInfo(this->pc->getCrea(ry)->getId()).file));
+
+    float max_sz = (this->cimg.getTexture()->getSize().x > this->cimg.getTexture()->getSize().y) ? this->cimg.getTexture()->getSize().x : this->cimg.getTexture()->getSize().y;
+    float sc = 512.0f / max_sz;
+    this->cimg.setScale(sc, sc);
 }
 
 int CreaView::process_event(sf::Event& event, sf::Time elapsed)
@@ -137,16 +151,45 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             if (__X >= 238 && __X <= 393 && __Y >= 10 && __Y <= 90)
             {
                 this->displaying_crea = !this->displaying_crea;
+                this->offset = 0;
+                this->selected = 0;
             }
             else if (__X >= 464 && __X <= 531 && __Y >= 523 && __Y <= 588)
             {
                 this->send_to(this->selected);
                 this->selected = 0;  // to avoid problem and always have a creature selected
             }
+            else if (__X >= 18 && __X <= 234 && __Y >= 144 && __Y <= 601)
+            {
+                // selecting a creature
+                int lim = (this->displaying_crea) ? 0 : this->offset;
+                int ry = (__Y - 144) / 79;
+                if (!this->displaying_crea)
+                    ry += this->offset;
+                int sz = (this->displaying_crea) ? this->equip->getSize() : this->pc->getSize();
+
+                if (lim <= ry && ry < sz)
+                {
+                    // we are in a correct range
+                    this->selected = ry;
+                    this->set_cimg(ry);
+                }
+            }
             break;
 
         default:
             break;
+        }
+        break;
+
+    case sf::Event::MouseWheelScrolled:
+        if (!this->displaying_crea)
+        {
+            this->offset -= event.mouseWheelScroll.delta;
+            if (this->offset <= -1)
+                this->offset = 0;
+            if (this->offset > this->pc->getSize());
+                this->offset = (this->pc->getSize() != 0) ? this->pc->getSize() - 1 : 0;
         }
         break;
 
@@ -170,16 +213,8 @@ void CreaView::draw_content(sf::RenderWindow& window)
     std::string type, statut;
     int i, sz;
 
-    if (this->displaying_crea)
-    {
-        i = 0;
-        sz = this->equip->getSize();
-    }
-    else
-    {
-        i = this->offset;
-        sz = this->pc->getSize();
-    }
+    i = (this->displaying_crea) ? 0 : this->offset;
+    sz = (this->displaying_crea) ? this->equip->getSize() : ((this->offset + 6 < this->pc->getSize()) ? this->offset + 6 : this->pc->getSize());
 
     for (i; i < sz; i++)
     {
@@ -267,7 +302,7 @@ void CreaView::draw_content(sf::RenderWindow& window)
             window.draw(this->catk);
             window.draw(this->cdef);
             window.draw(this->clif);
-            //window.draw(this->cimg);
+            window.draw(this->cimg);
 
             this->lsdata.setColor(sf::Color::Green);
         }
@@ -309,4 +344,9 @@ void CreaView::send_to(int id)
 void CreaView::add_creaload(CreaturesLoader* creaload)
 {
     this->creaload = creaload;
+}
+
+void CreaView::add_dex(Dex* dex)
+{
+    this->dex = dex;
 }

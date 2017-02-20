@@ -5,14 +5,20 @@
 // public
 Equip::Equip() :
     max_crea(3)
+    , pc(false)
 {
 
 }
 
-bool Equip::load(const std::string& fpath)
+bool Equip::load(const std::string& fpath, bool pc)
 {
+    this->pc = pc;
+
     // load file from player save
-    std::cout << "Loading equip" << std::endl;
+    if (!this->pc)
+        std::cout << "Loading equip" << std::endl;
+    else
+        std::cout << "Loading pc" << std::endl;
 
     std::mt19937 rng;
     rng.seed(std::random_device()());
@@ -20,27 +26,34 @@ bool Equip::load(const std::string& fpath)
 
     if (!is_file_existing(fpath))
     {
-        // create default creature
-        std::cout << "No content found, creating default creature" << std::endl;
-        Creature* crea = new Creature();
-        int  id = 0 // accologion
-              , _t = 0  // Type::NORMAL
-              ,  _s = 3  // State::STD
-              , _st = 0  // SortilegeType::UniqueTargetAdvDamage
-              , life = int(distlife(rng))  // mlife = life
-              , level = 1
-              , sdmg = 5  // damages for the sortilege
-              , scd = 4  // cooldown for the sortilege
-              , stargets = 1  // targets for the sortilege
-              , atk = 10  // attack of the creature
-              , def = 10;  // defense
+        if (this->pc)
+            goto dont_create_for_pc;
 
-        Type t = static_cast<Type>(_t % 8);
-        State s = static_cast<State>(_s % 4);
-        SortilegeType st = static_cast<SortilegeType>(_st % 14);
+        {
+            // create default creature
+            std::cout << "No content found, creating default creature" << std::endl;
+            Creature* crea = new Creature();
+            int  id = 0 // accologion
+                  , _t = 0  // Type::NORMAL
+                  ,  _s = 3  // State::STD
+                  , _st = 0  // SortilegeType::UniqueTargetAdvDamage
+                  , life = int(distlife(rng))  // mlife = life
+                  , level = 1
+                  , sdmg = 5  // damages for the sortilege
+                  , scd = 4  // cooldown for the sortilege
+                  , stargets = 1  // targets for the sortilege
+                  , atk = 10  // attack of the creature
+                  , def = 10;  // defense
 
-        crea->load(id, t, atk, def, life, life, "first creature", s, level, st, sdmg, scd, stargets);
-        this->equip.push_back(crea);
+            Type t = static_cast<Type>(_t % 8);
+            State s = static_cast<State>(_s % 4);
+            SortilegeType st = static_cast<SortilegeType>(_st % 14);
+
+            crea->load(id, t, atk, def, life, life, "first creature", s, level, st, sdmg, scd, stargets);
+            this->equip.push_back(crea);
+        }
+
+        dont_create_for_pc:;
     }
     else
     {
@@ -88,24 +101,30 @@ bool Equip::add_creature(Creature& crea)
     return true;
 }
 
-bool Equip::remove_creature(int id)
+bool Equip::remove_creature(int pos)
 {
-    if (0 <= id && id < this->max_crea)
+    if (0 <= pos && pos < this->max_crea)
     {
-        pop<Creature*>(&(this->equip), id);
+        pop<Creature*>(&(this->equip), pos);
         return true;
     }
-    std::cout << "The creature id in the equip is not correct" << std::endl;
+    if (!this->pc)
+        std::cout << "The creature's position in the equip is not correct" << std::endl;
+    else
+        std::cout << "The creature's position in the pc is not correct" << std::endl;
     return false;
 }
 
-Creature* Equip::getCrea(int id)
+Creature* Equip::getCrea(int pos)
 {
-    if (0 <= id && id < this->equip.size())
+    if (0 <= pos && pos < this->equip.size())
     {
-        return this->equip[id];
+        return this->equip[pos];
     }
-    std::cout << "The creature id in the equip is not correct" << std::endl;
+    if (!this->pc)
+        std::cout << "The creature's position in the equip is not correct" << std::endl;
+    else
+        std::cout << "The creature's position in the equip is not correct" << std::endl;
 }
 
 void Equip::increase_size()
@@ -123,7 +142,7 @@ void Equip::save(const std::string& path)
     Json::Value value;
     value["creatures"] = Json::Value();
 
-    int i;
+    int i = 0;
     for (i=0; i < this->equip.size(); i++)
     {
         value["creatures"].append(this->equip[i]->serialize());

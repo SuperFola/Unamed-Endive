@@ -24,6 +24,7 @@ bool Dex::load(const std::string& path)
         player_save = true;
     }
 
+    int _id = 0;
     for (Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++)
     {
         struct DexInfo dexi;
@@ -55,6 +56,9 @@ bool Dex::load(const std::string& path)
 
         this->content[key.asString()] = dexi;
         this->names.push_back(key.asString());
+        this->id_name[_id] = key.asString();
+
+        _id++;
     }
 
     struct DexInfo default_inf;
@@ -63,9 +67,10 @@ bool Dex::load(const std::string& path)
     default_inf.type = Type::NORMAL;
     default_inf.stade = 99;
     default_inf.evolution = "";
-    default_inf.file = "";
+    default_inf.file = "default.png";
 
     this->content["default"] = default_inf;
+    this->id_name[999] = "default";
 
     return true;
 }
@@ -99,6 +104,15 @@ DexInfo Dex::getInfo(const std::string& name)
     if (this->content.find(name) != this->content.end())
         return this->content[name];
     std::cout << "Can not find creature with name '" << name << "', returning a default one" << std::endl;
+
+    return this->content["default"];
+}
+
+DexInfo Dex::getInfo(int id)
+{
+    if (this->id_name.find(id) != this->id_name.end())
+        return this->content[this->id_name[id]];
+    std::cout << "Can not find creature with id " << id << ", returning a default one" << std::endl;
 
     return this->content["default"];
 }

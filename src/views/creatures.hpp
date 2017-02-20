@@ -10,6 +10,7 @@
 #include "../abstract/equip.hpp"
 #include "../abstract/functions.hpp"
 #include "../abstract/creatures_loader.hpp"
+#include "../objects/dex.hpp"
 
 class CreaView : public View
 {
@@ -21,6 +22,7 @@ private:
     sf::Font font;
     Equip* equip;
     Equip* pc;
+    Dex* dex;
     CreaturesLoader* creaload;
 
     sf::Text lsdata;
@@ -38,6 +40,7 @@ private:
     // methods
     void draw_content(sf::RenderWindow&);
     void send_to(int);
+    void set_cimg(int);
 
 public:
     // methods
@@ -49,6 +52,7 @@ public:
     void add_equip(Equip*);
     void add_pc(Equip*);
     void add_creaload(CreaturesLoader*);
+    void add_dex(Dex*);
 };
 
 #endif // DEF_CREA_VIEW

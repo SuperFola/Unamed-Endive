@@ -59,7 +59,7 @@ void Character::_load()
 
     this->bag.load("saves/" + this->name + "/bag.json");
     this->equip.load("saves/" + this->name + "/equip.json");
-    this->pc.load("saves/" + this->name + "/pc.json");
+    this->pc.load("saves/" + this->name + "/pc.json", true);
     this->dex.load("saves/" + this->name + "/dex.json");
 }
 

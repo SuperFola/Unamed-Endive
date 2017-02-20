@@ -14,6 +14,7 @@ private:
     Json::Value root;
     Json::Value root_player;
     std::map<std::string, struct DexInfo> content;
+    std::map<int, std::string> id_name;
     std::vector<std::string> names;
     int _current;
 
@@ -23,6 +24,7 @@ public:
     void save(const std::string&);
     std::string getNext();
     DexInfo getInfo(const std::string&);
+    DexInfo getInfo(int);
 };
 
 #endif // DEF_DEX

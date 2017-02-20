@@ -204,10 +204,11 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
 
     case sf::Event::MouseWheelScrolled:
         this->offset -= event.mouseWheelScroll.delta;
-        if (this->offset < -1)
+        std::cout << this->offset << std::endl;
+        if (this->offset <= -1)
             this->offset = 0;
         if (this->offset > this->bag->getPocket(this->current)->getSize());
-            this->offset = this->bag->getPocket(this->current)->getSize() - 1;
+            this->offset = (this->bag->getPocket(this->current)->getSize() != 0) ? this->bag->getPocket(this->current)->getSize() - 1 : 0;
         break;
 
     default:

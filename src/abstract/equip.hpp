@@ -16,11 +16,12 @@ private:
     int max_crea;
     std::vector<Creature*> equip;
     Json::Value root;
+    bool pc;
 
 public:
     // methods
     Equip();
-    bool load(const std::string&);
+    bool load(const std::string&, bool pc=false);
     void save(const std::string&);
     bool add_creature(Creature&);
     bool remove_creature(int);
