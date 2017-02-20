@@ -194,10 +194,10 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
         if (!this->displaying_crea)
         {
             this->offset -= event.mouseWheelScroll.delta;
-            if (this->offset <= -1)
+            if (this->offset == -1)
                 this->offset = 0;
-            if (this->offset > this->pc->getSize());
-                this->offset = (this->pc->getSize() != 0) ? this->pc->getSize() - 1 : 0;
+            else if (this->offset >= this->pc->getSize());
+                this->offset = (this->pc->getSize() != 0) ? (this->pc->getSize() - 1) : 0;
         }
         break;
 
