@@ -122,16 +122,21 @@ void CreaView::render(sf::RenderWindow& window)
 
 void CreaView::set_cimg(int ry)
 {
-    this->cimg.setTexture((this->displaying_crea) ? this->creaload->get(this->dex->getInfo(this->equip->getCrea(ry)->getId()).file) : this->creaload->get(this->dex->getInfo(this->pc->getCrea(ry)->getId()).file));
+    int container_sz = (this->displaying_crea) ? this->equip->getSize() : this->pc->getSize();
 
-    sf::Vector2u sz = this->cimg.getTexture()->getSize();
-    float max_sz = (sz.x > sz.y) ? sz.x : sz.y;
-    float sc = (max_sz == sz.x) ? (159.0f / max_sz) : (141.0f / max_sz);
+    if (container_sz)
+    {
+        this->cimg.setTexture((this->displaying_crea) ? this->creaload->get(this->dex->getInfo(this->equip->getCrea(ry)->getId()).file) : this->creaload->get(this->dex->getInfo(this->pc->getCrea(ry)->getId()).file));
 
-    this->cimg.setScale(sc, sc);
+        sf::Vector2u sz = this->cimg.getTexture()->getSize();
+        float max_sz = (sz.x > sz.y) ? sz.x : sz.y;
+        float sc = (max_sz == sz.x) ? (159.0f / max_sz) : (141.0f / max_sz);
 
-    sf::FloatRect nsz = this->cimg.getLocalBounds();
-    this->cimg.setPosition(416.0f + (160.0f - nsz.width * sc) / 2.0f, 194.0f + (142.0f - nsz.height * sc) / 2.0f);
+        this->cimg.setScale(sc, sc);
+
+        sf::Vector2u nsz = this->cimg.getTexture()->getSize();
+        this->cimg.setPosition(416.0f + (160.0f - nsz.x * sc) / 2.0f, 194.0f + (142.0f - nsz.y * sc) / 2.0f);
+    }
 }
 
 int CreaView::process_event(sf::Event& event, sf::Time elapsed)
@@ -161,6 +166,7 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
                 this->displaying_crea = !this->displaying_crea;
                 this->offset = 0;
                 this->selected = 0;
+                this->set_cimg(0);
             }
             else if (__X >= 464 && __X <= 531 && __Y >= 523 && __Y <= 588)
             {
