@@ -97,9 +97,12 @@ bool CreaView::load()
     this->lsdata.setColor(sf::Color::White);
     this->lsdata.setCharacterSize(20);
 
-    this->set_cimg(0);
-
     return true;
+}
+
+void CreaView::post_load()
+{
+    this->set_cimg(0);
 }
 
 void CreaView::render(sf::RenderWindow& window)
@@ -121,9 +124,15 @@ void CreaView::set_cimg(int ry)
 {
     this->cimg.setTexture((this->displaying_crea) ? this->creaload->get(this->dex->getInfo(this->equip->getCrea(ry)->getId()).file) : this->creaload->get(this->dex->getInfo(this->pc->getCrea(ry)->getId()).file));
 
-    float max_sz = (this->cimg.getTexture()->getSize().x > this->cimg.getTexture()->getSize().y) ? this->cimg.getTexture()->getSize().x : this->cimg.getTexture()->getSize().y;
-    float sc = 512.0f / max_sz;
+    sf::Vector2u sz = this->cimg.getTexture()->getSize();
+    float max_sz = (sz.x > sz.y) ? sz.x : sz.y;
+    float sc = (max_sz == sz.x) ? (159.0f / max_sz) : (141.0f / max_sz);
+
     this->cimg.setScale(sc, sc);
+
+    sf::FloatRect nsz = this->cimg.getLocalBounds();
+    this->cimg.setPosition(416.0f + (160.0f - nsz.width) / 2.0f, 194.0f + (142.0f - nsz.height) / 2.0f);
+    std::cout << this->cimg.getPosition().x << " " << this->cimg.getPosition().y << std::endl;
 }
 
 int CreaView::process_event(sf::Event& event, sf::Time elapsed)

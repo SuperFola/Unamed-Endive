@@ -46,6 +46,7 @@ public:
     // methods
     CreaView();
     bool load() override;
+    void post_load();
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;

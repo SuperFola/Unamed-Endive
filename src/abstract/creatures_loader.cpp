@@ -68,6 +68,7 @@ bool CreaturesLoader::load_next()
     image.createMaskFromColor(sf::Color(255, 0, 255, 255));
     sf::Texture texture;
     texture.loadFromImage(image);
+    texture.setSmooth(true);
 
     this->textures.addTexture(file, texture);
     this->current++;  // increment the cursor

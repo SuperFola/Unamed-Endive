@@ -652,6 +652,8 @@ void Game::post_load()
     PyScripting::load();
     // launch the scripts
     PyScripting::run_on_start_modules();
+
+    this->sm.getCrea()->post_load();
 }
 
 void Game::on_end()
