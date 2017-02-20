@@ -22,7 +22,7 @@ std::vector<std::string> list_files(const std::string& directory)
     if (hSearch != INVALID_HANDLE_VALUE)
     {
         do {
-                if (std::string(File.cFileName) != directory + "/." && std::string(File.cFileName) != directory + "/..")
+                if (std::string(File.cFileName) != "." && std::string(File.cFileName) != "..")
                     files.push_back(std::string(File.cFileName));
         } while (FindNextFile(hSearch, &File));
 
@@ -62,15 +62,17 @@ bool CreaturesLoader::load_next()
 
     sf::Image image;
 
-    if (!image.loadFromFile(this->folder + "/" + file))
+    if (!image.loadFromFile(this->folder + "/" + file) && file != "." && file != "..")
         std::cout << "Unable to open " << this->folder + "/" + file << std::endl;
+    else
+    {
+        image.createMaskFromColor(sf::Color(255, 0, 255, 255));
+        sf::Texture texture;
+        texture.loadFromImage(image);
+        texture.setSmooth(true);
+        this->textures.addTexture(file, texture);
+    }
 
-    image.createMaskFromColor(sf::Color(255, 0, 255, 255));
-    sf::Texture texture;
-    texture.loadFromImage(image);
-    texture.setSmooth(true);
-
-    this->textures.addTexture(file, texture);
     this->current++;  // increment the cursor
 
     if (this->current == this->files.size())

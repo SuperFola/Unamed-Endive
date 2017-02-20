@@ -131,8 +131,7 @@ void CreaView::set_cimg(int ry)
     this->cimg.setScale(sc, sc);
 
     sf::FloatRect nsz = this->cimg.getLocalBounds();
-    this->cimg.setPosition(416.0f + (160.0f - nsz.width) / 2.0f, 194.0f + (142.0f - nsz.height) / 2.0f);
-    std::cout << this->cimg.getPosition().x << " " << this->cimg.getPosition().y << std::endl;
+    this->cimg.setPosition(416.0f + (160.0f - nsz.width * sc) / 2.0f, 194.0f + (142.0f - nsz.height * sc) / 2.0f);
 }
 
 int CreaView::process_event(sf::Event& event, sf::Time elapsed)

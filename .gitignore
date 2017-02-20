@@ -7,10 +7,10 @@
 /assets/.calques_pnj
 /assets/.tiles_buildings
 /assets/.tilesets
+/assets/.originals
 /obj/
 /screenshots/
 /dlls/Lib/*
-/assets/creatures/.orginals/*
 /saves/
 .temp/
 
