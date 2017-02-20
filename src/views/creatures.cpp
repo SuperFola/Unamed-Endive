@@ -211,6 +211,7 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             else if (this->offset >= this->pc->getSize())
                 this->offset = (this->pc->getSize() != 0) ? (this->pc->getSize() - 1) : 0;
             this->selected = this->offset;
+            this->set_cimg(this->selected);
         }
         break;
 
