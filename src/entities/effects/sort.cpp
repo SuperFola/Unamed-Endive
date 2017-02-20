@@ -22,6 +22,17 @@ bool Sort::load(SortilegeType stype, int dmg, int cd, int targets)
     return true;
 }
 
+bool Sort::loadfrom(Sort& other)
+{
+    this->type = other.type;
+    this->damages = other.damages;
+    this->cooldown = other.cooldown;
+    this->current_cooldown = other.current_cooldown;
+    this->targets = other.targets;
+
+    return true;
+}
+
 void Sort::update()
 {
     // update cooldown

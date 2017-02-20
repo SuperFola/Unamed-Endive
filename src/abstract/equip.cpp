@@ -94,18 +94,24 @@ bool Equip::load(const std::string& fpath, bool pc)
     return true;
 }
 
-// deprecated
-bool Equip::add_creature(Creature& crea)
+bool Equip::add_creature(Creature* crea)
 {
-    // this->equip.push_back(crea);
-    return true;
+    if (this->equip.size() + 1 <= this->max_crea)
+    {
+        Creature* ncrea = new Creature();
+        ncrea->loadfrom(crea);
+        this->equip.push_back(ncrea);
+
+        return true;
+    }
+    return false;
 }
 
 bool Equip::remove_creature(int pos)
 {
-    if (0 <= pos && pos < this->max_crea)
+    if (0 <= pos && pos < this->equip.size())
     {
-        pop<Creature*>(&(this->equip), pos);
+        pop<Creature*>(&this->equip, pos);
         return true;
     }
     if (!this->pc)
@@ -130,6 +136,11 @@ Creature* Equip::getCrea(int pos)
 void Equip::increase_size()
 {
     this->max_crea++;
+}
+
+void Equip::increase_size(int nsz)
+{
+    this->max_crea += nsz;
 }
 
 int Equip::getSize()

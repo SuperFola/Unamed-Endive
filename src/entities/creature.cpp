@@ -32,6 +32,21 @@ bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, std:
     return this->sortilege.load(stype, sdmg, scd, stargets);
 }
 
+bool Creature::loadfrom(Creature* other)
+{
+    std::cout << "Loading creature from another one" << std::endl;
+    this->id = other->id;
+    this->type = other->type;
+    this->atk = other->atk;
+    this->def = other->def;
+    this->life = other->life;
+    this->max_life = other->max_life;
+    this->name = other->name;
+    this->state = other->state;
+    this->level = other->level;
+    return this->sortilege.loadfrom(other->sortilege);
+}
+
 void Creature::print()
 {
     std::cout << "id: " << this->id

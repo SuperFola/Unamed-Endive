@@ -20,6 +20,9 @@
 // specials define
 #define DISPLAY_FPS_IN_TITLE 1
 
+// game related
+#define MAX_SIZE_PC 750
+
 // tiles
 #define TILE_SIZE 16
 #define TILE_SIZE_IN_TILESET 17

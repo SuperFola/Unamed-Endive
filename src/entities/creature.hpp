@@ -31,6 +31,7 @@ public:
     // methods
     Creature();
     bool load(int, Type&, int, int, int, int, std::string, State&, int, SortilegeType&, int, int, int);
+    bool loadfrom(Creature*);
     int getLife();
     int getLevel();
     std::string& getName();

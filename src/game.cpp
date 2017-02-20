@@ -654,6 +654,7 @@ void Game::post_load()
     PyScripting::run_on_start_modules();
 
     this->sm.getCrea()->post_load();
+    this->sm.getDefault()->getCharacter()->getPC()->increase_size(MAX_SIZE_PC);
 }
 
 void Game::on_end()

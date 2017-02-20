@@ -22,6 +22,7 @@ public:
     // methods
     Sort();
     bool load(SortilegeType, int, int, int);
+    bool loadfrom(Sort&);
     int getCooldown();
     void update();
     void act(std::vector<Creature>&);

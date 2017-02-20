@@ -348,10 +348,34 @@ void CreaView::send_to(int id)
     if (this->displaying_crea)
     {
         // send selected crea to pc
+        if (this->pc->add_creature(this->equip->getCrea(this->selected)))
+        {
+            // it succeeded, we can delete the creature from the old container
+            this->equip->remove_creature(this->selected);
+        }
+        else
+        {
+            // print error message
+
+            // temp
+            std::cout << "Can not send the creature to the pc" << std::endl;
+        }
     }
     else
     {
         // send selected crea to the pc
+        if (this->equip->add_creature(this->pc->getCrea(this->selected)))
+        {
+            // it succeeded, delete the creature from the old container as before
+            this->pc->remove_creature(this->selected);
+        }
+        else
+        {
+            // display a nice error message
+
+            // temp
+            std::cout << "Can not send the creature to the equip" << std::endl;
+        }
     }
 }
 
