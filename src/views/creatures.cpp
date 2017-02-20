@@ -126,7 +126,8 @@ void CreaView::set_cimg(int ry)
 
     if (container_sz)
     {
-        this->cimg.setTexture((this->displaying_crea) ? this->creaload->get(this->dex->getInfo(this->equip->getCrea(ry)->getId()).file) : this->creaload->get(this->dex->getInfo(this->pc->getCrea(ry)->getId()).file));
+        // resetRect= true to avoid cropped images
+        this->cimg.setTexture((this->displaying_crea) ? this->creaload->get(this->dex->getInfo(this->equip->getCrea(ry)->getId()).file) : this->creaload->get(this->dex->getInfo(this->pc->getCrea(ry)->getId()).file), true);
 
         sf::Vector2u sz = this->cimg.getTexture()->getSize();
         float max_sz = (sz.x > sz.y) ? sz.x : sz.y;
@@ -163,6 +164,7 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
         case sf::Mouse::Button::Left:
             if (__X >= 238 && __X <= 393 && __Y >= 10 && __Y <= 90)
             {
+                // changing the "view" (pc/equip)
                 this->displaying_crea = !this->displaying_crea;
                 this->offset = 0;
                 this->selected = 0;
@@ -170,8 +172,12 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             }
             else if (__X >= 464 && __X <= 531 && __Y >= 523 && __Y <= 588)
             {
+                // transfering creature
                 this->send_to(this->selected);
-                this->selected = 0;  // to avoid problem and always have a creature selected
+                this->selected -= 1;  // to avoid problem and always have a creature selected
+                if (this->selected == -1)
+                    this->selected = 0;
+                this->set_cimg(this->selected);
             }
             else if (__X >= 18 && __X <= 234 && __Y >= 144 && __Y <= 601)
             {
@@ -202,8 +208,9 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             this->offset -= event.mouseWheelScroll.delta;
             if (this->offset == -1)
                 this->offset = 0;
-            else if (this->offset >= this->pc->getSize());
-                this->offset = (this->pc->getSize() != 0) ? (this->pc->getSize() - 1) : 0;
+            /*else if (this->offset >= this->pc->getSize());
+                this->offset = (this->pc->getSize() != 0) ? (this->pc->getSize() - 1) : 0;*/
+            std::cout << this->offset << " " << this->pc->getSize() << std::endl;
         }
         break;
 
