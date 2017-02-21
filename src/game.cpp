@@ -117,11 +117,6 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                 break;
 
             #ifdef DEV_MODE
-            case sf::Keyboard::C:
-                std::cout << "test" << std::endl;
-                this->sm.getDefault()->getCharacter()->getEquip()->getCrea(0)->print();
-                break;
-
             case sf::Keyboard::F8:
                 std::cout << "Reloading scripts" << std::endl;
                 PyScripting::reload_all();
