@@ -245,7 +245,7 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
             new_view = 5;
             break;
 
-        case sf::Keyboard::RShift:
+        case sf::Keyboard::E:
             new_view = 5;
             break;
 

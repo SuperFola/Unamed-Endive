@@ -122,7 +122,7 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
-        case sf::Keyboard::RShift:
+        case sf::Keyboard::E:
             this->menu_hud.setTrigger(true);
             has_triggered_hud = true;
             break;
