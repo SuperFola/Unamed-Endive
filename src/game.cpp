@@ -117,6 +117,10 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                 break;
 
             #ifdef DEV_MODE
+            case sf::Keyboard::F:
+                this->sm.change_view(FIGHT_VIEW_ID);
+                break;
+
             case sf::Keyboard::F8:
                 std::cout << "Reloading scripts" << std::endl;
                 PyScripting::reload_all();

@@ -83,6 +83,7 @@ bool FightView::load()
     this->action.setFillColor(sf::Color::Black);
     this->action.setCharacterSize(24);
     this->action.setPosition(5.0f, WIN_H - 155.0f);
+    this->action.setString("Ceci est un message d'action");
 
     this->ennemy.setFont(this->font);
     this->ennemy.setFillColor(sf::Color::Black);
@@ -97,7 +98,41 @@ bool FightView::load()
 
 void FightView::render(sf::RenderWindow& window)
 {
+    switch (this->env)
+    {
+    case FightEnv::CityWithForest:
+        window.draw(this->sprites[this->BKG1]);
+        this->sprites[this->GRD1].setPosition(289.0f, 166.0f);
+        window.draw(this->sprites[this->GRD1]);
+        this->sprites[this->GRD1].setPosition(17.0f, 418.0f);
+        window.draw(this->sprites[this->GRD1]);
+        break;
 
+    case FightEnv::Forest:
+        window.draw(this->sprites[this->BKG2]);
+        this->sprites[this->GRD2].setPosition(289.0f, 166.0f);
+        window.draw(this->sprites[this->GRD2]);
+        this->sprites[this->GRD2].setPosition(17.0f, 418.0f);
+        window.draw(this->sprites[this->GRD2]);
+        break;
+
+    case FightEnv::Sea:
+        window.draw(this->sprites[this->BKG3]);
+        this->sprites[this->GRD3].setPosition(289.0f, 166.0f);
+        window.draw(this->sprites[this->GRD3]);
+        this->sprites[this->GRD3].setPosition(17.0f, 418.0f);
+        window.draw(this->sprites[this->GRD3]);
+        break;
+
+    default:
+        window.clear(sf::Color::Blue);
+        break;
+    }
+    window.draw(this->sprites[this->OVERLAY]);
+    window.draw(this->sprites[this->TOOLS]);
+    window.draw(this->action);
+    window.draw(this->ennemy);
+    window.draw(this->me);
 }
 
 int FightView::process_event(sf::Event& event, sf::Time elapsed)
