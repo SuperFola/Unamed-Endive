@@ -140,6 +140,8 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                 break;
             }
             break;
+        default:
+            break;
     }
 }
 
