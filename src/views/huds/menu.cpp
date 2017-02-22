@@ -116,42 +116,42 @@ bool MenuHUD::load()
     crea.setFont(this->font);
     crea.setString("Créatures");
     crea.setCharacterSize(24);
-    crea.setColor(sf::Color::Black);
+    crea.setFillColor(sf::Color::Black);
     this->texts[this->TXT_CREA] = crea;
 
     sf::Text invent;
     invent.setFont(this->font);
     invent.setString("Inventaire");
     invent.setCharacterSize(24);
-    invent.setColor(sf::Color::Black);
+    invent.setFillColor(sf::Color::Black);
     this->texts[this->TXT_INVENT] = invent;
 
     sf::Text carte;
     carte.setFont(this->font);
     carte.setString("Carte");
     carte.setCharacterSize(24);
-    carte.setColor(sf::Color::Black);
+    carte.setFillColor(sf::Color::Black);
     this->texts[this->TXT_MAP] = carte;
 
     sf::Text save;
     save.setFont(this->font);
     save.setString("Sauvegarder");
     save.setCharacterSize(24);
-    save.setColor(sf::Color::Black);
+    save.setFillColor(sf::Color::Black);
     this->texts[this->TXT_SAVE] = save;
 
     sf::Text dex;
     dex.setFont(this->font);
     dex.setString("Indexeur");
     dex.setCharacterSize(24);
-    dex.setColor(sf::Color::Black);
+    dex.setFillColor(sf::Color::Black);
     this->texts[this->TXT_DEX] = dex;
 
     sf::Text goback;
     goback.setFont(this->font);
     goback.setString("Retour");
     goback.setCharacterSize(24);
-    goback.setColor(sf::Color::Black);
+    goback.setFillColor(sf::Color::Black);
     this->texts[this->TXT_BACK] = goback;
 
     // setting pos (texts)

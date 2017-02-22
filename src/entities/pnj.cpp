@@ -58,7 +58,7 @@ void PNJ::_load()
 
     this->render_text.setFont(this->font);
     this->render_text.setCharacterSize(24);
-    this->render_text.setColor(sf::Color::Black);
+    this->render_text.setFillColor(sf::Color::Black);
     this->render_text.setString(this->name + ": " + this->text);
     int w = this->render_text.getGlobalBounds().width;
     int h = this->render_text.getGlobalBounds().height;

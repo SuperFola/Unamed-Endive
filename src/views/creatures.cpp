@@ -56,37 +56,37 @@ bool CreaView::load()
         return false;
 
     this->cnam.setFont(this->font);
-    this->cnam.setColor(sf::Color::Black);
+    this->cnam.setFillColor(sf::Color::Black);
     this->cnam.setCharacterSize(18);
     this->cnam.setPosition(388.0f, 155.0f);
 
     this->clev.setFont(this->font);
-    this->clev.setColor(sf::Color::Black);
+    this->clev.setFillColor(sf::Color::Black);
     this->clev.setCharacterSize(24);
     this->clev.setPosition(565.0f, 150.0f);
 
     this->ctyp.setFont(this->font);
-    this->ctyp.setColor(sf::Color::Black);
+    this->ctyp.setFillColor(sf::Color::Black);
     this->ctyp.setCharacterSize(18);
     this->ctyp.setPosition(428.0f, 342.0f);
 
     this->csta.setFont(this->font);
-    this->csta.setColor(sf::Color::Black);
+    this->csta.setFillColor(sf::Color::Black);
     this->csta.setCharacterSize(18);
     this->csta.setPosition(505.0f, 342.0f);
 
     this->catk.setFont(this->font);
-    this->catk.setColor(sf::Color::Black);
+    this->catk.setFillColor(sf::Color::Black);
     this->catk.setCharacterSize(24);
     this->catk.setPosition(423.0f, 380.0f);
 
     this->cdef.setFont(this->font);
-    this->cdef.setColor(sf::Color::Black);
+    this->cdef.setFillColor(sf::Color::Black);
     this->cdef.setCharacterSize(24);
     this->cdef.setPosition(423.0f, 427.0f);
 
     this->clif.setFont(this->font);
-    this->clif.setColor(sf::Color::Black);
+    this->clif.setFillColor(sf::Color::Black);
     this->clif.setCharacterSize(24);
     this->clif.setPosition(423.0f, 474.0f);
 
@@ -94,7 +94,7 @@ bool CreaView::load()
     this->cimg.setPosition(416.0f, 194.0f);
 
     this->lsdata.setFont(this->font);
-    this->lsdata.setColor(sf::Color::White);
+    this->lsdata.setFillColor(sf::Color::White);
     this->lsdata.setCharacterSize(20);
 
     return true;
@@ -326,10 +326,10 @@ void CreaView::draw_content(sf::RenderWindow& window)
             window.draw(this->clif);
             window.draw(this->cimg);
 
-            this->lsdata.setColor(sf::Color::Green);
+            this->lsdata.setFillColor(sf::Color::Green);
         }
         else
-            this->lsdata.setColor(sf::Color::White);
+            this->lsdata.setFillColor(sf::Color::White);
 
         this->lsdata.setString(crea->getName() + "\n\n" + type + ", niveau: " + to_string<int>(crea->getLevel()));
         window.draw(this->lsdata);

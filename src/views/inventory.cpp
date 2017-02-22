@@ -106,19 +106,19 @@ bool InventView::load()
     this->current_pocket_name.setFont(this->font);
     this->current_pocket_name.setString("Pocket");
     this->current_pocket_name.setCharacterSize(24);
-    this->current_pocket_name.setColor(sf::Color::Black);
+    this->current_pocket_name.setFillColor(sf::Color::Black);
     this->current_pocket_name.setPosition(310.0f - this->current_pocket_name.getLocalBounds().width / 2.0f, 599.0f - this->current_pocket_name.getLocalBounds().height);
 
     this->object_name.setFont(this->font);
     this->object_name.setString("object0");
     this->object_name.setCharacterSize(18);
-    this->object_name.setColor(sf::Color::Black);
+    this->object_name.setFillColor(sf::Color::Black);
     this->object_name.setPosition(265.0f, 37.0f);
 
     this->object_desc.setFont(this->font);
     this->object_desc.setString("");
     this->object_desc.setCharacterSize(18);
-    this->object_desc.setColor(sf::Color::Black);
+    this->object_desc.setFillColor(sf::Color::Black);
     this->object_desc.setPosition(30.0f, 300.0f);
 
     return true;

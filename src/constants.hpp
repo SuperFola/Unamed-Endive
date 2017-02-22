@@ -71,4 +71,10 @@ enum class ChState {
     running
 };
 
+enum class FightEnv {
+    CityWithForest,
+    Forest,
+    Sea
+};
+
 #endif // DEF_CONSTANTS

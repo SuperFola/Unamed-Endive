@@ -34,7 +34,7 @@ bool DexView::load()
     this->text.setFont(this->font);
     this->text.setString("Dexeur");
     this->text.setCharacterSize(24);
-    this->text.setColor(sf::Color::Black);
+    this->text.setFillColor(sf::Color::Black);
     this->text.setPosition(WIN_W / 2 - this->text.getGlobalBounds().width / 2, 30.0f);
 
     return true;
@@ -168,7 +168,7 @@ void DexView::load_dex_content()
         sf::Text _text;
         _text.setFont(this->font);
         _text.setCharacterSize(20);
-        _text.setColor(sf::Color::Black);
+        _text.setFillColor(sf::Color::Black);
 
         sf::Sprite _sprite;
         _sprite.setTexture(this->crealoader->get(crea.file));
@@ -288,7 +288,7 @@ void DexView::load_dex_content()
         }
         sf::Text text_type;
         text_type.setCharacterSize(20);
-        text_type.setColor(sf::Color::Black);
+        text_type.setFillColor(sf::Color::Black);
         text_type.setFont(this->font);
         text_type.setString(type_c);
 

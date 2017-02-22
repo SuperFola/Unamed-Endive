@@ -348,9 +348,9 @@ void Game::render_menu(const std::vector<std::string>& s, bool new_game)
             this->menu_text.setPosition(this->menu_text.getPosition().x, 150.0f + i * (this->menu_text.getCharacterSize() + 4.0f));
 
             if (i == this->menu_game_selected)
-                this->menu_text.setColor(sf::Color::Green);
+                this->menu_text.setFillColor(sf::Color::Green);
             else
-                this->menu_text.setColor(sf::Color::Black);
+                this->menu_text.setFillColor(sf::Color::Black);
 
             this->window.draw(this->menu_text);
 
@@ -596,23 +596,23 @@ Game::Game() :
     this->cmd.setFont(this->font);
     this->cmd.setCharacterSize(24);
     this->cmd.setPosition(10.0f, 10.0f);
-    this->cmd.setColor(sf::Color::White);
+    this->cmd.setFillColor(sf::Color::White);
 
     this->menu_user.setFont(this->font);
     this->menu_user.setCharacterSize(24);
     this->menu_user.setPosition(0.0f, WIN_H / 2.0f - 72.0f);
-    this->menu_user.setColor(sf::Color::Black);
+    this->menu_user.setFillColor(sf::Color::Black);
 
     this->menu_text.setFont(this->font);
     this->menu_text.setCharacterSize(24);
     this->menu_text.setPosition(WIN_W / 2.0f - 200.0f, 0.0f);
-    this->menu_text.setColor(sf::Color::Black);
+    this->menu_text.setFillColor(sf::Color::Black);
 
     this->menu_ask_user.setFont(this->font);
     this->menu_ask_user.setCharacterSize(24);
     this->menu_ask_user.setString("Quel est votre nom ?");
     this->menu_ask_user.setPosition(WIN_W / 2.0f - this->menu_ask_user.getLocalBounds().width / 2.0f, WIN_H / 2.0f - 100.0f);
-    this->menu_ask_user.setColor(sf::Color::Black);
+    this->menu_ask_user.setFillColor(sf::Color::Black);
 
     ObjectsTable::load();
     this->ttable.load();
