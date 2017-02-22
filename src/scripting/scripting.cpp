@@ -831,8 +831,7 @@ void PyScripting::setPlayer(Character* player)
  {
      std::string tid = std::string(id);
 
-     if (instance.sprites[tid].getPosition().x != x || instance.sprites[tid].getPosition().y != y)
-        instance.sprites[tid].setPosition(x, y);
+    instance.sprites[tid].setPosition(x, y);
     instance.window->draw(instance.sprites[tid]);
 
     return 0;
@@ -842,11 +841,8 @@ void PyScripting::setPlayer(Character* player)
  {
      std::string tid = std::string(id);
 
-     if (instance.sprites[tid].getPosition().x != x || instance.sprites[tid].getPosition().y != y)
-     {
-        sf::Vector2f p2 = instance.window->mapPixelToCoords(sf::Vector2i(x, y));
-        instance.sprites[tid].setPosition(p2);
-     }
+    sf::Vector2f p2 = instance.window->mapPixelToCoords(sf::Vector2i(x, y));
+    instance.sprites[tid].setPosition(p2);
     instance.window->draw(instance.sprites[tid]);
 
     return 0;
