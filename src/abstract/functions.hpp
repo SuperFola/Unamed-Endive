@@ -45,8 +45,6 @@ std::string to_string(const T& n)
 
 bool is_file_existing(const std::string& file);
 
-bool create_directory(const std::string& name);
-
 sf::String wrapText(sf::String, int, const sf::Font&, int, bool bold=false);
 
 #endif // DEF_ABS_FUNC

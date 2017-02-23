@@ -356,7 +356,7 @@ void CreaView::send_to(int id)
     if (this->displaying_crea)
     {
         // send selected crea to pc
-        if (this->pc->add_creature(this->equip->getCrea(this->selected)))
+        if (this->pc->add_creature(this->equip->getCrea(this->selected)) && this->equip->getSize() > 1)
         {
             // it succeeded, we can delete the creature from the old container
             this->equip->remove_creature(this->selected);

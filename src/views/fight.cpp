@@ -144,9 +144,9 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
-        case sf::Keyboard::Escape:
+        /*case sf::Keyboard::Escape:
             new_view = LAST_VIEW_ID;
-            break;
+            break;*/
 
         default:
             break;
@@ -157,6 +157,25 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
+            if (__Y >= 490 + 75 && __Y <= 490 + 125)
+            {
+                if (__X >= 5 && __X <= 157)
+                {
+                    // attack button
+                }
+                else if (__X >= 164 && __X <= 316)
+                {
+                    // equip button
+                }
+                else if (__X >= 323 && __X <= 475)
+                {
+                    // bag button
+                }
+                else if (__X >= 480 && __X <= 632)
+                {
+                    // fly away button
+                }
+            }
             break;
 
         default:

@@ -28,6 +28,8 @@ private:
     sf::Text lsdata;
     sf::Text cnam, clev, ctyp, csta, catk, cdef, clif;
     sf::Sprite cimg;
+    sf::Text error_msg;
+    int err_duration;
 
     int selected;
     int offset;
