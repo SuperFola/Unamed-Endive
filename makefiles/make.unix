@@ -15,11 +15,11 @@ AR = ar
 LD = g++-6
 WINDRES = windres
 #-I$SFML_DIR/include
-INC = -I$PY_DIR_INC
+INC = -I$(PY_DIR_INC)
 CFLAGS = -Wall -std=c++14
 RESINC = 
 #-L$$SFML_DIR/lib
-LIBDIR = -L$PY_DIR_LIB -Ldlls/
+LIBDIR = -L$(PY_DIR_LIB) -Ldlls/
 LIB = 
 LDFLAGS = -lPython34
 
