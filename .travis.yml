@@ -21,6 +21,6 @@ before_install:
 
 script:
 - sudo bash configure
-- g++ -v
+- g++-6 -v
 - make -f makefiles/make.unix
 - bin/DebugUnix/main
