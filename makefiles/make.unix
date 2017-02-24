@@ -5,7 +5,7 @@
 
 WORKDIR = `pwd`
 
-SFML_VERSION = 2.4.2
+SFML_DIR = C:\SFML-2.4.2
 
 CC = gcc
 CXX = g++
@@ -13,365 +13,359 @@ AR = ar
 LD = g++
 WINDRES = windres
 
-INC = -IC:/SFML-\$\$SFML_VERSION/include -Isrc/scripting/Python34/include
-CFLAGS = -Wall -std=c++1y
+INC = -I\$\$SFML_DIR/include -Isrc/scripting/Python34/include
+CFLAGS = -Wall -std=c++14
 RESINC = 
-LIBDIR = -LC:/SFML-\$\$SFML_VERSION/lib -Lsrc/scripting/Python34/libs -Ldlls/
+LIBDIR = -L\$\$SFML_DIR/lib -Lsrc/scripting/Python34/libs -Ldlls/
 LIB = 
 LDFLAGS = -lPython34
 
-INC_DEBUG = $(INC)
-CFLAGS_DEBUG = $(CFLAGS) -g
-RESINC_DEBUG = $(RESINC)
-RCFLAGS_DEBUG = $(RCFLAGS)
-LIBDIR_DEBUG = $(LIBDIR)
-LIB_DEBUG = $(LIB)-lsfml-graphics-d -lsfml-window-d -lsfml-audio-d -lsfml-system-d
-LDFLAGS_DEBUG = $(LDFLAGS)
-OBJDIR_DEBUG = obj/Debug
-DEP_DEBUG = 
-OUT_DEBUG = bin/Debug/main
+INC_DEBUGUNIX = $(INC)
+CFLAGS_DEBUGUNIX = $(CFLAGS) -g
+RESINC_DEBUGUNIX = $(RESINC)
+RCFLAGS_DEBUGUNIX = $(RCFLAGS)
+LIBDIR_DEBUGUNIX = $(LIBDIR)
+LIB_DEBUGUNIX = $(LIB)-lsfml-graphics-d -lsfml-window-d -lsfml-audio-d -lsfml-system-d
+LDFLAGS_DEBUGUNIX = $(LDFLAGS)
+OBJDIR_DEBUGUNIX = obj/DebugUnix
+DEP_DEBUGUNIX = 
+OUT_DEBUGUNIX = bin/DebugUnix/main
 
-INC_RELEASE = $(INC)
-CFLAGS_RELEASE = $(CFLAGS) -O2
-RESINC_RELEASE = $(RESINC)
-RCFLAGS_RELEASE = $(RCFLAGS)
-LIBDIR_RELEASE = $(LIBDIR)
-LIB_RELEASE = $(LIB)-lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
-LDFLAGS_RELEASE = $(LDFLAGS) -s
-OBJDIR_RELEASE = obj/Release
-DEP_RELEASE = 
-OUT_RELEASE = bin/Release/main
+INC_RELEASEUNIX = $(INC)
+CFLAGS_RELEASEUNIX = $(CFLAGS) -O2
+RESINC_RELEASEUNIX = $(RESINC)
+RCFLAGS_RELEASEUNIX = $(RCFLAGS)
+LIBDIR_RELEASEUNIX = $(LIBDIR)
+LIB_RELEASEUNIX = $(LIB)-lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
+LDFLAGS_RELEASEUNIX = $(LDFLAGS) -s
+OBJDIR_RELEASEUNIX = obj/ReleaseUnix
+DEP_RELEASEUNIX = 
+OUT_RELEASEUNIX = bin/ReleaseUnix/main
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/src/scripting/scripting.o $(OBJDIR_DEBUG)/src/particles/particles.o $(OBJDIR_DEBUG)/src/objects/dex.o $(OBJDIR_DEBUG)/src/map/tilemap.o $(OBJDIR_DEBUG)/src/map/reader.o $(OBJDIR_DEBUG)/src/map/map.o $(OBJDIR_DEBUG)/src/map/blocks/block.o $(OBJDIR_DEBUG)/src/jsoncpp.o $(OBJDIR_DEBUG)/src/game.o $(OBJDIR_DEBUG)/src/entities/pnjmanager.o $(OBJDIR_DEBUG)/src/views/view.o $(OBJDIR_DEBUG)/src/views/save.o $(OBJDIR_DEBUG)/src/views/map.o $(OBJDIR_DEBUG)/src/views/inventory.o $(OBJDIR_DEBUG)/src/views/huds/menu.o $(OBJDIR_DEBUG)/src/views/huds/hud.o $(OBJDIR_DEBUG)/src/views/fight.o $(OBJDIR_DEBUG)/src/views/dex.o $(OBJDIR_DEBUG)/src/views/default.o $(OBJDIR_DEBUG)/src/views/creatures.o $(OBJDIR_DEBUG)/src/abstract/triggersmanager.o $(OBJDIR_DEBUG)/src/abstract/texturesmanager.o $(OBJDIR_DEBUG)/src/abstract/statemachine.o $(OBJDIR_DEBUG)/src/abstract/soundmanager.o $(OBJDIR_DEBUG)/src/abstract/point.o $(OBJDIR_DEBUG)/src/abstract/musicplayer.o $(OBJDIR_DEBUG)/src/abstract/functions.o $(OBJDIR_DEBUG)/src/abstract/equip.o $(OBJDIR_DEBUG)/src/abstract/creatures_loader.o $(OBJDIR_DEBUG)/src/abstract/competence.o $(OBJDIR_DEBUG)/resource.o $(OBJDIR_DEBUG)/main.o $(OBJDIR_DEBUG)/src/entities/pnj.o $(OBJDIR_DEBUG)/src/entities/effects/sort.o $(OBJDIR_DEBUG)/src/entities/creature.o $(OBJDIR_DEBUG)/src/entities/character.o $(OBJDIR_DEBUG)/src/entities/animatedentity.o $(OBJDIR_DEBUG)/src/constants.o $(OBJDIR_DEBUG)/src/bag/pockets/pocket.o $(OBJDIR_DEBUG)/src/bag/pockets/objects/object.o $(OBJDIR_DEBUG)/src/bag/objectstable.o $(OBJDIR_DEBUG)/src/bag/bag.o $(OBJDIR_DEBUG)/src/abstract/types_table.o
+OBJ_DEBUGUNIX = $(OBJDIR_DEBUGUNIX)/src/scripting/scripting.o $(OBJDIR_DEBUGUNIX)/src/particles/particles.o $(OBJDIR_DEBUGUNIX)/src/objects/dex.o $(OBJDIR_DEBUGUNIX)/src/map/tilemap.o $(OBJDIR_DEBUGUNIX)/src/map/reader.o $(OBJDIR_DEBUGUNIX)/src/map/map.o $(OBJDIR_DEBUGUNIX)/src/map/blocks/block.o $(OBJDIR_DEBUGUNIX)/src/jsoncpp.o $(OBJDIR_DEBUGUNIX)/src/game.o $(OBJDIR_DEBUGUNIX)/src/entities/pnjmanager.o $(OBJDIR_DEBUGUNIX)/src/views/view.o $(OBJDIR_DEBUGUNIX)/src/views/save.o $(OBJDIR_DEBUGUNIX)/src/views/map.o $(OBJDIR_DEBUGUNIX)/src/views/inventory.o $(OBJDIR_DEBUGUNIX)/src/views/huds/menu.o $(OBJDIR_DEBUGUNIX)/src/views/huds/hud.o $(OBJDIR_DEBUGUNIX)/src/views/fight.o $(OBJDIR_DEBUGUNIX)/src/views/dex.o $(OBJDIR_DEBUGUNIX)/src/views/default.o $(OBJDIR_DEBUGUNIX)/src/views/creatures.o $(OBJDIR_DEBUGUNIX)/src/abstract/triggersmanager.o $(OBJDIR_DEBUGUNIX)/src/abstract/texturesmanager.o $(OBJDIR_DEBUGUNIX)/src/abstract/statemachine.o $(OBJDIR_DEBUGUNIX)/src/abstract/soundmanager.o $(OBJDIR_DEBUGUNIX)/src/abstract/point.o $(OBJDIR_DEBUGUNIX)/src/abstract/musicplayer.o $(OBJDIR_DEBUGUNIX)/src/abstract/functions.o $(OBJDIR_DEBUGUNIX)/src/abstract/equip.o $(OBJDIR_DEBUGUNIX)/src/abstract/creatures_loader.o $(OBJDIR_DEBUGUNIX)/src/abstract/competence.o $(OBJDIR_DEBUGUNIX)/main.o $(OBJDIR_DEBUGUNIX)/src/entities/pnj.o $(OBJDIR_DEBUGUNIX)/src/entities/effects/sort.o $(OBJDIR_DEBUGUNIX)/src/entities/creature.o $(OBJDIR_DEBUGUNIX)/src/entities/character.o $(OBJDIR_DEBUGUNIX)/src/entities/animatedentity.o $(OBJDIR_DEBUGUNIX)/src/constants.o $(OBJDIR_DEBUGUNIX)/src/bag/pockets/pocket.o $(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects/object.o $(OBJDIR_DEBUGUNIX)/src/bag/objectstable.o $(OBJDIR_DEBUGUNIX)/src/bag/bag.o $(OBJDIR_DEBUGUNIX)/src/abstract/types_table.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/src/scripting/scripting.o $(OBJDIR_RELEASE)/src/particles/particles.o $(OBJDIR_RELEASE)/src/objects/dex.o $(OBJDIR_RELEASE)/src/map/tilemap.o $(OBJDIR_RELEASE)/src/map/reader.o $(OBJDIR_RELEASE)/src/map/map.o $(OBJDIR_RELEASE)/src/map/blocks/block.o $(OBJDIR_RELEASE)/src/jsoncpp.o $(OBJDIR_RELEASE)/src/game.o $(OBJDIR_RELEASE)/src/entities/pnjmanager.o $(OBJDIR_RELEASE)/src/views/view.o $(OBJDIR_RELEASE)/src/views/save.o $(OBJDIR_RELEASE)/src/views/map.o $(OBJDIR_RELEASE)/src/views/inventory.o $(OBJDIR_RELEASE)/src/views/huds/menu.o $(OBJDIR_RELEASE)/src/views/huds/hud.o $(OBJDIR_RELEASE)/src/views/fight.o $(OBJDIR_RELEASE)/src/views/dex.o $(OBJDIR_RELEASE)/src/views/default.o $(OBJDIR_RELEASE)/src/views/creatures.o $(OBJDIR_RELEASE)/src/abstract/triggersmanager.o $(OBJDIR_RELEASE)/src/abstract/texturesmanager.o $(OBJDIR_RELEASE)/src/abstract/statemachine.o $(OBJDIR_RELEASE)/src/abstract/soundmanager.o $(OBJDIR_RELEASE)/src/abstract/point.o $(OBJDIR_RELEASE)/src/abstract/musicplayer.o $(OBJDIR_RELEASE)/src/abstract/functions.o $(OBJDIR_RELEASE)/src/abstract/equip.o $(OBJDIR_RELEASE)/src/abstract/creatures_loader.o $(OBJDIR_RELEASE)/src/abstract/competence.o $(OBJDIR_RELEASE)/resource.o $(OBJDIR_RELEASE)/main.o $(OBJDIR_RELEASE)/src/entities/pnj.o $(OBJDIR_RELEASE)/src/entities/effects/sort.o $(OBJDIR_RELEASE)/src/entities/creature.o $(OBJDIR_RELEASE)/src/entities/character.o $(OBJDIR_RELEASE)/src/entities/animatedentity.o $(OBJDIR_RELEASE)/src/constants.o $(OBJDIR_RELEASE)/src/bag/pockets/pocket.o $(OBJDIR_RELEASE)/src/bag/pockets/objects/object.o $(OBJDIR_RELEASE)/src/bag/objectstable.o $(OBJDIR_RELEASE)/src/bag/bag.o $(OBJDIR_RELEASE)/src/abstract/types_table.o
+OBJ_RELEASEUNIX = $(OBJDIR_RELEASEUNIX)/src/scripting/scripting.o $(OBJDIR_RELEASEUNIX)/src/particles/particles.o $(OBJDIR_RELEASEUNIX)/src/objects/dex.o $(OBJDIR_RELEASEUNIX)/src/map/tilemap.o $(OBJDIR_RELEASEUNIX)/src/map/reader.o $(OBJDIR_RELEASEUNIX)/src/map/map.o $(OBJDIR_RELEASEUNIX)/src/map/blocks/block.o $(OBJDIR_RELEASEUNIX)/src/jsoncpp.o $(OBJDIR_RELEASEUNIX)/src/game.o $(OBJDIR_RELEASEUNIX)/src/entities/pnjmanager.o $(OBJDIR_RELEASEUNIX)/src/views/view.o $(OBJDIR_RELEASEUNIX)/src/views/save.o $(OBJDIR_RELEASEUNIX)/src/views/map.o $(OBJDIR_RELEASEUNIX)/src/views/inventory.o $(OBJDIR_RELEASEUNIX)/src/views/huds/menu.o $(OBJDIR_RELEASEUNIX)/src/views/huds/hud.o $(OBJDIR_RELEASEUNIX)/src/views/fight.o $(OBJDIR_RELEASEUNIX)/src/views/dex.o $(OBJDIR_RELEASEUNIX)/src/views/default.o $(OBJDIR_RELEASEUNIX)/src/views/creatures.o $(OBJDIR_RELEASEUNIX)/src/abstract/triggersmanager.o $(OBJDIR_RELEASEUNIX)/src/abstract/texturesmanager.o $(OBJDIR_RELEASEUNIX)/src/abstract/statemachine.o $(OBJDIR_RELEASEUNIX)/src/abstract/soundmanager.o $(OBJDIR_RELEASEUNIX)/src/abstract/point.o $(OBJDIR_RELEASEUNIX)/src/abstract/musicplayer.o $(OBJDIR_RELEASEUNIX)/src/abstract/functions.o $(OBJDIR_RELEASEUNIX)/src/abstract/equip.o $(OBJDIR_RELEASEUNIX)/src/abstract/creatures_loader.o $(OBJDIR_RELEASEUNIX)/src/abstract/competence.o $(OBJDIR_RELEASEUNIX)/main.o $(OBJDIR_RELEASEUNIX)/src/entities/pnj.o $(OBJDIR_RELEASEUNIX)/src/entities/effects/sort.o $(OBJDIR_RELEASEUNIX)/src/entities/creature.o $(OBJDIR_RELEASEUNIX)/src/entities/character.o $(OBJDIR_RELEASEUNIX)/src/entities/animatedentity.o $(OBJDIR_RELEASEUNIX)/src/constants.o $(OBJDIR_RELEASEUNIX)/src/bag/pockets/pocket.o $(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects/object.o $(OBJDIR_RELEASEUNIX)/src/bag/objectstable.o $(OBJDIR_RELEASEUNIX)/src/bag/bag.o $(OBJDIR_RELEASEUNIX)/src/abstract/types_table.o
 
-all: before_build build_debug build_release after_build
+all: before_build build_debugunix build_releaseunix after_build
 
-clean: clean_debug clean_release
+clean: clean_debugunix clean_releaseunix
 
 before_build: 
 
 after_build: 
 	"..\tools\genmakefile.bat"
 
-before_debug: 
-	test -d bin/Debug || mkdir -p bin/Debug
-	test -d $(OBJDIR_DEBUG)/src/scripting || mkdir -p $(OBJDIR_DEBUG)/src/scripting
-	test -d $(OBJDIR_DEBUG)/src/particles || mkdir -p $(OBJDIR_DEBUG)/src/particles
-	test -d $(OBJDIR_DEBUG)/src/objects || mkdir -p $(OBJDIR_DEBUG)/src/objects
-	test -d $(OBJDIR_DEBUG)/src/map || mkdir -p $(OBJDIR_DEBUG)/src/map
-	test -d $(OBJDIR_DEBUG)/src/map/blocks || mkdir -p $(OBJDIR_DEBUG)/src/map/blocks
-	test -d $(OBJDIR_DEBUG)/src || mkdir -p $(OBJDIR_DEBUG)/src
-	test -d $(OBJDIR_DEBUG)/src/entities || mkdir -p $(OBJDIR_DEBUG)/src/entities
-	test -d $(OBJDIR_DEBUG)/src/views || mkdir -p $(OBJDIR_DEBUG)/src/views
-	test -d $(OBJDIR_DEBUG)/src/views/huds || mkdir -p $(OBJDIR_DEBUG)/src/views/huds
-	test -d $(OBJDIR_DEBUG)/src/abstract || mkdir -p $(OBJDIR_DEBUG)/src/abstract
-	test -d $(OBJDIR_DEBUG) || mkdir -p $(OBJDIR_DEBUG)
-	test -d $(OBJDIR_DEBUG)/src/entities/effects || mkdir -p $(OBJDIR_DEBUG)/src/entities/effects
-	test -d $(OBJDIR_DEBUG)/src/bag/pockets || mkdir -p $(OBJDIR_DEBUG)/src/bag/pockets
-	test -d $(OBJDIR_DEBUG)/src/bag/pockets/objects || mkdir -p $(OBJDIR_DEBUG)/src/bag/pockets/objects
-	test -d $(OBJDIR_DEBUG)/src/bag || mkdir -p $(OBJDIR_DEBUG)/src/bag
+before_debugunix: 
+	test -d bin/DebugUnix || mkdir -p bin/DebugUnix
+	test -d $(OBJDIR_DEBUGUNIX)/src/scripting || mkdir -p $(OBJDIR_DEBUGUNIX)/src/scripting
+	test -d $(OBJDIR_DEBUGUNIX)/src/particles || mkdir -p $(OBJDIR_DEBUGUNIX)/src/particles
+	test -d $(OBJDIR_DEBUGUNIX)/src/objects || mkdir -p $(OBJDIR_DEBUGUNIX)/src/objects
+	test -d $(OBJDIR_DEBUGUNIX)/src/map || mkdir -p $(OBJDIR_DEBUGUNIX)/src/map
+	test -d $(OBJDIR_DEBUGUNIX)/src/map/blocks || mkdir -p $(OBJDIR_DEBUGUNIX)/src/map/blocks
+	test -d $(OBJDIR_DEBUGUNIX)/src || mkdir -p $(OBJDIR_DEBUGUNIX)/src
+	test -d $(OBJDIR_DEBUGUNIX)/src/entities || mkdir -p $(OBJDIR_DEBUGUNIX)/src/entities
+	test -d $(OBJDIR_DEBUGUNIX)/src/views || mkdir -p $(OBJDIR_DEBUGUNIX)/src/views
+	test -d $(OBJDIR_DEBUGUNIX)/src/views/huds || mkdir -p $(OBJDIR_DEBUGUNIX)/src/views/huds
+	test -d $(OBJDIR_DEBUGUNIX)/src/abstract || mkdir -p $(OBJDIR_DEBUGUNIX)/src/abstract
+	test -d $(OBJDIR_DEBUGUNIX) || mkdir -p $(OBJDIR_DEBUGUNIX)
+	test -d $(OBJDIR_DEBUGUNIX)/src/entities/effects || mkdir -p $(OBJDIR_DEBUGUNIX)/src/entities/effects
+	test -d $(OBJDIR_DEBUGUNIX)/src/bag/pockets || mkdir -p $(OBJDIR_DEBUGUNIX)/src/bag/pockets
+	test -d $(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects || mkdir -p $(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects
+	test -d $(OBJDIR_DEBUGUNIX)/src/bag || mkdir -p $(OBJDIR_DEBUGUNIX)/src/bag
 
-after_debug: 
+after_debugunix: 
 
-build_debug: before_debug out_debug after_debug
+build_debugunix: before_debugunix out_debugunix after_debugunix
 
-debug: before_build build_debug after_build
+debugunix: before_build build_debugunix after_build
 
-out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
-	$(LD) $(LIBDIR_DEBUG) -o $(OUT_DEBUG) $(OBJ_DEBUG)  $(LDFLAGS_DEBUG) $(LIB_DEBUG)
+out_debugunix: before_debugunix $(OBJ_DEBUGUNIX) $(DEP_DEBUGUNIX)
+	$(LD) $(LIBDIR_DEBUGUNIX) -o $(OUT_DEBUGUNIX) $(OBJ_DEBUGUNIX)  $(LDFLAGS_DEBUGUNIX) $(LIB_DEBUGUNIX)
 
-$(OBJDIR_DEBUG)/src/scripting/scripting.o: src/scripting/scripting.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/scripting/scripting.cpp -o $(OBJDIR_DEBUG)/src/scripting/scripting.o
+$(OBJDIR_DEBUGUNIX)/src/scripting/scripting.o: src/scripting/scripting.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/scripting/scripting.cpp -o $(OBJDIR_DEBUGUNIX)/src/scripting/scripting.o
 
-$(OBJDIR_DEBUG)/src/particles/particles.o: src/particles/particles.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/particles/particles.cpp -o $(OBJDIR_DEBUG)/src/particles/particles.o
+$(OBJDIR_DEBUGUNIX)/src/particles/particles.o: src/particles/particles.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/particles/particles.cpp -o $(OBJDIR_DEBUGUNIX)/src/particles/particles.o
 
-$(OBJDIR_DEBUG)/src/objects/dex.o: src/objects/dex.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/objects/dex.cpp -o $(OBJDIR_DEBUG)/src/objects/dex.o
+$(OBJDIR_DEBUGUNIX)/src/objects/dex.o: src/objects/dex.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/objects/dex.cpp -o $(OBJDIR_DEBUGUNIX)/src/objects/dex.o
 
-$(OBJDIR_DEBUG)/src/map/tilemap.o: src/map/tilemap.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/map/tilemap.cpp -o $(OBJDIR_DEBUG)/src/map/tilemap.o
+$(OBJDIR_DEBUGUNIX)/src/map/tilemap.o: src/map/tilemap.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/map/tilemap.cpp -o $(OBJDIR_DEBUGUNIX)/src/map/tilemap.o
 
-$(OBJDIR_DEBUG)/src/map/reader.o: src/map/reader.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/map/reader.cpp -o $(OBJDIR_DEBUG)/src/map/reader.o
+$(OBJDIR_DEBUGUNIX)/src/map/reader.o: src/map/reader.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/map/reader.cpp -o $(OBJDIR_DEBUGUNIX)/src/map/reader.o
 
-$(OBJDIR_DEBUG)/src/map/map.o: src/map/map.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/map/map.cpp -o $(OBJDIR_DEBUG)/src/map/map.o
+$(OBJDIR_DEBUGUNIX)/src/map/map.o: src/map/map.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/map/map.cpp -o $(OBJDIR_DEBUGUNIX)/src/map/map.o
 
-$(OBJDIR_DEBUG)/src/map/blocks/block.o: src/map/blocks/block.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/map/blocks/block.cpp -o $(OBJDIR_DEBUG)/src/map/blocks/block.o
+$(OBJDIR_DEBUGUNIX)/src/map/blocks/block.o: src/map/blocks/block.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/map/blocks/block.cpp -o $(OBJDIR_DEBUGUNIX)/src/map/blocks/block.o
 
-$(OBJDIR_DEBUG)/src/jsoncpp.o: src/jsoncpp.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/jsoncpp.cpp -o $(OBJDIR_DEBUG)/src/jsoncpp.o
+$(OBJDIR_DEBUGUNIX)/src/jsoncpp.o: src/jsoncpp.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/jsoncpp.cpp -o $(OBJDIR_DEBUGUNIX)/src/jsoncpp.o
 
-$(OBJDIR_DEBUG)/src/game.o: src/game.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/game.cpp -o $(OBJDIR_DEBUG)/src/game.o
+$(OBJDIR_DEBUGUNIX)/src/game.o: src/game.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/game.cpp -o $(OBJDIR_DEBUGUNIX)/src/game.o
 
-$(OBJDIR_DEBUG)/src/entities/pnjmanager.o: src/entities/pnjmanager.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/entities/pnjmanager.cpp -o $(OBJDIR_DEBUG)/src/entities/pnjmanager.o
+$(OBJDIR_DEBUGUNIX)/src/entities/pnjmanager.o: src/entities/pnjmanager.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/entities/pnjmanager.cpp -o $(OBJDIR_DEBUGUNIX)/src/entities/pnjmanager.o
 
-$(OBJDIR_DEBUG)/src/views/view.o: src/views/view.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/view.cpp -o $(OBJDIR_DEBUG)/src/views/view.o
+$(OBJDIR_DEBUGUNIX)/src/views/view.o: src/views/view.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/view.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/view.o
 
-$(OBJDIR_DEBUG)/src/views/save.o: src/views/save.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/save.cpp -o $(OBJDIR_DEBUG)/src/views/save.o
+$(OBJDIR_DEBUGUNIX)/src/views/save.o: src/views/save.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/save.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/save.o
 
-$(OBJDIR_DEBUG)/src/views/map.o: src/views/map.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/map.cpp -o $(OBJDIR_DEBUG)/src/views/map.o
+$(OBJDIR_DEBUGUNIX)/src/views/map.o: src/views/map.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/map.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/map.o
 
-$(OBJDIR_DEBUG)/src/views/inventory.o: src/views/inventory.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/inventory.cpp -o $(OBJDIR_DEBUG)/src/views/inventory.o
+$(OBJDIR_DEBUGUNIX)/src/views/inventory.o: src/views/inventory.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/inventory.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/inventory.o
 
-$(OBJDIR_DEBUG)/src/views/huds/menu.o: src/views/huds/menu.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/huds/menu.cpp -o $(OBJDIR_DEBUG)/src/views/huds/menu.o
+$(OBJDIR_DEBUGUNIX)/src/views/huds/menu.o: src/views/huds/menu.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/huds/menu.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/huds/menu.o
 
-$(OBJDIR_DEBUG)/src/views/huds/hud.o: src/views/huds/hud.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/huds/hud.cpp -o $(OBJDIR_DEBUG)/src/views/huds/hud.o
+$(OBJDIR_DEBUGUNIX)/src/views/huds/hud.o: src/views/huds/hud.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/huds/hud.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/huds/hud.o
 
-$(OBJDIR_DEBUG)/src/views/fight.o: src/views/fight.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/fight.cpp -o $(OBJDIR_DEBUG)/src/views/fight.o
+$(OBJDIR_DEBUGUNIX)/src/views/fight.o: src/views/fight.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/fight.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/fight.o
 
-$(OBJDIR_DEBUG)/src/views/dex.o: src/views/dex.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/dex.cpp -o $(OBJDIR_DEBUG)/src/views/dex.o
+$(OBJDIR_DEBUGUNIX)/src/views/dex.o: src/views/dex.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/dex.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/dex.o
 
-$(OBJDIR_DEBUG)/src/views/default.o: src/views/default.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/default.cpp -o $(OBJDIR_DEBUG)/src/views/default.o
+$(OBJDIR_DEBUGUNIX)/src/views/default.o: src/views/default.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/default.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/default.o
 
-$(OBJDIR_DEBUG)/src/views/creatures.o: src/views/creatures.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/views/creatures.cpp -o $(OBJDIR_DEBUG)/src/views/creatures.o
+$(OBJDIR_DEBUGUNIX)/src/views/creatures.o: src/views/creatures.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/creatures.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/creatures.o
 
-$(OBJDIR_DEBUG)/src/abstract/triggersmanager.o: src/abstract/triggersmanager.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/triggersmanager.cpp -o $(OBJDIR_DEBUG)/src/abstract/triggersmanager.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/triggersmanager.o: src/abstract/triggersmanager.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/triggersmanager.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/triggersmanager.o
 
-$(OBJDIR_DEBUG)/src/abstract/texturesmanager.o: src/abstract/texturesmanager.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/texturesmanager.cpp -o $(OBJDIR_DEBUG)/src/abstract/texturesmanager.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/texturesmanager.o: src/abstract/texturesmanager.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/texturesmanager.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/texturesmanager.o
 
-$(OBJDIR_DEBUG)/src/abstract/statemachine.o: src/abstract/statemachine.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/statemachine.cpp -o $(OBJDIR_DEBUG)/src/abstract/statemachine.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/statemachine.o: src/abstract/statemachine.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/statemachine.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/statemachine.o
 
-$(OBJDIR_DEBUG)/src/abstract/soundmanager.o: src/abstract/soundmanager.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/soundmanager.cpp -o $(OBJDIR_DEBUG)/src/abstract/soundmanager.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/soundmanager.o: src/abstract/soundmanager.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/soundmanager.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/soundmanager.o
 
-$(OBJDIR_DEBUG)/src/abstract/point.o: src/abstract/point.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/point.cpp -o $(OBJDIR_DEBUG)/src/abstract/point.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/point.o: src/abstract/point.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/point.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/point.o
 
-$(OBJDIR_DEBUG)/src/abstract/musicplayer.o: src/abstract/musicplayer.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/musicplayer.cpp -o $(OBJDIR_DEBUG)/src/abstract/musicplayer.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/musicplayer.o: src/abstract/musicplayer.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/musicplayer.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/musicplayer.o
 
-$(OBJDIR_DEBUG)/src/abstract/functions.o: src/abstract/functions.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/functions.cpp -o $(OBJDIR_DEBUG)/src/abstract/functions.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/functions.o: src/abstract/functions.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/functions.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/functions.o
 
-$(OBJDIR_DEBUG)/src/abstract/equip.o: src/abstract/equip.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/equip.cpp -o $(OBJDIR_DEBUG)/src/abstract/equip.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/equip.o: src/abstract/equip.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/equip.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/equip.o
 
-$(OBJDIR_DEBUG)/src/abstract/creatures_loader.o: src/abstract/creatures_loader.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/creatures_loader.cpp -o $(OBJDIR_DEBUG)/src/abstract/creatures_loader.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/creatures_loader.o: src/abstract/creatures_loader.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/creatures_loader.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/creatures_loader.o
 
-$(OBJDIR_DEBUG)/src/abstract/competence.o: src/abstract/competence.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/competence.cpp -o $(OBJDIR_DEBUG)/src/abstract/competence.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/competence.o: src/abstract/competence.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/competence.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/competence.o
 
-$(OBJDIR_DEBUG)/resource.o: resource.rc
-	$(WINDRES) -i resource.rc -J rc -o $(OBJDIR_DEBUG)/resource.o -O coff $(INC_DEBUG)
+$(OBJDIR_DEBUGUNIX)/main.o: main.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c main.cpp -o $(OBJDIR_DEBUGUNIX)/main.o
 
-$(OBJDIR_DEBUG)/main.o: main.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c main.cpp -o $(OBJDIR_DEBUG)/main.o
+$(OBJDIR_DEBUGUNIX)/src/entities/pnj.o: src/entities/pnj.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/entities/pnj.cpp -o $(OBJDIR_DEBUGUNIX)/src/entities/pnj.o
 
-$(OBJDIR_DEBUG)/src/entities/pnj.o: src/entities/pnj.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/entities/pnj.cpp -o $(OBJDIR_DEBUG)/src/entities/pnj.o
+$(OBJDIR_DEBUGUNIX)/src/entities/effects/sort.o: src/entities/effects/sort.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/entities/effects/sort.cpp -o $(OBJDIR_DEBUGUNIX)/src/entities/effects/sort.o
 
-$(OBJDIR_DEBUG)/src/entities/effects/sort.o: src/entities/effects/sort.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/entities/effects/sort.cpp -o $(OBJDIR_DEBUG)/src/entities/effects/sort.o
+$(OBJDIR_DEBUGUNIX)/src/entities/creature.o: src/entities/creature.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/entities/creature.cpp -o $(OBJDIR_DEBUGUNIX)/src/entities/creature.o
 
-$(OBJDIR_DEBUG)/src/entities/creature.o: src/entities/creature.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/entities/creature.cpp -o $(OBJDIR_DEBUG)/src/entities/creature.o
+$(OBJDIR_DEBUGUNIX)/src/entities/character.o: src/entities/character.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/entities/character.cpp -o $(OBJDIR_DEBUGUNIX)/src/entities/character.o
 
-$(OBJDIR_DEBUG)/src/entities/character.o: src/entities/character.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/entities/character.cpp -o $(OBJDIR_DEBUG)/src/entities/character.o
+$(OBJDIR_DEBUGUNIX)/src/entities/animatedentity.o: src/entities/animatedentity.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/entities/animatedentity.cpp -o $(OBJDIR_DEBUGUNIX)/src/entities/animatedentity.o
 
-$(OBJDIR_DEBUG)/src/entities/animatedentity.o: src/entities/animatedentity.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/entities/animatedentity.cpp -o $(OBJDIR_DEBUG)/src/entities/animatedentity.o
+$(OBJDIR_DEBUGUNIX)/src/constants.o: src/constants.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/constants.cpp -o $(OBJDIR_DEBUGUNIX)/src/constants.o
 
-$(OBJDIR_DEBUG)/src/constants.o: src/constants.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/constants.cpp -o $(OBJDIR_DEBUG)/src/constants.o
+$(OBJDIR_DEBUGUNIX)/src/bag/pockets/pocket.o: src/bag/pockets/pocket.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/bag/pockets/pocket.cpp -o $(OBJDIR_DEBUGUNIX)/src/bag/pockets/pocket.o
 
-$(OBJDIR_DEBUG)/src/bag/pockets/pocket.o: src/bag/pockets/pocket.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/bag/pockets/pocket.cpp -o $(OBJDIR_DEBUG)/src/bag/pockets/pocket.o
+$(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects/object.o: src/bag/pockets/objects/object.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/bag/pockets/objects/object.cpp -o $(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects/object.o
 
-$(OBJDIR_DEBUG)/src/bag/pockets/objects/object.o: src/bag/pockets/objects/object.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/bag/pockets/objects/object.cpp -o $(OBJDIR_DEBUG)/src/bag/pockets/objects/object.o
+$(OBJDIR_DEBUGUNIX)/src/bag/objectstable.o: src/bag/objectstable.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/bag/objectstable.cpp -o $(OBJDIR_DEBUGUNIX)/src/bag/objectstable.o
 
-$(OBJDIR_DEBUG)/src/bag/objectstable.o: src/bag/objectstable.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/bag/objectstable.cpp -o $(OBJDIR_DEBUG)/src/bag/objectstable.o
+$(OBJDIR_DEBUGUNIX)/src/bag/bag.o: src/bag/bag.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/bag/bag.cpp -o $(OBJDIR_DEBUGUNIX)/src/bag/bag.o
 
-$(OBJDIR_DEBUG)/src/bag/bag.o: src/bag/bag.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/bag/bag.cpp -o $(OBJDIR_DEBUG)/src/bag/bag.o
+$(OBJDIR_DEBUGUNIX)/src/abstract/types_table.o: src/abstract/types_table.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/types_table.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/types_table.o
 
-$(OBJDIR_DEBUG)/src/abstract/types_table.o: src/abstract/types_table.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c src/abstract/types_table.cpp -o $(OBJDIR_DEBUG)/src/abstract/types_table.o
+clean_debugunix: 
+	rm -f $(OBJ_DEBUGUNIX) $(OUT_DEBUGUNIX)
 
-clean_debug: 
-	rm -f $(OBJ_DEBUG) $(OUT_DEBUG)
+before_releaseunix: 
+	test -d bin/ReleaseUnix || mkdir -p bin/ReleaseUnix
+	test -d $(OBJDIR_RELEASEUNIX)/src/scripting || mkdir -p $(OBJDIR_RELEASEUNIX)/src/scripting
+	test -d $(OBJDIR_RELEASEUNIX)/src/particles || mkdir -p $(OBJDIR_RELEASEUNIX)/src/particles
+	test -d $(OBJDIR_RELEASEUNIX)/src/objects || mkdir -p $(OBJDIR_RELEASEUNIX)/src/objects
+	test -d $(OBJDIR_RELEASEUNIX)/src/map || mkdir -p $(OBJDIR_RELEASEUNIX)/src/map
+	test -d $(OBJDIR_RELEASEUNIX)/src/map/blocks || mkdir -p $(OBJDIR_RELEASEUNIX)/src/map/blocks
+	test -d $(OBJDIR_RELEASEUNIX)/src || mkdir -p $(OBJDIR_RELEASEUNIX)/src
+	test -d $(OBJDIR_RELEASEUNIX)/src/entities || mkdir -p $(OBJDIR_RELEASEUNIX)/src/entities
+	test -d $(OBJDIR_RELEASEUNIX)/src/views || mkdir -p $(OBJDIR_RELEASEUNIX)/src/views
+	test -d $(OBJDIR_RELEASEUNIX)/src/views/huds || mkdir -p $(OBJDIR_RELEASEUNIX)/src/views/huds
+	test -d $(OBJDIR_RELEASEUNIX)/src/abstract || mkdir -p $(OBJDIR_RELEASEUNIX)/src/abstract
+	test -d $(OBJDIR_RELEASEUNIX) || mkdir -p $(OBJDIR_RELEASEUNIX)
+	test -d $(OBJDIR_RELEASEUNIX)/src/entities/effects || mkdir -p $(OBJDIR_RELEASEUNIX)/src/entities/effects
+	test -d $(OBJDIR_RELEASEUNIX)/src/bag/pockets || mkdir -p $(OBJDIR_RELEASEUNIX)/src/bag/pockets
+	test -d $(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects || mkdir -p $(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects
+	test -d $(OBJDIR_RELEASEUNIX)/src/bag || mkdir -p $(OBJDIR_RELEASEUNIX)/src/bag
 
-before_release: 
-	test -d bin/Release || mkdir -p bin/Release
-	test -d $(OBJDIR_RELEASE)/src/scripting || mkdir -p $(OBJDIR_RELEASE)/src/scripting
-	test -d $(OBJDIR_RELEASE)/src/particles || mkdir -p $(OBJDIR_RELEASE)/src/particles
-	test -d $(OBJDIR_RELEASE)/src/objects || mkdir -p $(OBJDIR_RELEASE)/src/objects
-	test -d $(OBJDIR_RELEASE)/src/map || mkdir -p $(OBJDIR_RELEASE)/src/map
-	test -d $(OBJDIR_RELEASE)/src/map/blocks || mkdir -p $(OBJDIR_RELEASE)/src/map/blocks
-	test -d $(OBJDIR_RELEASE)/src || mkdir -p $(OBJDIR_RELEASE)/src
-	test -d $(OBJDIR_RELEASE)/src/entities || mkdir -p $(OBJDIR_RELEASE)/src/entities
-	test -d $(OBJDIR_RELEASE)/src/views || mkdir -p $(OBJDIR_RELEASE)/src/views
-	test -d $(OBJDIR_RELEASE)/src/views/huds || mkdir -p $(OBJDIR_RELEASE)/src/views/huds
-	test -d $(OBJDIR_RELEASE)/src/abstract || mkdir -p $(OBJDIR_RELEASE)/src/abstract
-	test -d $(OBJDIR_RELEASE) || mkdir -p $(OBJDIR_RELEASE)
-	test -d $(OBJDIR_RELEASE)/src/entities/effects || mkdir -p $(OBJDIR_RELEASE)/src/entities/effects
-	test -d $(OBJDIR_RELEASE)/src/bag/pockets || mkdir -p $(OBJDIR_RELEASE)/src/bag/pockets
-	test -d $(OBJDIR_RELEASE)/src/bag/pockets/objects || mkdir -p $(OBJDIR_RELEASE)/src/bag/pockets/objects
-	test -d $(OBJDIR_RELEASE)/src/bag || mkdir -p $(OBJDIR_RELEASE)/src/bag
+after_releaseunix: 
 
-after_release: 
+build_releaseunix: before_releaseunix out_releaseunix after_releaseunix
 
-build_release: before_release out_release after_release
+releaseunix: before_build build_releaseunix after_build
 
-release: before_build build_release after_build
+out_releaseunix: before_releaseunix $(OBJ_RELEASEUNIX) $(DEP_RELEASEUNIX)
+	$(LD) $(LIBDIR_RELEASEUNIX) -o $(OUT_RELEASEUNIX) $(OBJ_RELEASEUNIX)  $(LDFLAGS_RELEASEUNIX) $(LIB_RELEASEUNIX)
 
-out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
-	$(LD) $(LIBDIR_RELEASE) -o $(OUT_RELEASE) $(OBJ_RELEASE)  $(LDFLAGS_RELEASE) $(LIB_RELEASE)
+$(OBJDIR_RELEASEUNIX)/src/scripting/scripting.o: src/scripting/scripting.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/scripting/scripting.cpp -o $(OBJDIR_RELEASEUNIX)/src/scripting/scripting.o
 
-$(OBJDIR_RELEASE)/src/scripting/scripting.o: src/scripting/scripting.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/scripting/scripting.cpp -o $(OBJDIR_RELEASE)/src/scripting/scripting.o
+$(OBJDIR_RELEASEUNIX)/src/particles/particles.o: src/particles/particles.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/particles/particles.cpp -o $(OBJDIR_RELEASEUNIX)/src/particles/particles.o
 
-$(OBJDIR_RELEASE)/src/particles/particles.o: src/particles/particles.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/particles/particles.cpp -o $(OBJDIR_RELEASE)/src/particles/particles.o
+$(OBJDIR_RELEASEUNIX)/src/objects/dex.o: src/objects/dex.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/objects/dex.cpp -o $(OBJDIR_RELEASEUNIX)/src/objects/dex.o
 
-$(OBJDIR_RELEASE)/src/objects/dex.o: src/objects/dex.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/objects/dex.cpp -o $(OBJDIR_RELEASE)/src/objects/dex.o
+$(OBJDIR_RELEASEUNIX)/src/map/tilemap.o: src/map/tilemap.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/map/tilemap.cpp -o $(OBJDIR_RELEASEUNIX)/src/map/tilemap.o
 
-$(OBJDIR_RELEASE)/src/map/tilemap.o: src/map/tilemap.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/map/tilemap.cpp -o $(OBJDIR_RELEASE)/src/map/tilemap.o
+$(OBJDIR_RELEASEUNIX)/src/map/reader.o: src/map/reader.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/map/reader.cpp -o $(OBJDIR_RELEASEUNIX)/src/map/reader.o
 
-$(OBJDIR_RELEASE)/src/map/reader.o: src/map/reader.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/map/reader.cpp -o $(OBJDIR_RELEASE)/src/map/reader.o
+$(OBJDIR_RELEASEUNIX)/src/map/map.o: src/map/map.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/map/map.cpp -o $(OBJDIR_RELEASEUNIX)/src/map/map.o
 
-$(OBJDIR_RELEASE)/src/map/map.o: src/map/map.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/map/map.cpp -o $(OBJDIR_RELEASE)/src/map/map.o
+$(OBJDIR_RELEASEUNIX)/src/map/blocks/block.o: src/map/blocks/block.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/map/blocks/block.cpp -o $(OBJDIR_RELEASEUNIX)/src/map/blocks/block.o
 
-$(OBJDIR_RELEASE)/src/map/blocks/block.o: src/map/blocks/block.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/map/blocks/block.cpp -o $(OBJDIR_RELEASE)/src/map/blocks/block.o
+$(OBJDIR_RELEASEUNIX)/src/jsoncpp.o: src/jsoncpp.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/jsoncpp.cpp -o $(OBJDIR_RELEASEUNIX)/src/jsoncpp.o
 
-$(OBJDIR_RELEASE)/src/jsoncpp.o: src/jsoncpp.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/jsoncpp.cpp -o $(OBJDIR_RELEASE)/src/jsoncpp.o
+$(OBJDIR_RELEASEUNIX)/src/game.o: src/game.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/game.cpp -o $(OBJDIR_RELEASEUNIX)/src/game.o
 
-$(OBJDIR_RELEASE)/src/game.o: src/game.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/game.cpp -o $(OBJDIR_RELEASE)/src/game.o
+$(OBJDIR_RELEASEUNIX)/src/entities/pnjmanager.o: src/entities/pnjmanager.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/entities/pnjmanager.cpp -o $(OBJDIR_RELEASEUNIX)/src/entities/pnjmanager.o
 
-$(OBJDIR_RELEASE)/src/entities/pnjmanager.o: src/entities/pnjmanager.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/entities/pnjmanager.cpp -o $(OBJDIR_RELEASE)/src/entities/pnjmanager.o
+$(OBJDIR_RELEASEUNIX)/src/views/view.o: src/views/view.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/view.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/view.o
 
-$(OBJDIR_RELEASE)/src/views/view.o: src/views/view.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/view.cpp -o $(OBJDIR_RELEASE)/src/views/view.o
+$(OBJDIR_RELEASEUNIX)/src/views/save.o: src/views/save.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/save.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/save.o
 
-$(OBJDIR_RELEASE)/src/views/save.o: src/views/save.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/save.cpp -o $(OBJDIR_RELEASE)/src/views/save.o
+$(OBJDIR_RELEASEUNIX)/src/views/map.o: src/views/map.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/map.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/map.o
 
-$(OBJDIR_RELEASE)/src/views/map.o: src/views/map.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/map.cpp -o $(OBJDIR_RELEASE)/src/views/map.o
+$(OBJDIR_RELEASEUNIX)/src/views/inventory.o: src/views/inventory.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/inventory.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/inventory.o
 
-$(OBJDIR_RELEASE)/src/views/inventory.o: src/views/inventory.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/inventory.cpp -o $(OBJDIR_RELEASE)/src/views/inventory.o
+$(OBJDIR_RELEASEUNIX)/src/views/huds/menu.o: src/views/huds/menu.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/huds/menu.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/huds/menu.o
 
-$(OBJDIR_RELEASE)/src/views/huds/menu.o: src/views/huds/menu.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/huds/menu.cpp -o $(OBJDIR_RELEASE)/src/views/huds/menu.o
+$(OBJDIR_RELEASEUNIX)/src/views/huds/hud.o: src/views/huds/hud.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/huds/hud.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/huds/hud.o
 
-$(OBJDIR_RELEASE)/src/views/huds/hud.o: src/views/huds/hud.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/huds/hud.cpp -o $(OBJDIR_RELEASE)/src/views/huds/hud.o
+$(OBJDIR_RELEASEUNIX)/src/views/fight.o: src/views/fight.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/fight.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/fight.o
 
-$(OBJDIR_RELEASE)/src/views/fight.o: src/views/fight.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/fight.cpp -o $(OBJDIR_RELEASE)/src/views/fight.o
+$(OBJDIR_RELEASEUNIX)/src/views/dex.o: src/views/dex.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/dex.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/dex.o
 
-$(OBJDIR_RELEASE)/src/views/dex.o: src/views/dex.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/dex.cpp -o $(OBJDIR_RELEASE)/src/views/dex.o
+$(OBJDIR_RELEASEUNIX)/src/views/default.o: src/views/default.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/default.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/default.o
 
-$(OBJDIR_RELEASE)/src/views/default.o: src/views/default.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/default.cpp -o $(OBJDIR_RELEASE)/src/views/default.o
+$(OBJDIR_RELEASEUNIX)/src/views/creatures.o: src/views/creatures.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/creatures.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/creatures.o
 
-$(OBJDIR_RELEASE)/src/views/creatures.o: src/views/creatures.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/views/creatures.cpp -o $(OBJDIR_RELEASE)/src/views/creatures.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/triggersmanager.o: src/abstract/triggersmanager.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/triggersmanager.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/triggersmanager.o
 
-$(OBJDIR_RELEASE)/src/abstract/triggersmanager.o: src/abstract/triggersmanager.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/triggersmanager.cpp -o $(OBJDIR_RELEASE)/src/abstract/triggersmanager.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/texturesmanager.o: src/abstract/texturesmanager.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/texturesmanager.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/texturesmanager.o
 
-$(OBJDIR_RELEASE)/src/abstract/texturesmanager.o: src/abstract/texturesmanager.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/texturesmanager.cpp -o $(OBJDIR_RELEASE)/src/abstract/texturesmanager.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/statemachine.o: src/abstract/statemachine.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/statemachine.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/statemachine.o
 
-$(OBJDIR_RELEASE)/src/abstract/statemachine.o: src/abstract/statemachine.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/statemachine.cpp -o $(OBJDIR_RELEASE)/src/abstract/statemachine.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/soundmanager.o: src/abstract/soundmanager.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/soundmanager.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/soundmanager.o
 
-$(OBJDIR_RELEASE)/src/abstract/soundmanager.o: src/abstract/soundmanager.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/soundmanager.cpp -o $(OBJDIR_RELEASE)/src/abstract/soundmanager.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/point.o: src/abstract/point.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/point.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/point.o
 
-$(OBJDIR_RELEASE)/src/abstract/point.o: src/abstract/point.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/point.cpp -o $(OBJDIR_RELEASE)/src/abstract/point.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/musicplayer.o: src/abstract/musicplayer.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/musicplayer.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/musicplayer.o
 
-$(OBJDIR_RELEASE)/src/abstract/musicplayer.o: src/abstract/musicplayer.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/musicplayer.cpp -o $(OBJDIR_RELEASE)/src/abstract/musicplayer.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/functions.o: src/abstract/functions.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/functions.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/functions.o
 
-$(OBJDIR_RELEASE)/src/abstract/functions.o: src/abstract/functions.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/functions.cpp -o $(OBJDIR_RELEASE)/src/abstract/functions.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/equip.o: src/abstract/equip.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/equip.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/equip.o
 
-$(OBJDIR_RELEASE)/src/abstract/equip.o: src/abstract/equip.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/equip.cpp -o $(OBJDIR_RELEASE)/src/abstract/equip.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/creatures_loader.o: src/abstract/creatures_loader.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/creatures_loader.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/creatures_loader.o
 
-$(OBJDIR_RELEASE)/src/abstract/creatures_loader.o: src/abstract/creatures_loader.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/creatures_loader.cpp -o $(OBJDIR_RELEASE)/src/abstract/creatures_loader.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/competence.o: src/abstract/competence.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/competence.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/competence.o
 
-$(OBJDIR_RELEASE)/src/abstract/competence.o: src/abstract/competence.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/competence.cpp -o $(OBJDIR_RELEASE)/src/abstract/competence.o
+$(OBJDIR_RELEASEUNIX)/main.o: main.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c main.cpp -o $(OBJDIR_RELEASEUNIX)/main.o
 
-$(OBJDIR_RELEASE)/resource.o: resource.rc
-	$(WINDRES) -i resource.rc -J rc -o $(OBJDIR_RELEASE)/resource.o -O coff $(INC_RELEASE)
+$(OBJDIR_RELEASEUNIX)/src/entities/pnj.o: src/entities/pnj.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/entities/pnj.cpp -o $(OBJDIR_RELEASEUNIX)/src/entities/pnj.o
 
-$(OBJDIR_RELEASE)/main.o: main.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c main.cpp -o $(OBJDIR_RELEASE)/main.o
+$(OBJDIR_RELEASEUNIX)/src/entities/effects/sort.o: src/entities/effects/sort.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/entities/effects/sort.cpp -o $(OBJDIR_RELEASEUNIX)/src/entities/effects/sort.o
 
-$(OBJDIR_RELEASE)/src/entities/pnj.o: src/entities/pnj.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/entities/pnj.cpp -o $(OBJDIR_RELEASE)/src/entities/pnj.o
+$(OBJDIR_RELEASEUNIX)/src/entities/creature.o: src/entities/creature.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/entities/creature.cpp -o $(OBJDIR_RELEASEUNIX)/src/entities/creature.o
 
-$(OBJDIR_RELEASE)/src/entities/effects/sort.o: src/entities/effects/sort.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/entities/effects/sort.cpp -o $(OBJDIR_RELEASE)/src/entities/effects/sort.o
+$(OBJDIR_RELEASEUNIX)/src/entities/character.o: src/entities/character.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/entities/character.cpp -o $(OBJDIR_RELEASEUNIX)/src/entities/character.o
 
-$(OBJDIR_RELEASE)/src/entities/creature.o: src/entities/creature.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/entities/creature.cpp -o $(OBJDIR_RELEASE)/src/entities/creature.o
+$(OBJDIR_RELEASEUNIX)/src/entities/animatedentity.o: src/entities/animatedentity.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/entities/animatedentity.cpp -o $(OBJDIR_RELEASEUNIX)/src/entities/animatedentity.o
 
-$(OBJDIR_RELEASE)/src/entities/character.o: src/entities/character.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/entities/character.cpp -o $(OBJDIR_RELEASE)/src/entities/character.o
+$(OBJDIR_RELEASEUNIX)/src/constants.o: src/constants.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/constants.cpp -o $(OBJDIR_RELEASEUNIX)/src/constants.o
 
-$(OBJDIR_RELEASE)/src/entities/animatedentity.o: src/entities/animatedentity.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/entities/animatedentity.cpp -o $(OBJDIR_RELEASE)/src/entities/animatedentity.o
+$(OBJDIR_RELEASEUNIX)/src/bag/pockets/pocket.o: src/bag/pockets/pocket.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/bag/pockets/pocket.cpp -o $(OBJDIR_RELEASEUNIX)/src/bag/pockets/pocket.o
 
-$(OBJDIR_RELEASE)/src/constants.o: src/constants.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/constants.cpp -o $(OBJDIR_RELEASE)/src/constants.o
+$(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects/object.o: src/bag/pockets/objects/object.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/bag/pockets/objects/object.cpp -o $(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects/object.o
 
-$(OBJDIR_RELEASE)/src/bag/pockets/pocket.o: src/bag/pockets/pocket.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/bag/pockets/pocket.cpp -o $(OBJDIR_RELEASE)/src/bag/pockets/pocket.o
+$(OBJDIR_RELEASEUNIX)/src/bag/objectstable.o: src/bag/objectstable.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/bag/objectstable.cpp -o $(OBJDIR_RELEASEUNIX)/src/bag/objectstable.o
 
-$(OBJDIR_RELEASE)/src/bag/pockets/objects/object.o: src/bag/pockets/objects/object.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/bag/pockets/objects/object.cpp -o $(OBJDIR_RELEASE)/src/bag/pockets/objects/object.o
+$(OBJDIR_RELEASEUNIX)/src/bag/bag.o: src/bag/bag.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/bag/bag.cpp -o $(OBJDIR_RELEASEUNIX)/src/bag/bag.o
 
-$(OBJDIR_RELEASE)/src/bag/objectstable.o: src/bag/objectstable.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/bag/objectstable.cpp -o $(OBJDIR_RELEASE)/src/bag/objectstable.o
+$(OBJDIR_RELEASEUNIX)/src/abstract/types_table.o: src/abstract/types_table.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/types_table.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/types_table.o
 
-$(OBJDIR_RELEASE)/src/bag/bag.o: src/bag/bag.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/bag/bag.cpp -o $(OBJDIR_RELEASE)/src/bag/bag.o
+clean_releaseunix: 
+	rm -f $(OBJ_RELEASEUNIX) $(OUT_RELEASEUNIX)
 
-$(OBJDIR_RELEASE)/src/abstract/types_table.o: src/abstract/types_table.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c src/abstract/types_table.cpp -o $(OBJDIR_RELEASE)/src/abstract/types_table.o
-
-clean_release: 
-	rm -f $(OBJ_RELEASE) $(OUT_RELEASE)
-
-.PHONY: before_build after_build before_debug after_debug clean_debug before_release after_release clean_release
+.PHONY: before_build after_build before_debugunix after_debugunix clean_debugunix before_releaseunix after_releaseunix clean_releaseunix
 
