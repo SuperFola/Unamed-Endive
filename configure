@@ -2,9 +2,8 @@
 
 set -e
 
-#build-essential
-YUM_PACKAGE_NAME="python34 python-devel python-pip SFML"
-DEB_PACKAGE_NAME="python3.4 python-dev python-pip libsfml-dev"
+YUM_PACKAGE_NAME="build-essential python34 python-devel python-pip SFML"
+DEB_PACKAGE_NAME="build-essential python3.4 python-dev python-pip libsfml-dev"
 
 if cat /etc/*release | grep ^NAME | grep CentOS; then
     echo "==============================================="
