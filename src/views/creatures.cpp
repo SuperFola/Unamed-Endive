@@ -12,6 +12,7 @@ CreaView::CreaView() :
     , displaying_crea(true)
     , selected(0)
     , offset(0)
+    , err_duration(0.0f)
 {
 
 }
@@ -97,6 +98,11 @@ bool CreaView::load()
     this->lsdata.setFillColor(sf::Color::White);
     this->lsdata.setCharacterSize(20);
 
+    this->error_msg.setFont(this->font);
+    this->error_msg.setFillColor(sf::Color::Red);
+    this->error_msg.setCharacterSize(26);
+    this->error_msg.setPosition(0.0f, 106.0f);
+
     return true;
 }
 
@@ -118,6 +124,8 @@ void CreaView::render(sf::RenderWindow& window)
         window.draw(this->sprites[this->BTN_PC]);
     }
     this->draw_content(window);
+    if (this->err_duration != 0.0f)
+        window.draw(this->error_msg);
 }
 
 void CreaView::set_cimg(int ry)
@@ -224,7 +232,9 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
 
 void CreaView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-
+    this->err_duration -= elapsed.asSeconds();
+    if (this->err_duration < 0.0f)
+        this->err_duration = 0.0f;
 }
 
 void CreaView::draw_content(sf::RenderWindow& window)
@@ -356,17 +366,27 @@ void CreaView::send_to(int id)
     if (this->displaying_crea)
     {
         // send selected crea to pc
-        if (this->pc->add_creature(this->equip->getCrea(this->selected)) && this->equip->getSize() > 1)
+        if (this->equip->getSize() > 1)
         {
-            // it succeeded, we can delete the creature from the old container
-            this->equip->remove_creature(this->selected);
+            if (this->pc->add_creature(this->equip->getCrea(this->selected)))
+            {
+                // it succeeded, we can delete the creature from the old container
+                this->equip->remove_creature(this->selected);
+            }
+            else
+            {
+                // print error message
+                this->error_msg.setString("Impossible d'envoyer la créature au PC");
+                this->err_duration = 7.0f;
+                this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
+            }
         }
         else
         {
             // print error message
-
-            // temp
-            std::cout << "Can not send the creature to the pc" << std::endl;
+            this->error_msg.setString("Votre équipe ne peut pas être vide !");
+            this->err_duration = 7.0f;
+            this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
         }
     }
     else
@@ -380,9 +400,9 @@ void CreaView::send_to(int id)
         else
         {
             // display a nice error message
-
-            // temp
-            std::cout << "Can not send the creature to the equip" << std::endl;
+            this->error_msg.setString("Impossible d'envoyer la créature dans l'équipe");
+            this->err_duration = 7.0f;
+            this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
         }
     }
 }

@@ -6,20 +6,17 @@
 WORKDIR = `pwd`
 
 SFML_DIR = C:\SFML-2.4.2
-PY_DIR_INC = /usr/include/python3.4m
-PY_DIR_LIB = /usr/lib/python
 
 CC = gcc
-CXX = g++-6
+CXX = g++
 AR = ar
-LD = g++-6
+LD = g++
 WINDRES = windres
-#-I$SFML_DIR/include
-INC = -I$(PY_DIR_INC)
+
+INC = -I\$\$SFML_DIR/include -Isrc/scripting/Python34/include
 CFLAGS = -Wall -std=c++14
 RESINC = 
-#-L$$SFML_DIR/lib
-LIBDIR = -L$(PY_DIR_LIB) -Ldlls/
+LIBDIR = -L\$\$SFML_DIR/lib -Lsrc/scripting/Python34/libs -Ldlls/
 LIB = 
 LDFLAGS = -lPython34
 
