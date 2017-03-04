@@ -22,7 +22,7 @@ DefaultView::DefaultView() :
 {
 }
 
-bool DefaultView::load() { }
+bool DefaultView::load() { return true; }
 
 bool DefaultView::load(sf::String playername)
 {
