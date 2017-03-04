@@ -116,7 +116,10 @@ int StateMachine::change_view(int new_view)
         ret_val = (!this->go_back_to_last_view()) ? 1 : -1;
         break;
 
+    // all the views id here
+    // we can add specific methods to each view just before displaying them
     case DEFAULT_VIEW_ID:
+        this->dexv.load_dex_content();
     case MYCREATURES_VIEW_ID:
     case DEX_VIEW_ID:
     case SAVING_VIEW_ID:
