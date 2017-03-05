@@ -17,7 +17,7 @@ void DefaultView::unset_view(sf::RenderWindow& window)
 DefaultView::DefaultView() :
     View(DEFAULT_VIEW_ID)
     , view(sf::FloatRect(0, 0, WIN_W, WIN_H))
-    , level("assets/map/1.umd")
+    , level("assets/map/0.umd")
     , display_mmap(true)
 {
 }

@@ -36,7 +36,7 @@ private:
 public:
     // methods
     Character(Sex sex_=Sex::Male);
-    int chara_move(Map, std::vector<float>);
+    int chara_move(Map&, std::vector<float>) override;
     int save();
     void setName(const std::string);
     std::string getName();

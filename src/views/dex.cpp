@@ -10,6 +10,7 @@
 DexView::DexView() :
     View(DEX_VIEW_ID)
     , selected(0)
+    , loaded(false)
 {
 
 }
@@ -139,105 +140,113 @@ void DexView::add_dex(Dex* dex)
 void DexView::add_crealoader(CreaturesLoader* creaload)
 {
     this->crealoader = creaload;
+    this->loaded = true;
     // load the content of the dex by creating all the sf::Text
     this->load_dex_content();
 }
 
 void DexView::load_dex_content()
 {
-    // we must ensure it is empty each time we use this method
-    this->dex_content.clear();
+    if (!this->loaded)
+        goto hell_again;
 
-    struct DexInfo crea;
-
-    // variables for formating
-    std::string stext;
-    std::string stype;
-    std::string vu;
-    std::string capture;
-    std::string evolution;
-
-    // magic variables
-    int id = 0;
-    std::string current;
-
-    current = this->dex->getNext();
-    while (current != "")
     {
-        std::tuple<sf::Text, sf::Sprite, std::string> content;
+        // we must ensure it is empty each time we use this method
+        this->dex_content.clear();
 
-        crea = this->dex->getInfo(current);
+        struct DexInfo crea;
 
-        sf::Text _text;
-        _text.setFont(this->font);
-        _text.setCharacterSize(20);
-        _text.setFillColor(sf::Color::Black);
+        // variables for formating
+        std::string stext;
+        std::string stype;
+        std::string vu;
+        std::string capture;
+        std::string evolution;
 
-        sf::Sprite _sprite;
-        _sprite.setTexture(this->crealoader->get(crea.file));
-        float factor = 180.0f / this->crealoader->get(crea.file).getSize().y;
-        _sprite.setScale(factor, factor);
-
-        switch (crea.type)
-        {
-        case Type::NORMAL:
-            stype = "Normal";
-            break;
-
-        case Type::FIRE:
-            stype = "Feu";
-            break;
-
-        case Type::WATER:
-            stype = "Eau";
-            break;
-
-        case Type::GRASS:
-            stype = "Plante";
-            break;
-
-        case Type::FLYING:
-            stype = "Vol";
-            break;
-
-        case Type::FIGHTING:
-            stype = "Combat";
-            break;
-
-        case Type::POISON:
-            stype = "Poison";
-            break;
-
-        case Type::ELECTRIC:
-            stype = "Electrique";
-            break;
-
-        default:
-            stype = "???";
-            break;
-        }
-        vu = (crea.viewed) ? "oui" : "non";
-        capture = (crea.captured) ? "oui" : "non";
-        evolution = (crea.evolution != "") ? crea.evolution : "Aucune";
-
-        stext = current
-            + ", " + stype
-            + "\nNiveau " + to_string<int>(crea.stade)
-            + ", Evolution : " + evolution
-            + "\nVu : " + vu
-            + ", Capturé : " + capture;
-
-        _text.setString(stext);
-
-        _sprite.setPosition(WIN_W - 30.0f - _sprite.getGlobalBounds().width, this->text.getPosition().y + 104.0f);
-
-        std::get<0>(content) = _text;
-        std::get<1>(content) = _sprite;
-        std::get<2>(content) = current;
-
-        this->dex_content.push_back(content);
+        // magic variables
+        int id = 0;
+        std::string current;
 
         current = this->dex->getNext();
-        id++;
+        while (current != "")
+        {
+            std::tuple<sf::Text, sf::Sprite, std::string> content;
+
+            crea = this->dex->getInfo(current);
+
+            sf::Text _text;
+            _text.setFont(this->font);
+            _text.setCharacterSize(20);
+            _text.setFillColor(sf::Color::Black);
+
+            sf::Sprite _sprite;
+            _sprite.setTexture(this->crealoader->get(crea.file));
+            float factor = 180.0f / this->crealoader->get(crea.file).getSize().y;
+            _sprite.setScale(factor, factor);
+
+            switch (crea.type)
+            {
+            case Type::NORMAL:
+                stype = "Normal";
+                break;
+
+            case Type::FIRE:
+                stype = "Feu";
+                break;
+
+            case Type::WATER:
+                stype = "Eau";
+                break;
+
+            case Type::GRASS:
+                stype = "Plante";
+                break;
+
+            case Type::FLYING:
+                stype = "Vol";
+                break;
+
+            case Type::FIGHTING:
+                stype = "Combat";
+                break;
+
+            case Type::POISON:
+                stype = "Poison";
+                break;
+
+            case Type::ELECTRIC:
+                stype = "Electrique";
+                break;
+
+            default:
+                stype = "???";
+                break;
+            }
+            vu = (crea.viewed) ? "oui" : "non";
+            capture = (crea.captured) ? "oui" : "non";
+            evolution = (crea.evolution != "") ? crea.evolution : "Aucune";
+
+            stext = current
+                + ", " + stype
+                + "\nNiveau " + to_string<int>(crea.stade)
+                + ", Evolution : " + evolution
+                + "\nVu : " + vu
+                + ", Capturé : " + capture;
+
+            _text.setString(stext);
+
+            _sprite.setPosition(WIN_W - 30.0f - _sprite.getGlobalBounds().width, this->text.getPosition().y + 104.0f);
+
+            std::get<0>(content) = _text;
+            std::get<1>(content) = _sprite;
+            std::get<2>(content) = current;
+
+            this->dex_content.push_back(content);
+
+            current = this->dex->getNext();
+            id++;
+        }
     }
+
+    hell_again:;
 }

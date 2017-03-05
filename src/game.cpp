@@ -624,6 +624,8 @@ Game::Game() :
 
 void Game::post_load()
 {
+    std::cout << "Post load" << std::endl;
+
     // views
     // we "add" a default view
     this->sm.change_view(DEFAULT_VIEW_ID);

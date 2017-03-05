@@ -64,10 +64,6 @@ getPlayerName
 -------------
 Return the name of the player
 
-getSpawnPosFromMapId
---------------------
-Return a tuple of two int representing the position of the spawn. If the spawn can not be found, return -1
-
 getTrigger
 ----------
 Take two integers, mid and rid, and return a string representing the identifier of a trigger. Remember to check if the trigger is valid using is_notrigger(id)
@@ -75,10 +71,6 @@ Take two integers, mid and rid, and return a string representing the identifier 
 hasActiveHud
 ------------
 Check if a view, with a given id, has currently an active HUD
-
-isSpawn
--------
-Return 1 if the block at the pos x y is a spawn, otherwise 0
 
 isTp
 ----

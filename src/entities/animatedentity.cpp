@@ -113,7 +113,7 @@ bool AnimatedEntity::load()
     return true;
 }
 
-int AnimatedEntity::move(DIRECTION dir, Map map_, sf::Time elapsed)
+int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
 {
     // update state
     if (this->state == ChState::idle)
@@ -167,6 +167,7 @@ int AnimatedEntity::move(DIRECTION dir, Map map_, sf::Time elapsed)
     int nrpos = this->chara_move(map_, vect);
     if (nrpos != -1)
     {
+        std::cout << "nrpos mid " << map_.getId() << std::endl;
         // one the new rpos returned by post_colliding_test_to_check_tp(..) is not -1, our character is on a tp, let's change the map
         this->pos.set(
                       nrpos % map_.getWidth()
@@ -189,7 +190,7 @@ int AnimatedEntity::move(DIRECTION dir, Map map_, sf::Time elapsed)
     return 0;
 }
 
-int AnimatedEntity::chara_move(Map, std::vector<float>)
+int AnimatedEntity::chara_move(Map&, std::vector<float>)
 {
     // not implemented for basic entity such as PNJ(npc)
     return -1;

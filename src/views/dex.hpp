@@ -24,6 +24,7 @@ private:
     Dex* dex;
     CreaturesLoader* crealoader;
     int selected;
+    bool loaded;
 
     const std::string BCKG = "background";
 

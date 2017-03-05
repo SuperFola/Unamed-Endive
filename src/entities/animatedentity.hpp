@@ -35,8 +35,8 @@ public:
     AnimatedEntity(int x=32, int y=32);
     bool load();
     virtual void _load() = 0;
-    int move(DIRECTION, Map, sf::Time);
-    int chara_move(Map, std::vector<float>);
+    int move(DIRECTION, Map&, sf::Time);
+    virtual int chara_move(Map&, std::vector<float>);
     sf::Sprite& getCurrentSprite();
     void update(sf::RenderWindow&, sf::Time);
     void setDir(DIRECTION);

@@ -84,9 +84,7 @@ public:
     static void setTriggsMgr(TriggersManager*);
     static void setPlayer(Character*);
 
-    static int map_is_spawn(int, int);
     static int map_is_tp(int, int);
-    static int map_getSpawnFrom(int);
     static int map_getMapFromTp(int, int);
     static void map_tpPlayerOnSpawn(int, int);
     static void map_tpPlayerOn(int);

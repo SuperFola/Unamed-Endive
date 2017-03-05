@@ -44,7 +44,7 @@ class Editor:
         self.texts = []
         self.display_tb = True
         self.tb = []
-        self.entry = textentry.TextBox(self.win, x=(W - 120) // 2, y=20, sx=120)
+        self.entry = None
 
     def resize_tmap(self, nw, nh):
         to_change = []
@@ -95,6 +95,8 @@ class Editor:
 
         self.win = pygame.display.set_mode(WSIZE)
         pygame.display.set_caption(TITLE)
+        
+        self.entry = textentry.TextBox(self.win, x=(W - 120) // 2, y=20, sx=120)
 
         self.alpha_black = pygame.Surface((16, 16))
         self.alpha_black.fill(0)
@@ -105,7 +107,7 @@ class Editor:
         self.tileset = pygame.image.load("../../assets/tileset.png").convert()
         print("Cutting in tiles of %i*%i" % (REAL_TS, REAL_TS))
         self.tiles = functions.cut_ts_in_tiles(self.tileset)
-        print("Succesfully loaded the tiles")
+        print("Successfully loaded the tiles")
 
         self.font = pygame.font.SysFont("arial", 18)
         self.texts.append(self.font.render("layer 0", True, WHITE))
