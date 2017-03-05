@@ -1,4 +1,5 @@
 #include<iostream>
+#include "../../debug.hpp"
 
 #include "creatures_loader.hpp"
 
@@ -63,7 +64,7 @@ bool CreaturesLoader::load_next()
     sf::Image image;
 
     if (!image.loadFromFile(this->folder + "/" + file) && file != "." && file != "..")
-        std::cout << "Unable to open " << this->folder + "/" + file << std::endl;
+        DebugLog(SH_ERR, "Unable to open " << this->folder + "/" + file);
     else
     {
         image.createMaskFromColor(sf::Color(255, 0, 255, 255));
@@ -78,7 +79,7 @@ bool CreaturesLoader::load_next()
     if (this->current == this->files.size())
         done = true;  // we tell the caller of this method that we are done
     if (done)
-        std::cout << "Finished loading all the creatures (images)" << std::endl;
+        DebugLog(SH_OK, "Finished loading all the creatures (images)");
 
     return done;
 }

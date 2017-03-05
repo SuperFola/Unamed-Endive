@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "soundmanager.hpp"
 
@@ -18,7 +19,7 @@ sf::SoundBuffer& SoundManager::getBuffer(const std::string& name)
     auto it = this->sounds.find(name);
 
     if (it == this->sounds.end())
-        std::cout << "Can not find sound buffer with name " << name << std::endl;
+        DebugLog(SH_ERR, "Can not find sound buffer with name " << name);
     else
         return it->second;
 }

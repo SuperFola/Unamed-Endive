@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "equip.hpp"
 
@@ -16,9 +17,9 @@ bool Equip::load(const std::string& fpath, bool pc)
 
     // load file from player save
     if (!this->pc)
-        std::cout << "Loading equip" << std::endl;
+        DebugLog(SH_INFO, "Loading equip");
     else
-        std::cout << "Loading pc" << std::endl;
+        DebugLog(SH_INFO, "Loading PC");
 
     std::mt19937 rng;
     rng.seed(std::random_device()());
@@ -31,7 +32,7 @@ bool Equip::load(const std::string& fpath, bool pc)
 
         {
             // create default creature
-            std::cout << "No content found, creating default creature" << std::endl;
+            DebugLog(SH_WARN, "No content found, creating default creature");
             Creature* crea = new Creature();
             int  id = 0 // accologion
                   , _t = 0  // Type::NORMAL
@@ -86,7 +87,7 @@ bool Equip::load(const std::string& fpath, bool pc)
                 crea->load(id, t, atk, def, life, mlife, this->root["creatures"][i]["name"].asString(), s, level, st, sdmg, scd, stargets);
                 this->equip.push_back(crea);
 
-                std::cout << "Loaded creature " << i << std::endl;
+                DebugLog(SH_OK, "Loaded creature (" << i << ") " << this->root["creatures"][i]["name"].asString());
             }
         }
     }
@@ -115,9 +116,9 @@ bool Equip::remove_creature(int pos)
         return true;
     }
     if (!this->pc)
-        std::cout << "The creature's position in the equip is not correct" << std::endl;
+        DebugLog(SH_WARN, "The creature's position in the equip is not correct");
     else
-        std::cout << "The creature's position in the pc is not correct" << std::endl;
+        DebugLog(SH_WARN, "The creature's position in the pc is not correct");
     return false;
 }
 
@@ -128,9 +129,9 @@ Creature* Equip::getCrea(int pos)
         return this->equip[pos];
     }
     if (!this->pc)
-        std::cout << "The creature's position in the equip is not correct" << std::endl;
+        DebugLog(SH_WARN, "The creature's position in the equip is not correct");
     else
-        std::cout << "The creature's position in the equip is not correct" << std::endl;
+        DebugLog(SH_WARN, "The creature's position in the pc is not correct");
 }
 
 void Equip::increase_size()

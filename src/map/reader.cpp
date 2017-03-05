@@ -1,5 +1,6 @@
 #include<iostream>
 #include <fstream>
+#include "../../debug.hpp"
 
 #include "reader.hpp"
 
@@ -11,10 +12,10 @@ MapReader::MapReader() :
 
 bool MapReader::load()
 {
-    std::cout << "Loading data (map)" << std::endl;
+    DebugLog(SH_INFO, "Loading data (map view)");
     std::ifstream desc("assets/config/worldmap.json");
     desc >> this->content;
-    std::cout << "Loading description (map)" << std::endl;
+    DebugLog(SH_INFO, "Loading description (map view)");
     std::ifstream file("assets/config/worldmap_desc.json");
     file >> this->root;
 

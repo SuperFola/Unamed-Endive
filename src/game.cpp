@@ -2,6 +2,8 @@
 #include <ctime>
 #include <string>
 
+#include "../debug.hpp"
+
 #include "game.hpp"
 
 #define __X event.mouseButton.x
@@ -122,7 +124,7 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                 break;
 
             case sf::Keyboard::F8:
-                std::cout << "Reloading scripts" << std::endl;
+                DebugLog(SH_WARN, "Reloading scripts");
                 PyScripting::reload_all();
                 break;
 
@@ -130,12 +132,12 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                 this->cheat_on = !this->cheat_on;
                 if (this->cheat_on)
                 {
-                    std::cout << "Cheats on" << std::endl;
+                    DebugLog(SH_SPE, "Cheats on");
                     this->cmd.setPosition(10.0f, 10.0f);
                 }
                 else
                 {
-                    std::cout << "Cheats off" << std::endl;
+                    DebugLog(SH_SPE, "Cheats off");
                 }
                 break;
             #endif
@@ -167,21 +169,21 @@ void Game::dispatch_events(sf::Event& event, sf::Time elapsed)
         {
         case -1:
             // an error occured
-            std::cout << "Unable to find the view " << new_view << " to process the events" << std::endl;
+            DebugLog(SH_ERR, "Unable to find the view " << new_view << " to process the events");
             break;
 
         case 0:
             break;
 
         case 1:
-            std::cout << "Changed view (Game::dispatch_events). Old one was " << c_view << std::endl;
+            DebugLog(SH_OK, "Changed view (Game::dispatch_events). Old one was " << c_view);
             break;
         }
     }
     else
     {
         // error
-        std::cout << "Unable to find the view " << c_view << " to process the events" << std::endl;
+        DebugLog(SH_ERR, "Unable to find the view " << c_view << " to process the events");
     }
 }
 
@@ -199,7 +201,7 @@ void Game::render()
     else
     {
         // error
-        std::cout << "Unable to find the view " << c_view << " to render it" << std::endl;
+        DebugLog(SH_ERR, "Unable to find the view " << c_view << " to render it");
     }
     // launch the scripts
     PyScripting::run_drawing_modules();
@@ -224,7 +226,7 @@ void Game::update(sf::Time elapsed)
     else
     {
         // error
-        std::cout << "Unable to find the view " << c_view << " to update it" << std::endl;
+        DebugLog(SH_ERR, "Unable to find the view " << c_view << " to update it");
     }
 }
 
@@ -589,7 +591,7 @@ Game::Game() :
 
     // font
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
-        std::cout << "Missing font at assets/fonts/pkmnemn.ttf" << std::endl;
+        DebugLog(SH_ERR, "Missing font at assets/fonts/pkmnemn.ttf");
 
     // texts
     this->loading_text.setFont(this->font);
@@ -624,7 +626,7 @@ Game::Game() :
 
 void Game::post_load()
 {
-    std::cout << "Post load" << std::endl;
+    DebugLog(SH_INFO, "Post load");
 
     // views
     // we "add" a default view
@@ -658,6 +660,13 @@ void Game::post_load()
 
     this->sm.getCrea()->post_load();
     this->sm.getDefault()->getCharacter()->getPC()->increase_size(MAX_SIZE_PC);
+
+    #ifdef PLATFORM_WIN
+        DebugLog(SH_INFO, "Platform: Windows");
+    #endif // PLATFORM_WIN
+    #ifdef PLATFORM_POSIX
+        DebugLog(SH_INFO, "Platform: Posix");
+    #endif // PLATFORM_POSIX
 }
 
 void Game::on_end()

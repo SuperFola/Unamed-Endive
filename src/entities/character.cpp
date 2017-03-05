@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "character.hpp"
 
@@ -8,7 +9,7 @@ Character::Character(Sex sex_) :
     , name("Someone")
     , sex(sex_)
 {
-    std::cout << "Character loader" << std::endl;
+    DebugLog(SH_INFO, "Character cstr");
 
     if (this->sex == Sex::Male)
         this->path = "assets/players/male/";
@@ -18,7 +19,6 @@ Character::Character(Sex sex_) :
 
 int Character::chara_move(Map& map_, std::vector<float> vect)
 {
-    std::cout << "chara move mid " << map_.getId() << std::endl;
     // checking all edges and returning the first one to be like != -1
     // which means that it is on a tp, and we got a new rpos
     // so we return it
@@ -50,7 +50,7 @@ std::string Character::getName()
 
 void Character::_load()
 {
-    std::cout << "creating \"saves/" << this->name << "\"" << std::endl;
+    DebugLog(SH_INFO, "creating \"saves/" << this->name << "\"");
     #ifdef PLATFORM_WIN
     system((std::string("mkdir saves & cd saves & mkdir \"") + this->name + "\"").c_str());
     #endif // PLATFORM_WIN
@@ -77,7 +77,7 @@ int Character::save()
 
 void Character::speak(int mid, PNJManager* pnjm)
 {
-    std::cout << "Speaking" << std::endl;
+    DebugLog(SH_WARN, "Speaking. Please change the behavior of this method ASAP");
     pnjm->getPNJonMap(mid, 0).speak();
 }
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "../../debug.hpp"
 
 #include "scripting.hpp"
 #include "../constants.hpp"
@@ -526,7 +527,7 @@ void PyScripting::load_all_modules()
         std::ifstream file;
         file.open(mod);
 
-        std::cout << "Loading script : " << mod << std::endl;
+        DebugLog(SH_INFO, "Loading script : " << mod);
 
         std::string content;
         while (file)
@@ -601,7 +602,7 @@ int PyScripting::run_code(const char* code)
 {
     if (instance.connected)
         return PyRun_SimpleString(code);
-    std::cout << "You need to connect your PyScripting instance to Python before using it !" << std::endl;
+    DebugLog(SH_WARN, "You need to connect the PyScripting singleton to Python before using it !");
     return -1;
 }
 
@@ -620,7 +621,7 @@ const char* PyScripting::run_code_and_get_out(const char* code)
 
         return ss.str().c_str();
     }
-    std::cout << "You need to connect your PyScripting instance to Python before using it !" << std::endl;
+    DebugLog(SH_WARN, "You need to connect the PyScripting singleton to Python before using it !");
     return "None";
 }
 
@@ -648,7 +649,7 @@ int PyScripting::run_on_start_modules()
         instance.run_code(module_code.second.data());
         i++;
     }
-    std::cout << "Ran " << i << " modules at the start of the game" << std::endl;
+    DebugLog(SH_INFO, "Ran " << i << " modules at the start of the game");
 
     return 1;
 }
@@ -661,7 +662,7 @@ int PyScripting::run_on_end_modules()
         instance.run_code(module_code.second.data());
         i++;
     }
-    std::cout << "Ran " << i << " modules at the end of the game" << std::endl;
+    DebugLog(SH_INFO, "Ran " << i << " modules at the end of the game");
 
     return 1;
 }
@@ -713,43 +714,43 @@ sf::Event PyScripting::getEvent()
 
 void PyScripting::setWindow(sf::RenderWindow* win)
 {
-    std::cout << "Adding a pointer on the window to the PyScripting singleton" << std::endl;
+    DebugLog(SH_INFO, "Adding a pointer on the window to the PyScripting singleton");
     instance.window = win;
 }
 
 void PyScripting::setMusicPlayer(MusicPlayer* mp)
 {
-    std::cout << "Adding a pointer on the music player to the PyScripting singleton" << std::endl;
+    DebugLog(SH_INFO, "Adding a pointer on the music player to the PyScripting singleton");
     instance.music_player = mp;
 }
 
 void PyScripting::setStateMachine(StateMachine* sm)
 {
-    std::cout << "Adding a pointer on the statemachine to the PyScripting singleton" << std::endl;
+    DebugLog(SH_INFO, "Adding a pointer on the statemachine to the PyScripting singleton");
     instance.sm = sm;
 }
 
 void PyScripting::setPnjManager(PNJManager* pnjm)
 {
-    std::cout << "Adding a pointer on the pnjmanager to the PyScripting singleton" << std::endl;
+    DebugLog(SH_INFO, "Adding a pointer on the pnjmanager to the PyScripting singleton");
     instance.pnjm = pnjm;
 }
 
 void PyScripting::setMap(Map* level)
 {
-    std::cout << "Adding a pointer on the map to the PyScripting singleton" << std::endl;
+    DebugLog(SH_INFO, "Adding a pointer on the map to the PyScripting singleton");
     instance.level = level;
 }
 
 void PyScripting::setTriggsMgr(TriggersManager* triggs)
 {
-    std::cout << "Adding a pointer on the triggers manager to the PyScripting singleton" << std::endl;
+    DebugLog(SH_INFO, "Adding a pointer on the triggers manager to the PyScripting singleton");
     instance.triggsmgr = triggs;
 }
 
 void PyScripting::setPlayer(Character* player)
 {
-    std::cout << "Adding a pointer on the player to the PyScripting singleton" << std::endl;
+    DebugLog(SH_INFO, "Adding a pointer on the player to the PyScripting singleton");
     instance.player = player;
 }
 
@@ -758,7 +759,7 @@ void PyScripting::setPlayer(Character* player)
      std::string tkind = std::string(kind);
      std::string tid = std::string(id);
 
-     std::cout << "Registering " << tid << " as " << tkind << std::endl;
+     DebugLog(SH_OK, "Registering " << tid << " as " << tkind);
 
      if (instance.modules_kinds.find(tkind) != instance.modules_kinds.end())
      {
@@ -781,8 +782,6 @@ void PyScripting::setPlayer(Character* player)
  {
      std::string tname = std::string(name);
      std::string tid = std::string(id);
-
-     std::cout << "Loading an image from the python binding (c++ code here) path: " << tname << ", id: " << tid << std::endl;
 
      sf::Texture tex;
      if (!tex.loadFromFile(tname))

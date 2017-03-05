@@ -1,4 +1,9 @@
 #ifndef DEF_CONSTANTS
+
+#ifndef __cplusplus
+#error A C++ compiler is required!
+#endif
+
 #define DEF_CONSTANTS
 
 #define DEV_MODE

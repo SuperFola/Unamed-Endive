@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "statemachine.hpp"
 
@@ -50,7 +51,7 @@ bool StateMachine::load(sf::String playername)
         this->fightv.load();
         break;
     }
-    std::cout << "Loading view " << id << std::endl;
+    DebugLog(SH_INFO, "Loading view " << id);
     this->loaded++;
 
     return this->loaded == 7;
@@ -127,14 +128,14 @@ int StateMachine::change_view(int new_view)
     case MAP_VIEW_ID:
         this->history.push_back(this->current_view);
         this->current_view = new_view;
-        std::cout << "Changing view from id " << this->history[this->history.size() - 1] << " to id " << new_view << std::endl;
+        DebugLog(SH_OK, "Changing view from id " << this->history[this->history.size() - 1] << " to id " << new_view);
         ret_val = 1;
         break;
 
     case FIGHT_VIEW_ID:
         // note that here, we don't log that we were in a fight to avoid going back with the use of LAST_VIEW_ID
         this->current_view = new_view;
-        std::cout << "Changing view (fight)  to id " << new_view << std::endl;
+        DebugLog(SH_SPE, "Changing view (fight)  to id " << new_view);
         ret_val = 1;
         break;
 
@@ -154,7 +155,7 @@ int StateMachine::go_back_to_last_view()
         if (latest != -1)
         {
             this->current_view = latest;
-            std::cout << "Going back to view id " << latest << std::endl;
+            DebugLog(SH_INFO, "Going back to view id " << latest);
             return 0;
         }
         else

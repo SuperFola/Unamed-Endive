@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "../../debug.hpp"
 
 #include "objectstable.hpp"
 
@@ -13,16 +14,16 @@ ObjectsTable::ObjectsTable() :
 
 bool ObjectsTable::load()
 {
-    std::cout << "Loading ObjectsTable" << std::endl;
+    DebugLog(SH_INFO, "Loading ObjectsTable");
     if (!instance.loaded)
     {
         instance.loaded = true;
 
         if (is_file_existing("assets/inventory/objects.json"))
-            std::cout << "Objects.json found" << std::endl;
+            DebugLog(SH_OK, "Objects.json found");
         else
         {
-            std::cout << "Can not find objects.json" << std::endl;
+            DebugLog(SH_ERR, "Can not find objects.json");
             return false;
         }
 
@@ -46,7 +47,7 @@ bool ObjectsTable::load()
 
         return true;
     }
-    std::cout << "ObjectsTable was already loaded" << std::endl;
+    DebugLog(SH_WARN, "ObjectsTable was already loaded");
     return true;
 }
 

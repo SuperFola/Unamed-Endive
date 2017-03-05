@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "animatedentity.hpp"
 
@@ -78,7 +79,7 @@ AnimatedEntity::AnimatedEntity(int x, int y) :
 bool AnimatedEntity::load()
 {
     const std::vector<std::string> chtexfname = {"up", "down", "left", "right"};
-    std::cout << "Loading AnimatedEntity " << this->path << std::endl;
+    DebugLog(SH_INFO, "Loading AnimatedEntity at " << this->path);
 
     for (const auto& dir: chtexfname)
     {
@@ -88,7 +89,7 @@ bool AnimatedEntity::load()
 
             if (!image.loadFromFile(this->path + dir + to_string<int>(i) + ".png"))
             {
-                std::cout << "Unable to open " << this->path << dir << to_string<int>(i) << ".png" << std::endl;
+                DebugLog(SH_ERR, "Unable to open " << this->path << dir << to_string<int>(i) << ".png");
                 return false;
             }
 
@@ -167,7 +168,6 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
     int nrpos = this->chara_move(map_, vect);
     if (nrpos != -1)
     {
-        std::cout << "nrpos mid " << map_.getId() << std::endl;
         // one the new rpos returned by post_colliding_test_to_check_tp(..) is not -1, our character is on a tp, let's change the map
         this->pos.set(
                       nrpos % map_.getWidth()

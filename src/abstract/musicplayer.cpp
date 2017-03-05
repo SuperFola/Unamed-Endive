@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "musicplayer.hpp"
 
@@ -8,7 +9,7 @@ MusicPlayer::MusicPlayer() :
     , current("")
     , _current(0)
 {
-    std::cout << "Creating a MusicPlayer instance" << std::endl;
+    DebugLog(SH_INFO, "Creating a music player instance");
     this->sounds_name = {
         "01.ogg", "02.ogg", "03.ogg", "04.ogg", "05.ogg", "06.ogg", "07.ogg", "08.ogg", "09.ogg", "10.ogg",
         "11.ogg", "12.ogg"
@@ -17,7 +18,7 @@ MusicPlayer::MusicPlayer() :
 
 bool MusicPlayer::load()
 {
-    std::cout << "Loading " << this->sounds_name[this->_current] << std::endl;
+    DebugLog(SH_INFO, "Loading " << this->sounds_name[this->_current]);
 
     sf::SoundBuffer buffer;
     if (!buffer.loadFromFile("assets/sounds/" + this->sounds_name[this->_current]))
@@ -42,7 +43,7 @@ bool MusicPlayer::getState()
 bool MusicPlayer::play(const std::string& name)
 {
     if (!this->loaded)
-        std::cout << "Need to load MusicPlayer !" << std::endl;
+        DebugLog(SH_WARN, "Need to load MusicPlayer !");
 
     if (this->sounds.find(name) == this->sounds.end())
         return false;
@@ -70,7 +71,7 @@ bool MusicPlayer::play(const std::string& name)
 void MusicPlayer::stop()
 {
     if (!this->loaded)
-        std::cout << "Need to load MusicPlayer !" << std::endl;
+        DebugLog(SH_WARN, "Need to load MusicPlayer !");
 
     if (this->current != "")
     {
@@ -83,7 +84,7 @@ void MusicPlayer::stop()
 std::string MusicPlayer::getNext()
 {
     if (!this->loaded)
-        std::cout << "Need to load MusicPlayer !" << std::endl;
+        DebugLog(SH_WARN, "Need to load MusicPlayer !");
 
     int index = 0;
     while (this->sounds_name[index] != this->current)

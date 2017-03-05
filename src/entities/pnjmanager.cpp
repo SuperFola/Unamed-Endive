@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "pnjmanager.hpp"
 
@@ -12,7 +13,7 @@ void PNJManager::add_pnj_on_map(int mid, const std::string& name, const std::str
     PNJ* pnj = new PNJ(name, text, kind, x, y);
     pnj->setDisplayName(dname);
     if (!pnj->load())
-        std::cout << "Unable to load " << dname << " PNJ" << std::endl;
+        DebugLog(SH_ERR, "Unable to load " << dname << " PNJ");
 
     if (this->pnjs.find(mid) == this->pnjs.end())
     {

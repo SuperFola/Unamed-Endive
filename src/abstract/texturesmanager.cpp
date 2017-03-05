@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "texturesmanager.hpp"
 
@@ -13,7 +14,7 @@ sf::Texture& TexturesManager::getTexture(const std::string& name)
     auto it = this->textures.find(name);
 
     if (it == this->textures.end())
-        std::cout << "Can not find texture with name " << name << std::endl;
+        DebugLog(SH_ERR, "Can not find texture with name " << name);
     else
         return it->second;
 }

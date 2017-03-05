@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "../../debug.hpp"
 
 #include "dex.hpp"
 
@@ -11,18 +12,20 @@ Dex::Dex() :
 
 bool Dex::load(const std::string& path)
 {
-    std::cout << "Loading dex" << std::endl;
+    DebugLog(SH_INFO, "Loading dex");
 
     std::ifstream file("assets/config/dex.json");
     file >> this->root;
     bool player_save = false;
     if (is_file_existing(path))
     {
-        std::cout << "Found the player dex" << std::endl;
+        DebugLog(SH_OK, "Found the player dex");
         std::ifstream player(path);
         player >> this->root_player;
         player_save = true;
     }
+    else
+        DebugLog(SH_WARN, "No dex found for the player");
 
     int _id = 0;
     for (Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++)
@@ -103,7 +106,7 @@ DexInfo Dex::getInfo(const std::string& name)
 {
     if (this->content.find(name) != this->content.end())
         return this->content[name];
-    std::cout << "Can not find creature with name '" << name << "', returning a default one" << std::endl;
+    DebugLog(SH_ERR, "Can not find creature with name '" << name << "', returning a default one");
 
     return this->content["default"];
 }
@@ -112,7 +115,7 @@ DexInfo Dex::getInfo(int id)
 {
     if (this->id_name.find(id) != this->id_name.end())
         return this->content[this->id_name[id]];
-    std::cout << "Can not find creature with id " << id << ", returning a default one" << std::endl;
+    DebugLog(SH_ERR, "Can not find creature with id " << id << ", returning a default one");
 
     return this->content["default"];
 }

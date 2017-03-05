@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "creature.hpp"
 
@@ -19,7 +20,7 @@ Creature::Creature() :
 
 bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, std::string name, State& s, int level, SortilegeType& stype, int sdmg, int scd, int stargets)
 {
-    std::cout << "Loading creature '" << name << "'" << std::endl;
+    DebugLog(SH_INFO, "Loading creature " << name);
     this->id = id;
     this->type = t;
     this->atk = atk;
@@ -34,7 +35,7 @@ bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, std:
 
 bool Creature::loadfrom(Creature* other)
 {
-    std::cout << "Loading creature from another one" << std::endl;
+    DebugLog(SH_INFO, "Loading creature from another one");
     this->id = other->id;
     this->type = other->type;
     this->atk = other->atk;
@@ -49,14 +50,13 @@ bool Creature::loadfrom(Creature* other)
 
 void Creature::print()
 {
-    std::cout << "id: " << this->id
-                    << "type: " << static_cast<int>(this->type)
-                    << " life: " << this->life
-                    << " max life: " << this->max_life
-                    << " name : " << this->name
-                    << " state : " << static_cast<int>(this->state)
-                    << " level : " << this->level
-                    << std::endl;
+    DebugLog(SH_SPE, "id: " << this->id
+                                 << "type: " << static_cast<int>(this->type)
+                                 << " life: " << this->life
+                                 << " max life: " << this->max_life
+                                 << " name : " << this->name
+                                 << " state : " << static_cast<int>(this->state)
+                                 << " level : " << this->level);
 }
 
 int Creature::getLife()

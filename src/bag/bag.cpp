@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "../../debug.hpp"
 
 #include "bag.hpp"
 
@@ -16,11 +17,11 @@ Bag::Bag()
 
 bool Bag::load(const std::string& path)
 {
-    std::cout << "Loading bag" << std::endl;
+    DebugLog(SH_INFO, "Loading bag");
 
     if (!is_file_existing(path))
     {
-        std::cout << "Can not find the file, creating a default bag" << std::endl;
+        DebugLog(SH_WARN, "Can not find the file, creating a default bag");
         // we will create a bag by default
         for (const auto& pname: this->_pockets)
         {
@@ -28,7 +29,7 @@ bool Bag::load(const std::string& path)
             this->pockets.push_back(pocket);
         }
 
-        std::cout << "Bag loaded" << std::endl;
+        DebugLog(SH_OK, "Bag loaded");
         return true;
     }
 
@@ -41,10 +42,10 @@ bool Bag::load(const std::string& path)
         if (!pocket->load(this->root[pname]))
                 return false;
         this->pockets.push_back(pocket);
-        std::cout << "Loaded " << pname << std::endl;
+        DebugLog(SH_OK, "Loaded " << pname);
     }
 
-    std::cout << "Bag loaded" << std::endl;
+    DebugLog(SH_OK, "Bag loaded");
 
     return true;
 }
@@ -60,7 +61,7 @@ Pocket* Bag::getPocket(int id)
         return this->pockets[id];
     else
     {
-        std::cout << "Can not find the pocket with the id " << id << std::endl;
+        DebugLog(SH_ERR, "Can not find the pocket with the id " << id);
         return this->pockets[0]; // return default one to avoid problems
     }
 }

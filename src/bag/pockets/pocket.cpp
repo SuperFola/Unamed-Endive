@@ -1,4 +1,6 @@
 #include <iostream>
+#include "../../../debug.hpp"
+
 #include "pocket.hpp"
 
 Pocket::Pocket(const std::string& name_, bool default_one) :
@@ -42,7 +44,7 @@ Object* Pocket::getObject(int id)
         return this->objects[id];
     else
     {
-        std::cout << "Can not find the object with the id " << id << std::endl;
+        DebugLog(SH_ERR, "Can not find the object with the id " << id);
         return this->objects[0]; // return first one to avoid problems
     }
 }
@@ -58,7 +60,7 @@ void Pocket::useObject(int id)
     }
     else
     {
-        std::cout << "Can not find the object with the id " << id << std::endl;
+        DebugLog(SH_ERR, "Can not find the object with the id " << id);
     }
 }
 
@@ -69,7 +71,7 @@ void Pocket::drop_object(int id)
         this->objects[id]->drop(1);
     }
     else
-        std::cout << "Can not find the object with the id " << id << std::endl;
+        DebugLog(SH_ERR, "Can not find the object with the id " << id);
 }
 
 void Pocket::dropall_object(int id)
@@ -77,7 +79,7 @@ void Pocket::dropall_object(int id)
     if (0 <= id && id < this->objects.size())
         pop<Object*>(&(this->objects), id);
     else
-        std::cout << "Can not find the object with the id " << id << std::endl;
+        DebugLog(SH_ERR, "Can not find the object with the id " << id);
 }
 
 Json::Value Pocket::serialize()

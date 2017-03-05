@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "../../debug.hpp"
 
 #include "default.hpp"
 
@@ -29,7 +30,7 @@ bool DefaultView::load(sf::String playername)
     this->level.load_map_at();  // empty will cause to load the map given by default
     if (!this->menu_hud.load())
     {
-        std::cout << "An error occured while loading the menu" << std::endl;
+        DebugLog(SH_ERR, "An error occured while loading the menu");
         return false;
     }
 
@@ -38,7 +39,7 @@ bool DefaultView::load(sf::String playername)
     this->player.setName(playername.toAnsiString());
     if (!this->player.load())
     {
-        std::cout << "An error occured while loading the player" << std::endl;
+        DebugLog(SH_ERR, "An error occured while loading the player");
         return false;
     }
 

@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "../../../debug.hpp"
 
 #include "menu.hpp"
 #include "../../constants.hpp"
@@ -13,8 +14,8 @@ MenuHUD::MenuHUD() :
     , current(-1)
 {
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
-        std::cout << "Can not load font at assets/fonts/pkmnemn.ttf" << std::endl;
-    std::cout << "menu hud loaded" << std::endl;
+        DebugLog(SH_ERR, "Can not load font at assets/fonts/pkmnemn.ttf");
+    DebugLog(SH_OK, "Menu HUD loaded");
 }
 
 bool MenuHUD::load()

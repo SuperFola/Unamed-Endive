@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "../../debug.hpp"
 
 #include "map.hpp"
 
@@ -10,10 +11,9 @@ Map::Map(std::string path) :
     , map_height(8)
 {
     if (is_file_existing(path))
-        std::cout << "Map file found : ";
+        DebugLog(SH_OK, "Map file found : " << path);
     else
-        std::cout << "Can not find map file : ";
-    std::cout << path << std::endl;
+        DebugLog(SH_ERR, "Can not find map file at : " << path);
 
     this->map_data_path = path;
     this->id = atoi(this->map_data_path.substr(11, this->map_data_path.size() - 4).data());
@@ -27,10 +27,10 @@ int Map::load_map_at(std::string path)
 {
     if (path != "default")
     {
-        std::cout << this->id << " ";
+        DebugLog(SH_SPE, "Changing map. Current id : " << this->id);
         this->map_data_path = path;
         this->id = atoi(this->map_data_path.substr(11, this->map_data_path.size() - 4).data());
-        std::cout << this->id << std::endl;
+        DebugLog(SH_SPE, "Changed map. New id : " << this->id);
     }
     return this->load_map(this->map_data_path);
 }
@@ -94,11 +94,8 @@ int Map::post_colliding_test_to_check_tp(int tx, int ty)
 
     if (_tp)
     {
-        std::cout << "#changing from map " << this->id << "#" << std::endl;
         nrpos = this->findTpOnCase(rpos).tocase;
-        std::cout << "0 ?= " << this->load_map_at("assets/map/" + to_string<int>(this->getMapFromTp(rpos)) + ".umd") << std::endl;
-        std::cout << "# to map id " << this->getId() << std::endl << std::endl;
-        std::cout << "#" << this->map_data_path << "#" << std::endl;
+        DebugLog(SH_SPE, "0 ?= " << this->load_map_at("assets/map/" + to_string<int>(this->getMapFromTp(rpos)) + ".umd"));
     }
     return nrpos;
 }
@@ -124,7 +121,7 @@ int Map::load_map(std::string& map_path)
     std::ifstream config_doc(map_path);
     config_doc >> this->root;
 
-    std::cout << "Loading map " << map_path << std::endl;
+    DebugLog(SH_INFO, "Loading map");
     this->map_width = this->root["width"].asInt();
     this->map_height = this->root["height"].asInt();
 
@@ -143,7 +140,7 @@ int Map::load_map(std::string& map_path)
         }
         this->level.push_back(temp);
     }
-    std::cout << "Map loaded" << std::endl;
+    DebugLog(SH_OK, "Map loaded");
 
     for (int i=0; i < 3; i++)
     {
@@ -154,7 +151,7 @@ int Map::load_map(std::string& map_path)
         if (this->tmaps[i]->load_map(sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level[i], this->map_width, this->map_height))
             return 1;
     }
-    std::cout << "Tilemaps loaded" << std::endl;
+    DebugLog(SH_OK, "Tilemaps loaded");
 
     for (int i=0; i < this->root["tp"].size(); i++)
     {
@@ -165,9 +162,7 @@ int Map::load_map(std::string& map_path)
         this->tp.push_back(ttp);
     }
 
-    std::cout << "Tp loaded" << std::endl;
-
-    std::cout << "mid " << this->id << std::endl;
+    DebugLog(SH_OK, "Tp loaded");
 
     return 0;
 }
@@ -190,7 +185,7 @@ int Map::getMapFromTp(int rpos)
     struct TypeTp ttp = this->findTpOnCase(rpos);
     mid = ttp.tomap;
 
-    std::cout << "Tp on " << rpos << " go to map " << mid << std::endl;
+    DebugLog(SH_INFO, "Tp on " << rpos << " go to map " << mid);
 
     return mid;
 }
