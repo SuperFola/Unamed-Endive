@@ -8,6 +8,7 @@ MusicPlayer::MusicPlayer() :
     , state(false)
     , current("")
     , _current(0)
+    , volume(50)
 {
     DebugLog(SH_INFO, "Creating a music player instance");
     this->sounds_name = {
@@ -18,19 +19,9 @@ MusicPlayer::MusicPlayer() :
 
 bool MusicPlayer::load()
 {
-    DebugLog(SH_INFO, "Loading " << this->sounds_name[this->_current]);
+    DebugLog(SH_INFO, "Loading MusicPlayer");
 
-    sf::SoundBuffer buffer;
-    if (!buffer.loadFromFile("assets/sounds/" + this->sounds_name[this->_current]))
-        return false;
-    this->sdmgr.addSound(this->sounds_name[this->_current], buffer);
-    this->sounds[this->sounds_name[this->_current]] = sf::Sound();
-    this->sounds[this->sounds_name[this->_current]].setBuffer(this->sdmgr.getBuffer(this->sounds_name[this->_current]));
-
-    this->_current++;
-
-    if (this->_current == this->sounds_name.size())
-        this->loaded = true;
+    this->loaded = true;
 
     return this->loaded;
 }
@@ -40,30 +31,47 @@ bool MusicPlayer::getState()
     return this->state;
 }
 
+void MusicPlayer::setVolume(int vol)
+{
+    this->volume = vol;
+}
+
+bool MusicPlayer::load(const std::string& name)
+{
+    DebugLog(SH_INFO, "Loading music : assets/sounds/" << name);
+    if (!this->music.openFromFile("assets/sounds/" + name))
+    {
+        DebugLog(SH_ERR, "Could not load assets/sounds/" << name);
+        return false;
+    }
+    DebugLog(SH_INFO, "Setting volume");
+    this->music.setVolume(this->volume);
+
+    return true;
+}
+
 bool MusicPlayer::play(const std::string& name)
 {
     if (!this->loaded)
         DebugLog(SH_WARN, "Need to load MusicPlayer !");
 
-    if (this->sounds.find(name) == this->sounds.end())
+    int index = 0;
+    while (this->sounds_name[index] != name)
+    {
+        if (index == this->sounds_name.size() - 1)
+            break;
+        index++;
+    }
+
+    if (index == this->sounds_name.size() - 1)
         return false;
 
-    this->state = true;
-
-    if (this->current != "")
-    {
-        // we are already playing something
-        if (this->sounds[this->current].getStatus() == sf::SoundSource::Status::Playing)
-        {
-
-        }
-        else if (this->sounds[this->current].getStatus() == sf::SoundSource::Status::Paused)
-        {
-            this->sounds[this->current].stop();
-        }
-    }
+    this->stop();  // in case we are already playing something
     this->current = name;
-    this->sounds[name].play();
+    if (!this->load(name))
+        return false;
+    this->music.play();
+    this->state = true;
 
     return true;
 }
@@ -73,11 +81,11 @@ void MusicPlayer::stop()
     if (!this->loaded)
         DebugLog(SH_WARN, "Need to load MusicPlayer !");
 
-    if (this->current != "")
+    if (this->state == true)
     {
+        DebugLog(SH_INFO, "Stopping music");
         this->state = false;
-        this->sounds[this->current].stop();
-        this->current = "";
+        this->music.stop();
     }
 }
 

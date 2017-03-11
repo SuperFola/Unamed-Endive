@@ -68,6 +68,10 @@
         add all the case YOURVIEWID needed in src/abstract/statemachine.cpp (update view, renderv iew, process ev view)
         add an instance of your view in src/abstract/statemachine.hpp, do not forget to create the getter (returning a pointer)
     
+    adding new sounds :
+        put them in assets/sounds folder
+        add them in sounds_name in src/abstract/musicplayer.cpp
+    
     (IDEA)
     adding namespace in python scripting :
         class namespace: pass

@@ -14,7 +14,7 @@ LD = g++
 WINDRES = windres
 
 INC = -I\$\$SFML_DIR/include -Isrc/scripting/Python34/include
-CFLAGS = -Wall -std=c++14
+CFLAGS = -Wall -std=gnu++14
 RESINC = 
 LIBDIR = -L\$\$SFML_DIR/lib -Lsrc/scripting/Python34/libs -Ldlls/
 LIB = 

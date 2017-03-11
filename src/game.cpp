@@ -689,9 +689,7 @@ int Game::run()
     int _fps_update = 0;
 
     // musics
-    #ifndef DEV_MODE
     this->mplayer.play(this->mplayer.getNext());
-    #endif
 
     sf::Event event;
 
