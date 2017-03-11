@@ -52,10 +52,10 @@ void Character::_load()
 {
     DebugLog(SH_INFO, "creating \"saves/" << this->name << "\"");
     #ifdef PLATFORM_WIN
-    system((std::string("mkdir saves & cd saves & mkdir \"") + this->name + "\"").c_str());
+        system((std::string("mkdir saves & cd saves & mkdir \"") + this->name + "\"").c_str());
     #endif // PLATFORM_WIN
     #ifdef PLATFORM_POSIX
-    system((std::string("mkdir -p \"saves/") + this->name + "\"").c_str());
+        system((std::string("mkdir -p \"saves/") + this->name + "\"").c_str());
     #endif // PLATFORM_POSIX
 
     this->bag.load("saves/" + this->name + "/bag.json");
