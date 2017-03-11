@@ -18,57 +18,57 @@ bool FightView::load()
     sf::Texture bk1;
     if (!bk1.loadFromFile("assets/gui/fight/background1.png"))
         return false;
-    this->textures.addTexture("bk1", bk1);
+    this->textures.add("bk1", bk1);
 
     sf::Texture bk2;
     if (!bk2.loadFromFile("assets/gui/fight/background2.png"))
         return false;
-    this->textures.addTexture("bk2", bk2);
+    this->textures.add("bk2", bk2);
 
     sf::Texture bk3;
     if (!bk3.loadFromFile("assets/gui/fight/background3.png"))
         return false;
-    this->textures.addTexture("bk3", bk3);
+    this->textures.add("bk3", bk3);
 
     sf::Texture gr1;
     if (!gr1.loadFromFile("assets/gui/fight/ground1.png"))
         return false;
-    this->textures.addTexture("gr1", gr1);
+    this->textures.add("gr1", gr1);
 
     sf::Texture gr2;
     if (!gr2.loadFromFile("assets/gui/fight/ground2.png"))
         return false;
-    this->textures.addTexture("gr2", gr2);
+    this->textures.add("gr2", gr2);
 
     sf::Texture gr3;
     if (!gr3.loadFromFile("assets/gui/fight/ground3.png"))
         return false;
-    this->textures.addTexture("gr3", gr3);
+    this->textures.add("gr3", gr3);
 
     sf::Texture tool;
     if (!tool.loadFromFile("assets/gui/fight/bottom.png"))
         return false;
-    this->textures.addTexture("tool", tool);
+    this->textures.add("tool", tool);
 
     sf::Texture overlay;
     if (!overlay.loadFromFile("assets/gui/fight/overlay.png"))
         return false;
-    this->textures.addTexture("overlay", overlay);
+    this->textures.add("overlay", overlay);
 
     sf::Texture lifebar;
     if (!lifebar.loadFromFile("assets/gui/fight/lifebar.png"))
         return false;
-    this->textures.addTexture("lifebar", lifebar);
+    this->textures.add("lifebar", lifebar);
 
-    this->sprites[this->BKG1] = sf::Sprite(this->textures.getTexture("bk1"));
-    this->sprites[this->BKG2] = sf::Sprite(this->textures.getTexture("bk2"));
-    this->sprites[this->BKG3] = sf::Sprite(this->textures.getTexture("bk3"));
-    this->sprites[this->GRD1] = sf::Sprite(this->textures.getTexture("gr1"));
-    this->sprites[this->GRD2] = sf::Sprite(this->textures.getTexture("gr2"));
-    this->sprites[this->GRD3] = sf::Sprite(this->textures.getTexture("gr3"));
-    this->sprites[this->TOOLS] = sf::Sprite(this->textures.getTexture("tool"));
-    this->sprites[this->OVERLAY] = sf::Sprite(this->textures.getTexture("overlay"));
-    this->sprites[this->LIFEBAR] = sf::Sprite(this->textures.getTexture("lifebar"));
+    this->sprites[this->BKG1] = sf::Sprite(this->textures.get("bk1"));
+    this->sprites[this->BKG2] = sf::Sprite(this->textures.get("bk2"));
+    this->sprites[this->BKG3] = sf::Sprite(this->textures.get("bk3"));
+    this->sprites[this->GRD1] = sf::Sprite(this->textures.get("gr1"));
+    this->sprites[this->GRD2] = sf::Sprite(this->textures.get("gr2"));
+    this->sprites[this->GRD3] = sf::Sprite(this->textures.get("gr3"));
+    this->sprites[this->TOOLS] = sf::Sprite(this->textures.get("tool"));
+    this->sprites[this->OVERLAY] = sf::Sprite(this->textures.get("overlay"));
+    this->sprites[this->LIFEBAR] = sf::Sprite(this->textures.get("lifebar"));
 
     this->sprites[this->BKG1].setPosition(0.0f, 0.0f);
     this->sprites[this->BKG2].setPosition(0.0f, 0.0f);

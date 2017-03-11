@@ -7,7 +7,7 @@
 #include <map>
 
 #include "view.hpp"
-#include "../abstract/texturesmanager.hpp"
+#include "../abstract/container.hpp"
 #include "../bag/bag.hpp"
 #include "../constants.hpp"
 #include "../bag/objectstable.hpp"
@@ -20,7 +20,7 @@ private:
     int current;
     int selected;
     int offset;
-    TexturesManager textures;
+    Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
     sf::Font font;
     sf::Text current_pocket_name;

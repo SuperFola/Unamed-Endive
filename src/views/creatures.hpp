@@ -6,7 +6,7 @@
 #include <map>
 
 #include "view.hpp"
-#include "../abstract/texturesmanager.hpp"
+#include "../abstract/container.hpp"
 #include "../abstract/equip.hpp"
 #include "../abstract/functions.hpp"
 #include "../abstract/creatures_loader.hpp"
@@ -17,7 +17,7 @@ class CreaView : public View
 private:
     // variables
     bool displaying_crea;
-    TexturesManager textures;
+    Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
     sf::Font font;
     Equip* equip;

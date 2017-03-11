@@ -24,76 +24,76 @@ bool MenuHUD::load()
     sf::Texture cat;
     if (!cat.loadFromFile("assets/gui/menu/fd_case_creature.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_CREA, cat);
+    this->textures.add(this->BG_CAT_CREA, cat);
 
     sf::Texture cat2;
     if (!cat2.loadFromFile("assets/gui/menu/fd_case_creature_selected.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_SEL_CREA, cat2);
+    this->textures.add(this->BG_CAT_SEL_CREA, cat2);
 
     sf::Texture cat3;
     if (!cat3.loadFromFile("assets/gui/menu/fd_case_indexer.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_DEX, cat3);
+    this->textures.add(this->BG_CAT_DEX, cat3);
 
     sf::Texture cat4;
     if (!cat4.loadFromFile("assets/gui/menu/fd_case_indexer_selected.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_SEL_DEX, cat4);
+    this->textures.add(this->BG_CAT_SEL_DEX, cat4);
 
     sf::Texture cat5;
     if (!cat5.loadFromFile("assets/gui/menu/fd_case_inventaire.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_INVENTORY, cat5);
+    this->textures.add(this->BG_CAT_INVENTORY, cat5);
 
     sf::Texture cat6;
     if (!cat6.loadFromFile("assets/gui/menu/fd_case_inventaire_selected.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_SEL_INVENTORY, cat6);
+    this->textures.add(this->BG_CAT_SEL_INVENTORY, cat6);
 
     sf::Texture cat7;
     if (!cat7.loadFromFile("assets/gui/menu/fd_case_map.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_MAP, cat7);
+    this->textures.add(this->BG_CAT_MAP, cat7);
 
     sf::Texture cat8;
     if (!cat8.loadFromFile("assets/gui/menu/fd_case_map_selected.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_SEL_MAP, cat8);
+    this->textures.add(this->BG_CAT_SEL_MAP, cat8);
 
     sf::Texture cat9;
     if (!cat9.loadFromFile("assets/gui/menu/fd_case_retour.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_BACK, cat9);
+    this->textures.add(this->BG_CAT_BACK, cat9);
 
     sf::Texture cat10;
     if (!cat10.loadFromFile("assets/gui/menu/fd_case_retour_selected.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_SEL_BACK, cat10);
+    this->textures.add(this->BG_CAT_SEL_BACK, cat10);
 
     sf::Texture cat11;
     if (!cat11.loadFromFile("assets/gui/menu/fd_case_sauvegarder.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_SAVE, cat11);
+    this->textures.add(this->BG_CAT_SAVE, cat11);
 
     sf::Texture cat12;
     if (!cat12.loadFromFile("assets/gui/menu/fd_case_sauvegarder_selected.png"))
         return false;
-    this->textures.addTexture(this->BG_CAT_SEL_SAVE, cat12);
+    this->textures.add(this->BG_CAT_SEL_SAVE, cat12);
 
     // creating sprites
-    this->sprites[this->BG_CAT_CREA] = sf::Sprite(this->textures.getTexture(this->BG_CAT_CREA));
-    this->sprites[this->BG_CAT_SEL_CREA] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_CREA));
-    this->sprites[this->BG_CAT_DEX] = sf::Sprite(this->textures.getTexture(this->BG_CAT_DEX));
-    this->sprites[this->BG_CAT_SEL_DEX] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_DEX));
-    this->sprites[this->BG_CAT_INVENTORY] = sf::Sprite(this->textures.getTexture(this->BG_CAT_INVENTORY));
-    this->sprites[this->BG_CAT_SEL_INVENTORY] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_INVENTORY));
-    this->sprites[this->BG_CAT_MAP] = sf::Sprite(this->textures.getTexture(this->BG_CAT_MAP));
-    this->sprites[this->BG_CAT_SEL_MAP] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_MAP));
-    this->sprites[this->BG_CAT_BACK] = sf::Sprite(this->textures.getTexture(this->BG_CAT_BACK));
-    this->sprites[this->BG_CAT_SEL_BACK] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_BACK));
-    this->sprites[this->BG_CAT_SAVE] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SAVE));
-    this->sprites[this->BG_CAT_SEL_SAVE] = sf::Sprite(this->textures.getTexture(this->BG_CAT_SEL_SAVE));
+    this->sprites[this->BG_CAT_CREA] = sf::Sprite(this->textures.get(this->BG_CAT_CREA));
+    this->sprites[this->BG_CAT_SEL_CREA] = sf::Sprite(this->textures.get(this->BG_CAT_SEL_CREA));
+    this->sprites[this->BG_CAT_DEX] = sf::Sprite(this->textures.get(this->BG_CAT_DEX));
+    this->sprites[this->BG_CAT_SEL_DEX] = sf::Sprite(this->textures.get(this->BG_CAT_SEL_DEX));
+    this->sprites[this->BG_CAT_INVENTORY] = sf::Sprite(this->textures.get(this->BG_CAT_INVENTORY));
+    this->sprites[this->BG_CAT_SEL_INVENTORY] = sf::Sprite(this->textures.get(this->BG_CAT_SEL_INVENTORY));
+    this->sprites[this->BG_CAT_MAP] = sf::Sprite(this->textures.get(this->BG_CAT_MAP));
+    this->sprites[this->BG_CAT_SEL_MAP] = sf::Sprite(this->textures.get(this->BG_CAT_SEL_MAP));
+    this->sprites[this->BG_CAT_BACK] = sf::Sprite(this->textures.get(this->BG_CAT_BACK));
+    this->sprites[this->BG_CAT_SEL_BACK] = sf::Sprite(this->textures.get(this->BG_CAT_SEL_BACK));
+    this->sprites[this->BG_CAT_SAVE] = sf::Sprite(this->textures.get(this->BG_CAT_SAVE));
+    this->sprites[this->BG_CAT_SEL_SAVE] = sf::Sprite(this->textures.get(this->BG_CAT_SEL_SAVE));
 
     // setting pos
     float y = 11.0f + WIN_H / 2 - 220.0f;

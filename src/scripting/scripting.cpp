@@ -786,8 +786,8 @@ void PyScripting::setPlayer(Character* player)
      sf::Texture tex;
      if (!tex.loadFromFile(tname))
         return -1;
-     instance.textures.addTexture(tid, tex);
-     instance.sprites[tid] = sf::Sprite(instance.textures.getTexture(tid));
+     instance.textures.add(tid, tex);
+     instance.sprites[tid] = sf::Sprite(instance.textures.get(tid));
 
      return 0;
  }

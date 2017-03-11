@@ -23,28 +23,28 @@ bool CreaView::load()
     sf::Texture background;
     if (!background.loadFromFile("assets/gui/equip/fd_equip.png"))
         return false;
-    this->textures.addTexture("background", background);
+    this->textures.add("background", background);
 
     sf::Texture bckg_pc;
     if (!bckg_pc.loadFromFile("assets/gui/equip/fd_pc.png"))
         return false;
-    this->textures.addTexture("background_pc", bckg_pc);
+    this->textures.add("background_pc", bckg_pc);
 
     sf::Texture btn_pc;
     if (!btn_pc.loadFromFile("assets/gui/equip/pc.png"))
         return false;
-    this->textures.addTexture("btn_pc", btn_pc);
+    this->textures.add("btn_pc", btn_pc);
 
     sf::Texture btn_crea;
     if (!btn_crea.loadFromFile("assets/gui/equip/team.png"))
         return false;
-    this->textures.addTexture("btn_crea", btn_crea);
+    this->textures.add("btn_crea", btn_crea);
 
     // setting sprites
-    this->sprites[this->BCKG] = sf::Sprite(this->textures.getTexture("background"));
-    this->sprites[this->BCKG_PC] = sf::Sprite(this->textures.getTexture("background_pc"));
-    this->sprites[this->BTN_PC] = sf::Sprite(this->textures.getTexture("btn_pc"));
-    this->sprites[this->BTN_CREA] = sf::Sprite(this->textures.getTexture("btn_crea"));
+    this->sprites[this->BCKG] = sf::Sprite(this->textures.get("background"));
+    this->sprites[this->BCKG_PC] = sf::Sprite(this->textures.get("background_pc"));
+    this->sprites[this->BTN_PC] = sf::Sprite(this->textures.get("btn_pc"));
+    this->sprites[this->BTN_CREA] = sf::Sprite(this->textures.get("btn_crea"));
 
     // setting pos
     this->sprites[this->BCKG].setPosition(0.0f, 0.0f);

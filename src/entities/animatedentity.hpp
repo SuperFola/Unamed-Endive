@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../map/map.hpp"
-#include "../abstract/texturesmanager.hpp"
+#include "../abstract/container.hpp"
 #include "../abstract/point.hpp"
 #include "../abstract/functions.hpp"
 #include "../constants.hpp"
@@ -22,7 +22,7 @@ protected:
     DIRECTION direction;
     float speed;
     std::string path;
-    TexturesManager textures;
+    Container<sf::Texture> textures;
     std::vector<sf::Sprite> sprites;
     sf::Time elapsed_mvt_time;
     sf::Time not_moving_time;

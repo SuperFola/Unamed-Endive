@@ -71,7 +71,7 @@ bool CreaturesLoader::load_next()
         sf::Texture texture;
         texture.loadFromImage(image);
         texture.setSmooth(true);
-        this->textures.addTexture(file, texture);
+        this->textures.add(file, texture);
     }
 
     this->current++;  // increment the cursor
@@ -86,5 +86,5 @@ bool CreaturesLoader::load_next()
 
 sf::Texture& CreaturesLoader::get(const std::string& name)
 {
-    return this->textures.getTexture(name);
+    return this->textures.get(name);
 }

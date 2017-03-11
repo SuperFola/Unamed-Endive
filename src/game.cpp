@@ -578,22 +578,22 @@ Game::Game() :
     sf::Texture btn_start;
     btn_start.loadFromFile("assets/menu/btn_start_game.png");
       // saving them
-    this->textures.addTexture("bckg", menu_bckg);
-    this->textures.addTexture("logo", menu_logo);
-    this->textures.addTexture("btn_new", btn_new);
-    this->textures.addTexture("btn_del", btn_del);
-    this->textures.addTexture("btn_start", btn_start);
+    this->textures.add("bckg", menu_bckg);
+    this->textures.add("logo", menu_logo);
+    this->textures.add("btn_new", btn_new);
+    this->textures.add("btn_del", btn_del);
+    this->textures.add("btn_start", btn_start);
       // creating the sprites
-    this->menu_bckg_s.setTexture(this->textures.getTexture("bckg"));
+    this->menu_bckg_s.setTexture(this->textures.get("bckg"));
     this->menu_bckg_s.setPosition(0.0f, 0.0f);
-    this->menu_logo_s.setTexture(this->textures.getTexture("logo"));
-    this->menu_logo_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("logo").getSize().x / 2.0f, 20.0f);
-    this->menu_btn_new_s.setTexture(this->textures.getTexture("btn_new"));
-    this->menu_btn_new_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("btn_new").getSize().x / 2.0f, WIN_H - 3 * (this->textures.getTexture("btn_new").getSize().y + 20.0f));
-    this->menu_btn_del_s.setTexture(this->textures.getTexture("btn_del"));
-    this->menu_btn_del_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("btn_del").getSize().x / 2.0f, WIN_H - 2 * (this->textures.getTexture("btn_del").getSize().y + 20.0f));
-    this->menu_btn_start_s.setTexture(this->textures.getTexture("btn_start"));
-    this->menu_btn_start_s.setPosition(WIN_W / 2.0f - this->textures.getTexture("btn_start").getSize().x / 2.0f, WIN_H - (this->textures.getTexture("btn_start").getSize().y + 20.0f));
+    this->menu_logo_s.setTexture(this->textures.get("logo"));
+    this->menu_logo_s.setPosition(WIN_W / 2.0f - this->textures.get("logo").getSize().x / 2.0f, 20.0f);
+    this->menu_btn_new_s.setTexture(this->textures.get("btn_new"));
+    this->menu_btn_new_s.setPosition(WIN_W / 2.0f - this->textures.get("btn_new").getSize().x / 2.0f, WIN_H - 3 * (this->textures.get("btn_new").getSize().y + 20.0f));
+    this->menu_btn_del_s.setTexture(this->textures.get("btn_del"));
+    this->menu_btn_del_s.setPosition(WIN_W / 2.0f - this->textures.get("btn_del").getSize().x / 2.0f, WIN_H - 2 * (this->textures.get("btn_del").getSize().y + 20.0f));
+    this->menu_btn_start_s.setTexture(this->textures.get("btn_start"));
+    this->menu_btn_start_s.setPosition(WIN_W / 2.0f - this->textures.get("btn_start").getSize().x / 2.0f, WIN_H - (this->textures.get("btn_start").getSize().y + 20.0f));
 
     // font
     if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))

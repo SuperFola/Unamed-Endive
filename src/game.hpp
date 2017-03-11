@@ -13,7 +13,7 @@
 #include "abstract/musicplayer.hpp"
 #include "abstract/types_table.hpp"
 #include "abstract/triggersmanager.hpp"
-#include "abstract/texturesmanager.hpp"
+#include "abstract/container.hpp"
 
 class Game {
 private:
@@ -24,7 +24,7 @@ private:
     MusicPlayer mplayer;
     TypesTable ttable;
     CreaturesLoader crea_load;
-    TexturesManager textures;
+    Container<sf::Texture> textures;
     bool has_requested_quit;
     // others utilities
       // loading

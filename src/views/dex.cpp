@@ -21,10 +21,10 @@ bool DexView::load()
     sf::Texture background;
     if (!background.loadFromFile("assets/gui/fd_indexer.png"))
         return false;
-    this->textures.addTexture("background", background);
+    this->textures.add("background", background);
 
     // setting sprites
-    this->sprites[this->BCKG] = sf::Sprite(this->textures.getTexture("background"));
+    this->sprites[this->BCKG] = sf::Sprite(this->textures.get("background"));
 
     // setting pos
     this->sprites[this->BCKG].setPosition(20.0f, 20.0f);

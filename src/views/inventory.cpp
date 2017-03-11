@@ -21,70 +21,70 @@ bool InventView::load()
     sf::Texture background;
     if (!background.loadFromFile("assets/gui/inventory/fd_inventaire.png"))
         return false;
-    this->textures.addTexture("background", background);
+    this->textures.add("background", background);
 
     sf::Texture larrow;
     if (!larrow.loadFromFile("assets/gui/inventory/fd_bouton_previous.png"))
         return false;
-    this->textures.addTexture("larrow", larrow);
+    this->textures.add("larrow", larrow);
 
     sf::Texture rarrow;
     if (!rarrow.loadFromFile("assets/gui/inventory/fd_bouton_next.png"))
         return false;
-    this->textures.addTexture("rarrow", rarrow);
+    this->textures.add("rarrow", rarrow);
 
     sf::Texture p1;
     if (!p1.loadFromFile("assets/inventory/pockets/0.png"))
         return false;
-    this->textures.addTexture("pocket1", p1);
+    this->textures.add("pocket1", p1);
 
     sf::Texture p2;
     if (!p2.loadFromFile("assets/inventory/pockets/1.png"))
         return false;
-    this->textures.addTexture("pocket2", p2);
+    this->textures.add("pocket2", p2);
 
     sf::Texture p3;
     if (!p3.loadFromFile("assets/inventory/pockets/2.png"))
         return false;
-    this->textures.addTexture("pocket3", p3);
+    this->textures.add("pocket3", p3);
 
     sf::Texture p4;
     if (!p4.loadFromFile("assets/inventory/pockets/3.png"))
         return false;
-    this->textures.addTexture("pocket4", p4);
+    this->textures.add("pocket4", p4);
 
     sf::Texture p5;
     if (!p5.loadFromFile("assets/inventory/pockets/4.png"))
         return false;
-    this->textures.addTexture("pocket5", p5);
+    this->textures.add("pocket5", p5);
 
     sf::Texture drop;
     if (!drop.loadFromFile("assets/gui/inventory/fd_bouton_jeter.png"))
         return false;
-    this->textures.addTexture("btn_drop", drop);
+    this->textures.add("btn_drop", drop);
 
     sf::Texture vid;
     if (!vid.loadFromFile("assets/gui/inventory/fd_bouton_vider.png"))
         return false;
-    this->textures.addTexture("btn_vide", vid);
+    this->textures.add("btn_vide", vid);
 
     sf::Texture use;
     if (!use.loadFromFile("assets/gui/inventory/fd_bouton_utiliser.png"))
         return false;
-    this->textures.addTexture("btn_use", use);
+    this->textures.add("btn_use", use);
 
     // setting sprites
-    this->sprites[this->BCKG] = sf::Sprite(this->textures.getTexture("background"));
-    this->sprites[this->LARROW] = sf::Sprite(this->textures.getTexture("larrow"));
-    this->sprites[this->RARROW] = sf::Sprite(this->textures.getTexture("rarrow"));
-    this->sprites[this->POCKET1] = sf::Sprite(this->textures.getTexture("pocket1"));
-    this->sprites[this->POCKET2] = sf::Sprite(this->textures.getTexture("pocket2"));
-    this->sprites[this->POCKET3] = sf::Sprite(this->textures.getTexture("pocket3"));
-    this->sprites[this->POCKET4] = sf::Sprite(this->textures.getTexture("pocket4"));
-    this->sprites[this->POCKET5] = sf::Sprite(this->textures.getTexture("pocket5"));
-    this->sprites[this->DROP] = sf::Sprite(this->textures.getTexture("btn_drop"));
-    this->sprites[this->VID] = sf::Sprite(this->textures.getTexture("btn_vide"));
-    this->sprites[this->USE] = sf::Sprite(this->textures.getTexture("btn_use"));
+    this->sprites[this->BCKG] = sf::Sprite(this->textures.get("background"));
+    this->sprites[this->LARROW] = sf::Sprite(this->textures.get("larrow"));
+    this->sprites[this->RARROW] = sf::Sprite(this->textures.get("rarrow"));
+    this->sprites[this->POCKET1] = sf::Sprite(this->textures.get("pocket1"));
+    this->sprites[this->POCKET2] = sf::Sprite(this->textures.get("pocket2"));
+    this->sprites[this->POCKET3] = sf::Sprite(this->textures.get("pocket3"));
+    this->sprites[this->POCKET4] = sf::Sprite(this->textures.get("pocket4"));
+    this->sprites[this->POCKET5] = sf::Sprite(this->textures.get("pocket5"));
+    this->sprites[this->DROP] = sf::Sprite(this->textures.get("btn_drop"));
+    this->sprites[this->VID] = sf::Sprite(this->textures.get("btn_vide"));
+    this->sprites[this->USE] = sf::Sprite(this->textures.get("btn_use"));
 
     // setting pos
     this->sprites[this->BCKG].setPosition(0.0f, 0.0f);

@@ -97,8 +97,8 @@ bool AnimatedEntity::load()
             sf::Texture texture;
             texture.loadFromImage(image);
 
-            this->textures.addTexture(this->path + dir + to_string<int>(i), texture);
-            this->sprites.push_back(sf::Sprite(this->textures.getTexture(this->path + dir + to_string<int>(i))));
+            this->textures.add(this->path + dir + to_string<int>(i), texture);
+            this->sprites.push_back(sf::Sprite(this->textures.get(this->path + dir + to_string<int>(i))));
         }
     }
     this->_load();

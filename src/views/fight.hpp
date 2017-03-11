@@ -6,13 +6,13 @@
 #include <map>
 
 #include "view.hpp"
-#include "../abstract/texturesmanager.hpp"
+#include "../abstract/container.hpp"
 #include "../constants.hpp"
 
 class FightView : public View
 {
 private:
-    TexturesManager textures;
+    Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
     sf::Font font;
     sf::Text action;

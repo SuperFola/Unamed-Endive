@@ -5,14 +5,14 @@
 #include<vector>
 #include <SFML/Graphics.hpp>
 
-#include "texturesmanager.hpp"
+#include "container.hpp"
 #include "../constants.hpp"
 
 class CreaturesLoader
 {
 private:
     const std::string folder = "assets/creatures";
-    TexturesManager textures;
+    Container<sf::Texture> textures;
     std::vector<std::string> files;
     int current = 0;
 

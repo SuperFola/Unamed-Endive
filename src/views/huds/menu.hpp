@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "hud.hpp"
-#include "../../abstract/texturesmanager.hpp"
+#include "../../abstract/container.hpp"
 
 class MenuHUD : public Hud
 {
@@ -16,7 +16,7 @@ private:
     std::vector<int> menus;
     int current;
     sf::Font font;
-    TexturesManager textures;
+    Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
     std::map<std::string, sf::Text> texts;
 

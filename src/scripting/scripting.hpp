@@ -14,7 +14,7 @@
 #include <iostream>
 
 #include "types.hpp"
-#include "../abstract/texturesmanager.hpp"
+#include "../abstract/container.hpp"
 #include "../abstract/musicplayer.hpp"
 #include "../abstract/statemachine.hpp"
 #include "../entities/pnjmanager.hpp"
@@ -39,7 +39,7 @@ private:
     std::map<std::string, svar_t> globals_vars;
     svar_t empty_svar_t;
     sf::Event event;
-    TexturesManager textures;
+    Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
 
     sf::RenderWindow* window;

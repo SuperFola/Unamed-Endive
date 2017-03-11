@@ -7,7 +7,7 @@
 #include <map>
 
 #include "view.hpp"
-#include "../abstract/texturesmanager.hpp"
+#include "../abstract/container.hpp"
 #include "../objects/dex.hpp"
 #include "../abstract/functions.hpp"
 #include "../abstract/creatures_loader.hpp"
@@ -16,7 +16,7 @@ class DexView : public View
 {
 private:
     // variables
-    TexturesManager textures;
+    Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
     std::vector<std::tuple<sf::Text, sf::Sprite, std::string>> dex_content;
     sf::Font font;
