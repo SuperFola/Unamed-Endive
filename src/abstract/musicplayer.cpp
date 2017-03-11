@@ -31,9 +31,17 @@ bool MusicPlayer::getState()
     return this->state;
 }
 
-void MusicPlayer::setVolume(int vol)
+void MusicPlayer::setVolumeConst(int vol)
 {
     this->volume = vol;
+}
+
+void MusicPlayer::mute()
+{
+    if (this->music.getVolume() > 0.0f)
+        this->music.setVolume(0);
+    else
+        this->music.setVolume(this->volume);
 }
 
 bool MusicPlayer::load(const std::string& name)

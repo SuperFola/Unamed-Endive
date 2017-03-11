@@ -100,11 +100,17 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
             switch (event.key.code)
             {
             case sf::Keyboard::F5:
-                // take screenshoot
+                // take screenshot
                 this->take_screenshot();
                 break;
 
             case sf::Keyboard::F6:
+                // mute the music
+                if (this->mplayer.getState())
+                    this->mplayer.mute();
+                break;
+
+            case sf::Keyboard::F10:
                 // shut the music (or unshut it if it has already been used)
                 if (this->mplayer.getState())
                     this->mplayer.stop();

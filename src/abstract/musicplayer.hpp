@@ -25,7 +25,8 @@ public:
     void stop();
     std::string getNext();
     const std::string& getCurrentName();
-    void setVolume(int);
+    void setVolumeConst(int);
+    void mute();
 };
 
 #endif // DEF_MUSICPLAYER
