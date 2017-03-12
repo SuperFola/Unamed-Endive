@@ -29,8 +29,13 @@ def main():
     
     if updated:
         if os.path.exists("releases-to-upload.txt"):
-            with open("releases-to-upload.txt", "a") as file:
-                file.write("\n" + version)
+            in_it = False
+            with open("releases-to-upload.txt") as test:
+                c = test.read()
+                in_it = version in c
+            if not in_it:
+                with open("releases-to-upload.txt", "a") as file:
+                    file.write("\n" + version)
         else:
             with open("releases-to-upload.txt", "w") as file:
                 file.write(version)

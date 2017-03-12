@@ -39,3 +39,5 @@ def main():
         tkcommentsrelease.main(version)
         release = official_repository.create_release(version, name="New update ! Version " + version, body=read_comments(), prerelease=True)
         release.upload_asset("binaryfile", "installer.exe", open("../ENDIVE-protos/" + version + "/Unamed Rebirth - " + version + ".exe", "rb"))
+    
+    os.remove("releases-to-upload.txt")  # we have upload everything, no need to keep the file (which will be regenerated automatically when needed)

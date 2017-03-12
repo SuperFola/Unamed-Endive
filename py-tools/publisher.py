@@ -36,7 +36,10 @@ def convert_version_to_dict(v):
 
 
 def format_out(r):
-    print('\n'.join(r.split('\n')[-3:-1]))
+    if r:
+        print('\n'.join(r.split('\n')[-3:-1]))
+    else:
+        print("Nothing to be done")
 
 
 def main():
@@ -46,11 +49,16 @@ def main():
         mode = sys.argv[1]
     else:
         mode = 'd'
+    
+    ver = read_version()
+    
+    if os.path.exists('F:/ENDIVE-protos/' + ver):
+        return ""
 
     with open('inno_build.iss') as base:
         with open('build.iss', 'w') as new:
             formatted = base.readlines()
-            formatted[4] = formatted[4][:-1] + '"{version}"\n'.format(version=read_version())
+            formatted[4] = formatted[4][:-1] + '"{version}"\n'.format(version=ver)
             formatted[5] = formatted[5][:-1] + '"{publisher}"\n'.format(publisher="Kubiangle (c) (r) tm")
             formatted[6] = formatted[6][:-1] + '"{website}"\n'.format(website='https://loodoor.github.io/Unamed-Endive')
             if mode == 'd':
