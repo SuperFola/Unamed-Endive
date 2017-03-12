@@ -1,4 +1,6 @@
 # Project folders and files
+credentials.json
+comments.txt
 *.layout
 *.depend
 *.cbp

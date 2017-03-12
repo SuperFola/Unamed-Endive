@@ -17,6 +17,28 @@ def read_version():
     return v
 
 
+def convert_version_to_dict(v):
+    w = {
+        'MAJOR': -1,
+        'MINOR': -1,
+        'BUILD': -1,
+        'REVISION': -1,
+        'STATUS': -1
+    }
+    v = v.replace('.', ' ').replace('-', ' ').split(' ')
+    w['MAJOR'] = v[0]
+    w['MINOR'] = v[1]
+    w['BUILD'] = v[2]
+    w['REVISION'] = v[3]
+    w['STATUS'] = v[4]
+    
+    return w
+
+
+def format_out(r):
+    print('\n'.join(r.split('\n')[-3:-1]))
+
+
 def main():
     os.chdir("F:\\ENDIVE")
     
@@ -45,4 +67,4 @@ def main():
 
 if __name__ == '__main__':
     r = main()
-    input('\n'.join(r.split('\n')[-3:-1]))
+    format_out(r)
