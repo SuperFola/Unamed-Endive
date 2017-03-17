@@ -647,6 +647,8 @@ void Game::post_load()
     this->sm.getDex()->add_dex(this->sm.getDefault()->getCharacter()->getDex());
     // we add a pointer on the creatures loader to the dex /!/
     this->sm.getDex()->add_crealoader(&this->crea_load);
+    // pointer to sm to save
+    this->sm.getSave()->setdefv(this->sm.getDefault());
 
     // scripting
     PyScripting::setWindow(&this->window);
@@ -679,8 +681,8 @@ void Game::on_end()
     // launch the scripts
     PyScripting::run_on_end_modules();
 
-    // testing
-    this->sm.getDefault()->getCharacter()->save();
+    // saving, JIC
+    this->sm.getSave()->save();
 }
 
 int Game::run()

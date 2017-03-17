@@ -23,6 +23,11 @@ Map::Map(std::string path) :
     this->default_tp.tomap = -1;
 }
 
+void Map::setMapPath(const std::string& npath)
+{
+    this->map_data_path = npath;
+}
+
 int Map::load_map_at(std::string path)
 {
     if (path != "default")

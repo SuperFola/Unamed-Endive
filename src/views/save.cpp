@@ -64,3 +64,18 @@ void SaveView::update(sf::RenderWindow& window, sf::Time elapsed)
 
 }
 
+void SaveView::setdefv(DefaultView* _defv)
+{
+    this->defv = _defv;
+}
+
+void SaveView::save()
+{
+    this->defv->getCharacter()->save();
+
+    Json::Value root;
+    root["id"] = this->defv->getMap()->getId();
+
+    std::ofstream output("saves/" + this->defv->getCharacter()->getName() + "/map.json");
+    output << root;
+}

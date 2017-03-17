@@ -12,6 +12,8 @@
 #include "../constants.hpp"
 #include "../entities/pnjmanager.hpp"
 #include "../abstract/triggersmanager.hpp"
+#include "../abstract/functions.hpp"
+#include "../json/json.h"
 
 class DefaultView : public View
 {

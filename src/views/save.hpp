@@ -7,6 +7,8 @@
 
 #include "view.hpp"
 #include "../abstract/container.hpp"
+#include "../json/json.h"
+#include "default.hpp"
 
 class SaveView : public View
 {
@@ -14,6 +16,7 @@ private:
     // variables
     Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
+    DefaultView* defv;
 
 public:
     // methods
@@ -22,6 +25,8 @@ public:
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
+    void setdefv(DefaultView*);
+    void save();
 };
 
 #endif // DEF_SAVE_VIEW

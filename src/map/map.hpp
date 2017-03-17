@@ -32,6 +32,7 @@ private:
 
 public:
     Map(std::string);
+    void setMapPath(const std::string&);
     int load_map_at(std::string path="default");
     void render(sf::RenderWindow&);
     void micro_render(sf::RenderTexture&);

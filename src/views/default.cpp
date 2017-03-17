@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <fstream>
 #include "../../debug.hpp"
 
 #include "default.hpp"
@@ -27,7 +28,16 @@ bool DefaultView::load() { return true; }
 
 bool DefaultView::load(sf::String playername)
 {
+    if (is_file_existing("saves/" + playername.toAnsiString() + "/map.json"))
+    {
+        std::ifstream file("saves/" + playername.toAnsiString() + "/map.json");
+        Json::Value root;
+        file >> root;
+        this->level.setMapPath("assets/map/" + to_string<int>(root["id"].asInt()) + ".umd");
+    }
+
     this->level.load_map_at();  // empty will cause to load the map given by default
+
     if (!this->menu_hud.load())
     {
         DebugLog(SH_ERR, "An error occured while loading the menu");
