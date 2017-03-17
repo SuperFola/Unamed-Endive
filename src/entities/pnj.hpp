@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../map/map.hpp"
-#include "../abstract/texturesmanager.hpp"
+#include "../abstract/container.hpp"
 #include "../abstract/point.hpp"
 #include "../abstract/functions.hpp"
 #include "../constants.hpp"
@@ -30,6 +30,7 @@ private:
     std::string text;
     PNJkind kind;
     bool speaking;
+    Container<sf::Texture> textures;
     sf::Sprite bckg_speak;
     sf::Font font;
     sf::Text render_text;

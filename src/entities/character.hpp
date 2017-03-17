@@ -10,7 +10,6 @@
 #include "../constants.hpp"
 #include "../abstract/point.hpp"
 #include "../map/map.hpp"
-#include "../abstract/texturesmanager.hpp"
 #include "../bag/bag.hpp"
 #include "../abstract/functions.hpp"
 #include "animatedentity.hpp"

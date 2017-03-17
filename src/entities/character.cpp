@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../../debug.hpp"
+#include "../scripting/scripting.hpp"
 
 #include "character.hpp"
 
@@ -51,12 +52,7 @@ std::string Character::getName()
 void Character::_load()
 {
     DebugLog(SH_INFO, "creating \"saves/" << this->name << "\"");
-    #ifdef PLATFORM_WIN
-        system((std::string("mkdir saves & cd saves & mkdir \"") + this->name + "\"").c_str());
-    #endif // PLATFORM_WIN
-    #ifdef PLATFORM_POSIX
-        system((std::string("mkdir -p \"saves/") + this->name + "\"").c_str());
-    #endif // PLATFORM_POSIX
+    PyScripting::run_code(("if not os.path.exists(\"saves/" + this->name + "\"): os.mkdir(\"saves/" + this->name + "\")").c_str());
 
     this->bag.load("saves/" + this->name + "/bag.json");
     this->equip.load("saves/" + this->name + "/equip.json");

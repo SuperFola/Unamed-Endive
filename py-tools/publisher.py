@@ -36,10 +36,7 @@ def convert_version_to_dict(v):
 
 
 def format_out(r):
-    if r:
-        print('\n'.join(r.split('\n')[-3:-1]))
-    else:
-        print("Nothing to be done")
+    print('\n'.join(r.split('\n')[-3:-1]))
 
 
 def main():
@@ -53,7 +50,8 @@ def main():
     ver = read_version()
     
     if os.path.exists('F:/ENDIVE-protos/' + ver):
-        return ""
+        print("Nothing to be done")
+        return False
 
     with open('inno_build.iss') as base:
         with open('build.iss', 'w') as new:
@@ -68,11 +66,10 @@ def main():
             
             new.write("".join(formatted))
 
-    r = os.popen('"C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe" build.iss').read()
+    format_out(os.popen('"C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe" build.iss').read())
     os.remove("build.iss")
-    return r
+    return True
 
 
 if __name__ == '__main__':
     r = main()
-    format_out(r)

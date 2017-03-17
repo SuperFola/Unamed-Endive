@@ -544,12 +544,11 @@ Game::Game() :
     , _got_coderet(false)
     , menu_game_selected(-1)
 {
-    // creating base folders
-    system("mkdir saves");
-    system("mkdir screenshots");
-
     // scripting module
     PyScripting::connect();
+
+    // creating base folders
+    PyScripting::run_code("if not os.path.exists(\"saves\"): os.mkdir(\"saves\")\nif not os.path.exists(\"screenshots\"): os.mkdir(\"screenshots\")");
 
     // window
     this->window.setFramerateLimit(FRAMERATE_LIM);

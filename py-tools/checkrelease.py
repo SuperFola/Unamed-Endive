@@ -22,8 +22,7 @@ def main():
     
     if d_ver['BUILD'] == '0' and not is_debugging(argv):
         print("Please wait ~2 minutes while the publishing tool is running", flush=True)
-        publisher.format_out(publisher.main())
-        updated = True
+        updated = publisher.main()
     else:
         print("Nothing to do. Skipping", flush=True)
     

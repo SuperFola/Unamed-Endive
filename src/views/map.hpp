@@ -6,7 +6,6 @@
 #include <map>
 
 #include "view.hpp"
-#include "../abstract/texturesmanager.hpp"
 #include "../map/reader.hpp"
 
 class MapView : public View

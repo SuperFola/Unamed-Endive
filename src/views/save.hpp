@@ -6,12 +6,14 @@
 #include <map>
 
 #include "view.hpp"
-#include "../abstract/texturesmanager.hpp"
+#include "../abstract/container.hpp"
 
 class SaveView : public View
 {
 private:
     // variables
+    Container<sf::Texture> textures;
+    std::map<std::string, sf::Sprite> sprites;
 
 public:
     // methods
