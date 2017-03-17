@@ -78,6 +78,8 @@ AnimatedEntity::AnimatedEntity(int x, int y) :
 
 bool AnimatedEntity::load()
 {
+    this->_load();
+
     const std::vector<std::string> chtexfname = {"up", "down", "left", "right"};
     DebugLog(SH_INFO, "Loading AnimatedEntity at " << this->path);
 
@@ -101,7 +103,6 @@ bool AnimatedEntity::load()
             this->sprites.push_back(sf::Sprite(this->textures.get(this->path + dir + to_string<int>(i))));
         }
     }
-    this->_load();
 
     // essentially for th pnj, otherwise the static ones won't be at the correct position
     sf::Vector2f _pos {

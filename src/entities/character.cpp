@@ -58,6 +58,18 @@ void Character::_load()
     this->equip.load("saves/" + this->name + "/equip.json");
     this->pc.load("saves/" + this->name + "/pc.json", true);
     this->dex.load("saves/" + this->name + "/dex.json");
+
+    if (is_file_existing("saves/" + this->name + "/player.json"))
+    {
+        std::ifstream file("saves/" + this->name + "/player.json");
+        Json::Value root;
+        file >> root;
+
+        this->pos.set(root["pos"]["x"].asFloat(), root["pos"]["y"].asFloat());
+        this->sex = static_cast<Sex>(root["sex"].asInt());
+        this->path = root["asset"].asString();
+    }
+
 }
 
 int Character::save()
@@ -67,6 +79,17 @@ int Character::save()
     this->equip.save("saves/" + this->name + "/equip.json");
     this->pc.save("saves/" + this->name + "/pc.json");
     this->dex.save("saves/" + this->name + "/dex.json");
+
+    Json::Value value;
+    Json::Value pos;
+    pos["x"] = this->getPos().getX();
+    pos["y"] = this->getPos().getY();
+    value["sex"] = static_cast<int>(this->sex);
+    value["asset"] = this->path;
+    value["pos"] = pos;
+
+    std::ofstream output("saves/" + this->name + "/player.json");
+    output << value;
 
     return 0;
 }
