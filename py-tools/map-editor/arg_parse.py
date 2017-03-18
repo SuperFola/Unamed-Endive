@@ -16,7 +16,7 @@ def parse_args():
                 temp = {
                     "type": "map",
                     "path": map_path_to_load,
-                    "content": eval(open(map_path_to_load).read().replace('true', 'True').replace('false', 'False'))
+                    "content": eval(open(map_path_to_load).read().replace('true', 'True').replace('false', 'False').replace('null', 'None'))
                 }
             except IndexError:
                 print("Missing argument for option -p")

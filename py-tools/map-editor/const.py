@@ -2,9 +2,9 @@ TS = 17
 REAL_TS = 16
 DEF_WIDTH = 16
 DEF_HEIGHT = 8
-VERSION = "v0.1.0"
+VERSION = "v0.3.0"
 TITLE = "Unamed Maps Editor (Py3 version)"
-W, H = 840, 540
+W, H = 1040, 640
 WSIZE = W, H
 controls = [
     "KP7 : map width + 1",

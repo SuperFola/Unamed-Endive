@@ -28,3 +28,12 @@ def create_default():
         "spawns": [],
         "tp": []
     }
+
+
+def get_tiles_used_on_map(tmap):
+    w = []
+    for k in ('map', 'map2', 'map3'):
+        for i in tmap[k]:
+            if i["id"] not in w:
+                w.append(i["id"])
+    return w
