@@ -50,6 +50,7 @@ class Editor:
         self.tiles_used = []
         self.tilesused_offset = 0
         self.hist = historic.Historic()
+        self.scroll_ts = 0
 
     def resize_tmap(self, action):
         action = list(action)
@@ -204,6 +205,11 @@ class Editor:
             pygame.draw.rect(self.win, self.tb[i][2], (W - 200, i * 20, 200, 20))
             self.win.blit(self.tb[i][0], (W - 180, i * 20))
 
+    def render_tileset(self):
+        for i, e in enumerate(self.tiles):
+            if self.scroll_ts <= i // 9 <= self.scroll_ts + H // REAL_TS:
+                self.win.blit(e, (W - 144 + (i % 9) * REAL_TS, (i // 9 - self.scroll_ts) * REAL_TS))
+
     def render(self):
         # background
         pygame.draw.rect(self.win, (0, 0, 0), (0, 0) + self.win.get_size())
@@ -233,6 +239,8 @@ class Editor:
 
         if self.display_tb:
             self.render_toolbox()
+        else:
+            self.render_tileset()
 
         # current block
         xp, yp = pygame.mouse.get_pos()
@@ -380,14 +388,10 @@ class Editor:
                 self.clic = event.button
             elif event.button == 4:
                 # mouse wheel going up
-                self.current_block += 1
-                if self.current_block >= len(self.tiles):
-                    self.current_block = 0
+                self.scroll_ts += 1
             elif event.button == 5:
                 # going down
-                self.current_block -= 1
-                if self.current_block < 0:
-                    self.current_block = len(self.tiles) - 1
+                self.scroll_ts -= 1
 
             if 1 <= self.clic < 4:
                 self.hist.add(self.tmap)
@@ -400,7 +404,13 @@ class Editor:
                 if 0 <= rx < len(self.tiles_used):
                     self.current_block = self.tiles_used[rx]
 
-            if ((self.display_tb and xp < W - 200) or not self.display_tb) and 0 <= yp // REAL_TS < len(self.tmap[lay]) \
+            if not self.display_tb and xp >= W - 144:
+                rx = (xp - W + 144) // REAL_TS
+                ry = yp // REAL_TS + self.scroll_ts
+                if 0 <= rx <= 9 and 0 <= ry <= len(self.tiles):
+                    rs = rx + ry * 9
+                    self.current_block = rs
+            elif ((self.display_tb and xp < W - 200) or not self.display_tb) and 0 <= yp // REAL_TS < len(self.tmap[lay]) \
                     and 0 <= xp // REAL_TS < len(self.tmap[lay][yp // REAL_TS]):
                 if self.clic == 1:
                     # put a block
