@@ -1,6 +1,5 @@
-Ctrl +Z
+Ctrl + Z
 Ctrl + Y
 Agrandir les maps
 le tileset apparent
 c'est pas pratique la molette
-des noms corrects pour les maps et pas besoin d'extensions pour load

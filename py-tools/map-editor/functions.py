@@ -37,3 +37,25 @@ def get_tiles_used_on_map(tmap):
             if i["id"] not in w:
                 w.append(i["id"])
     return w
+
+
+def convert_monolay_to_multilay(tmap, w):
+    ntmap = []
+
+    for i, e in enumerate(tmap):
+        if not ntmap or len(ntmap[-1]) == w:
+            ntmap.append([e])
+        elif len(ntmap[-1]) < w:
+            ntmap[-1].append(e)
+
+    return ntmap
+
+
+def convert_multilay_to_monolay(tmap):
+    ntmap = []
+
+    for y, line in enumerate(tmap):
+        for x, case in enumerate(line):
+            ntmap.append(case)
+
+    return ntmap

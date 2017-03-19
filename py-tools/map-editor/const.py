@@ -7,21 +7,17 @@ TITLE = "Unamed Maps Editor (Py3 version)"
 W, H = 1040, 640
 WSIZE = W, H
 controls = [
-    "KP7 : map width + 1",
-    "KP8 : map width - 1",
-    "KP4 : map height + 1",
-    "KP5 : map height - 1",
     "s : save the map",
+    "l : load a map",
     "c : the block under the cursor is now colliding",
     "v : the block under the cursor is no longer colliding",
     "h : to show or not the toolbox",
-    "o : add a spawn to the pointed block",
     "p : add a tp to the pointed block",
     "left clic : put a block",
-    "middle clic : pick a bloc",
-    "right clic : destroy a block",
-    "up : change the layer",
-    "down : change the layer"
+    "middle clic : set/unset collision",
+    "right clic : put a tp",
+    "up/right : change the layer",
+    "down_left : change the layer"
 ]
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)

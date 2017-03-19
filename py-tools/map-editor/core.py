@@ -49,39 +49,73 @@ class Editor:
         self.tiles_used = []
         self.tilesused_offset = 0
 
-    def resize_tmap(self, nw, nh):
+    def resize_tmap(self, action):
+        action = list(action)
+        action[3] = int(action[3])
         to_change = []
         ow = self.tmap["width"]
         oh = self.tmap["height"]
+        nw = ow
+        nh = oh
 
-        for i, element in enumerate(self.tmap["map"]):
-            tu, tv = i % ow, i // ow
+        if action[0] == "w":
+            if action[2] == "+":
+                nw += action[3]
+            if action[2] == "-":
+                nw -= action[3]
+        elif action[0] == "h":
+            if action[2] == "+":
+                nh += action[3]
+            if action[2] == "-":
+                nh -= action[3]
 
-            if ow < nw and tu == 0:
-                to_change.append(i)
-            elif ow > nw and tu == nw:
-                to_change.append(i)
-            elif oh < nh and tv == 0:
-                to_change.append(i)
-            elif oh > nh and tv == nh:
-                to_change.append(i)
+        for y, line in enumerate(self.tmap["map"]):
+            for x, case in enumerate(line):
+                if action[0] == "w":
+                    if action[1] == "r":
+                        if x == len(line) - 1:
+                            to_change.append((x, y))
+                    elif action[1] == "l":
+                        if x == 0:
+                            to_change.append((x, y))
+                elif action[0] == "h":
+                    if action[1] == "t":
+                        if y == 0:
+                            to_change.append((x, y))
+                    elif action[1] == "b":
+                        if y == len(self.tmap["map"]) - 1:
+                            to_change.append((x, y))
 
-        if (ow < nw) or (oh < nh):
+        if action[2] == "+":
             # insert
-            print("insert", len(to_change))
-            for elem in to_change[::-1]:
-                self.tmap["map"].insert(elem, None)
-                self.tmap["map2"].insert(elem, None)
-                self.tmap["map3"].insert(elem, None)
-        elif (ow > nw) or (oh > nh):
+            for (x, y) in to_change[::-1]:
+                _x = x
+                _y = y
+                if action[0] == "w" and action[1] == "r":
+                    _x += 1
+                if action[0] == "h" and action[1] == "b":
+                    _y += 1
+                if action[0] == "w":
+                    self.tmap["map"][_y].insert(_x, {"id": None, "colliding": False})
+                    self.tmap["map2"][_y].insert(_x, {"id": None, "colliding": False})
+                    self.tmap["map3"][_y].insert(_x, {"id": None, "colliding": False})
+                else:
+                    self.tmap["map"].insert(_y, [{"id": None, "colliding": False} for _ in range(self.tmap["width"])])
+                    self.tmap["map2"].insert(_y, [{"id": None, "colliding": False} for _ in range(self.tmap["width"])])
+                    self.tmap["map3"].insert(_y, [{"id": None, "colliding": False} for _ in range(self.tmap["width"])])
+                    break
+        elif action[2] == "-":
             # pop
-            print("pop", len(to_change))
-            for elem in to_change[::-1]:
-                self.tmap["map"].pop(elem)
-                self.tmap["map2"].pop(elem)
-                self.tmap["map3"].pop(elem)
-        else:
-            print("else. should not be here")
+            for (x, y) in to_change[::-1]:
+                if action[0] == "w":
+                    self.tmap["map"][y].pop(x)
+                    self.tmap["map2"][y].pop(x)
+                    self.tmap["map3"][y].pop(x)
+                else:
+                    self.tmap["map"].pop(y)
+                    self.tmap["map2"].pop(y)
+                    self.tmap["map3"].pop(y)
+                    break
 
         self.tmap["width"] = nw
         self.tmap["height"] = nh
@@ -102,12 +136,12 @@ class Editor:
                 print("Creating a map of %ix%i" % (self.tmap["width"], self.tmap["height"]))
 
         if not temp or temp["type"] == "new map":
-            self.tmap["map"] = [{"id": 0, "colliding": False} for _ in range(self.tmap["width"] * self.tmap["height"])]
-            self.tmap["map2"] = [{"id": 0, "colliding": False} for _ in range(self.tmap["width"] * self.tmap["height"])]
-            self.tmap["map3"] = [{"id": 0, "colliding": False} for _ in range(self.tmap["width"] * self.tmap["height"])]
+            self.tmap["map"] = functions.convert_monolay_to_multilay([{"id": 0, "colliding": False} for _ in range(self.tmap["width"] * self.tmap["height"])], self.tmap["width"])
+            self.tmap["map2"] = functions.convert_monolay_to_multilay([{"id": 0, "colliding": False} for _ in range(self.tmap["width"] * self.tmap["height"])], self.tmap["width"])
+            self.tmap["map3"] = functions.convert_monolay_to_multilay([{"id": 0, "colliding": False} for _ in range(self.tmap["width"] * self.tmap["height"])], self.tmap["width"])
             self.tmap["tp"] = {}
 
-        self.tiles_used = functions.get_tiles_used_on_map(self.tmap)
+        self.tiles_used = [0]
 
         self.win = pygame.display.set_mode(WSIZE)
         pygame.display.set_caption(TITLE)
@@ -136,10 +170,14 @@ class Editor:
         self.tb.append(["previous layer", lambda: self.change_layer(-1)])
         self.tb.append(["load", self.loadmap])
         self.tb.append(["save", self.save])
-        self.tb.append(["width + 1", lambda: self.resize_tmap(self.tmap["width"] + 1, self.tmap["height"])])
-        self.tb.append(["width - 1", lambda: self.resize_tmap(self.tmap["width"] - 1, self.tmap["height"])])
-        self.tb.append(["height + 1", lambda: self.resize_tmap(self.tmap["width"], self.tmap["height"] + 1)])
-        self.tb.append(["height - 1", lambda: self.resize_tmap(self.tmap["width"], self.tmap["height"] - 1)])
+        self.tb.append(["width + 1 (right)", lambda: self.resize_tmap("wr+1")])
+        self.tb.append(["width + 1 (left)", lambda: self.resize_tmap("wl+1")])
+        self.tb.append(["width - 1 (right)", lambda: self.resize_tmap("wr-1")])
+        self.tb.append(["width - 1 (left)", lambda: self.resize_tmap("wl-1")])
+        self.tb.append(["height + 1 (top)", lambda: self.resize_tmap("ht+1")])
+        self.tb.append(["height + 1 (bottom)", lambda: self.resize_tmap("hb+1")])
+        self.tb.append(["height - 1 (top)", lambda: self.resize_tmap("ht-1")])
+        self.tb.append(["height - 1 (bottom)", lambda: self.resize_tmap("hb-1")])
         self.tb.append(["< tiles used", lambda: self.set("tilesused_offset", self.tilesused_offset - 1)])
         self.tb.append(["tiles used >", lambda: self.set("tilesused_offset", self.tilesused_offset + 1)])
 
@@ -148,12 +186,14 @@ class Editor:
             self.tb[i].append(COLORS[i % len(COLORS)])
 
     def _make_all_colliding(self):
-        for elem in self.tmap[self.layer]:
-            elem["colliding"] = True
+        for line in self.tmap[self.layer]:
+            for case in line:
+                case["colliding"] = True
 
     def _make_all_uncolliding(self):
-        for elem in self.tmap[self.layer]:
-            elem["colliding"] = False
+        for line in self.tmap[self.layer]:
+            for case in line:
+                case["colliding"] = False
 
     def render_toolbox(self):
         pygame.draw.rect(self.win, GREY, (W - 200, 0, 200, H))
@@ -173,17 +213,19 @@ class Editor:
         except KeyError:
             tps = {}
 
-        for i, element in enumerate(self.tmap[self.layer]):
-            if element is not None:
-                tu, tv = i % self.tmap["width"], i // self.tmap["width"]
-                self.win.blit(self.tiles[element["id"]], (tu * REAL_TS, tv * REAL_TS))
-                # if the block is not colliding, let's draw a semi black thing on it
-                # to help the mapper identifying them (the non colliding tiles)
-                if not element["colliding"]:
-                    self.win.blit(self.alpha_black, (tu * REAL_TS, tv * REAL_TS))
-                # if the bloc is a TP, we put a small indication on it
-                if i in tps.keys():
-                    self.win.blit(self.font.render("-" + str(tps[i]) + "-", True, (0, 0, 0)), (tu * REAL_TS, tv * REAL_TS))
+        i = 0
+        for y, line in enumerate(self.tmap[self.layer]):
+            for x, element in enumerate(line):
+                if element["id"] is not None:
+                    self.win.blit(self.tiles[element["id"]], (x * REAL_TS, y * REAL_TS))
+                    # if the block is not colliding, let's draw a semi black thing on it
+                    # to help the mapper identifying them (the non colliding tiles)
+                    if not element["colliding"]:
+                        self.win.blit(self.alpha_black, (x * REAL_TS, y * REAL_TS))
+                    # if the bloc is a TP, we put a small indication on it
+                    if i in tps.keys():
+                        self.win.blit(self.font.render("-" + str(tps[i]) + "-", True, (0, 0, 0)), (x * REAL_TS, y * REAL_TS))
+                i += 1
         self.win.blit(self.texts[Editor.convert_layer_to_int(self.layer)],
                       (10, self.tmap["height"] * REAL_TS + 10))
 
@@ -205,26 +247,46 @@ class Editor:
         self.entry.reset()
         self.entry.set_placeholder("map path")
         self.map_path = self.entry.get_text()
-        while not os.path.exists("maps/{}".format(self.map_path)):
+
+        while not os.path.exists("maps/{}".format(self.map_path)) and not os.path.exists("maps/{}.umd".format(self.map_path)):
             self.entry.reset()
-            self.entry.set_placeholder("map path")
+            self.entry.set_placeholder("map path ?")
             self.map_path = self.entry.get_text()
+
+        if self.map_path[-3:] != "umd":
+            self.map_path += ".umd"
+
         with open("maps/{}".format(self.map_path)) as file:
             self.tmap = eval(file.read().replace('null', 'None').replace('false', 'False').replace('true', 'True'))
+
         self.tiles_used = functions.get_tiles_used_on_map(self.tmap)
+
+        self.tmap["map"] = functions.convert_monolay_to_multilay(self.tmap["map"], self.tmap["width"])
+        self.tmap["map2"] = functions.convert_monolay_to_multilay(self.tmap["map2"], self.tmap["width"])
+        self.tmap["map3"] = functions.convert_monolay_to_multilay(self.tmap["map3"], self.tmap["width"])
 
     def save(self):
         self.entry.reset()
         self.entry.set_placeholder("map path")
         self.map_path = self.entry.get_text()
+
+        # to save in the decent format
+        self.tmap["map"] = functions.convert_multilay_to_monolay(self.tmap["map"])
+        self.tmap["map2"] = functions.convert_multilay_to_monolay(self.tmap["map2"])
+        self.tmap["map3"] = functions.convert_multilay_to_monolay(self.tmap["map3"])
+
         with open("maps/%s" % self.map_path, "w") as file:
             file.write(str(self.tmap).replace("'", '"').replace('True', "true").replace('False', "false"))
         print("Saved to maps/%s" % self.map_path)
 
+        # putting back the data correctly
+        self.tmap["map"] = functions.convert_monolay_to_multilay(self.tmap["map"], self.tmap["width"])
+        self.tmap["map2"] = functions.convert_monolay_to_multilay(self.tmap["map2"], self.tmap["width"])
+        self.tmap["map3"] = functions.convert_monolay_to_multilay(self.tmap["map3"], self.tmap["width"])
+
     def change_collide_state(self, v):
         xp, yp = pygame.mouse.get_pos()
-        rpos = xp // REAL_TS + yp // REAL_TS * self.tmap["width"]
-        self.tmap[self.layer][rpos]["colliding"] = v
+        self.tmap[self.layer][yp // REAL_TS][xp // REAL_TS]["colliding"] = v
 
     def change_layer(self, v):
         if v == +1:
@@ -277,19 +339,7 @@ class Editor:
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             self.done = True
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_KP7:
-                # width + 1
-                self.resize_tmap(self.tmap["width"] + 1, self.tmap["height"])
-            elif event.key == pygame.K_KP8:
-                # width - 1
-                self.resize_tmap(self.tmap["width"] - 1, self.tmap["height"])
-            elif event.key == pygame.K_KP4:
-                # height + 1
-                self.resize_tmap(self.tmap["width"], self.tmap["height"] + 1)
-            elif event.key == pygame.K_KP5:
-                # height - 1
-                self.resize_tmap(self.tmap["width"], self.tmap["height"] - 1)
-            elif event.key == pygame.K_s:
+            if event.key == pygame.K_s:
                 # save the map
                 self.save()
             elif event.key == pygame.K_l:
@@ -328,7 +378,6 @@ class Editor:
                     self.current_block = len(self.tiles) - 1
 
             xp, yp = event.pos
-            rpos = xp // REAL_TS + yp // REAL_TS * self.tmap["width"]
             lay = self.layer
 
             if self.clic == 1 and yp >= H - TS:
@@ -336,15 +385,16 @@ class Editor:
                 if 0 <= rx < len(self.tiles_used):
                     self.current_block = self.tiles_used[rx]
 
-            if ((self.display_tb and xp < W - 200) or not self.display_tb) and 0 <= rpos < len(self.tmap[lay]):
+            if ((self.display_tb and xp < W - 200) or not self.display_tb) and 0 <= yp // REAL_TS < len(self.tmap[lay]) \
+                    and 0 <= xp // REAL_TS < len(self.tmap[lay][yp // REAL_TS]):
                 if self.clic == 1:
                     # put a block
-                    self.tmap[lay][rpos]["id"] = self.current_block
+                    self.tmap[lay][yp // REAL_TS][xp // REAL_TS]["id"] = self.current_block
                     if self.current_block not in self.tiles_used:
                         self.tiles_used.append(self.current_block)
                 elif self.clic == 2:
                     # collide state
-                    self.tmap[lay][rpos]["colliding"] = not self.tmap[lay][rpos]["colliding"]
+                    self.tmap[lay][yp // REAL_TS][xp // REAL_TS]["colliding"] = not self.tmap[lay][yp // REAL_TS][xp // REAL_TS]["colliding"]
                 elif self.clic == 3:
                     # put a tp or delete one
                     self.add_tp()
@@ -355,21 +405,21 @@ class Editor:
                     self.tb[ry][1]() if self.tb[ry][1] else None
         elif event.type == pygame.MOUSEMOTION:
             xp, yp = event.pos
-            rpos = xp // REAL_TS + yp // REAL_TS * self.tmap["width"]
             lay = self.layer
 
-            if rpos < 0 or rpos >= len(self.tmap[lay]):
+            if xp // REAL_TS < 0 or yp // REAL_TS < 0 or yp // REAL_TS >= len(self.tmap[lay]) or xp // REAL_TS >= len(self.tmap[lay][0]):
                 self.clic = 0
 
-            if ((self.display_tb and xp < W - 200) or not self.display_tb) and 0 <= rpos < len(self.tmap[lay]):  # no drag and drop in the toolbox
+            if ((self.display_tb and xp < W - 200) or not self.display_tb) and 0 <= yp // REAL_TS < len(self.tmap[lay]) \
+                    and 0 <= xp // REAL_TS < len(self.tmap[lay][yp // REAL_TS]):
                 if self.clic == 1:
                     # put a block
-                    self.tmap[lay][rpos]["id"] = self.current_block
+                    self.tmap[lay][yp // REAL_TS][xp // REAL_TS]["id"] = self.current_block
                     if self.current_block not in self.tiles_used:
                         self.tiles_used.append(self.current_block)
                 elif self.clic == 2:
                     # collide state
-                    self.tmap[lay][rpos]["colliding"] = not self.tmap[lay][rpos]["colliding"]
+                    self.tmap[lay][yp // REAL_TS][xp // REAL_TS]["colliding"] = not self.tmap[lay][yp // REAL_TS][xp // REAL_TS]["colliding"]
                 elif self.clic == 3:
                     # put a tp or delete one
                     self.add_tp()
