@@ -1,3 +1,4 @@
+import os
 import glob
 import time
 import pygame
@@ -104,6 +105,7 @@ class Editor:
             self.tmap["map"] = [{"id": 0, "colliding": False} for _ in range(self.tmap["width"] * self.tmap["height"])]
             self.tmap["map2"] = [{"id": 0, "colliding": False} for _ in range(self.tmap["width"] * self.tmap["height"])]
             self.tmap["map3"] = [{"id": 0, "colliding": False} for _ in range(self.tmap["width"] * self.tmap["height"])]
+            self.tmap["tp"] = {}
 
         self.tiles_used = functions.get_tiles_used_on_map(self.tmap)
 
@@ -166,7 +168,10 @@ class Editor:
         # a background to visualize mapping errors
         pygame.draw.rect(self.win, PURPLE, (0, 0, self.tmap["width"] * REAL_TS, self.tmap["height"] * REAL_TS))
 
-        tps = {i["fromcase"]: i["tomap"] for i in self.tmap["tp"]}
+        try:
+            tps = {i["fromcase"]: i["tomap"] for i in self.tmap["tp"]}
+        except KeyError:
+            tps = {}
 
         for i, element in enumerate(self.tmap[self.layer]):
             if element is not None:
@@ -200,11 +205,18 @@ class Editor:
         self.entry.reset()
         self.entry.set_placeholder("map path")
         self.map_path = self.entry.get_text()
+        while not os.path.exists("maps/{}".format(self.map_path)):
+            self.entry.reset()
+            self.entry.set_placeholder("map path")
+            self.map_path = self.entry.get_text()
         with open("maps/{}".format(self.map_path)) as file:
             self.tmap = eval(file.read().replace('null', 'None').replace('false', 'False').replace('true', 'True'))
         self.tiles_used = functions.get_tiles_used_on_map(self.tmap)
 
     def save(self):
+        self.entry.reset()
+        self.entry.set_placeholder("map path")
+        self.map_path = self.entry.get_text()
         with open("maps/%s" % self.map_path, "w") as file:
             file.write(str(self.tmap).replace("'", '"').replace('True', "true").replace('False', "false"))
         print("Saved to maps/%s" % self.map_path)
