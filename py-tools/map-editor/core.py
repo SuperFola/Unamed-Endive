@@ -118,7 +118,7 @@ class Editor:
         self.alpha_black.set_alpha(90)
 
         print("Loading tileset")
-        self.tileset = pygame.image.load("../../assets/tileset.png").convert()
+        self.tileset = pygame.image.load("tileset.png").convert()
         print("Cutting in tiles of %i*%i" % (REAL_TS, REAL_TS))
         self.tiles = functions.cut_ts_in_tiles(self.tileset)
         print("Successfully loaded the tiles")
@@ -199,7 +199,8 @@ class Editor:
     def loadmap(self):
         self.entry.reset()
         self.entry.set_placeholder("map path")
-        with open("maps/{}".format(self.entry.get_text())) as file:
+        self.map_path = self.entry.get_text()
+        with open("maps/{}".format(self.map_path)) as file:
             self.tmap = eval(file.read().replace('null', 'None').replace('false', 'False').replace('true', 'True'))
         self.tiles_used = functions.get_tiles_used_on_map(self.tmap)
 
