@@ -1,5 +1,2 @@
-Ctrl + Z
-Ctrl + Y
-Agrandir les maps
-le tileset apparent
+le tileset apparant
 c'est pas pratique la molette
