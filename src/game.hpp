@@ -12,7 +12,6 @@
 #include "bag/objectstable.hpp"
 #include "abstract/musicplayer.hpp"
 #include "abstract/types_table.hpp"
-#include "abstract/triggersmanager.hpp"
 #include "abstract/container.hpp"
 
 class Game {

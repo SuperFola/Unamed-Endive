@@ -21,7 +21,6 @@
 #include "../entities/pnjmanager.hpp"
 #include "../entities/character.hpp"
 #include "../map/map.hpp"
-#include "../abstract/triggersmanager.hpp"
 
 #include "../abstract/convert_events.hpp"
 
@@ -50,7 +49,6 @@ private:
     StateMachine* sm;
     PNJManager* pnjm;
     Map* level;
-    TriggersManager* triggsmgr;
     Character* player;
 
     // methods
@@ -84,7 +82,6 @@ public:
     static void setStateMachine(StateMachine*);
     static void setPnjManager(PNJManager*);
     static void setMap(Map*);
-    static void setTriggsMgr(TriggersManager*);
     static void setPlayer(Character*);
 
     static int map_is_tp(int, int);
@@ -95,10 +92,6 @@ public:
     static int getMapHeight();
     static int getMapId();
     static void changeBlockAttrib(int, const char*, int);
-
-    static const char* getTrigger(int, int);
-    static void addTrigger(int, int, const char*);
-    static int is_notrigger(const char*);
 
     static int setModuleKind(const char*, const char*);
 

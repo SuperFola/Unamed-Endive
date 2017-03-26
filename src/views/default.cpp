@@ -193,11 +193,6 @@ Map* DefaultView::getMap()
     return &this->level;
 }
 
-TriggersManager* DefaultView::getTriggsMgr()
-{
-    return &this->triggsmgr;
-}
-
 void DefaultView::change_display_mmap(bool value)
 {
     this->display_mmap = value;

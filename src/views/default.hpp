@@ -11,7 +11,6 @@
 #include "huds/menu.hpp"
 #include "../constants.hpp"
 #include "../entities/pnjmanager.hpp"
-#include "../abstract/triggersmanager.hpp"
 #include "../abstract/functions.hpp"
 #include "../json/json.h"
 
@@ -28,7 +27,6 @@ private:
     Map level;
     PNJManager pnjmgr;
     MenuHUD menu_hud;
-    TriggersManager triggsmgr;
     bool display_mmap;
     // methods
     void set_view(sf::RenderWindow&);
@@ -47,7 +45,6 @@ public:
     Character* getCharacter();
     PNJManager* getPNJM();
     Map* getMap();
-    TriggersManager* getTriggsMgr();
     void change_display_mmap(bool);
     bool get_display_mmap();
     void draw_on_offscreen(const sf::Drawable&);
