@@ -96,6 +96,10 @@ registerScript
 --------------
 Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given
 
+screenshot
+----------
+Take a screenshot and save it to screenshots/. Return the name of the file
+
 stopMusic
 ---------
 Stop the current, if one is playing

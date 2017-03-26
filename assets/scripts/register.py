@@ -54,7 +54,7 @@ Unamed.registerScript("runWhenUpdatingGame", "ev_checking.py")
 ###############################################################################
 
 Unamed.registerScript("runOnceWhenStarting", "img_loader.py")
-Unamed.registerScript("runWhenRenderingView", "script.py")
+Unamed.registerScript("runWhenProcessingEvents", "script.py")
 
 ###############################################################################
 # functions that need to be execute after everything has been loaded          #
