@@ -4,6 +4,7 @@
 # PLEASE DO NOT DELETE THIS FILE
 import Unamed
 from Unamed import upr
+import ast
 
 ###############################################################################
 # game stuff                                                                  #
@@ -14,7 +15,7 @@ playername = Unamed.getPlayerName()
 PRGS_SAVING_PATH = "saves/" + playername + "/progess"
 SWITCHS_SAVING_PATH = "saves/" + playername + "/switchs"
 VARS_SAVING_PATH = "saves/" + playername + "/vars"
-keys_ev_code = eval(open("assets/scripts/keysevents.json").read())
+keys_ev_code = ast.literal_eval(open("assets/scripts/keysevents.json").read())
 
 # a table to track down the progress of the player in the adventure
 # useful if you want to create an event at a specific moment of the game
@@ -28,13 +29,13 @@ def load_stuff():
     global progress
     if os.path.exists(PRGS_SAVING_PATH):
         with open(PRGS_SAVING_PATH) as file:
-            _progress = eval(file.read())
+            _progress = ast.literal_eval(file.read())
     if os.path.exists(SWITCHS_SAVING_PATH):
         with open(SWITCHS_SAVING_PATH) as file:
-            _switchs = eval(file.read())
+            _switchs = ast.literal_eval(file.read())
     if os.path.exists(VARS_SAVING_PATH):
         with open(VARS_SAVING_PATH) as file:
-            _vars = eval(file.read())
+            _vars = ast.literal_eval(file.read())
 # save progress/switchs...
 def save_stuff():
     with open(PRGS_SAVING_PATH, "w") as file:

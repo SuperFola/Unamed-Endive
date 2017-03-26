@@ -15,7 +15,7 @@ for ev, data in _progress.items():
                 ok += 1
         # checking finally the variable
         v = data["variable"][0]
-        if v != False: var = _var[v] >= eval(data["variable"][1])
+        if v != False: var = _var[v] >= ast.literal_eval(data["variable"][1])
         else:          var = 1
         # if all the switchs are OK and the value if OK too
         if ok == len(sws) and var:
