@@ -19,9 +19,11 @@ table de switch :
         "switch_2": même chose,                                          |/
         "variable": [
             id d'une variable globale,
-            expression python testant la valeur (et renvoyant un booléen)
+            valeur minimale à avoir
         ],
-        "self_switch": id switch local,                            |----------> local à l'évenement, activable via les commandes de script
+        "self_switch": {                            |----------> local à l'évenement, activable via les commandes de script
+            id: True || False
+        },
         "trigger": triggtype,                                      |-----> si le trigger est lancé, on vérifie switch_1, switch_2, variable
                                                                          > uniquement s'ils sont spécifiés
         "commands": [... code python par exemple]

@@ -248,11 +248,13 @@ namespace PyUnamed
         static PyObject* getEvent(PyObject* self, PyObject* args)
         {
             sf::Event ev = PyScripting::getEvent();
-            PyObject* d = PyDict_New();
+            std::string sev = eventToString(ev);
+            PyObject *builtins = PyImport_ImportModule("builtins");
+            PyObject *eval = PyObject_GetAttrString(builtins, "eval");
+            PyObject *fargs = Py_BuildValue("(s)", sev.c_str());
+            PyObject *result = PyObject_CallObject(eval, fargs);
 
-            //PyDict_SetItem(d, "type", static_cast<int>(ev.type));
-
-            return d;
+            return result;
         }
 
         static PyObject* createPNJ(PyObject* self, PyObject* args)
@@ -408,6 +410,11 @@ namespace PyUnamed
             RETURN_NONE
         }
 
+        static PyObject* screenshot(PyObject* self, PyObject* args)
+        {
+            return Py_BuildValue("s", PyScripting::screenshot());
+        }
+
         // module definition
         static PyMethodDef UnamedMethods[] = {
             // ...
@@ -437,6 +444,7 @@ namespace PyUnamed
             {"addTrigger", addTrigger, METH_VARARGS, "Take two integers (mid and rid) and a string representing the id of your new trigger"},
             {"tpPlayerOnSpawn", tpPlayerOnSpawn, METH_VARARGS, "Take a map id and a spawn id (integer and string). Will teleport the player to this map (can be the actual map), on the position of the spawn"},
             {"tpPlayerOn", tpPlayerOn, METH_VARARGS, "Take two integers (x, y). Will teleport the player on this position, on the current map"},
+            {"screenshot", screenshot, METH_VARARGS, "Take a screenshot and save it to screenshots/. Return the name of the file"},
             // ...
             {NULL, NULL, 0, NULL}  // sentinel
         };
@@ -959,5 +967,34 @@ void PyScripting::map_tpPlayerOn(int rid)
 void PyScripting::print(const char* thing)
 {
     std::cout << thing << std::endl;
+}
+
+const char* PyScripting::screenshot()
+{
+    time_t t = time(0);
+    struct tm* now = localtime(&t);
+    sf::Vector2u windowSize = instance.window->getSize();
+    sf::Texture texture;
+
+    texture.create(windowSize.x, windowSize.y);
+    texture.update(*(instance.window));
+
+    sf::Image screenshot = texture.copyToImage();
+    std::string name = std::string("screenshots/screenshot-")
+                          + to_string<int>(now->tm_year + 1900)
+                          + std::string("-")
+                          + to_string<int>(now->tm_mon + 1)
+                          + std::string("-")
+                          + to_string<int>(now->tm_mday)
+                          + std::string(" - ")
+                          + to_string<int>(now->tm_hour)
+                          + std::string("-")
+                          + to_string<int>(now->tm_min)
+                          + std::string("-")
+                          + to_string<int>(now->tm_sec)
+                          + std::string(".jpg");
+    screenshot.saveToFile(name);
+
+    return name.c_str();
 }
 

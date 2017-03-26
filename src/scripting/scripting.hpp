@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <ctime>
 
 #include <iostream>
 
@@ -21,6 +22,8 @@
 #include "../entities/character.hpp"
 #include "../map/map.hpp"
 #include "../abstract/triggersmanager.hpp"
+
+#include "../abstract/convert_events.hpp"
 
 class PyScripting
 {
@@ -118,6 +121,8 @@ public:
     static const char* getPlayerName();
 
     static void print(const char*);
+
+    static const char* screenshot();
 };
 
 #endif // DEF_SCRIPTING
