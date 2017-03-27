@@ -4,10 +4,14 @@ Implémentation des évenements (type RMXP)
 table de switch :
 ```
 {
-    id: {
-        "name": name,
-        "on": True || False
-    }
+    id: True||False
+}
+```
+
+table de variables :
+```
+{
+    name: value (int/string/n'importe quoi qui peut etre comparé avec >=)
 }
 ```
 

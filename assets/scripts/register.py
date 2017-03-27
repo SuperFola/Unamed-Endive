@@ -27,14 +27,23 @@ _vars = {}     # TODO : same
 # load progress/switchs...
 def load_stuff():
     global progress
+    # progress
     if os.path.exists(PRGS_SAVING_PATH):
         with open(PRGS_SAVING_PATH) as file:
             _progress = ast.literal_eval(file.read())
+    # switchs
     if os.path.exists(SWITCHS_SAVING_PATH):
         with open(SWITCHS_SAVING_PATH) as file:
             _switchs = ast.literal_eval(file.read())
+    else:
+        with open("assets/config/switchs") as file:
+            _switchs = ast.literal_eval(file.read())
+    # global vars
     if os.path.exists(VARS_SAVING_PATH):
         with open(VARS_SAVING_PATH) as file:
+            _vars = ast.literal_eval(file.read())
+    else:
+        with open("assets/config/vars") as file:
             _vars = ast.literal_eval(file.read())
 # save progress/switchs...
 def save_stuff():

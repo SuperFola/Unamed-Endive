@@ -65,7 +65,7 @@
         create two new files in src/views/ (.hpp, .cpp)
         heritate from View (public)
         create a new id in constants.hpp, section Views id
-        add all the case YOURVIEWID needed in src/abstract/statemachine.cpp (update view, renderv iew, process ev view)
+        add all the case YOURVIEWID needed in src/abstract/statemachine.cpp (update view, render view, process ev view)
         add an instance of your view in src/abstract/statemachine.hpp, do not forget to create the getter (returning a pointer)
     
     adding new sounds :
