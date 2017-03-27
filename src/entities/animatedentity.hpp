@@ -16,6 +16,7 @@
 class AnimatedEntity
 {
 protected:
+    const int _size = TILE_SIZE * 2;
     Point pos;
     ChState state;
     MvState anim_cursor;
@@ -42,6 +43,7 @@ public:
     void setDir(DIRECTION);
     Point& getPos();
     void setPos(int, int);
+    bool collide(int, int);
 };
 
 #endif // DEF_ANIMATED_ENTITY

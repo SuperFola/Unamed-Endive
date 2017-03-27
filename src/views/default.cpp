@@ -5,6 +5,9 @@
 
 #include "default.hpp"
 
+#define __X event.mouseButton.x
+#define __Y event.mouseButton.y
+
 void DefaultView::set_view(sf::RenderWindow& window)
 {
     this->view.setCenter(this->player.getPos().getX() + TILE_SIZE, this->player.getPos().getY() + TILE_SIZE);
@@ -21,6 +24,7 @@ DefaultView::DefaultView() :
     , view(sf::FloatRect(0, 0, WIN_W, WIN_H))
     , level("assets/map/0.umd")
     , display_mmap(false)
+    , _speaking_to_pnj(false, -1, -1)
 {
 }
 
@@ -121,9 +125,12 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
     this->minimap.clear(sf::Color::Transparent);
 }
 
-int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
+int DefaultView::process_event(sf::Event&, sf::Time) {}
+
+int DefaultView::process_event(sf::Event& event, sf::Time elapsed, sf::RenderWindow& window)
 {
     bool has_triggered_hud = false;
+    bool has_moved = false;
 
     if (this->menu_hud.isTriggered())
         goto menu_hud_ev_processing;
@@ -140,22 +147,26 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
 
         case sf::Keyboard::Z:
             this->player.move(DIRECTION::up, this->level, elapsed);
+            has_moved = true;
             break;
 
         case sf::Keyboard::S:
             this->player.move(DIRECTION::down, this->level, elapsed);
+            has_moved = true;
             break;
 
         case sf::Keyboard::Q:
             this->player.move(DIRECTION::left, this->level, elapsed);
+            has_moved = true;
             break;
 
         case sf::Keyboard::D:
             this->player.move(DIRECTION::right, this->level, elapsed);
+            has_moved = true;
             break;
 
         case sf::Keyboard::Space:
-            this->player.speak(this->level.getId(), &this->pnjmgr);
+            has_moved = true;  // kind of tricky, just to stop speaking to the pnj
             break;
 
         default:
@@ -163,9 +174,19 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed)
         }
         break;
 
+        case sf::Event::MouseButtonPressed:
+            if (event.mouseButton.button == sf::Mouse::Left)
+            {
+                this->resolve_pnjspeak(__X, __Y, window);
+            }
+            break;
+
     default:
         break;
     }
+
+    if (has_moved || has_triggered_hud)
+        this->disable_pnj_speaking();
 
     menu_hud_ev_processing:
     if (!has_triggered_hud) // if we triggered the hud, sending the event to it will cause to close it immediately
@@ -206,4 +227,30 @@ bool DefaultView::get_display_mmap()
 void DefaultView::draw_on_offscreen(const sf::Drawable& drawable)
 {
     this->offscreen.draw(drawable);
+}
+
+void DefaultView::resolve_pnjspeak(int x, int y, sf::RenderWindow& window)
+{
+    int mid = this->level.getId();
+    sf::Vector2i pixPos = window.mapCoordsToPixel(sf::Vector2f(x, y));
+    int pnji = this->pnjmgr.find_pnjid_at(int(pixPos.x), int(pixPos.y), mid);
+
+    if (pnji != -1)
+    {
+        this->pnjmgr.getPNJonMap(mid, pnji).speak();
+        this->_speaking_to_pnj = std::make_tuple(true, mid, pnji);
+    }
+    else
+        DebugLog(SH_WARN, "Can not find pnj at " << x << " " << y << " on mid " << mid);
+}
+
+void DefaultView::disable_pnj_speaking()
+{
+    if (std::get<0>(this->_speaking_to_pnj))
+    {
+        // we are speaking to a pnj
+        this->pnjmgr.getPNJonMap(std::get<1>(this->_speaking_to_pnj), std::get<2>(this->_speaking_to_pnj)).speak();
+
+        this->_speaking_to_pnj = std::make_tuple(false, -1, -1);
+    }
 }

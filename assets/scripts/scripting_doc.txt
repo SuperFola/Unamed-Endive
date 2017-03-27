@@ -8,10 +8,6 @@ When you receive an event in the python scripting, it is a dict
 
 To check the code of a key event, you can do ev['key'] == keys_ev_code.index('A') (will check if it is the key A)
 
-addTrigger
-----------
-Take two integers (mid and rid) and a string representing the id of your new trigger
-
 changeBlockAttribute
 --------------------
 To change attributes of a specified block on the current map
@@ -68,10 +64,6 @@ getPlayerName
 -------------
 Return the name of the player
 
-getTrigger
-----------
-Take two integers, mid and rid, and return a string representing the identifier of a trigger. Remember to check if the trigger is valid using is_notrigger(id)
-
 hasActiveHud
 ------------
 Check if a view, with a given id, has currently an active HUD
@@ -79,10 +71,6 @@ Check if a view, with a given id, has currently an active HUD
 isTp
 ----
 Return 1 if the block at the pos x y is a tp, otherwise 0
-
-is_notrigger
-------------
-Take a string, given by getTrigger(..), and return True or False whether the id represents a valid trigger or not
 
 loadImage
 ---------

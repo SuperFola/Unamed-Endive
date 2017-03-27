@@ -45,3 +45,17 @@ void PNJManager::update(int mid, sf::RenderWindow& window, sf::Time elapsed)
     }
     _end:;
 }
+
+int PNJManager::find_pnjid_at(int x, int y, int mid)
+{
+    if (this->pnjs[mid].size() == 0)
+        return -1;
+
+    for (int i=0; i < this->pnjs[mid].size(); i++)
+    {
+        if (this->pnjs[mid][i]->collide(x, y))
+            return i;
+    }
+
+    return -1;
+}

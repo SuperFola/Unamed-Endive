@@ -169,7 +169,7 @@ void Game::dispatch_events(sf::Event& event, sf::Time elapsed)
     {
         int new_view = UNREACHABLE_VIEW_ID;
         if (!this->cheat_on)
-            new_view = this->sm.process_event_current(event, elapsed);
+            new_view = this->sm.process_event_current(event, elapsed, this->window);
 
         switch (this->sm.change_view(new_view))
         {

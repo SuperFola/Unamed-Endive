@@ -1,6 +1,7 @@
 #ifndef DEF_DEFAULT_VIEW
 #define DEF_DEFAULT_VIEW
 
+#include <tuple>
 #include <string>
 #include <SFML/System/String.hpp>
 
@@ -28,6 +29,7 @@ private:
     PNJManager pnjmgr;
     MenuHUD menu_hud;
     bool display_mmap;
+    std::tuple <bool, int, int> _speaking_to_pnj;
     // methods
     void set_view(sf::RenderWindow&);
     void unset_view(sf::RenderWindow&);
@@ -39,7 +41,9 @@ public:
       // we are overriding it but not using it
       bool load() override;
     void render(sf::RenderWindow&) override;
-    int process_event(sf::Event&, sf::Time) override;
+        // we are overriding it but not using it
+        int process_event(sf::Event&, sf::Time) override;
+    int process_event(sf::Event&, sf::Time, sf::RenderWindow&);
     void update(sf::RenderWindow&, sf::Time) override;
     bool hasActiveHud();
     Character* getCharacter();
@@ -48,6 +52,8 @@ public:
     void change_display_mmap(bool);
     bool get_display_mmap();
     void draw_on_offscreen(const sf::Drawable&);
+    void resolve_pnjspeak(int, int, sf::RenderWindow&);
+    void disable_pnj_speaking();
 };
 
 #endif // DEF_DEFAULT_VIEW

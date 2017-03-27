@@ -94,12 +94,6 @@ int Character::save()
     return 0;
 }
 
-void Character::speak(int mid, PNJManager* pnjm)
-{
-    DebugLog(SH_WARN, "Speaking. Please change the behavior of this method ASAP");
-    pnjm->getPNJonMap(mid, 0).speak();
-}
-
 Bag* Character::getBag()
 {
     return &this->bag;

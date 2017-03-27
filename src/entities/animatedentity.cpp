@@ -224,3 +224,12 @@ void AnimatedEntity::setPos(int x, int y)
 {
     this->pos.set(x, y);
 }
+
+bool AnimatedEntity::collide(int x, int y)
+{
+    DebugLog(SH_INFO, x << " " << y << " " << this->_size << " - " << this->pos.getX() << " " << this->pos.getY());
+    if (this->pos.getX() <= x && x <= this->pos.getX() + this->_size &&
+         this->pos.getY() <= y && y <= this->pos.getY() + this->_size)
+            return true;
+    return false;
+}

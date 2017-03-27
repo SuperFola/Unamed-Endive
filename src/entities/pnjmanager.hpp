@@ -19,6 +19,7 @@ public:
     int countPNJonMap(int);
     PNJ& getPNJonMap(int, int);
     void update(int, sf::RenderWindow&, sf::Time);
+    int find_pnjid_at(int, int, int);
 };
 
 #endif // DEF_PNJMANAGER
