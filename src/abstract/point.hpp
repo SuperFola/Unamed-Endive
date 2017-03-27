@@ -18,6 +18,7 @@ public:
     float getX();
     float getY();
     sf::Vector2f get();
+    int squareDistanceTo(Point&);
 };
 
 #endif // DEF_POINT

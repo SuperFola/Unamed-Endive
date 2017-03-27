@@ -232,16 +232,18 @@ void DefaultView::draw_on_offscreen(const sf::Drawable& drawable)
 void DefaultView::resolve_pnjspeak(int x, int y, sf::RenderWindow& window)
 {
     int mid = this->level.getId();
-    sf::Vector2i pixPos = window.mapCoordsToPixel(sf::Vector2f(x, y));
+    sf::Vector2f pixPos = window.mapPixelToCoords(sf::Vector2i(x, y), this->view);
     int pnji = this->pnjmgr.find_pnjid_at(int(pixPos.x), int(pixPos.y), mid);
 
     if (pnji != -1)
     {
-        this->pnjmgr.getPNJonMap(mid, pnji).speak();
-        this->_speaking_to_pnj = std::make_tuple(true, mid, pnji);
+        Point _pos = this->pnjmgr.getPNJonMap(mid, pnji).getPos();
+        if (this->player.getPos().squareDistanceTo(_pos) <= 9 * TILE_SIZE * TILE_SIZE)
+        {
+            this->pnjmgr.getPNJonMap(mid, pnji).speak();
+            this->_speaking_to_pnj = std::make_tuple(true, mid, pnji);
+        }
     }
-    else
-        DebugLog(SH_WARN, "Can not find pnj at " << x << " " << y << " on mid " << mid);
 }
 
 void DefaultView::disable_pnj_speaking()

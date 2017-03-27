@@ -47,3 +47,12 @@ sf::Vector2f Point::get()
 {
     return sf::Vector2f(this->x, this->y);
 }
+
+int Point::squareDistanceTo(Point& _pos)
+{
+    int r = 0;
+
+    r = (this->x - _pos.x) * (this->x - _pos.x) + (this->y - _pos.y) * (this->y - _pos.y);
+
+    return r;
+}
