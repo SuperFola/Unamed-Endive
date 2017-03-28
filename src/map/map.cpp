@@ -3,6 +3,7 @@
 #include "../../debug.hpp"
 
 #include "map.hpp"
+#include "../scripting/scripting.hpp"
 
 // public
 Map::Map(std::string path) :
@@ -81,12 +82,10 @@ bool Map::colliding_at(int tx, int ty)
 {
     int rpos = tx + ty * this->map_width;
     bool ret_val = true;
-    bool _tp = this->is_tp(tx, ty);
 
     if (rpos < this->map_height * this->map_width)
     {
-        //if (!_tp)
-            ret_val = this->level[COLLIDING_LAYER][rpos]->is_solid();
+        ret_val = this->level[COLLIDING_LAYER][rpos]->is_solid();
     }
     return ret_val;
 }
@@ -101,6 +100,14 @@ int Map::post_colliding_test_to_check_tp(int tx, int ty)
     {
         nrpos = this->findTpOnCase(rpos).tocase;
         DebugLog(SH_SPE, "0 ?= " << this->load_map_at("assets/map/" + to_string<int>(this->getMapFromTp(rpos)) + ".umd"));
+        if (nrpos != -1)
+        {
+            PyScripting::run_code(("trigger_event(" +
+                                   to_string<int>(this->getId()) + "," +
+                                   to_string<int>(tx / TILE_SIZE) + "," +
+                                   to_string<int>(ty / TILE_SIZE) + "," +
+                                   "'autorun')").c_str());
+        }
     }
     return nrpos;
 }

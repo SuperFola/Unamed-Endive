@@ -26,7 +26,7 @@ _vars = {}     # TODO : same
 
 # load progress/switchs...
 def load_stuff():
-    global progress
+    global _progress
     # progress
     if os.path.exists(PRGS_SAVING_PATH):
         with open(PRGS_SAVING_PATH) as file:
@@ -53,6 +53,21 @@ def save_stuff():
         file.write(str(_switchs))
     with open(VARS_SAVING_PATH, "w") as file:
         file.write(str(_vars))
+# function to trigger an event from the C++ code
+def trigger_event(mid, x, y, triggtype):
+    global _progress
+    print("PY> trying to trigger an event")
+    ev_onmap = _progress.get(mid, {})
+    if ev_onmap and ((x, y) in ev_onmap.keys() or triggtype == "autorun"):
+        # triggering the autorun events
+        if triggtype == "autorun":
+            for k, v in ev_onmap.items():
+                if v["trigger"] == "autorun":
+                    v["triggered"] = True
+        # triggering other events' type
+        else:
+            if ev_onmap[x, y]["trigger"] == triggtype:
+                ev_onmap[x, y]["triggered"] = True
 
 # scripts only for the game do not modify/delete them
 Unamed.registerScript("runOnceWhenClosing", "closing.py")

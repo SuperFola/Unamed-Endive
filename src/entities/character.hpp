@@ -35,6 +35,7 @@ public:
     // methods
     Character(Sex sex_=Sex::Male);
     int chara_move(Map&, std::vector<float>) override;
+    void chara_send_player_touch(Map&) override;
     int save();
     void setName(const std::string);
     std::string getName();

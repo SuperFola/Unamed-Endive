@@ -4,6 +4,7 @@
 #include "../../debug.hpp"
 
 #include "default.hpp"
+#include "../scripting/scripting.hpp"
 
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
@@ -167,6 +168,11 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed, sf::RenderWin
 
         case sf::Keyboard::Space:
             has_moved = true;  // kind of tricky, just to stop speaking to the pnj
+            PyScripting::run_code(("trigger_event(" +
+                                   to_string<int>(this->level.getId()) + "," +
+                                   to_string<int>(this->player.getPos().getX() / TILE_SIZE) + "," +
+                                   to_string<int>(this->player.getPos().getY() / TILE_SIZE) + "," +
+                                   "'action button')").c_str());
             break;
 
         default:

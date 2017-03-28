@@ -5,3 +5,4 @@ WHEN DEBUGGING
 * check for all the pointers/references passed to functions/methods using the object
 * if 'undefined error ..' check for infinite include and templates (must be in a header file, both declaration and implementation)
 * check for default values of variables
+* if cyclic include, try including the file in fault in the .cpp

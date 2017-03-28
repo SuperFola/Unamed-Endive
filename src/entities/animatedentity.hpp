@@ -18,6 +18,7 @@ class AnimatedEntity
 protected:
     const int _size = TILE_SIZE * 2;
     Point pos;
+    Point opos;
     ChState state;
     MvState anim_cursor;
     DIRECTION direction;
@@ -31,6 +32,7 @@ protected:
     void update_anim(sf::Time);
     void update_walk_anim();
     void update_run_anim();
+    bool has_changed_case();
 
 public:
     AnimatedEntity(int x=32, int y=32);
@@ -38,6 +40,7 @@ public:
     virtual void _load() = 0;
     int move(DIRECTION, Map&, sf::Time);
     virtual int chara_move(Map&, std::vector<float>);
+    virtual void chara_send_player_touch(Map&);
     sf::Sprite& getCurrentSprite();
     void update(sf::RenderWindow&, sf::Time);
     void setDir(DIRECTION);

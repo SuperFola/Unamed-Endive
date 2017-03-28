@@ -1,8 +1,8 @@
 #include <iostream>
 #include "../../debug.hpp"
-#include "../scripting/scripting.hpp"
 
 #include "character.hpp"
+#include "../scripting/scripting.hpp"
 
 // public
 Character::Character(Sex sex_) :
@@ -37,6 +37,19 @@ int Character::chara_move(Map& map_, std::vector<float> vect)
 
     // nothing was != -1 so we return -1 to tell that we are not on some tp
     return -1;
+}
+
+void Character::chara_send_player_touch(Map& map_)
+{
+    // we must check if we changed case
+    if (this->has_changed_case())
+    {
+        PyScripting::run_code(("trigger_event(" +
+                                   to_string<int>(map_.getId()) + "," +
+                                   to_string<int>(this->pos.getX() / TILE_SIZE) + "," +
+                                   to_string<int>(this->pos.getY() / TILE_SIZE) + "," +
+                                   "'player touch')").c_str());
+    }
 }
 
 void Character::setName(const std::string new_name)

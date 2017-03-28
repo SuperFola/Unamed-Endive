@@ -69,6 +69,7 @@ void AnimatedEntity::update_run_anim()
 
 AnimatedEntity::AnimatedEntity(int x, int y) :
     pos(x, y)
+    , opos(x, y)
     , state(ChState::idle)
     , anim_cursor(MvState::idle)
     , direction(DIRECTION::down)
@@ -115,8 +116,27 @@ bool AnimatedEntity::load()
     return true;
 }
 
+bool AnimatedEntity::has_changed_case()
+{
+    if (int(this->opos.getX()) / TILE_SIZE != int(this->pos.getX()) / TILE_SIZE ||
+         int(this->opos.getY()) / TILE_SIZE != int(this->pos.getY()) / TILE_SIZE)
+         {
+             DebugLog(SH_INFO, "opos " <<
+                      int(this->opos.getX()) / TILE_SIZE << " " <<
+                      int(this->opos.getY()) / TILE_SIZE << " " <<
+                      "pos " <<
+                      int(this->pos.getX()) / TILE_SIZE << " " <<
+                      int(this->pos.getY()) / TILE_SIZE
+                      );
+             return true;
+         }
+    return false;
+}
+
 int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
 {
+    this->opos = this->pos;
+
     // update state
     if (this->state == ChState::idle)
         this->state = ChState::walking;  // default value, we will change it regarding the AnimatedEntity equipment in the future
@@ -179,6 +199,7 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
     {
         // otherwise we can set the new position, it is not blocking and there is not any tp
         this->pos.move(int(vect[0]), int(vect[1]));
+        this->chara_send_player_touch(map_);
     }
 
     sf::Vector2f _pos {
@@ -191,9 +212,14 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
     return 0;
 }
 
+void AnimatedEntity::chara_send_player_touch(Map& map_)
+{
+    // not implemented for basic entities such as PNJ(npc)
+}
+
 int AnimatedEntity::chara_move(Map&, std::vector<float>)
 {
-    // not implemented for basic entity such as PNJ(npc)
+    // not implemented for basic entities such as PNJ(npc)
     return -1;
 }
 
@@ -227,7 +253,6 @@ void AnimatedEntity::setPos(int x, int y)
 
 bool AnimatedEntity::collide(int x, int y)
 {
-    DebugLog(SH_INFO, x << " " << y << " " << this->_size << " - " << this->pos.getX() << " " << this->pos.getY());
     if (this->pos.getX() <= x && x <= this->pos.getX() + this->_size &&
          this->pos.getY() <= y && y <= this->pos.getY() + this->_size)
             return true;

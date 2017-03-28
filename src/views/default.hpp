@@ -7,13 +7,13 @@
 
 #include "view.hpp"
 #include "../map/map.hpp"
-#include "../entities/character.hpp"
 #include "../entities/pnj.hpp"
 #include "huds/menu.hpp"
 #include "../constants.hpp"
 #include "../entities/pnjmanager.hpp"
 #include "../abstract/functions.hpp"
 #include "../json/json.h"
+#include "../entities/character.hpp"
 
 class DefaultView : public View
 {
