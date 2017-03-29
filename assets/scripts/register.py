@@ -56,7 +56,7 @@ def save_stuff():
 # function to trigger an event from the C++ code
 def trigger_event(mid, x, y, triggtype):
     global _progress
-    print("PY> trying to trigger an event")
+    print("PY> trying to trigger an event on map id", mid, "x", x, "y", y, "triggtype", triggtype)
     ev_onmap = _progress.get(mid, {})
     if ev_onmap and ((x, y) in ev_onmap.keys() or triggtype == "autorun"):
         # triggering the autorun events

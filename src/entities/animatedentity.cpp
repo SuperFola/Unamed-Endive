@@ -120,16 +120,7 @@ bool AnimatedEntity::has_changed_case()
 {
     if (int(this->opos.getX()) / TILE_SIZE != int(this->pos.getX()) / TILE_SIZE ||
          int(this->opos.getY()) / TILE_SIZE != int(this->pos.getY()) / TILE_SIZE)
-         {
-             DebugLog(SH_INFO, "opos " <<
-                      int(this->opos.getX()) / TILE_SIZE << " " <<
-                      int(this->opos.getY()) / TILE_SIZE << " " <<
-                      "pos " <<
-                      int(this->pos.getX()) / TILE_SIZE << " " <<
-                      int(this->pos.getY()) / TILE_SIZE
-                      );
              return true;
-         }
     return false;
 }
 
