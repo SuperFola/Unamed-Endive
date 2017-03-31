@@ -25,9 +25,6 @@
 // specials define
 #define DISPLAY_FPS_IN_TITLE 1
 
-// game related
-#define MAX_SIZE_PC 750
-
 // tiles
 #define TILE_SIZE 16
 #define TILE_SIZE_IN_TILESET 17
@@ -39,12 +36,13 @@
 #define ICO_X 32
 #define ICO_Y 32
 
+// game related
+#define MAX_SIZE_PC 750
 #define FRAMERATE_LIM 120
-
 #define MINIMAP_X 128
 #define MINIMAP_Y 128
-
 #define COLLIDING_LAYER 1
+#define MAX_DIST_FROM_PNJ_IN_CASE 5
 
 // platform (useful for some functions)
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)

@@ -195,7 +195,18 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 
 }
 
+void FightView::encounter()
+{
+    if (this->dex)
+        this->dex->register_viewed(0);  // TODO : put the id of the encountered creature(s)
+}
+
 void FightView::set_env(FightEnv new_env)
 {
     this->env = new_env;
+}
+
+void FightView::set_dex(Dex* _dex)
+{
+    this->dex = _dex;
 }

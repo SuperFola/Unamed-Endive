@@ -173,7 +173,7 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
                         && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      )
                         && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2)
                         && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
-    if (!pass)
+    if (!pass || !this->pass_pnj(map_, vect))
         return 0;
 
     // check for tp on a new map
@@ -206,6 +206,12 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
 void AnimatedEntity::chara_send_player_touch(Map& map_)
 {
     // not implemented for basic entities such as PNJ(npc)
+}
+
+bool AnimatedEntity::pass_pnj(Map&, std::vector<float>)
+{
+    // not implemented for basi entities such as PNJ(npc)
+    return true;
 }
 
 int AnimatedEntity::chara_move(Map&, std::vector<float>)

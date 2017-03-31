@@ -39,6 +39,18 @@ int Character::chara_move(Map& map_, std::vector<float> vect)
     return -1;
 }
 
+bool Character::pass_pnj(Map& map_, std::vector<float> vect)
+{
+    if (this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()                             , vect[1] + this->pos.getY()                             , map_.getId()) != -1 ||
+         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + 2 * TILE_SIZE, vect[1] + this->pos.getY()                             , map_.getId()) != -1 ||
+         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()                             , vect[1] + this->pos.getY() + 2 * TILE_SIZE, map_.getId()) != -1 ||
+         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + 2 * TILE_SIZE, vect[1] + this->pos.getY() + 2 * TILE_SIZE, map_.getId()) != -1)
+    {
+        return false;
+    }
+    return true;
+}
+
 void Character::chara_send_player_touch(Map& map_)
 {
     // we must check if we changed case
@@ -125,4 +137,10 @@ Equip* Character::getPC()
 Dex* Character::getDex()
 {
     return &this->dex;
+}
+
+void Character::setPNJm(PNJManager* _pnjm)
+{
+    this->pnjm = _pnjm;
+    DebugLog(SH_INFO, "Adding pnj manager to character");
 }

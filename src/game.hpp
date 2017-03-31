@@ -5,7 +5,6 @@
 #include <SFML/System.hpp>
 
 #include "constants.hpp"
-//#include "abstract/statemachine.hpp"
 #include "scripting/scripting.hpp"
 #include "abstract/creatures_loader.hpp"
 #include "abstract/functions.hpp"

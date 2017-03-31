@@ -15,6 +15,7 @@
 #include "animatedentity.hpp"
 #include "../abstract/equip.hpp"
 #include "../objects/dex.hpp"
+#include "pnjmanager.hpp"
 
 enum class Sex {
     Female,
@@ -30,12 +31,14 @@ private:
     Equip equip;
     Equip pc;
     Dex dex;
+    PNJManager* pnjm;
 
 public:
     // methods
     Character(Sex sex_=Sex::Male);
     int chara_move(Map&, std::vector<float>) override;
     void chara_send_player_touch(Map&) override;
+    bool pass_pnj(Map&, std::vector<float>) override;
     int save();
     void setName(const std::string);
     std::string getName();
@@ -44,6 +47,7 @@ public:
     Equip* getEquip();
     Equip* getPC();
     Dex* getDex();
+    void setPNJm(PNJManager*);
 };
 
 #endif // DEF_CHARACTER

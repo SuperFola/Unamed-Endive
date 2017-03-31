@@ -49,14 +49,13 @@ bool DefaultView::load(sf::String playername)
         return false;
     }
 
-    this->pnjmgr.add_pnj_on_map(this->level.getId(), "vader", "Je suis Vader, un commander d'El Padrino !", PNJkind::special, "Vader");
-
     this->player.setName(playername.toAnsiString());
     if (!this->player.load())
     {
         DebugLog(SH_ERR, "An error occured while loading the player");
         return false;
     }
+    this->player.setPNJm(&this->pnjmgr);
 
     if (!this->offscreen.create(WIN_W, WIN_H))
         return false;
@@ -244,7 +243,7 @@ void DefaultView::resolve_pnjspeak(int x, int y, sf::RenderWindow& window)
     if (pnji != -1)
     {
         Point _pos = this->pnjmgr.getPNJonMap(mid, pnji).getPos();
-        if (this->player.getPos().squareDistanceTo(_pos) <= 9 * TILE_SIZE * TILE_SIZE)
+        if (this->player.getPos().squareDistanceTo(_pos) <= MAX_DIST_FROM_PNJ_IN_CASE * MAX_DIST_FROM_PNJ_IN_CASE * TILE_SIZE * TILE_SIZE)
         {
             this->pnjmgr.getPNJonMap(mid, pnji).speak();
             this->_speaking_to_pnj = std::make_tuple(true, mid, pnji);

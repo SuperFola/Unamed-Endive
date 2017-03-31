@@ -25,6 +25,8 @@ public:
     std::string getNext();
     DexInfo getInfo(const std::string&);
     DexInfo getInfo(int);
+    void register_viewed(int);
+    void register_capture(int);
 };
 
 #endif // DEF_DEX

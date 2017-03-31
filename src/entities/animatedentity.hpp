@@ -41,6 +41,7 @@ public:
     int move(DIRECTION, Map&, sf::Time);
     virtual int chara_move(Map&, std::vector<float>);
     virtual void chara_send_player_touch(Map&);
+    virtual bool pass_pnj(Map&, std::vector<float>);
     sf::Sprite& getCurrentSprite();
     void update(sf::RenderWindow&, sf::Time);
     void setDir(DIRECTION);

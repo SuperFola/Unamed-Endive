@@ -649,6 +649,8 @@ void Game::post_load()
     this->sm.getDex()->add_crealoader(&this->crea_load);
     // pointer to sm to save
     this->sm.getSave()->setdefv(this->sm.getDefault());
+    // pointer on the dex to the fight view
+    this->sm.getFight()->set_dex(this->sm.getDefault()->getCharacter()->getDex());
 
     // scripting
     PyScripting::setWindow(&this->window);
