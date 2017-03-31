@@ -175,7 +175,6 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
                         && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
     if (!pass || !this->pass_pnj(map_, vect))
     {
-        DebugLog(SH_SPE, "Colliding at " << vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE << " " << vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE << " either with a pnj or a bloc");
         return 0;
     }
 
