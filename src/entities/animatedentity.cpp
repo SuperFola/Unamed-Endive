@@ -174,7 +174,10 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
                         && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2)
                         && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
     if (!pass || !this->pass_pnj(map_, vect))
+    {
+        DebugLog(SH_SPE, "Colliding at " << vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE << " " << vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE << " either with a pnj or a bloc");
         return 0;
+    }
 
     // check for tp on a new map
     int nrpos = this->chara_move(map_, vect);
@@ -198,7 +201,8 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
         , float(int(this->pos.getY()))
     };
 
-    this->getCurrentSprite().setPosition(_pos);
+    for (int i=0; i < this->sprites.size(); i++)
+        this->sprites[i].setPosition(_pos);
 
     return 0;
 }

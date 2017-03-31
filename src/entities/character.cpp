@@ -41,10 +41,10 @@ int Character::chara_move(Map& map_, std::vector<float> vect)
 
 bool Character::pass_pnj(Map& map_, std::vector<float> vect)
 {
-    if (this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()                             , vect[1] + this->pos.getY()                             , map_.getId()) != -1 ||
-         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + 2 * TILE_SIZE, vect[1] + this->pos.getY()                             , map_.getId()) != -1 ||
-         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()                             , vect[1] + this->pos.getY() + 2 * TILE_SIZE, map_.getId()) != -1 ||
-         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + 2 * TILE_SIZE, vect[1] + this->pos.getY() + 2 * TILE_SIZE, map_.getId()) != -1)
+    if (this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()                       , vect[1] + this->pos.getY()                       , map_.getId()) != -1 ||
+         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + TILE_SIZE, vect[1] + this->pos.getY()                       , map_.getId()) != -1 ||
+         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()                       , vect[1] + this->pos.getY() + TILE_SIZE, map_.getId()) != -1 ||
+         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + TILE_SIZE, vect[1] + this->pos.getY() + TILE_SIZE, map_.getId()) != -1)
     {
         return false;
     }
