@@ -50,11 +50,16 @@ bool StateMachine::load(sf::String playername)
         id = this->fightv.getId();
         this->fightv.load();
         break;
+
+    case 7:
+        id = this->shopv.getId();
+        this->shopv.load();
+        break;
     }
     DebugLog(SH_INFO, "Loading view " << id);
     this->loaded++;
 
-    return this->loaded == 7;
+    return this->loaded == 8;
 }
 
 int StateMachine::getId()
@@ -96,6 +101,10 @@ bool StateMachine::hasActiveHud(int vid)
         ret_val = this->fightv.hasActiveHud();
         break;
 
+    case SHOP_VIEW_ID:
+        ret_val = this->fightv.hasActiveHud();
+        break;
+
     default:
         ret_val = -1;
         break;
@@ -125,6 +134,7 @@ int StateMachine::change_view(int new_view)
         this->dexv.load_dex_content();
     case SAVING_VIEW_ID:
     case INVENTORY_VIEW_ID:
+    case SHOP_VIEW_ID:
     case MAP_VIEW_ID:
         this->history.push_back(this->current_view);
         this->current_view = new_view;
@@ -200,6 +210,10 @@ int StateMachine::process_event_current(sf::Event& event, sf::Time elapsed, sf::
         ret_val = this->fightv.process_event(event, elapsed);
         break;
 
+    case SHOP_VIEW_ID:
+        ret_val = this->shopv.process_event(event, elapsed);
+        break;
+
     default:
         ret_val = -1;
         break;
@@ -238,6 +252,10 @@ void StateMachine::render_current(sf::RenderWindow& window)
 
     case FIGHT_VIEW_ID:
         this->fightv.render(window);
+        break;
+
+    case SHOP_VIEW_ID:
+        this->shopv.render(window);
         break;
 
     default:
@@ -280,6 +298,10 @@ void StateMachine::update_current(sf::RenderWindow& window, sf::Time elapsed)
         this->fightv.update(window, elapsed);
         break;
 
+    case SHOP_VIEW_ID:
+        this->shopv.update(window, elapsed);
+        break;
+
     default:
         break;
     }
@@ -318,5 +340,10 @@ MapView* StateMachine::getMap()
 FightView* StateMachine::getFight()
 {
     return &this->fightv;
+}
+
+ShopView* StateMachine::getShop()
+{
+    return &this->shopv;
 }
 

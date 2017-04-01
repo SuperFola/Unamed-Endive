@@ -7,17 +7,15 @@ void AnimatedEntity::update_anim(sf::Time elapsed)
 {
     this->elapsed_mvt_time += elapsed;
 
-    if (this->elapsed_mvt_time.asMilliseconds() % 24 < 4)
+    if (this->elapsed_mvt_time.asMilliseconds() >= this->frame_time.asMilliseconds())
     {
+        this->elapsed_mvt_time = sf::milliseconds(this->elapsed_mvt_time.asMilliseconds() % this->frame_time.asMilliseconds());
+
         if (this->state == ChState::walking)
             this->update_walk_anim();
         else if (this->state == ChState::running)
             this->update_run_anim();
     }
-
-    // reset timer to prevent an overflow
-    if (this->elapsed_mvt_time.asSeconds() > 3600.0f)
-        this->elapsed_mvt_time = sf::seconds((this->elapsed_mvt_time % sf::seconds(3600.0f)).asSeconds());
 }
 
 void AnimatedEntity::update_walk_anim()
@@ -74,6 +72,7 @@ AnimatedEntity::AnimatedEntity(int x, int y) :
     , anim_cursor(MvState::idle)
     , direction(DIRECTION::down)
     , speed(1.0f / 32.0f)
+    , frame_time(sf::seconds(0.2f))
 {
 }
 
@@ -204,6 +203,62 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
         this->sprites[i].setPosition(_pos);
 
     return 0;
+}
+
+void AnimatedEntity::simplemove(DIRECTION dir, sf::Time elapsed)
+{
+    this->opos = this->pos;
+
+    // update state
+    if (this->state == ChState::idle)
+        this->state = ChState::walking;  // default value, we will change it regarding the AnimatedEntity equipment in the future
+
+    // set the new direction
+    if (this->direction != dir)
+        this->anim_cursor = MvState::idle;
+        // the AnimatedEntity change his direction so we reset the anim cursor
+        // to prevent some visual glitches
+    this->direction = dir;
+
+    // update anim
+    this->not_moving_time = sf::seconds(0.0f);  // reset it
+    this->update_anim(elapsed);
+
+    float speed = (this->speed * TILE_SIZE * 4.0f);  // * (elapsed.asSeconds() * 100.0f);
+    sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
+
+    std::vector<float> vect {0, 0};
+
+    if (dir == DIRECTION::up)
+    {
+        if (this->pos.getY() - speed >= 0.0f)
+            vect[1] = -1 * speed;
+    }
+    else if (dir == DIRECTION::down)
+    {
+        if (this->pos.getY() + speed - csprite_size.y < WIN_H)
+            vect[1] = 1 * speed;
+    }
+    else if (dir == DIRECTION::left)
+    {
+        if (this->pos.getX() - speed >= 0.0f)
+            vect[0] = -1 * speed;
+    }
+    else if (dir == DIRECTION::right)
+    {
+        if (this->pos.getX() + speed - csprite_size.x < WIN_W)
+            vect[0] = 1 * speed;
+    }
+
+     this->pos.move(int(vect[0]), int(vect[1]));
+
+     sf::Vector2f _pos {
+        float(int(this->pos.getX()))
+        , float(int(this->pos.getY()))
+    };
+
+    for (int i=0; i < this->sprites.size(); i++)
+        this->sprites[i].setPosition(_pos);
 }
 
 void AnimatedEntity::chara_send_player_touch(Map& map_)

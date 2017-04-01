@@ -16,6 +16,7 @@
 #include "../views/inventory.hpp"
 #include "../views/map.hpp"
 #include "../views/fight.hpp"
+#include "../views/shop.hpp"
 
 #include "functions.hpp"
 
@@ -33,6 +34,7 @@ private:
     InventView inventoryv;
     MapView mapv;
     FightView fightv;
+    ShopView shopv;
 
 public:
     // methods
@@ -52,6 +54,7 @@ public:
     InventView* getInventory();
     MapView* getMap();
     FightView* getFight();
+    ShopView* getShop();
 };
 
 #endif // DEF_STATEMACHINE

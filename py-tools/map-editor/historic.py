@@ -7,9 +7,10 @@ class Historic:
         self.current = 0
 
     def add(self, new):
-        print("in")
         self.content.append(copy.deepcopy(new))
         self.current = len(self.content) - 1
+        if len(self.content) > 25:
+            self.content = self.content[1:]
 
     def set(self, x):
         if x < len(self.content):

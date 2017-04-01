@@ -265,9 +265,6 @@ class Editor:
             self.entry.set_placeholder("map path ?")
             self.map_path = self.entry.get_text()
 
-        if self.map_path[-3:] != "umd":
-            self.map_path += ".umd"
-
         with open("maps/{}".format(self.map_path)) as file:
             self.tmap = eval(file.read().replace('null', 'None').replace('false', 'False').replace('true', 'True'))
 

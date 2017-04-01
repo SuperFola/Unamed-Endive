@@ -28,6 +28,7 @@ protected:
     std::vector<sf::Sprite> sprites;
     sf::Time elapsed_mvt_time;
     sf::Time not_moving_time;
+    sf::Time frame_time;
 
     void update_anim(sf::Time);
     void update_walk_anim();
@@ -39,6 +40,7 @@ public:
     bool load();
     virtual void _load() = 0;
     int move(DIRECTION, Map&, sf::Time);
+    void simplemove(DIRECTION, sf::Time);
     virtual int chara_move(Map&, std::vector<float>);
     virtual void chara_send_player_touch(Map&);
     virtual bool pass_pnj(Map&, std::vector<float>);

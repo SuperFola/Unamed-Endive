@@ -8,6 +8,8 @@
 #include "view.hpp"
 #include "../abstract/container.hpp"
 #include "../json/json.h"
+#include "../abstract/functions.hpp"
+#include "../entities/pnj.hpp"
 #include "default.hpp"
 
 class SaveView : public View
@@ -17,6 +19,13 @@ private:
     Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
     DefaultView* defv;
+    sf::Font font;
+    sf::Text text;
+    PNJ npc;
+    sf::Time last;
+    int npcdoing;
+    bool npcway;
+    int _c;
 
 public:
     // methods
