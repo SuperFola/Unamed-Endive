@@ -33,7 +33,7 @@ bool SaveView::load()
         return false;
 
     this->text.setFont(this->font);
-    this->text.setColor(sf::Color::Black);
+    this->text.setFillColor(sf::Color::Black);
     this->text.setCharacterSize(24);
     this->text.setString("Clic pour sauvegarder ta partie !");
     this->text.setPosition((WIN_W - this->text.getGlobalBounds().width) / 2, 275.0f);

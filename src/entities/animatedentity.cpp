@@ -72,7 +72,7 @@ AnimatedEntity::AnimatedEntity(int x, int y) :
     , anim_cursor(MvState::idle)
     , direction(DIRECTION::down)
     , speed(1.0f / 32.0f)
-    , frame_time(sf::seconds(0.2f))
+    , frame_time(sf::seconds(0.035f))
 {
 }
 
@@ -142,7 +142,7 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
     this->not_moving_time = sf::seconds(0.0f);  // reset it
     this->update_anim(elapsed);
 
-    float speed = (this->speed * TILE_SIZE * 4.0f);  // * (elapsed.asSeconds() * 100.0f);
+    float speed = (this->speed * TILE_SIZE * 4.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
     std::vector<float> vect {0, 0};
