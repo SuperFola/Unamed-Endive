@@ -47,6 +47,9 @@ private:
     sf::Sprite menu_btn_del_s;
     sf::Sprite menu_btn_new_s;
     sf::Sprite menu_btn_start_s;
+    sf::Sprite alphablack;
+    sf::Sprite deletewarn;
+    sf::Sprite validatebtn;
     int menu_game_selected;
     // methods
       // commons methods
@@ -61,7 +64,7 @@ private:
     void loading();
       // menu interface methods
     void update_menu(sf::Time, int, bool);
-    void render_menu(const std::vector<std::string>&, bool);
+    void render_menu(const std::vector<std::string>&, bool, bool, bool, bool);
     void menu();
       // others methods
     void take_screenshot();

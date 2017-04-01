@@ -35,7 +35,7 @@ bool SaveView::load()
     this->text.setFont(this->font);
     this->text.setFillColor(sf::Color::Black);
     this->text.setCharacterSize(24);
-    this->text.setString("Clic pour sauvegarder ta partie !");
+    this->text.setString("Clique pour sauvegarder ta partie !");
     this->text.setPosition((WIN_W - this->text.getGlobalBounds().width) / 2, 275.0f);
 
     this->npc.load();
@@ -187,7 +187,7 @@ void SaveView::update(sf::RenderWindow& window, sf::Time elapsed)
     }
     else if (this->_c > 900)
     {
-        this->text.setString("Clic pour sauvegarder ta partie !");
+        this->text.setString("Clique pour sauvegarder ta partie !");
         this->text.setPosition((WIN_W - this->text.getGlobalBounds().width) / 2, 275.0f);
         this->_c = 0;
     }

@@ -2,8 +2,7 @@ Hi everyone !
 
 Here is a new release {VERSION} of Unamed Endive, bringing some new functionalities :
 
-* [..]
-* [..]
+* [...]
 
 Do not forget to check the [wiki](https://github.com/Loodoor/Unamed-Endive/wiki) if you want to know the commands and a lot more :)
 
@@ -12,6 +11,7 @@ Also if you have a bug, please report it [here](https://github.com/Loodoor/Uname
 Links about the project :
 
 * [Official website](https://loodoor.github.io/Unamed-Endive)
+* [Forum](http://unamedrebirth.alwaysdata.net)
 * [Official Twitter account](https://twitter.com/UnamedRebirth)
 * [Trello](https://trello.com/b/JdzEnDJf)
 * [ZesteDeSavoir](https://zestedesavoir.com/forums/sujet/7064/unamed-rebirth/)

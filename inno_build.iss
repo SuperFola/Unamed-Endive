@@ -47,10 +47,10 @@ Name: "{app}\screenshots"
 ;; Source: "*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
-Source: "assets\*"; DestDir: "{app}\assets"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "assets\*"; Excludes: ".dontupload"; DestDir: "{app}\assets"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "py-tools\*"; DestDir: "{app}\py-tools"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "bin\Debug\main.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "bin\Release\main.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bin\DebugWin\main.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bin\ReleaseWin\main.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "dlls\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]

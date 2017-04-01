@@ -6,10 +6,7 @@ comments.txt
 *.cbp
 *.backup
 .vs
-/assets/.calques_pnj
-/assets/.tiles_buildings
-/assets/.tilesets
-/assets/.originals
+/assets/.dontupload
 /obj/
 /screenshots/
 /dlls/Lib/*
