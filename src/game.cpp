@@ -328,8 +328,17 @@ void Game::loading()
 void Game::update_menu(sf::Time elapsed, int s, bool new_game)
 {
     // centering text
-    if (s == 0 || new_game)
+    if (new_game)
+    {
         this->menu_user.setPosition(WIN_W / 2.0f - this->menu_user.getLocalBounds().width / 2.0f, this->menu_user.getPosition().y);
+    }
+    this->blinking++;
+
+    if (!(this->blinking % 60))
+    {
+        this->blink = !this->blink;
+        this->blinking %= 60;
+    }
 }
 
 void Game::render_menu(const std::vector<std::string>& s, bool new_game, bool del_game, bool play_game, bool valid_delete)
@@ -381,6 +390,12 @@ void Game::render_menu(const std::vector<std::string>& s, bool new_game, bool de
     {
         this->window.draw(this->menu_ask_user);
         this->window.draw(this->menu_user);
+
+        if (this->blink)
+        {
+            this->cursor.setPosition(this->menu_user.getPosition().x + this->menu_user.getGlobalBounds().width + 10.0f, this->cursor.getPosition().y);
+            this->window.draw(this->cursor);
+        }
     }
 }
 
@@ -449,7 +464,7 @@ void Game::menu()
                         break;
                     }
                 }
-                else if (delete_selected_game)
+                if (del_game && delete_selected_game)
                 {
                     if (event.key.code == sf::Keyboard::Return)
                     {
@@ -479,47 +494,54 @@ void Game::menu()
                 switch(event.mouseButton.button)
                 {
                 case sf::Mouse::Button::Left:
-                    if (__X >= WIN_W / 2.0f - 200.0f && __X <= WIN_W / 2.0f + 200.0f && __Y >= 250.0f && __Y <= 250.0f + saves.size() * (4.0f + this->menu_text.getCharacterSize()))
+                    // activate buttons only if not in a submenu
+                    if (!play_game && !del_game && !new_game)
                     {
-                        // clic on an existing save
-                        int ry = (__Y - 250) / (4.0f + this->menu_text.getCharacterSize());
-
-                        if (play_game || del_game)
+                        if (__X >= this->menu_btn_new_s.getPosition().x && __X <= this->menu_btn_new_s.getPosition().x + this->menu_btn_new_s.getLocalBounds().width &&
+                             __Y >= this->menu_btn_new_s.getPosition().y && __Y <= this->menu_btn_new_s.getPosition().y + this->menu_btn_new_s.getLocalBounds().height)
                         {
-                            if (0 <= ry && ry <= saves.size() - 1)
-                            {
-                                this->menu_userentry = saves[ry];
-                                this->menu_game_selected = ry;
-                            }
-
-                            if (del_game)
-                            {
-                                delete_selected_game = true;
-                            }
-                            else if (play_game)
-                            {
-                                quit = true;
-                            }
+                            // clic on button new
+                            new_game = true;
+                            this->menu_userentry.clear();
+                        }
+                        if (__X >= this->menu_btn_del_s.getPosition().x && __X <= this->menu_btn_del_s.getPosition().x + this->menu_btn_del_s.getLocalBounds().width &&
+                             __Y >= this->menu_btn_del_s.getPosition().y && __Y <= this->menu_btn_del_s.getPosition().y + this->menu_btn_del_s.getLocalBounds().height)
+                        {
+                            // clic on button delete
+                            del_game = true;
+                        }
+                        if (__X >= this->menu_btn_start_s.getPosition().x && __X <= this->menu_btn_start_s.getPosition().x + this->menu_btn_start_s.getLocalBounds().width &&
+                             __Y >= this->menu_btn_start_s.getPosition().y && __Y <= this->menu_btn_start_s.getPosition().y + this->menu_btn_start_s.getLocalBounds().height)
+                        {
+                            // clic on button start
+                            play_game = true;
                         }
                     }
-                    if (__X >= this->menu_btn_new_s.getPosition().x && __X <= this->menu_btn_new_s.getPosition().x + this->menu_btn_new_s.getLocalBounds().width &&
-                         __Y >= this->menu_btn_new_s.getPosition().y && __Y <= this->menu_btn_new_s.getPosition().y + this->menu_btn_new_s.getLocalBounds().height)
+                    else
                     {
-                        // clic on button new
-                        new_game = true;
-                        this->menu_userentry.clear();
-                    }
-                    if (__X >= this->menu_btn_del_s.getPosition().x && __X <= this->menu_btn_del_s.getPosition().x + this->menu_btn_del_s.getLocalBounds().width &&
-                         __Y >= this->menu_btn_del_s.getPosition().y && __Y <= this->menu_btn_del_s.getPosition().y + this->menu_btn_del_s.getLocalBounds().height)
-                    {
-                        // clic on button delete
-                        del_game = true;
-                    }
-                    if (__X >= this->menu_btn_start_s.getPosition().x && __X <= this->menu_btn_start_s.getPosition().x + this->menu_btn_start_s.getLocalBounds().width &&
-                         __Y >= this->menu_btn_start_s.getPosition().y && __Y <= this->menu_btn_start_s.getPosition().y + this->menu_btn_start_s.getLocalBounds().height)
-                    {
-                        // clic on button start
-                        play_game = true;
+                        if (__X >= WIN_W / 2.0f - 200.0f && __X <= WIN_W / 2.0f + 200.0f && __Y >= 250.0f && __Y <= 250.0f + saves.size() * (4.0f + this->menu_text.getCharacterSize()))
+                        {
+                            // clic on an existing save
+                            int ry = (__Y - 250) / (4.0f + this->menu_text.getCharacterSize());
+
+                            if (play_game || del_game)
+                            {
+                                if (0 <= ry && ry <= saves.size() - 1)
+                                {
+                                    this->menu_userentry = saves[ry];
+                                    this->menu_game_selected = ry;
+                                }
+
+                                if (del_game)
+                                {
+                                    delete_selected_game = true;
+                                }
+                                else if (play_game)
+                                {
+                                    quit = true;
+                                }
+                            }
+                        }
                     }
                     break;
 
@@ -683,6 +705,15 @@ Game::Game() :
     this->menu_ask_user.setString("Quel est votre nom ?");
     this->menu_ask_user.setPosition(WIN_W / 2.0f - this->menu_ask_user.getLocalBounds().width / 2.0f, WIN_H / 2.0f - 100.0f);
     this->menu_ask_user.setFillColor(sf::Color::White);
+
+    this->cursor.setFont(this->font);
+    this->cursor.setCharacterSize(24);
+    this->cursor.setString("_");
+    this->cursor.setFillColor(sf::Color::White);
+    this->cursor.setPosition(0.0f, WIN_H / 2.0f - 72.0f);
+
+    this->blink = false;
+    this->blinking = 0;
 
     ObjectsTable::load();
     this->ttable.load();

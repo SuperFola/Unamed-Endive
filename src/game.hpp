@@ -40,6 +40,7 @@ private:
       // menu
     sf::Text menu_user;
     sf::Text menu_text;
+    sf::Text cursor;
     sf::String menu_userentry;
     sf::Text menu_ask_user;
     sf::Sprite menu_bckg_s;
@@ -50,6 +51,8 @@ private:
     sf::Sprite alphablack;
     sf::Sprite deletewarn;
     sf::Sprite validatebtn;
+    int blinking;
+    bool blink;
     int menu_game_selected;
     // methods
       // commons methods
