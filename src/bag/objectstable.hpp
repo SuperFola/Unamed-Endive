@@ -21,7 +21,6 @@ private:
     ObjectsTable();
 
 public:
-    static ObjectsTable& Instance();
     static bool load();
     static std::string getName(Object*);
     static std::string getDesc(Object*);

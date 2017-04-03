@@ -25,4 +25,21 @@ struct ObjData {
     ObjType type;
 };
 
+enum ObjAction {
+    nothing,
+    selectone
+};
+
+// ObjectUseDataDescription
+struct ObjUDD {
+    int target_view;
+    int type;
+    int value;
+    ObjAction action;
+};
+
 #endif // DEF_OBJTYPES
+
+
+
+

@@ -7,7 +7,10 @@ Pocket::Pocket(const std::string& name_, bool default_one) :
     name(name_)
     , default_pocket(default_one)
 {
-
+    this->default_udd.target_view = UNREACHABLE_VIEW_ID;
+    this->default_udd.type = -1;
+    this->default_udd.value = 0;
+    this->default_udd.action = ObjAction::nothing;
 }
 
 bool Pocket::load(Json::Value& root)
@@ -49,24 +52,65 @@ Object* Pocket::getObject(int id)
     }
 }
 
-void Pocket::useObject(int id)
+ObjUDD Pocket::useObject(int id)
 {
     if (0 <= id && id < this->objects.size())
     {
         if (this->objects[id]->getQuantity() > 0)
         {
-            this->objects[id];
+            // minus one to quantity regarding to limited_use attrib
+            if (ObjectsTable::isLimitedInUse(this->objects[id]))
+                this->objects[id]->drop(1);
+
+            ObjUDD ret;
+
+            switch (ObjectsTable::getType(this->objects[id]))
+            {
+            case ObjType::player:
+                ret.target_view = DEFAULT_VIEW_ID;
+                ret.action = ObjAction::nothing;
+                break;
+
+            case ObjType::healpv:
+            case ObjType::healpp:
+            case ObjType::healstatus:
+            case ObjType::levelup:
+            case ObjType::lowercooldown:
+                ret.target_view = MYCREATURES_VIEW_ID;
+                ret.action = ObjAction::selectone;
+                break;
+
+            case ObjType::capture:
+                ret.target_view = FIGHT_VIEW_ID;
+                ret.action = ObjAction::selectone;
+                break;
+
+            default:
+                // catching ObjType::none
+                ret.target_view = UNREACHABLE_VIEW_ID;
+                ret.action = ObjAction::nothing;
+                break;
+            }
+
+            ret.type = ObjectsTable::getType(this->objects[id]);
+            ret.value = ObjectsTable::getValue(this->objects[id]);
+
+            return ret;
         }
+        // else, quantity == 0
+        return this->default_udd;
     }
     else
     {
         DebugLog(SH_ERR, "Can not find the object with the id " << id);
+        return this->default_udd;
     }
 }
 
 void Pocket::drop_object(int id)
 {
-    if (0 <= id && id < this->objects.size())
+    // the id MUST be in range AND the object MUST be throwable
+    if (0 <= id && id < this->objects.size() && ObjectsTable::isThrowable(this->objects[id]))
     {
         this->objects[id]->drop(1);
     }
@@ -76,7 +120,8 @@ void Pocket::drop_object(int id)
 
 void Pocket::dropall_object(int id)
 {
-    if (0 <= id && id < this->objects.size())
+    // the id MUST be in range AND the object MUST be throwable
+    if (0 <= id && id < this->objects.size() && ObjectsTable::isThrowable(this->objects[id]))
         pop<Object*>(&(this->objects), id);
     else
         DebugLog(SH_ERR, "Can not find the object with the id " << id);

@@ -12,6 +12,7 @@
 #include "abstract/musicplayer.hpp"
 #include "abstract/types_table.hpp"
 #include "abstract/container.hpp"
+#include "objects/messenger.hpp"
 
 class Game {
 private:

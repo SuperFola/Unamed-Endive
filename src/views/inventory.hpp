@@ -12,6 +12,7 @@
 #include "../constants.hpp"
 #include "../bag/objectstable.hpp"
 #include "../abstract/functions.hpp"
+#include "../objects/messenger.hpp"
 
 class InventView : public View
 {
@@ -26,6 +27,8 @@ private:
     sf::Text current_pocket_name;
     sf::Text object_name;
     sf::Text object_desc;
+    sf::Text errmsg;
+    int errdisplay;
     Bag* bag;
 
     const std::string BCKG = "backgroud";

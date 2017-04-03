@@ -11,6 +11,7 @@ InventView::InventView() :
     , current(0)
     , selected(0)
     , offset(0)
+    , errdisplay(0)
 {
 
 }
@@ -121,6 +122,11 @@ bool InventView::load()
     this->object_desc.setFillColor(sf::Color::Black);
     this->object_desc.setPosition(30.0f, 300.0f);
 
+    this->errmsg.setFont(this->font);
+    this->errmsg.setCharacterSize(24);
+    this->errmsg.setFillColor(sf::Color::Red);
+    this->errmsg.setPosition(0.0f, 6.0f);
+
     return true;
 }
 
@@ -134,6 +140,8 @@ void InventView::render(sf::RenderWindow& window)
     window.draw(this->sprites[this->VID]);
     window.draw(this->sprites[this->USE]);
     this->draw_content(window);
+    if (this->errdisplay > 0)
+        window.draw(this->errmsg);
 }
 
 int InventView::process_event(sf::Event& event, sf::Time elapsed)
@@ -185,7 +193,19 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
             else if (__X >= 29 && __X <= 81 && __Y >= 508 && __Y <= 560)
             {
                 // use
-                this->bag->getPocket(this->current)->useObject(this->selected + this->offset);
+                ObjUDD udd = this->bag->getPocket(this->current)->useObject(this->selected + this->offset);
+                if (udd.target_view != UNREACHABLE_VIEW_ID)
+                {
+                    // we can see what to do with that now
+                    OMessenger::set(udd);
+                }
+                else
+                {
+                    // display error message
+                    this->errdisplay = 1;
+                    this->errmsg.setString("Impossible d'utiliser l'objet");
+                    this->errmsg.setPosition(WIN_W / 2.0f - this->errmsg.getGlobalBounds().width / 2.0f, this->errmsg.getPosition().y);
+                }
             }
             else if (__X >= 258 && __X <= 619 && __Y >= 30 && __Y <= 554)
             {
@@ -219,7 +239,10 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
 
 void InventView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-
+    if (this->errdisplay > 0)
+        this->errdisplay++;
+    if (!(this->errdisplay % 640))
+        this->errdisplay = 0;
 }
 
 void InventView::change_pocket()
