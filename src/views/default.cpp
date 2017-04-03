@@ -123,6 +123,23 @@ void DefaultView::update(sf::RenderWindow& window, sf::Time elapsed)
 
     this->offscreen.clear(sf::Color::Transparent);
     this->minimap.clear(sf::Color::Transparent);
+
+    if (OMessenger::get().target_view == this->getId())
+    {
+        if (OMessenger::get().action == ObjAction::nothing)
+        {
+            if (OMessenger::get().type == ObjType::player)
+            {
+                int s = OMessenger::get().value;
+
+                if (this->player.getSpeed() == s)
+                    this->player.resetSpeed();
+                else
+                    this->player.setSpeed(s);
+            }
+        }
+        OMessenger::empty();
+    }
 }
 
 int DefaultView::process_event(sf::Event&, sf::Time) {}

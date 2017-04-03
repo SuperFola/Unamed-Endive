@@ -5,6 +5,11 @@
 
 OMessenger OMessenger::instance = OMessenger();
 
+OMessenger::OMessenger()
+{
+
+}
+
 ObjUDD OMessenger::get()
 {
     return instance.current;
@@ -12,7 +17,7 @@ ObjUDD OMessenger::get()
 
 void OMessenger::set(ObjUDD _new)
 {
-    instance.curent = _new;
+    instance.current = _new;
 }
 
 void OMessenger::empty()

@@ -65,5 +65,4 @@ int MapView::process_event(sf::Event& event, sf::Time elapsed)
 
 void MapView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-
 }

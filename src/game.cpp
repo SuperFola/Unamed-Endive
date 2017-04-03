@@ -625,6 +625,9 @@ Game::Game() :
     , _got_coderet(false)
     , menu_game_selected(-1)
 {
+    // OMessenger
+    OMessenger::empty();
+
     // scripting module
     PyScripting::connect();
 

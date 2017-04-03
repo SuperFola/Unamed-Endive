@@ -265,7 +265,7 @@ void StateMachine::render_current(sf::RenderWindow& window)
 
 void StateMachine::update_current(sf::RenderWindow& window, sf::Time elapsed)
 {
-    // set sf::view as default
+    // set sf::view as default (kind of resetting)
     window.setView(window.getDefaultView());
 
     switch(this->current_view)
@@ -304,6 +304,11 @@ void StateMachine::update_current(sf::RenderWindow& window, sf::Time elapsed)
 
     default:
         break;
+    }
+
+    if (OMessenger::get().target_view != UNREACHABLE_VIEW_ID)
+    {
+        this->change_view(OMessenger::get().target_view);
     }
 }
 

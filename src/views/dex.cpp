@@ -105,7 +105,6 @@ int DexView::process_event(sf::Event& event, sf::Time elapsed)
 
 void DexView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-
 }
 
 int DexView::index_of(const std::string& name)

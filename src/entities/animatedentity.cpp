@@ -71,7 +71,8 @@ AnimatedEntity::AnimatedEntity(int x, int y) :
     , state(ChState::idle)
     , anim_cursor(MvState::idle)
     , direction(DIRECTION::down)
-    , speed(1.0f / 32.0f)
+    , speed(1)
+    , defaultspeed(1)
     , frame_time(sf::seconds(0.043f))
 {
 }
@@ -142,7 +143,7 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
     this->not_moving_time = sf::seconds(0.0f);  // reset it
     this->update_anim(elapsed);
 
-    float speed = (this->speed * TILE_SIZE * 3.0f);
+    float speed = ((this->speed / 32.0f) * TILE_SIZE * 3.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
     std::vector<float> vect {0, 0};
@@ -224,7 +225,7 @@ void AnimatedEntity::simplemove(DIRECTION dir, sf::Time elapsed)
     this->not_moving_time = sf::seconds(0.0f);  // reset it
     this->update_anim(elapsed);
 
-    float speed = (this->speed * TILE_SIZE * 3.0f);  // * (elapsed.asSeconds() * 100.0f);
+    float speed = ((this->speed / 32.0f) * TILE_SIZE * 3.0f);  // * (elapsed.asSeconds() * 100.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
     std::vector<float> vect {0, 0};
@@ -312,4 +313,19 @@ bool AnimatedEntity::collide(int x, int y)
          this->pos.getY() <= y && y <= this->pos.getY() + this->_size)
             return true;
     return false;
+}
+
+void AnimatedEntity::setSpeed(int new_speed)
+{
+    this->speed = new_speed;
+}
+
+void AnimatedEntity::resetSpeed()
+{
+    this->speed = this->defaultspeed;
+}
+
+int AnimatedEntity::getSpeed()
+{
+    return this->speed;
 }

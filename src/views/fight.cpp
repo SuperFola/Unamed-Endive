@@ -192,7 +192,20 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
 
 void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
+    if (OMessenger::get().target_view == this->getId())
+    {
+        switch (OMessenger::get().type)
+        {
+        case ObjType::capture:
+            break;
 
+        default:
+            // should never land here
+            DebugLog(SH_WARN, "We land here but we should'nt. What type of object is it ? => " << OMessenger::get().type);
+            break;
+        }
+        OMessenger::empty();
+    }
 }
 
 void FightView::encounter()

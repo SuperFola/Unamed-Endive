@@ -22,7 +22,8 @@ protected:
     ChState state;
     MvState anim_cursor;
     DIRECTION direction;
-    float speed;
+    int speed;
+    int defaultspeed;
     std::string path;
     Container<sf::Texture> textures;
     std::vector<sf::Sprite> sprites;
@@ -50,6 +51,9 @@ public:
     Point& getPos();
     void setPos(int, int);
     bool collide(int, int);
+    void setSpeed(int);
+    void resetSpeed();
+    int getSpeed();
 };
 
 #endif // DEF_ANIMATED_ENTITY

@@ -235,6 +235,33 @@ void CreaView::update(sf::RenderWindow& window, sf::Time elapsed)
     this->err_duration -= elapsed.asSeconds();
     if (this->err_duration < 0.0f)
         this->err_duration = 0.0f;
+
+    if (OMessenger::get().target_view == this->getId())
+    {
+        switch (OMessenger::get().type)
+        {
+        case ObjType::healpv:
+            break;
+
+        case ObjType::healpp:
+            break;
+
+        case ObjType::healstatus:
+            break;
+
+        case ObjType::levelup:
+            break;
+
+        case ObjType::lowercooldown:
+            break;
+
+        default:
+            // should never land here
+            DebugLog(SH_WARN, "We land here but we should'nt. What type of object is it ? => " << OMessenger::get().type);
+            break;
+        }
+        OMessenger::empty();
+    }
 }
 
 void CreaView::draw_content(sf::RenderWindow& window)

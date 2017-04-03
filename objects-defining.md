@@ -76,8 +76,7 @@ Values depending on the type, and effects listed below as described :
 ```
 
 * player :
-    * 0 : running shoes, speed increased by 1.5
-    * 1 : bike, speed increased by 2
+    * X : the speed of the player is now of X
 * healpv :
     * -1 : the creature is fully healed (if not KO only)
     * -2 : the creature is fully healed (if KO only)

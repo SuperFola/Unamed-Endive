@@ -2,6 +2,7 @@
 #define DEF_VIEW
 
 #include <SFML/Graphics.hpp>
+#include "../objects/messenger.hpp"
 
 class View {
 private:

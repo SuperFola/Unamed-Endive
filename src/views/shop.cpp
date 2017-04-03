@@ -61,5 +61,4 @@ int ShopView::process_event(sf::Event& event, sf::Time elapsed)
 
 void ShopView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-
 }

@@ -24,14 +24,14 @@ bool Pocket::load(Json::Value& root)
             if (!root["objects"][i].get("empty", false).asBool())
             {
                 Object* object = new Object(root["objects"][i]["id"].asInt(), root["objects"][i]["quantity"].asInt());
-                this->add_object(object);
+                this->objects.push_back(object);
             }
         }
     }
     else
     {
         Object* object = new Object(0, 1);
-        this->add_object(object);
+        this->objects.push_back(object);
     }
     return true;
 }
@@ -95,6 +95,8 @@ ObjUDD Pocket::useObject(int id)
             ret.type = ObjectsTable::getType(this->objects[id]);
             ret.value = ObjectsTable::getValue(this->objects[id]);
 
+            DebugLog(SH_INFO, "type " << ret.type << " value " << ret.value << " action " << ret.action << " target view " << ret.target_view);
+
             return ret;
         }
         // else, quantity == 0
@@ -115,7 +117,7 @@ void Pocket::drop_object(int id)
         this->objects[id]->drop(1);
     }
     else
-        DebugLog(SH_ERR, "Can not find the object with the id " << id);
+        DebugLog(SH_ERR, "Can not find the object with the id " << id << " or not throwable");
 }
 
 void Pocket::dropall_object(int id)
@@ -124,7 +126,7 @@ void Pocket::dropall_object(int id)
     if (0 <= id && id < this->objects.size() && ObjectsTable::isThrowable(this->objects[id]))
         pop<Object*>(&(this->objects), id);
     else
-        DebugLog(SH_ERR, "Can not find the object with the id " << id);
+        DebugLog(SH_ERR, "Can not find the object with the id " << id << " or not throwable");
 }
 
 Json::Value Pocket::serialize()

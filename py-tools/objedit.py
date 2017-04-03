@@ -48,14 +48,14 @@ def clear(vars, types, kind):
     vars["type" + kind + "sel"] = types[0]
 
 
-def save(vars, types, txmod):
+def save(vars, types):
     vars["objects"]["objects"].append({
         "id": int(vars["newid"].get()),
         "name": vars["newnom"].get(),
-        "desc": vars["newdesc"].get(),
+        "desc": vars["newdesc"],
         "price": int(vars["newprice"].get()),
-        "limited_use": bool(vars["newuse"].get()),
-        "throwaway": bool(vars["newdrop"].get()),
+        "limited_use": bool(int(vars["newuse"].get())),
+        "throwaway": bool(int(vars["newdrop"].get())),
         "value": int(vars["newval"].get()),
         "type": int(types.index(vars["typenewesel"]))
     })
@@ -70,12 +70,12 @@ def modify(vars, types):
     o = vars["objects"]["objects"][vars["objectselected"]]
     o["id"] = int(vars["modid"].get())
     o["name"] = vars["modnom"].get()
-    o["desc"] = vars["moddesc"].get()
+    o["desc"] = vars["moddesc"]
     o["price"] = int(vars["modprice"].get())
     o["limited_use"] = bool(vars["moduse"].get())
     o["throwaway"] = bool(vars["moddrop"].get())
     o["value"] = int(vars["modval"].get())
-    o["type"] = int(types.index(vars["typemodsel"]))
+    o["type"] = int(types.index(vars["typemodesel"]))
     with open("assets/inventory/objects.json", "w") as file:
         file.write(
             str(vars["objects"]).replace("True", "true").replace("False", "false").replace("None", "null").replace("'", "\"")
@@ -220,6 +220,7 @@ def main():
     list_type_mod.set(types[0])
     list_type_mod.bind('<<ComboboxSelected>>', lambda _: setv(vars, "typemodesel", list_type_mod.get()))
     sframe_mod7.pack(side=tk.TOP, pady=10)
+    vars["typemodesel"] = "player"
     
     sframe_mod8 = tk.Frame(frame_mod)
     tk.Label(sframe_mod8, text="Valeur :").pack(side=tk.LEFT)
@@ -229,7 +230,7 @@ def main():
     sframe_mod8.pack(side=tk.TOP, pady=10)
     
     savemod_btn = tk.Button(frame_mod, text="Enregistrer", command=lambda: (
-            setv(vars, "modnom", text_mod.get(1.0, tk.END))
+            setv(vars, "moddesc", text_mod.get(1.0, tk.END))
             , modify(vars, types)
             , setv(vars, "objects", load_objects())
             , load_objlb(objects_lb, vars)
@@ -300,6 +301,7 @@ def main():
     list_type_new.set(types[0])
     list_type_new.bind('<<ComboboxSelected>>', lambda _: setv(vars, "typenewesel", list_type_new.get()))
     sframe_new7.pack(side=tk.TOP, pady=10)
+    vars["typenewesel"] = "player"
     
     sframe_new8 = tk.Frame(frame_new)
     tk.Label(sframe_new8, text="Valeur :").pack(side=tk.LEFT)
@@ -309,7 +311,7 @@ def main():
     sframe_new8.pack(side=tk.TOP, pady=10)
     
     savenew_btn = tk.Button(frame_new, text="Enregistrer", command=lambda: (
-            setv(vars, "newnom", text_new.get(1.0, tk.END))
+            setv(vars, "newdesc", text_new.get(1.0, tk.END))
             , save(vars, types)
             , setv(vars, "objects", load_objects())
             , load_objlb(objects_lb, vars)
