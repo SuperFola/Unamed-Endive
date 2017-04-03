@@ -198,7 +198,11 @@ void Game::render()
     int c_view = this->sm.getId();
 
     if (this->cheat_on && c_view == DEFAULT_VIEW_ID)
+    {
         this->sm.getDefault()->draw_on_offscreen(this->cmd);
+        if (this->blink)
+            this->sm.getDefault()->draw_on_offscreen(this->cursor);
+    }
 
     if (c_view != -1) // does the view exist ?
     {
@@ -233,6 +237,17 @@ void Game::update(sf::Time elapsed)
     {
         // error
         DebugLog(SH_ERR, "Unable to find the view " << c_view << " to update it");
+    }
+
+    if (this->cheat_on && c_view == DEFAULT_VIEW_ID)
+    {
+        this->blinking++;
+        if (!(this->blinking % 60))
+        {
+            this->blink = !this->blink;
+            this->blinking %= 60;
+        }
+        this->cursor.setPosition(this->cmd.getPosition().x + this->cmd.getGlobalBounds().width + 10.0f, this->cmd.getPosition().y);
     }
 }
 
