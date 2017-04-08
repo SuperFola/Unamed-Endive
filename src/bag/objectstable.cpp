@@ -42,10 +42,11 @@ bool ObjectsTable::load()
             obj.value = instance.root["objects"][i]["value"].asInt();
             obj.type = static_cast<ObjType>(instance.root["objects"][i]["type"].asInt() % 8);
 
-            instance.objects_name[instance.root["object"][i]["id"].asInt()] = obj;
+            instance.objects_name.push_back(obj);
 
             DebugLog(SH_INFO, "id: " << obj.id << " name: " << obj.name << " desc: " << obj.desc << " price: " << obj.price <<
-                     " use: " << obj.limited_use << " thow: " << obj.throwaway << " value: " << obj.value << " type: " << obj.type);
+                     " use: " << obj.limited_use << " thow: " << obj.throwaway << " value: " << obj.value << " type: " << obj.type <<
+                     " objects name size : " << instance.objects_name.size());
         }
 
         return true;

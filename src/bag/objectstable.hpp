@@ -1,7 +1,7 @@
 #ifndef DEF_OBJECTSTABLE
 #define DEF_OBJECTSTABLE
 
-#include <map>
+#include <vector>
 #include <string>
 
 #include "pockets/objects/object.hpp"
@@ -13,7 +13,7 @@ class ObjectsTable
 {
 private:
     // variables
-    std::map<int, struct ObjData> objects_name;
+    std::vector<struct ObjData> objects_name;
     static class ObjectsTable instance;
     Json::Value root;
     bool loaded;
