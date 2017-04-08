@@ -43,6 +43,9 @@ bool ObjectsTable::load()
             obj.type = static_cast<ObjType>(instance.root["objects"][i]["type"].asInt() % 8);
 
             instance.objects_name[instance.root["object"][i]["id"].asInt()] = obj;
+
+            DebugLog(SH_INFO, "id: " << obj.id << " name: " << obj.name << " desc: " << obj.desc << " price: " << obj.price <<
+                     " use: " << obj.limited_use << " thow: " << obj.throwaway << " value: " << obj.value << " type: " << obj.type);
         }
 
         return true;

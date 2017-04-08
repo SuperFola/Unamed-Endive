@@ -27,6 +27,7 @@ Map::Map(std::string path) :
 void Map::setMapPath(const std::string& npath)
 {
     this->map_data_path = npath;
+    this->id = atoi(this->map_data_path.substr(11, this->map_data_path.size() - 4).data());
 }
 
 int Map::load_map_at(std::string path)

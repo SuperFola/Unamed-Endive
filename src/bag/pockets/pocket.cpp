@@ -25,6 +25,7 @@ bool Pocket::load(Json::Value& root)
             {
                 Object* object = new Object(root["objects"][i]["id"].asInt(), root["objects"][i]["quantity"].asInt());
                 this->objects.push_back(object);
+                DebugLog(SH_INFO, root["objects"][i]["id"].asInt() << " " << root["objects"][i]["quantity"].asInt());
             }
         }
     }

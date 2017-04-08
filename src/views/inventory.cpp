@@ -198,6 +198,7 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
                 {
                     // we can see what to do with that now
                     OMessenger::set(udd);
+                    DebugLog(SH_INFO, OMessenger::get().value << " " << OMessenger::get().type);
                 }
                 else
                 {
