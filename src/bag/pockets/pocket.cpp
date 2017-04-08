@@ -96,8 +96,6 @@ ObjUDD Pocket::useObject(int id)
             ret.type = ObjectsTable::getType(this->objects[id]);
             ret.value = ObjectsTable::getValue(this->objects[id]);
 
-            DebugLog(SH_INFO, "type " << ret.type << " value " << ret.value << " action " << ret.action << " target view " << ret.target_view);
-
             return ret;
         }
         // else, quantity == 0
