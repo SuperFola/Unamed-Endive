@@ -238,6 +238,9 @@ void CreaView::update(sf::RenderWindow& window, sf::Time elapsed)
 
     if (OMessenger::get().target_view == this->getId())
     {
+        // must select a creature and then change it's stats regarding to OMessenger::get().value
+        // OMessenger::get().action is not useful here
+        // OMessenger::get().target_view already handled, same for type
         switch (OMessenger::get().type)
         {
         case ObjType::healpv:

@@ -804,9 +804,6 @@ int Game::run()
 
     int _fps_update = 0;
 
-    // musics
-    this->mplayer.play(this->mplayer.getNext());
-
     sf::Event event;
 
     if (this->has_requested_quit)

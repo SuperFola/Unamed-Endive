@@ -93,6 +93,7 @@ void Character::_load()
         this->pos.set(root["pos"]["x"].asFloat(), root["pos"]["y"].asFloat());
         this->sex = static_cast<Sex>(root["sex"].asInt());
         this->path = root["asset"].asString();
+        this->speed = root["speed"].asInt();
     }
 
 }
@@ -112,6 +113,7 @@ int Character::save()
     value["sex"] = static_cast<int>(this->sex);
     value["asset"] = this->path;
     value["pos"] = pos;
+    value["speed"] = this->speed;
 
     std::ofstream output("saves/" + this->name + "/player.json");
     output << value;
