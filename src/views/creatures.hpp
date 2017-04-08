@@ -24,6 +24,7 @@ private:
     Equip* pc;
     Dex* dex;
     CreaturesLoader* creaload;
+    std::map<std::string, int> curobj;
 
     sf::Text lsdata;
     sf::Text cnam, clev, ctyp, csta, catk, cdef, clif;

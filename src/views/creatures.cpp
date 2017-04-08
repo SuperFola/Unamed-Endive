@@ -14,7 +14,9 @@ CreaView::CreaView() :
     , offset(0)
     , err_duration(0.0f)
 {
-
+    this->curobj["none"] = -1;
+    this->curobj["type"] = -1;
+    this->curobj["value"] = -1;
 }
 
 bool CreaView::load()
@@ -158,7 +160,15 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.key.code)
         {
         case sf::Keyboard::Escape:
-            new_view = LAST_VIEW_ID;
+            // can not escape if we didn't use the object
+            if (this->curobj["none"] == -1)
+                new_view = LAST_VIEW_ID;
+            else
+            {
+                this->error_msg.setString("Un objet est en cours d'utilisation, impossible de quitter");
+                this->err_duration = 7.0f;
+                this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
+            }
             break;
 
         default:
@@ -181,11 +191,21 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             else if (__X >= 464 && __X <= 531 && __Y >= 523 && __Y <= 588)
             {
                 // transfering creature
-                this->send_to(this->selected);
-                this->selected -= 1;  // to avoid problem and always have a creature selected
-                if (this->selected == -1)
-                    this->selected = 0;
-                this->set_cimg(this->selected);
+                // we can't transfert any creature if we are using an object
+                if (this->curobj["none"] == -1)
+                {
+                    this->send_to(this->selected);
+                    this->selected -= 1;  // to avoid problem and always have a creature selected
+                    if (this->selected == -1)
+                        this->selected = 0;
+                    this->set_cimg(this->selected);
+                }
+                else
+                {
+                    this->error_msg.setString("Impossible de transférer une créature quand un objet\nest en cours d'utilisation");
+                    this->err_duration = 10.0f;
+                    this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
+                }
             }
             else if (__X >= 18 && __X <= 234 && __Y >= 144 && __Y <= 601)
             {
@@ -201,6 +221,40 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
                     // we are in a correct range
                     this->selected = ry;
                     this->set_cimg(ry);
+
+                    if (this->curobj["none"] == 0)
+                    {
+                        // play with this->curobj["value"] now
+                        // we are using an object
+                        switch (this->curobj["type"])
+                        {
+                        case ObjType::healpv:
+                            break;
+
+                        case ObjType::healpp:
+                            break;
+
+                        case ObjType::healstatus:
+                            break;
+
+                        case ObjType::levelup:
+                            break;
+
+                        case ObjType::lowercooldown:
+                            break;
+
+                        default:
+                            DebugLog(SH_WARN, "Unrecognized object type : " << this->curobj["type"]);
+                            this->error_msg.setString("Objet inutilisable");
+                            this->err_duration = 10.0f;
+                            this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
+                            break;
+                        }
+
+                        this->curobj["none"] = -1;
+                        this->curobj["type"] = -1;
+                        this->curobj["value"] = -1;
+                    }
                 }
             }
             break;
@@ -238,31 +292,9 @@ void CreaView::update(sf::RenderWindow& window, sf::Time elapsed)
 
     if (OMessenger::get().target_view == this->getId())
     {
-        // must select a creature and then change it's stats regarding to OMessenger::get().value
-        // OMessenger::get().action is not useful here
-        // OMessenger::get().target_view already handled, same for type
-        switch (OMessenger::get().type)
-        {
-        case ObjType::healpv:
-            break;
-
-        case ObjType::healpp:
-            break;
-
-        case ObjType::healstatus:
-            break;
-
-        case ObjType::levelup:
-            break;
-
-        case ObjType::lowercooldown:
-            break;
-
-        default:
-            // should never land here
-            DebugLog(SH_WARN, "We land here but we should'nt. What type of object is it ? => " << OMessenger::get().type);
-            break;
-        }
+        this->curobj["none"] = 0;
+        this->curobj["type"] = OMessenger::get().type;
+        this->curobj["value"] = OMessenger::get().value;
         OMessenger::empty();
     }
 }
