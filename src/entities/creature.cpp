@@ -57,6 +57,16 @@ bool Creature::loadfrom(Creature* other)
     return this->sortilege.loadfrom(other->sortilege);
 }
 
+int Creature::calculateLevelFromXp()
+{
+    return int(pow(this->exp, 0.3));
+}
+
+int Creature::calculateExpFromLevel()
+{
+    return int(pow(this->level, 3));
+}
+
 void Creature::print()
 {
     DebugLog(SH_SPE, "id : " << this->id
@@ -159,6 +169,17 @@ Json::Value Creature::serialize()
     value["exp"] = this->exp;
 
     return value;
+}
+
+int Creature::gainExp(Creature* other)
+{
+    int old = this->level;
+    int n = 0;
+
+    this->exp += int((1.0f / float(other->level)) * other->exp) + 5;
+    other->exp -= int((1.0f / float(other->level)) * other->exp) + 5;
+
+    return n;
 }
 
 bool Creature::healPV(int value)

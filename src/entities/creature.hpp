@@ -6,6 +6,7 @@
 
 #include <string>
 #include <vector>
+#include <math.h>
 
 #include "../abstract/type.hpp"
 #include "../abstract/competence.hpp"
@@ -31,6 +32,8 @@ private:
     int level;
     std::vector<Competence> tree;
 
+    int calculateLevelFromXp();
+
 public:
     // methods
     Creature();
@@ -51,6 +54,8 @@ public:
     void update(std::vector<Creature>&);
     void print();
     Json::Value serialize();
+    int gainExp(Creature*);
+    int calculateExpFromLevel();
 
     bool healPV(int);
     bool healPP(int);

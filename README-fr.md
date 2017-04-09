@@ -32,7 +32,7 @@ Crédits
 * tiles d'extérieur : WesleyFG (à la base pour le projet Marnian)
 * tiles d'intérieur : Slahs
 * interface graphique (inventaire, dex, équipe/PC) : vulvoch
-* interface grpahique (menu) : Eurons ??
+* interface graphique (menu) : Eurons ??
 * fond des combats : WesleyFG
 * créatures : Smiley-Fakemon
 * carte du monde : Sansonic
