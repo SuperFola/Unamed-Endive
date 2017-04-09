@@ -1,7 +1,12 @@
 #include "sort.hpp"
 
 // public
-Sort::Sort()
+Sort::Sort() :
+    type(SortilegeType::UniqueTargetAdvDamage)
+    , damages(0)
+    , cooldown(0)
+    , current_cooldown(0)
+    , targets(0)
 {
 
 }
@@ -100,4 +105,28 @@ Json::Value Sort::serialize()
     value["targets"] = this->targets;
 
     return value;
+}
+
+bool Sort::lowercooldown(int value)
+{
+    bool r = false;
+
+    switch (value)
+    {
+    case -1:
+        this->current_cooldown = 0;
+        break;
+
+    default:
+        if (value > 0)
+        {
+            this->current_cooldown -= value;
+            if (this->current_cooldown < 0)
+                this->current_cooldown = 0;
+            r = true;
+        }
+        break;
+    }
+
+    return r;
 }

@@ -2,6 +2,7 @@
 #define DEF_CREATURE
 
 #define DEFAULT_LIFE 100
+#define DEFAULT_PP 30
 
 #include <string>
 #include <vector>
@@ -21,6 +22,9 @@ private:
     int def;
     int life;
     int max_life;
+    int pp;
+    int max_pp;
+    int exp;
     std::string name;
     Sort sortilege;
     State state;
@@ -30,10 +34,14 @@ private:
 public:
     // methods
     Creature();
-    bool load(int, Type&, int, int, int, int, std::string, State&, int, SortilegeType&, int, int, int);
+    bool load(int, Type&, int, int, int, int, int, int, std::string, State&, int, int, SortilegeType&, int, int, int);
     bool loadfrom(Creature*);
     int getLife();
+    int getMaxLife();
     int getLevel();
+    int getPP();
+    int getMaxPP();
+    int getExp();
     std::string& getName();
     int getId();
     State getState();
@@ -43,6 +51,12 @@ public:
     void update(std::vector<Creature>&);
     void print();
     Json::Value serialize();
+
+    bool healPV(int);
+    bool healPP(int);
+    bool healStatus(int);
+    bool levelUP(int);
+    bool lowercooldown(int);
 };
 
 #endif // DEF_CREATURE

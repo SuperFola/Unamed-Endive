@@ -24,6 +24,7 @@ public:
     bool load(SortilegeType, int, int, int);
     bool loadfrom(Sort&);
     int getCooldown();
+    bool lowercooldown(int);
     void update();
     void act(std::vector<Creature>&);
     Json::Value serialize();

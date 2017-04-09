@@ -183,10 +183,20 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             if (__X >= 238 && __X <= 393 && __Y >= 10 && __Y <= 90)
             {
                 // changing the "view" (pc/equip)
-                this->displaying_crea = !this->displaying_crea;
-                this->offset = 0;
-                this->selected = 0;
-                this->set_cimg(0);
+                // we can't change the "view" if we are using an object
+                if (this->curobj["none"] == -1)
+                {
+                    this->displaying_crea = !this->displaying_crea;
+                    this->offset = 0;
+                    this->selected = 0;
+                    this->set_cimg(0);
+                }
+                else
+                {
+                    this->error_msg.setString("Impossible d'aller au PC quand un objet\nest en cours d'utilisation");
+                    this->err_duration = 10.0f;
+                    this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
+                }
             }
             else if (__X >= 464 && __X <= 531 && __Y >= 523 && __Y <= 588)
             {
@@ -226,21 +236,27 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
                     {
                         // play with this->curobj["value"] now
                         // we are using an object
+                        Creature* crea = this->equip->getCrea(this->selected);
                         switch (this->curobj["type"])
                         {
                         case ObjType::healpv:
+                            crea->healPV(this->curobj["value"]);
                             break;
 
                         case ObjType::healpp:
+                            crea->healPP(this->curobj["value"]);
                             break;
 
                         case ObjType::healstatus:
+                            crea->healStatus(this->curobj["value"]);
                             break;
 
                         case ObjType::levelup:
+                            crea->levelUP(this->curobj["value"]);
                             break;
 
                         case ObjType::lowercooldown:
+                            crea->lowercooldown(this->curobj["value"]);
                             break;
 
                         default:
@@ -296,6 +312,7 @@ void CreaView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->curobj["type"] = OMessenger::get().type;
         this->curobj["value"] = OMessenger::get().value;
         OMessenger::empty();
+        this->displaying_crea = true;
     }
 }
 

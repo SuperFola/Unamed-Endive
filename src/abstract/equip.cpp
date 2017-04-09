@@ -24,6 +24,7 @@ bool Equip::load(const std::string& fpath, bool pc)
     std::mt19937 rng;
     rng.seed(std::random_device()());
     std::uniform_int_distribution<std::mt19937::result_type> distlife(14, 22);
+    std::uniform_int_distribution<std::mt19937::result_type> distpp(2, 5);
 
     if (!is_file_existing(fpath))
     {
@@ -39,7 +40,9 @@ bool Equip::load(const std::string& fpath, bool pc)
                   ,  _s = 3  // State::STD
                   , _st = 0  // SortilegeType::UniqueTargetAdvDamage
                   , life = int(distlife(rng))  // mlife = life
+                  , pp = int(distpp(rng)) // mpp = pp
                   , level = 1
+                  , exp = 0
                   , sdmg = 5  // damages for the sortilege
                   , scd = 4  // cooldown for the sortilege
                   , stargets = 1  // targets for the sortilege
@@ -50,7 +53,7 @@ bool Equip::load(const std::string& fpath, bool pc)
             State s = static_cast<State>(_s % 4);
             SortilegeType st = static_cast<SortilegeType>(_st % 14);
 
-            crea->load(id, t, atk, def, life, life, "first creature", s, level, st, sdmg, scd, stargets);
+            crea->load(id, t, atk, def, life, life, pp, pp, "first creature", s, level, exp, st, sdmg, scd, stargets);
             this->equip.push_back(crea);
         }
 
@@ -73,7 +76,10 @@ bool Equip::load(const std::string& fpath, bool pc)
                       , _st = this->root["creatures"][i]["sort"]["type"].asInt()
                       , life = this->root["creatures"][i]["life"].asInt()
                       , mlife = this->root["creatures"][i]["max_life"].asInt()
+                      , pp = this->root["creatures"][i]["pp"].asInt()
+                      , mpp = this->root["creatures"][i]["max_pp"].asInt()
                       , level = this->root["creatures"][i]["level"].asInt()
+                      , exp = this->root["creatures"][i]["exp"].asInt()
                       , sdmg = this->root["creatures"][i]["sort"]["damages"].asInt()
                       , scd = this->root["creatures"][i]["sort"]["cooldown"].asInt()
                       , stargets = this->root["creatures"][i]["sort"]["targets"].asInt()
@@ -84,7 +90,7 @@ bool Equip::load(const std::string& fpath, bool pc)
                 State s = static_cast<State>(_s % 4);
                 SortilegeType st = static_cast<SortilegeType>(_st % 14);
 
-                crea->load(id, t, atk, def, life, mlife, this->root["creatures"][i]["name"].asString(), s, level, st, sdmg, scd, stargets);
+                crea->load(id, t, atk, def, life, mlife, pp, mpp, this->root["creatures"][i]["name"].asString(), s, level, exp, st, sdmg, scd, stargets);
                 this->equip.push_back(crea);
 
                 DebugLog(SH_OK, "Loaded creature (" << i << ") " << this->root["creatures"][i]["name"].asString());

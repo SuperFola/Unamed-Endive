@@ -81,20 +81,21 @@ Values depending on the type, and effects listed below as described :
     * -1 : the creature is fully healed (if not KO only)
     * -2 : the creature is fully healed (if KO only)
     * -3 : the creature is half healed (if KO only)
-    * X > 0 : the creature receive X health points
+    * X > 0 : the creature receives X health points
 * healpp :
-    * 0 : 0
+    * -1 : the creature's pp are fully healed
+    * X > 0 : the creature receives X pp
 * healstatus :
-    * 0 : heal the status "burned"
-    * 1 : heal the status "paralysed"
-    * 2 : heal the status "poisoned"
-    * X > 2 : heal all the status
+    * 0 : heals the status "burned"
+    * 1 : heals the status "paralysed"
+    * 2 : heals the status "poisoned"
+    * X > 2 : heals all the status
 * capture :
     * 0 : 0
 * levelup :
     * X : level-up the creature of X levels
 * lowercooldown :
-    * -1 : the cooldown of a creature if set to 0
+    * -1 : the cooldown of a creature is set to 0
     * X > 0 : the creature's cooldown is lowered by X
 
 
