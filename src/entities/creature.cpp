@@ -57,14 +57,14 @@ bool Creature::loadfrom(Creature* other)
     return this->sortilege.loadfrom(other->sortilege);
 }
 
-int Creature::calculateLevelFromXp()
+int Creature::calculateLevelFromXp(int exp)
 {
-    return int(pow(this->exp, 0.3));
+    return int(pow(exp, 0.3));
 }
 
-int Creature::calculateExpFromLevel()
+int Creature::calculateExpFromLevel(int level)
 {
-    return int(pow(this->level, 3));
+    return int(pow(level, 3));
 }
 
 void Creature::print()
@@ -298,7 +298,7 @@ bool Creature::healStatus(int value)
 bool Creature::levelUP(int value)
 {
     this->level += value;
-    this->exp = 0;
+    this->exp = Creature::calculateExpFromLevel(this->level);
 
     return true;
 }

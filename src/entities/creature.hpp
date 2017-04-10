@@ -32,8 +32,6 @@ private:
     int level;
     std::vector<Competence> tree;
 
-    int calculateLevelFromXp();
-
 public:
     // methods
     Creature();
@@ -55,7 +53,9 @@ public:
     void print();
     Json::Value serialize();
     int gainExp(Creature*);
-    int calculateExpFromLevel();
+
+    static int calculateExpFromLevel(int);
+    static int calculateLevelFromXp(int);
 
     bool healPV(int);
     bool healPP(int);
