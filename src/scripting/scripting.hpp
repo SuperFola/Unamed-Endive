@@ -24,6 +24,8 @@
 
 #include "../abstract/convert_events.hpp"
 
+#define RETURN_NONE Py_INCREF(Py_None); return Py_None;
+
 class PyScripting
 {
 private:
@@ -69,13 +71,11 @@ public:
     // specific runners
     static int run_on_start_modules();
     static int run_on_end_modules();
-    static int run_until_end_modules();
     static int run_update_modules();
     static int run_event_modules();
     static int run_drawing_modules();
 
-    static void setEvent(sf::Event&);
-    static sf::Event getEvent();
+    static int setModuleKind(const char*, const char*);
 
     static void setWindow(sf::RenderWindow*);
     static void setMusicPlayer(MusicPlayer*);
@@ -84,23 +84,23 @@ public:
     static void setMap(Map*);
     static void setPlayer(Character*);
 
+    static int createGlobal(const char*, struct svar_t);
+    static svar_t getGlobal(const char*);
+    static void print(const char*);
+
+    static void setEvent(sf::Event&);
+    static sf::Event getEvent();
     static int map_is_tp(int, int);
     static int map_getMapFromTp(int, int);
-    static void map_tpPlayerOnSpawn(int, int);
     static void map_tpPlayerOn(int);
     static int getMapWidth();
     static int getMapHeight();
     static int getMapId();
     static void changeBlockAttrib(int, const char*, int);
 
-    static int setModuleKind(const char*, const char*);
-
     static int loadImage(const char*, const char*);
     static int displayImage(const char*, int, int);
     static int displayImageWithView(const char*, int, int);
-
-    static int createGlobal(const char*, struct svar_t);
-    static svar_t getGlobal(const char*);
 
     static int getCurrentView();
     static int hasActiveHud(int);
@@ -113,9 +113,13 @@ public:
 
     static const char* getPlayerName();
 
-    static void print(const char*);
-
     static const char* screenshot();
+
+    static std::string exec_net_req_getstr(const char*);
+    static int exec_net_req_getint(const char*);
+    static Json::Value exec_net_req_getjson(const char*);
+    static std::vector<int> exec_net_req_getvectorint(const char*);
+    static std::vector<std::string> exec_net_req_getvectorstr(const char*);
 };
 
 #endif // DEF_SCRIPTING

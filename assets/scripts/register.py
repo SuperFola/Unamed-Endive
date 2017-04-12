@@ -4,13 +4,14 @@
 # PLEASE DO NOT DELETE THIS FILE
 import Unamed
 from Unamed import upr
-import ast
+import ast, socket, hashlib
 
 ###############################################################################
 # game stuff                                                                  #
 ###############################################################################
 
 include = lambda n: __import__("assets/scripts/" + n)
+sha256 = lambda w: hashlib.sha256(w.encode()).hexdigest()
 playername = Unamed.getPlayerName()
 
 # CONSTANTS
@@ -19,6 +20,8 @@ SWITCHS_SAVING_PATH = "saves/" + playername + "/switchs"
 VARS_SAVING_PATH = "saves/" + playername + "/vars"
 keys_ev_code = ast.literal_eval(open("assets/scripts/keysevents.json").read())
 PNJkind = {"normal": 0, "special": 1, "system": 2}
+BUFFER = 2 ** 10
+HOST, PORT = "", 0
 
 # a table to track down the progress of the player in the adventure
 # useful if you want to create an event at a specific moment of the game
@@ -26,6 +29,9 @@ PNJkind = {"normal": 0, "special": 1, "system": 2}
 _progress = {}
 _switchs = {}  # TODO : create switchs or load them from file
 _vars = {}     # TODO : same
+
+# socket for the network
+sock = None
 
 # load progress/switchs...
 def load_stuff():
@@ -74,6 +80,35 @@ def trigger_event(mid, x, y, triggtype):
             if ev_onmap[x, y]["trigger"] == triggtype:
                 ev_onmap[x, y]["triggered"] = True
 
+# function to init the socket
+def netconnect(h, p, proto="TCP"):
+    global sock, HOST, PORT
+    HOST, PORT = h, p
+    if proto == "UDP":
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    elif proto == "TCP":
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((HOST, PORT))
+
+# handle the errors about the network
+def nethandle_error(func, *args):
+    try: return func(*args)
+    except socket.gaierror as sge: print("PY>", sge)
+    except ConnectionResetError as cre: print("PY> Socket not opened")
+
+# function to send messages through network
+def netsend(message, proto="TCP"):
+    global sock, HOST, PORT
+    send = lambda m, c: sock.sendto(m, c) if proto == "UDP" else sock.sendall(m)
+    nethandle_error(send, str(message).encode(), (HOST, PORT))
+
+# function to receive raw strings from network
+def netrecv(proto="TCP"):
+    global sock, BUFFER
+    recv = lambda: sock.recv(BUFFER).decode()
+    r = nethandle_error(recv)
+    return str(r)
+
 # scripts only for the game do not modify/delete them
 Unamed.registerScript("runOnceWhenClosing", "closing.py")
 Unamed.registerScript("runOnceWhenStarting", "doc_extract.py")
@@ -93,7 +128,7 @@ Unamed.registerScript("runWhenProcessingEvents", "script.py")
 
 load_stuff()
 
-print("cwd", os.getcwd())
-print("PYTHONHOME", os.environ.get("PYTHONHOME"))
-print("HOME", os.environ.get("HOME"))
+print("PY> cwd", os.getcwd())
+print("PY> PYTHONHOME", os.environ.get("PYTHONHOME"))
+print("PY> HOME", os.environ.get("HOME"))
 

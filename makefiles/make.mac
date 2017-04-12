@@ -13,10 +13,10 @@ AR = ar
 LD = g++
 WINDRES = windres
 
-INC = -I\$\$SFML_DIR/include -Isrc/scripting/Python34/include
+INC = -I\$\$SFML_DIR/include -IC:/Python34/include
 CFLAGS = -Wall -std=gnu++14
 RESINC = 
-LIBDIR = -L\$\$SFML_DIR/lib -Lsrc/scripting/Python34/libs -Ldlls/
+LIBDIR = -L\$\$SFML_DIR/lib -LC:/Python34/libs -Ldlls/
 LIB = 
 LDFLAGS = -lPython34
 
