@@ -103,7 +103,7 @@ def netsend(message, proto="TCP"):
     nethandle_error(send, str(message).encode(), (HOST, PORT))
 
 # function to receive raw strings from network
-def netrecv(proto="TCP"):
+def netrecv():
     global sock, BUFFER
     recv = lambda: sock.recv(BUFFER).decode()
     r = nethandle_error(recv)

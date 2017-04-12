@@ -115,11 +115,13 @@ public:
 
     static const char* screenshot();
 
-    static std::string exec_net_req_getstr(const char*);
-    static int exec_net_req_getint(const char*);
-    static Json::Value exec_net_req_getjson(const char*);
-    static std::vector<int> exec_net_req_getvectorint(const char*);
-    static std::vector<std::string> exec_net_req_getvectorstr(const char*);
+    static std::string exec_net_req_getstr(const char*, const char*);
+    static int exec_net_req_getint(const char*, const char*);
+    static Json::Value exec_net_req_getjson(const char*, const char*);
+    static std::vector<int> exec_net_req_getvectorint(const char*, const char*);
+    static std::vector<std::string> exec_net_req_getvectorstr(const char*, const char*);
+
+    static std::string sha256crypt(const char*);
 };
 
 #endif // DEF_SCRIPTING

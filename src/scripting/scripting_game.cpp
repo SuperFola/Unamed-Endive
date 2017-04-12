@@ -174,30 +174,32 @@ const char* PyScripting::screenshot()
     return name.c_str();
 }
 
-std::string PyScripting::exec_net_req_getstr(const char* req)
+std::string PyScripting::exec_net_req_getstr(const char* req, const char* t)
 {
     return std::string(PyScripting::run_code_and_get_out(
-                            ("netsend('" + std::string(req)+ "');" + "upr(netrecv())").c_str()));
+                            ("netsend('" + std::string(req)+ "', '" + std::string(t) + "');" + "upr(netrecv())").c_str()));
 }
 
-int PyScripting::exec_net_req_getint(const char* req)
+int PyScripting::exec_net_req_getint(const char* req, const char* t)
 {
-    std::string preq = PyScripting::exec_net_req_getstr(req);
+    std::string preq = PyScripting::exec_net_req_getstr(req, t);
 
     if (preq == "OK")
     {
+        DebugLog(SH_WARN, "NET> " << preq);
         return 1;
     }
     else if (preq.size() >=5 && preq.substr(0, 5) == "WRONG")
     {
+        DebugLog(SH_WARN, "NET> " << preq);
         return 0;
     }
     return std::atoi(preq.c_str());
 }
 
-Json::Value PyScripting::exec_net_req_getjson(const char* req)
+Json::Value PyScripting::exec_net_req_getjson(const char* req, const char* t)
 {
-    std::string preq = PyScripting::exec_net_req_getstr(req);
+    std::string preq = PyScripting::exec_net_req_getstr(req, t);
     Json::Value root;
     Json::Reader reader;
 
@@ -210,9 +212,9 @@ Json::Value PyScripting::exec_net_req_getjson(const char* req)
     return root;
 }
 
-std::vector<int> PyScripting::exec_net_req_getvectorint(const char* req)
+std::vector<int> PyScripting::exec_net_req_getvectorint(const char* req, const char* t)
 {
-    std::vector<std::string> strings = PyScripting::exec_net_req_getvectorstr(req);
+    std::vector<std::string> strings = PyScripting::exec_net_req_getvectorstr(req, t);
     std::vector<int> temp;
 
     for (int i=0; i < strings.size(); i++)
@@ -223,9 +225,9 @@ std::vector<int> PyScripting::exec_net_req_getvectorint(const char* req)
     return temp;
 }
 
-std::vector<std::string> PyScripting::exec_net_req_getvectorstr(const char* req)
+std::vector<std::string> PyScripting::exec_net_req_getvectorstr(const char* req, const char* t)
 {
-    std::string preq = PyScripting::exec_net_req_getstr(req);
+    std::string preq = PyScripting::exec_net_req_getstr(req, t);
     std::vector<std::string> temp;
     std::string test = "";
 
@@ -243,4 +245,9 @@ std::vector<std::string> PyScripting::exec_net_req_getvectorstr(const char* req)
     }
 
     return temp;
+}
+
+std::string PyScripting::sha256crypt(const char* word)
+{
+    return PyScripting::run_code_and_get_out(("upr(sha256('" + std::string(word)+ "'))").c_str());
 }
