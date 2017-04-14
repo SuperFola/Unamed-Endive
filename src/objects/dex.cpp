@@ -120,6 +120,15 @@ DexInfo Dex::getInfo(int id)
     return this->content["default"];
 }
 
+std::string Dex::getName(int id)
+{
+    if (this->id_name.find(id) != this->id_name.end())
+        return this->id_name[id];
+    DebugLog(SH_ERR, "Can not find creature with id " << id << ", returning a default one");
+
+    return this->content["default"];
+}
+
 void Dex::register_viewed(int id)
 {
     if (this->id_name.find(id) != this->id_name.end())
@@ -132,4 +141,9 @@ void Dex::register_capture(int id)
     if (this->id_name.find(id) != this->id_name.end())
         this->content[this->id_name[id]].captured = true;
     DebugLog(SH_ERR, "Can not find creature with id " << id << " while trying to set it as captured");
+}
+
+int Dex::getMaxId()
+{
+    return this->id_name.size() - 1;
 }

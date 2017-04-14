@@ -759,6 +759,8 @@ void Game::post_load()
     this->sm.getSave()->setdefv(this->sm.getDefault());
     // pointer on the dex to the fight view
     this->sm.getFight()->set_dex(this->sm.getDefault()->getCharacter()->getDex());
+    this->sm.getFight()->set_equip(this->sm.getDefault()->getCharacter()->getEquip());
+    this->sm.getFight()->set_pc(this->sm.getDefault()->getCharacter()->getPC());
 
     // scripting
     PyScripting::setWindow(&this->window);

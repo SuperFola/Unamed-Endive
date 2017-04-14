@@ -25,7 +25,7 @@ private:
     int max_life;
     int pp;
     int max_pp;
-    int exp;
+    long int exp;
     std::string name;
     Sort sortilege;
     State state;
@@ -35,7 +35,7 @@ private:
 public:
     // methods
     Creature();
-    bool load(int, Type&, int, int, int, int, int, int, std::string, State&, int, int, SortilegeType&, int, int, int);
+    bool load(int, Type&, int, int, int, int, int, int, std::string, State&, int, long int, SortilegeType&, int, int, int);
     bool loadfrom(Creature*);
     int getLife();
     int getMaxLife();
@@ -49,13 +49,15 @@ public:
     Type getType();
     int getAtk();
     int getDef();
-    void update(std::vector<Creature>&);
+    void update(std::vector<Creature*>&);
     void print();
     Json::Value serialize();
-    int gainExp(Creature*);
+    long int gainExp(Creature*);
 
-    static int calculateExpFromLevel(int);
-    static int calculateLevelFromXp(int);
+    static long int calculateExpFromLevel(int);
+    static int calculateLevelFromXp(long int);
+    static int calculatePPFromLevel(int);
+    static int calculateStatFromLevel(int);
 
     bool healPV(int);
     bool healPP(int);

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <random>
+#include "../../debug.hpp"
 
 #include "fight.hpp"
 #include "../constants.hpp"
@@ -144,10 +146,6 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
-        /*case sf::Keyboard::Escape:
-            new_view = LAST_VIEW_ID;
-            break;*/
-
         default:
             break;
         }
@@ -194,9 +192,11 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     if (OMessenger::get().target_view == this->getId())
     {
+        int c = 0;
         switch (OMessenger::get().type)
         {
         case ObjType::capture:
+            c = OMessenger::get().value;
             break;
 
         default:
@@ -204,14 +204,27 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             DebugLog(SH_WARN, "We land here but we should'nt. What type of object is it ? => " << OMessenger::get().type);
             break;
         }
-        OMessenger::empty();
+        if (c)
+        {
+            OMessenger::empty();
+            std::mt19937 rng;
+            rng.seed(std::random_device()());
+            std::uniform_int_distribution<std::mt19937::result_type> distgotit(0, 100);
+            if (distgotit(rng) >= c)
+            {
+                // we got the creature let's register it
+            }
+        }
     }
 }
 
 void FightView::encounter()
 {
     if (this->dex)
-        this->dex->register_viewed(0);  // TODO : put the id of the encountered creature(s)
+    {
+        for (int i=0; i < this->adv.size(); i++)
+            this->dex->register_viewed(this->adv[i]->getId());
+    }
 }
 
 void FightView::set_env(FightEnv new_env)
@@ -222,4 +235,50 @@ void FightView::set_env(FightEnv new_env)
 void FightView::set_dex(Dex* _dex)
 {
     this->dex = _dex;
+}
+
+void FightView::start()
+{
+    // generate adv
+    float moy_equip = 0.0f;
+    for (int i=0; i < this->equip->getSize(); i++)
+        moy_equip += this->equip->getCrea(i)->getLevel();
+    moy_equip /= float(this->equip->getSize());
+
+    std::mt19937 rng;
+    rng.seed(std::random_device()());
+    std::uniform_int_distribution<std::mt19937::result_type> dist1(int(moy_equip), int(moy_equip) + 10);
+    int _x_ = dist1(rng);
+    std::uniform_int_distribution<std::mt19937::result_type> dist2(_x_, _x_ + 4);
+    std::uniform_int_distribution<std::mt19937::result_type> distid(0, this->dex->getMaxId());
+    std::uniform_int_distribution<std::mt19937::result_type> diststype(0, SortilegeType::Count);
+    std::uniform_int_distribution<std::mt19937::result_type> distcd(3, 6);
+    std::uniform_int_distribution<std::mt19937::result_type> disttargets(2, this->equip->getSize());
+
+    for (int i=0; i < this->equip->getMaxSize(); i++)
+    {
+        Creature* crea = new Creature();
+        int  id = distid(rng)
+              , _t = this->dex->getInfo(id)->type
+              ,  _s = this->dex->getInfo(id)->stade
+              , _st = diststype(rng)  // SortilegeType::UniqueTargetAdvDamage
+              , level = dist2(rng)
+              , life = 2 * level + int(distlife(rng))  // mlife = life
+              , pp = Creature::calculatePPFromLevel(level) // mpp = pp
+              , scd = distcd(rng)  // cooldown for the sortilege
+              , sdmg = ceil(scd * 0.125 * level + 1)  // damages for the sortilege
+              , stargets = disttargets(rng)  // targets for the sortilege
+              , atk = Creature::calculateStatFromLevel(level)  // attack of the creature
+              , def = Creature::calculateStatFromLevel(level);  // defense
+        long int exp = Creature::calculateExpFromLevel(level);
+
+        Type t = static_cast<Type>(_t % 8);
+        State s = static_cast<State>(_s % 4);
+        SortilegeType st = static_cast<SortilegeType>(_st % 14);
+
+        crea->load(id, t, atk, def, life, life, pp, pp, this->dex->getName(id), s, level, exp, st, sdmg, scd, stargets);
+        this->adv.push_back(crea);
+    }
+
+    this->encounter();
 }

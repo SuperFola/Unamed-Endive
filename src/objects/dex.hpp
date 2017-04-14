@@ -27,6 +27,8 @@ public:
     DexInfo getInfo(int);
     void register_viewed(int);
     void register_capture(int);
+    std::string getName(int);
+    int getMaxId();
 };
 
 #endif // DEF_DEX

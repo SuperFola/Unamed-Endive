@@ -29,6 +29,7 @@ public:
     void increase_size();
     void increase_size(int);
     int getSize();
+    int getMaxSize();
 };
 
 #endif // DEF_EQUIP

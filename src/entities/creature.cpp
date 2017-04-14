@@ -21,7 +21,7 @@ Creature::Creature() :
 
 }
 
-bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, int pp, int mpp, std::string name, State& s, int level, int exp, SortilegeType& stype, int sdmg, int scd, int stargets)
+bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, int pp, int mpp, std::string name, State& s, int level, long int exp, SortilegeType& stype, int sdmg, int scd, int stargets)
 {
     DebugLog(SH_INFO, "Loading creature " << name);
     this->id = id;
@@ -57,14 +57,24 @@ bool Creature::loadfrom(Creature* other)
     return this->sortilege.loadfrom(other->sortilege);
 }
 
-int Creature::calculateLevelFromXp(int exp)
+int Creature::calculateLevelFromXp(long int exp)
 {
-    return int(pow(exp, 0.3));
+    return int(pow(exp, 0.33));
 }
 
-int Creature::calculateExpFromLevel(int level)
+long int Creature::calculateExpFromLevel(int level)
 {
     return int(pow(level, 3));
+}
+
+int Creature::calculatePPFromLevel(int level)
+{
+    return int(floor(pow(level, 0.5) + (x / 12.0f) + 3));
+}
+
+int Creature::calculateStatFromLevel(int level)
+{
+    return int(pow(level, 0.5) * 10);
 }
 
 void Creature::print()
@@ -106,7 +116,7 @@ int Creature::getMaxPP()
     return this->max_pp;
 }
 
-int Creature::getExp()
+long int Creature::getExp()
 {
     return this->exp;
 }
@@ -141,7 +151,7 @@ int Creature::getDef()
     return this->def;
 }
 
-void Creature::update(std::vector<Creature>& board)
+void Creature::update(std::vector<Creature*>& board)
 {
     if (!this->sortilege.getCooldown())
         // attack
@@ -174,12 +184,14 @@ Json::Value Creature::serialize()
 int Creature::gainExp(Creature* other)
 {
     int old = this->level;
-    int n = 0;
 
     this->exp += int((1.0f / float(other->level)) * other->exp) + 5;
     other->exp -= int((1.0f / float(other->level)) * other->exp) + 5;
+    other->level = Creature::calculateLevelFromXp(other->exp);
 
-    return n;
+    this->level = Creature::calculateLevelFromXp(this->exp);
+
+    return this->level - old;
 }
 
 bool Creature::healPV(int value)

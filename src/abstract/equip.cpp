@@ -24,7 +24,6 @@ bool Equip::load(const std::string& fpath, bool pc)
     std::mt19937 rng;
     rng.seed(std::random_device()());
     std::uniform_int_distribution<std::mt19937::result_type> distlife(14, 22);
-    std::uniform_int_distribution<std::mt19937::result_type> distpp(2, 5);
 
     if (!is_file_existing(fpath))
     {
@@ -40,7 +39,7 @@ bool Equip::load(const std::string& fpath, bool pc)
                   ,  _s = 3  // State::STD
                   , _st = 0  // SortilegeType::UniqueTargetAdvDamage
                   , life = int(distlife(rng))  // mlife = life
-                  , pp = int(distpp(rng)) // mpp = pp
+                  , pp = 3 // mpp = pp
                   , level = 1
                   , exp = 0
                   , sdmg = 5  // damages for the sortilege
@@ -79,12 +78,12 @@ bool Equip::load(const std::string& fpath, bool pc)
                       , pp = this->root["creatures"][i]["pp"].asInt()
                       , mpp = this->root["creatures"][i]["max_pp"].asInt()
                       , level = this->root["creatures"][i]["level"].asInt()
-                      , exp = this->root["creatures"][i]["exp"].asInt()
                       , sdmg = this->root["creatures"][i]["sort"]["damages"].asInt()
                       , scd = this->root["creatures"][i]["sort"]["cooldown"].asInt()
                       , stargets = this->root["creatures"][i]["sort"]["targets"].asInt()
                       , atk = this->root["creatures"][i]["atk"].asInt()
                       , def = this->root["creatures"][i]["def"].asInt();
+                long int exp = this->root["creatures"][i]["exp"].asDouble();
 
                 Type t = static_cast<Type>(_t % 8);
                 State s = static_cast<State>(_s % 4);
@@ -148,6 +147,11 @@ void Equip::increase_size()
 void Equip::increase_size(int nsz)
 {
     this->max_crea += nsz;
+}
+
+int Equip::getMaxSize()
+{
+    return this->max_crea;
 }
 
 int Equip::getSize()

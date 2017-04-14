@@ -10,19 +10,22 @@
 #include "../constants.hpp"
 #include "../objects/dex.hpp"
 #include "../entities/creature.hpp"
+#include "../abstract/equip.hpp"
 
 class FightView : public View
 {
 private:
     Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
-    std::vector<Creature> adv;
+    std::vector<Creature*> adv;
     sf::Font font;
     sf::Text action;
     sf::Text ennemy;
     sf::Text me;
     FightEnv env;
     Dex* dex;
+    Equip* equip;
+    Equip* pc;
 
     const std::string BKG1 = "bkg1";
     const std::string BKG2 = "bkg2";
@@ -43,6 +46,9 @@ public:
     void encounter();
     void set_env(FightEnv);
     void set_dex(Dex*);
+    void set_equip(Equip*);
+    void set_pc(Equip*);
+    void start();
 };
 
 #endif // DEF_FIGHT_VIEW

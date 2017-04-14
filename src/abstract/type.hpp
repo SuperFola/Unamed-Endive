@@ -31,7 +31,9 @@ enum SortilegeType {
     MultipleAdvNerfCooldown,
 
     MultipleUsHeal,
-    MultipleUsBuffCooldown
+    MultipleUsBuffCooldown,
+
+    Count
 };
 
 enum ActionType {

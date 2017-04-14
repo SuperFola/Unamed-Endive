@@ -91,7 +91,10 @@ Values depending on the type, and effects listed below as described :
     * 2 : heals the status "poisoned"
     * X > 2 : heals all the status
 * capture :
-    * 0 : 0
+    * X : 0 <= X <= 100
+         a number between 0 and 100 is chose randomly and compared to the value of the ball. if the number is above or equal
+            to the value of the ball, the creature is captured
+         if X == 0, it is like a master ball. the higher X gets, the weaker the ball is
 * levelup :
     * X : level-up the creature of X levels
 * lowercooldown :

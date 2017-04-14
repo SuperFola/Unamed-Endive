@@ -145,7 +145,8 @@ int StateMachine::change_view(int new_view)
     case FIGHT_VIEW_ID:
         // note that here, we don't log that we were in a fight to avoid going back with the use of LAST_VIEW_ID
         this->current_view = new_view;
-        DebugLog(SH_SPE, "Changing view (fight)  to id " << new_view);
+        DebugLog(SH_SPE, "Changing view (fight)  " << new_view);
+        this->fightv.start();
         ret_val = 1;
         break;
 
