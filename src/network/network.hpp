@@ -8,6 +8,8 @@
 #include "../abstract/functions.hpp"
 #include "../json/json.h"
 
+namespace Network
+{
 class Connection
 {
 private:
@@ -22,10 +24,21 @@ private:
 public:
     static void init(std::string, int, Protoc);
     static void start();
+    static bool isSecured();
     static int connect();
     static int auth(std::string, std::string);
+    static void init_game(std::string);
     static Json::Value getMap(int);
+    static Json::Value getPlayersOnMap(int);
+    static void sendMsg(std::string);
+    static Json::Value getMsg(int);
+    static Json::Value getPNJCode();
+    static Json::Value getSkin(std::string);
+    static bool setSkin(std::string);
+    static std::string getTileset();
+    static Json::Value getInfo();
     static int quit();
 };
+}
 
 #endif // DEF_NETWORK

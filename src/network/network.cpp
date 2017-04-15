@@ -4,6 +4,8 @@
 #include "network.hpp"
 #include "../scripting/scripting.hpp"
 
+namespace Network
+{
 Connection Connection::self = Connection();
 
 Connection::Connection() :
@@ -25,13 +27,18 @@ void Connection::start()
     PyScripting::run_code(("netconnect('" + self.HOST + "', " + to_string<int>(self.PORT) + ", '" + self.type + "')").c_str());
 }
 
+bool Connection::isSecured()
+{
+    return PyScripting::exec_net_req_getstr("secured?".c_str(), self.type.c_str()) == "True";
+}
+
 int Connection::connect()
 {
-    int o = PyScripting::exec_net_req_getint("connect", self.type.c_str());
+    int o = PyScripting::exec_net_req_getint("connect".c_str(), self.type.c_str());
     while (o != self.PORT)
     {
         self.PORT = o;
-        o = PyScripting::exec_net_req_getint("connect", self.type.c_str());
+        o = PyScripting::exec_net_req_getint("connect".c_str(), self.type.c_str());
         if (o == 0)
             break;
     }
@@ -39,6 +46,10 @@ int Connection::connect()
     {
         self.connected = true;
         DebugLog(SH_SPE, "NET> Connected on " << self.HOST << ":" << self.PORT);
+    }
+    else
+    {
+        DebugLog(SH_ERR, "NET> Could not connect to " << self.HOST << ":" << self.PORT<< ", all servers can be buzy");
     }
 
     return o;
@@ -48,10 +59,18 @@ int Connection::auth(std::string name, std::string pass)
 {
     if (self.connected)
     {
-        pass = PyScripting::sha256crypt(pass);
+        pass = PyScripting::sha256crypt(pass.c_str());
         return PyScripting::exec_net_req_getint(("auth " + name + " " + pass).c_str(), self.type.c_str());
     }
     return -1;
+}
+
+void Connection::init_game(std::string skinname)
+{
+    if (self.connected)
+    {
+        PyScripting::exec_net_req_getstr(("qzd " + skinname).c_str(), self.type.c_str());
+    }
 }
 
 Json::Value Connection::getMap(int mid)
@@ -59,9 +78,85 @@ Json::Value Connection::getMap(int mid)
     Json::Value map_root;
     if (self.connected)
     {
-        return PyScripting::exec_net_req_getjson(("map " + to_string<int>(mid)).c_str(), self.type.c_str());
+        map_root = PyScripting::exec_net_req_getjson(("map " + to_string<int>(mid)).c_str(), self.type.c_str());
     }
     return map_root;
+}
+
+Json::Value Connection::getPlayersOnMap(int mid)
+{
+    Json::Value root;
+    if (self.connected)
+    {
+        root = PyScripting::exec_net_req_getjson(("playerson " + to_string<int>(mid)).c_str(), self.type.c_str());
+    }
+    return root;
+}
+
+void Connection::sendMsg(std::string msg)
+{
+    if (self.connected)
+    {
+        PyScripting::exec_net_req_getint(("sendmsg " + msg).c_str(), self.type.c_str());
+    }
+}
+
+Json::Value Connection::getMsg(int quantity)
+{
+    Json::Value root;
+    if (self.connected)
+    {
+        root = PyScripting::exec_net_req_getjson(("getmsg " + to_string<int>(quantity)).c_str(), self.type.c_str());
+    }
+    return root;
+}
+
+Json::Value Connection::getPNJCode()
+{
+    Json::Value root;
+    if (self.connected)
+    {
+        root = PyScripting::exec_net_req_getjson("getpnjscode".c_str(), self.type.c_str());
+    }
+    return root;
+}
+
+Json::Value Connection::getSkin(std::string name)
+{
+    Json::Value root;
+    if (self.connected)
+    {
+        root = PyScripting::exec_net_req_getjson(("getskin " + name).c_str(), self.type.c_str());
+    }
+    return root;
+}
+
+bool Connection::setSkin(std::string name)
+{
+    if (self.connected)
+    {
+        return PyScripting::exec_net_req_getint(("setskin " + name).c_str(), self.type.c_str()) == 1;
+    }
+    return false;
+}
+
+std::string Connection::getTileset()
+{
+    if (self.connected)
+    {
+        return PyScripting::exec_net_req_getstr("gettileset".c_str(), self.type.c_str());
+    }
+    return "";
+}
+
+Json::Value Connection::getInfo()
+{
+    Json::Value root;
+    if (self.connected)
+    {
+        root = PyScripting::exec_net_req_getjson("about".c_str(), self.type.c_str());
+    }
+    return root;
 }
 
 int Connection::quit()
@@ -72,4 +167,5 @@ int Connection::quit()
         return PyScripting::exec_net_req_getint("disconnect".c_str(), self.type.c_str());
     }
     return -1;
+}
 }

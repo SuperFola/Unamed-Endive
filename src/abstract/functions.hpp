@@ -16,6 +16,7 @@
      #include <sys/types.h>
     #include <sys/stat.h>
 #endif
+#include "../network/network.hpp"
 
 template<typename T>
 T pop(std::vector<T>* obj, int i) {
