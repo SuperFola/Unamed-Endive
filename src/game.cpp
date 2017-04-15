@@ -618,7 +618,7 @@ Game::Game() :
     window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titlebar | sf::Style::Close)
     , crea_load()
     , has_requested_quit(false)
-    , network(true)  /** Testing */
+    , network(false)  /** Testing */
     , nethost("localhost")
     , netport(9999) // default port
     , netprotoc(Network::Protoc::TCP) // default communication protocole

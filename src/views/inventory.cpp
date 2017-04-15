@@ -89,8 +89,8 @@ bool InventView::load()
 
     // setting pos
     this->sprites[this->BCKG].setPosition(0.0f, 0.0f);
-    this->sprites[this->LARROW].setPosition(115.0f, 589.0f);
-    this->sprites[this->RARROW].setPosition(500.0f, 589.0f);
+    this->sprites[this->LARROW].setPosition(117.0f, 586.0f);
+    this->sprites[this->RARROW].setPosition(498.0f, 586.0f);
     this->sprites[this->POCKET1].setPosition(28.0f, 37.0f);
     this->sprites[this->POCKET2].setPosition(28.0f, 37.0f);
     this->sprites[this->POCKET3].setPosition(28.0f, 37.0f);
