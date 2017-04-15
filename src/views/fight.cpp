@@ -237,6 +237,16 @@ void FightView::set_dex(Dex* _dex)
     this->dex = _dex;
 }
 
+void FightView::set_equip(Equip* eq)
+{
+    this->equip = eq;
+}
+
+void FightView::set_pc(Equip* pc)
+{
+    this->pc = pc;
+}
+
 void FightView::start()
 {
     // generate adv
@@ -247,7 +257,7 @@ void FightView::start()
 
     std::mt19937 rng;
     rng.seed(std::random_device()());
-    std::uniform_int_distribution<std::mt19937::result_type> dist1(int(moy_equip), int(moy_equip) + 10);
+    std::uniform_int_distribution<std::mt19937::result_type> dist1(int(moy_equip), moy_equip + 10);
     int _x_ = dist1(rng);
     std::uniform_int_distribution<std::mt19937::result_type> dist2(_x_, _x_ + 4);
     std::uniform_int_distribution<std::mt19937::result_type> distid(0, this->dex->getMaxId());
@@ -259,11 +269,11 @@ void FightView::start()
     {
         Creature* crea = new Creature();
         int  id = distid(rng)
-              , _t = this->dex->getInfo(id)->type
-              ,  _s = this->dex->getInfo(id)->stade
+              , _t = this->dex->getInfo(id).type
+              ,  _s = this->dex->getInfo(id).stade
               , _st = diststype(rng)  // SortilegeType::UniqueTargetAdvDamage
               , level = dist2(rng)
-              , life = 2 * level + int(distlife(rng))  // mlife = life
+              , life = 2 * level + int(distcd(rng))  // mlife = life
               , pp = Creature::calculatePPFromLevel(level) // mpp = pp
               , scd = distcd(rng)  // cooldown for the sortilege
               , sdmg = ceil(scd * 0.125 * level + 1)  // damages for the sortilege

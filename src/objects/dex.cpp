@@ -126,7 +126,7 @@ std::string Dex::getName(int id)
         return this->id_name[id];
     DebugLog(SH_ERR, "Can not find creature with id " << id << ", returning a default one");
 
-    return this->content["default"];
+    return "default";
 }
 
 void Dex::register_viewed(int id)

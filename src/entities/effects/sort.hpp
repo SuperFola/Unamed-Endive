@@ -26,7 +26,7 @@ public:
     int getCooldown();
     bool lowercooldown(int);
     void update();
-    void act(std::vector<Creature>&);
+    void act(std::vector<Creature*>&);
     Json::Value serialize();
 };
 

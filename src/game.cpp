@@ -618,6 +618,10 @@ Game::Game() :
     window(sf::VideoMode(WIN_W, WIN_H), WIN_TITLE, sf::Style::Titlebar | sf::Style::Close)
     , crea_load()
     , has_requested_quit(false)
+    , network(true)  /** Testing */
+    , nethost("localhost")
+    , netport(9999) // default port
+    , netprotoc(Network::Protoc::TCP) // default communication protocole
     , shape(50)
     , shape_outline_sickness(10)
     , shape_increasing(true)
@@ -785,6 +789,15 @@ void Game::post_load()
     #ifdef PLATFORM_POSIX
         DebugLog(SH_INFO, "Platform: Posix");
     #endif // PLATFORM_POSIX
+
+    if (this->network)
+    {
+        Network::Connection::init(this->nethost, this->netport, this->netprotoc);
+        Network::Connection::start();
+        Network::Connection::connect();
+        // we skip Network::Connection::isSecured() and getInfo(), only useful when playing with other players, not in solo
+        Network::Connection::auth(this->sm.getDefault()->getCharacter()->getName(), "");
+    }
 }
 
 void Game::on_end()

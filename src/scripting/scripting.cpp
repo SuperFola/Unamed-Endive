@@ -329,5 +329,5 @@ svar_t PyScripting::getGlobal(const char* name)
 
 void PyScripting::print(const char* thing)
 {
-    std::cout << thing << std::endl;
+    std::cout << thing;
 }

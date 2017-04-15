@@ -13,6 +13,7 @@
 #include "abstract/types_table.hpp"
 #include "abstract/container.hpp"
 #include "objects/messenger.hpp"
+#include "network/network.hpp"
 
 class Game {
 private:
@@ -25,6 +26,10 @@ private:
     CreaturesLoader crea_load;
     Container<sf::Texture> textures;
     bool has_requested_quit;
+    bool network;
+    std::string nethost;
+    int netport;
+    Network::Protoc netprotoc;
     // others utilities
       // loading
     sf::CircleShape shape;

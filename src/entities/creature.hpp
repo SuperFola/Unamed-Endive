@@ -42,7 +42,7 @@ public:
     int getLevel();
     int getPP();
     int getMaxPP();
-    int getExp();
+    long int getExp();
     std::string& getName();
     int getId();
     State getState();
@@ -52,7 +52,7 @@ public:
     void update(std::vector<Creature*>&);
     void print();
     Json::Value serialize();
-    long int gainExp(Creature*);
+    int gainExp(Creature*);
 
     static long int calculateExpFromLevel(int);
     static int calculateLevelFromXp(long int);

@@ -9,7 +9,7 @@ namespace Network
 Connection Connection::self = Connection();
 
 Connection::Connection() :
-    , connected(false)
+    connected(false)
 {
 
 }
@@ -18,7 +18,7 @@ void Connection::init(std::string h, int p, Protoc pr)
 {
     self.HOST = h;
     self.PORT = p;
-    self.PROTOC = p;
+    self.PROTOC = pr;
     self.type = (self.PROTOC == Protoc::TCP) ? "TCP" : "UDP";
 }
 
@@ -29,16 +29,16 @@ void Connection::start()
 
 bool Connection::isSecured()
 {
-    return PyScripting::exec_net_req_getstr("secured?".c_str(), self.type.c_str()) == "True";
+    return PyScripting::exec_net_req_getstr("secured?", self.type.c_str()) == "True";
 }
 
 int Connection::connect()
 {
-    int o = PyScripting::exec_net_req_getint("connect".c_str(), self.type.c_str());
+    int o = PyScripting::exec_net_req_getint("connect", self.type.c_str());
     while (o != self.PORT)
     {
         self.PORT = o;
-        o = PyScripting::exec_net_req_getint("connect".c_str(), self.type.c_str());
+        o = PyScripting::exec_net_req_getint("connect", self.type.c_str());
         if (o == 0)
             break;
     }
@@ -116,7 +116,7 @@ Json::Value Connection::getPNJCode()
     Json::Value root;
     if (self.connected)
     {
-        root = PyScripting::exec_net_req_getjson("getpnjscode".c_str(), self.type.c_str());
+        root = PyScripting::exec_net_req_getjson("getpnjscode", self.type.c_str());
     }
     return root;
 }
@@ -144,7 +144,7 @@ std::string Connection::getTileset()
 {
     if (self.connected)
     {
-        return PyScripting::exec_net_req_getstr("gettileset".c_str(), self.type.c_str());
+        return PyScripting::exec_net_req_getstr("gettileset", self.type.c_str());
     }
     return "";
 }
@@ -154,7 +154,7 @@ Json::Value Connection::getInfo()
     Json::Value root;
     if (self.connected)
     {
-        root = PyScripting::exec_net_req_getjson("about".c_str(), self.type.c_str());
+        root = PyScripting::exec_net_req_getjson("about", self.type.c_str());
     }
     return root;
 }
@@ -164,7 +164,7 @@ int Connection::quit()
     if (self.connected)
     {
         self.connected = false;
-        return PyScripting::exec_net_req_getint("disconnect".c_str(), self.type.c_str());
+        return PyScripting::exec_net_req_getint("disconnect", self.type.c_str());
     }
     return -1;
 }

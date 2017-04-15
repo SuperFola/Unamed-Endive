@@ -43,7 +43,7 @@ void Sort::update()
     // update cooldown
 }
 
-void Sort::act(std::vector<Creature>& board)
+void Sort::act(std::vector<Creature*>& board)
 {
     switch (this->type)
     {

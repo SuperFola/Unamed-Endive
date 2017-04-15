@@ -69,7 +69,7 @@ long int Creature::calculateExpFromLevel(int level)
 
 int Creature::calculatePPFromLevel(int level)
 {
-    return int(floor(pow(level, 0.5) + (x / 12.0f) + 3));
+    return int(floor(pow(level, 0.5) + (level / 12.0f) + 3));
 }
 
 int Creature::calculateStatFromLevel(int level)
@@ -176,7 +176,7 @@ Json::Value Creature::serialize()
     value["def"] = this->def;
     value["pp"] = this->pp;
     value["max_pp"] = this->max_pp;
-    value["exp"] = this->exp;
+    value["exp"] = double(this->exp);
 
     return value;
 }

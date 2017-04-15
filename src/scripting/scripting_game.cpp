@@ -2,6 +2,7 @@
 #include "../../debug.hpp"
 
 #include <string>
+#include <algorithm>
 
 #include "scripting.hpp"
 #include "../constants.hpp"
@@ -176,8 +177,9 @@ const char* PyScripting::screenshot()
 
 std::string PyScripting::exec_net_req_getstr(const char* req, const char* t)
 {
-    return std::string(PyScripting::run_code_and_get_out(
-                            ("netsend('" + std::string(req)+ "', '" + std::string(t) + "');" + "upr(netrecv())").c_str()));
+    std::string r = "netsend('" + std::string(req)+ "', '" + std::string(t) + "');" + "upr(netrecv())";
+    std::string n = std::string(PyScripting::run_code_and_get_out(r.c_str()));
+    return n.substr(1, n.size() - 2);
 }
 
 int PyScripting::exec_net_req_getint(const char* req, const char* t)
@@ -194,7 +196,9 @@ int PyScripting::exec_net_req_getint(const char* req, const char* t)
         DebugLog(SH_WARN, "NET> " << preq);
         return 0;
     }
-    return std::atoi(preq.c_str());
+    int ipreq = atoi(preq.c_str());
+    DebugLog(SH_INFO, preq << " " << ipreq);
+    return ipreq;
 }
 
 Json::Value PyScripting::exec_net_req_getjson(const char* req, const char* t)
@@ -219,7 +223,8 @@ std::vector<int> PyScripting::exec_net_req_getvectorint(const char* req, const c
 
     for (int i=0; i < strings.size(); i++)
     {
-        temp.push_back(std::atoi(strings[i].c_str()));
+        int integer = atoi(strings[i].c_str());
+        temp.push_back(integer);
     }
 
     return temp;
@@ -249,5 +254,6 @@ std::vector<std::string> PyScripting::exec_net_req_getvectorstr(const char* req,
 
 std::string PyScripting::sha256crypt(const char* word)
 {
-    return PyScripting::run_code_and_get_out(("upr(sha256('" + std::string(word)+ "'))").c_str());
+    std::string n = std::string(PyScripting::run_code_and_get_out(("upr(sha256('" + std::string(word)+ "'))").c_str()));
+    return n.substr(1, n.size() - 2);
 }
