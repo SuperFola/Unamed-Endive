@@ -78,7 +78,7 @@ bool FightView::load()
     this->sprites[this->OVERLAY].setPosition(0.0f, 0.0f);
     this->sprites[this->TOOLS].setPosition(0.0f, WIN_H - 150.0f);
 
-    if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
+    if (!this->font.loadFromFile(FONTPATH))
         return false;
 
     this->action.setFont(this->font);

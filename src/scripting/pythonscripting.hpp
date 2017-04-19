@@ -34,6 +34,13 @@ extern "C"
     PYFUNC(getPlayerName);
     PYFUNC(tpPlayerOn);
     PYFUNC(screenshot);
+    PYFUNC(setCurrentView);
+    PYFUNC(countCreaturesInEquip);
+    PYFUNC(countCreaturesInPC);
+    PYFUNC(giveObject);
+    PYFUNC(turnPlayer);
+    PYFUNC(createText);
+    PYFUNC(writeText);
 
     PyMODINIT_FUNC PyInit_Unamed(void);
 }

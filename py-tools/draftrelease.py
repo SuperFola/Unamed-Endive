@@ -37,7 +37,16 @@ def main():
         version = ver.strip("\n")
         print("Drafting a new release :", version, flush=True)
         tkcommentsrelease.main(version)
-        release = official_repository.create_release(version, name="New update ! Version " + version, body=read_comments(), prerelease=True)
-        release.upload_asset("binaryfile", "installer.exe", open("../ENDIVE-protos/" + version + "/Unamed Rebirth - " + version + ".exe", "rb"))
+        try:
+            release = official_repository.create_release(version, name="New update ! Version " + version, body=read_comments(), prerelease=True)
+            release.upload_asset("binaryfile", "installer.exe", open("../ENDIVE-protos/" + version + "/Unamed Rebirth - " + version + ".exe", "rb"))
+        except github3.GitHubError as e:
+            print(e.message)
+            print(e)
+            _ = 0 // 0
     
     os.remove("releases-to-upload.txt")  # we have upload everything, no need to keep the file (which will be regenerated automatically when needed)
+
+
+if __name__ == '__main__':
+    main()

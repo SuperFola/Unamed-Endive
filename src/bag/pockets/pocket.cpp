@@ -42,6 +42,12 @@ void Pocket::add_object(Object* object)
     this->objects.push_back(object);
 }
 
+void Pocket::add_object(int id, int qu)
+{
+    Object* o = new Object(id, qu);
+    this->objects.push_back(o);
+}
+
 Object* Pocket::getObject(int id)
 {
     if (0 <= id && id < this->objects.size())

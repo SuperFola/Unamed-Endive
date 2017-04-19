@@ -698,8 +698,8 @@ Game::Game() :
     this->validatebtn.setPosition(0.0f, 0.0f);
 
     // font
-    if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
-        DebugLog(SH_ERR, "Missing font at assets/fonts/pkmnemn.ttf");
+    if (!this->font.loadFromFile(FONTPATH))
+        DebugLog(SH_ERR, "Missing font at " << FONTPATH);
 
     // texts
     this->loading_text.setFont(this->font);

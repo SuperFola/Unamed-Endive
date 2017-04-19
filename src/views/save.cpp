@@ -29,7 +29,7 @@ bool SaveView::load()
 
     this->sprites["BKG"].setPosition(0.0f, 0.0f);
 
-    if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
+    if (!this->font.loadFromFile(FONTPATH))
         return false;
 
     this->text.setFont(this->font);

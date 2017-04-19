@@ -15,6 +15,7 @@ private:
 
 public:
     Container();
+    bool contains(const std::string&);
     void add(const std::string&, ContainerType&);
     ContainerType& get(const std::string&);
 };
@@ -23,6 +24,17 @@ template <typename ContainerType>
 Container<ContainerType>::Container()
 {
 
+}
+
+template <typename ContainerType>
+bool Container<ContainerType>::contains(const std::string& name)
+{
+    auto it = this->content.find(name);
+
+    if (it == this->content.end())
+        return false;
+    else
+        return true;
 }
 
 template <typename ContainerType>

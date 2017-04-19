@@ -22,6 +22,7 @@ public:
     Pocket(const std::string&, bool default_one=false);
     bool load(Json::Value&);
     void add_object(Object*);
+    void add_object(int, int);
     Object* getObject(int);
     ObjUDD useObject(int);
     void drop_object(int);

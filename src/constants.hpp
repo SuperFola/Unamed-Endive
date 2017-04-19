@@ -44,6 +44,7 @@
 #define MINIMAP_Y 128
 #define COLLIDING_LAYER 1
 #define MAX_DIST_FROM_PNJ_IN_CASE 5
+#define FONTPATH "assets/fonts/pkmnemn.ttf"
 
 // platform (useful for some functions)
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)

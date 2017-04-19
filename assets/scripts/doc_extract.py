@@ -11,5 +11,5 @@ for method in methods:
     if method[:2] != "__" and method != "error":
         out.append(method + "\n" + "-" * len(method) + "\n" + str(getattr(Unamed, method).__doc__))
 
-with open("assets/scripts/scripting_doc.txt", "w") as file:
+with open("assets/scripts/data/scripting_doc.txt", "w") as file:
     file.write("\n\n".join(out))

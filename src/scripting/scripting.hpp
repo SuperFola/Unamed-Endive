@@ -45,6 +45,8 @@ private:
     sf::Event event;
     Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
+    sf::Font font;
+    Container<sf::Text> texts;
 
     sf::RenderWindow* window;
     MusicPlayer* music_player;
@@ -122,6 +124,14 @@ public:
     static std::vector<std::string> exec_net_req_getvectorstr(const char*, const char*);
 
     static std::string sha256crypt(const char*);
+
+    static void setCurrentView(int);
+    static int countCreaturesInEquip();
+    static int countCreaturesInPC();
+    static void giveObject(int, int, int);
+    static void turnPlayer(int);
+    static void createText(int, int, int, const char*, int, int, const char*);
+    static void writeText(const char*);
 };
 
 #endif // DEF_SCRIPTING

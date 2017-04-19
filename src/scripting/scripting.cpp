@@ -117,6 +117,8 @@ def handleRemoveReadonly(func, path, exc):\n\
   else: raise\n\
 remove = lambda filename : shutil.rmtree(filename, ignore_errors=False, onerror=handleRemoveReadonly)");
 
+        instance.font.loadFromFile(FONTPATH);
+
         return true;
     }
     return false;  // already running

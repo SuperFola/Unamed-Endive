@@ -13,8 +13,8 @@ MenuHUD::MenuHUD() :
     Hud(MENU_VIEW_ID)
     , current(-1)
 {
-    if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
-        DebugLog(SH_ERR, "Can not load font at assets/fonts/pkmnemn.ttf");
+    if (!this->font.loadFromFile(FONTPATH))
+        DebugLog(SH_ERR, "Can not load font at " << FONTPATH);
     DebugLog(SH_OK, "Menu HUD loaded");
 }
 

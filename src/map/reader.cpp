@@ -24,7 +24,7 @@ bool MapReader::load()
     this->bg.setTexture(this->t_bg);
     this->bg.setPosition(0, 0);
 
-    if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
+    if (!this->font.loadFromFile(FONTPATH))
         return false;
     this->text.setFont(this->font);
     this->text.setFillColor(sf::Color::Black);

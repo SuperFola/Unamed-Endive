@@ -101,7 +101,7 @@ bool InventView::load()
     this->sprites[this->USE].setPosition(29.0f, 508.0f);
 
     // texts
-    if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
+    if (!this->font.loadFromFile(FONTPATH))
         return false;
 
     this->current_pocket_name.setFont(this->font);

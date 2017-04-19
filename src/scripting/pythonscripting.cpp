@@ -338,10 +338,90 @@ extern "C"
         return Py_BuildValue("s", PyScripting::screenshot());
     }
 
+    static PyObject* setCurrentView(PyObject* self, PyObject* args)
+    {
+        int vid;
+        if (!PyArg_ParseTuple(args, "i", &vid))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need an integer");
+            return NULL;
+        }
+        PyScripting::setCurrentView(vid);
+
+        RETURN_NONE
+    }
+
+    static PyObject* countCreaturesInEquip(PyObject* self, PyObject* args)
+    {
+        return Py_BuildValue("i", PyScripting::countCreaturesInEquip());
+    }
+
+    static PyObject* countCreaturesInPC(PyObject* self, PyObject* args)
+    {
+        return Py_BuildValue("i", PyScripting::countCreaturesInPC());
+    }
+
+    static PyObject* giveObject(PyObject* self, PyObject* args)
+    {
+        int id;
+        int qu;
+        int p;
+        if (!PyArg_ParseTuple(args, "ii", &id, &qu, &p))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need 3 integers : id, quantity, and pocket id");
+            return NULL;
+        }
+        PyScripting::giveObject(id, qu, p);
+
+        RETURN_NONE
+    }
+
+    static PyObject* turnPlayer(PyObject* self, PyObject* args)
+    {
+        int o;
+        if (!PyArg_ParseTuple(args, "i", &o))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need an integer representing the orientation of the player");
+            return NULL;
+        }
+        PyScripting::turnPlayer(o);
+
+        RETURN_NONE
+    }
+
+    static PyObject* createText(PyObject* self, PyObject* args)
+    {
+        int x, y, w;
+        const char* text;
+        int fs, c;
+        const char* id;
+        if (!PyArg_ParseTuple(args, "iiisiis", &x, &y, &w, &text, &fs, &c, &id))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need 3 integers (x, y, number of characters), a string for the text, the font size, the color and finally an id (string)");
+            return NULL;
+        }
+        PyScripting::createText(x, y, w, text, fs, c,id);
+
+        RETURN_NONE
+    }
+
+    static PyObject* writeText(PyObject* self, PyObject* args)
+    {
+        const char* id;
+        if (!PyArg_ParseTuple(args, "s", &id))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need a string id for the text to display");
+            return NULL;
+        }
+        PyScripting::writeText(id);
+
+        RETURN_NONE
+    }
+
     static PyMethodDef UnamedMethods[] = {
         // ...
         {"upr", print, METH_VARARGS, "Print function using std::cout"},
-        {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given"},
+        {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with a string id also given"},
         {"loadImage", loadTexture, METH_VARARGS, "Load an image using a given path, and assigne it to a given id"},
         {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
         {"displayWithView", display_with_view, METH_VARARGS, "Display an image loaded before, relative to the top left corner of the view. Need the same argument as displayImage(...)"},
@@ -363,6 +443,13 @@ extern "C"
         {"getPlayerName", getPlayerName, METH_VARARGS, "Return the name of the player"},
         {"tpPlayerOn", tpPlayerOn, METH_VARARGS, "Take two integers (x, y). Will teleport the player on this position, on the current map"},
         {"screenshot", screenshot, METH_VARARGS, "Take a screenshot and save it to screenshots/. Return the name of the file"},
+        {"setCurrentView", setCurrentView, METH_VARARGS, "Set the current view. Take the id of the new view"},
+        {"countCreaturesInEquip", countCreaturesInEquip, METH_VARARGS, "Return how many creatures has the player in his/her equip"},
+        {"countCreaturesInPC", countCreaturesInPC, METH_VARARGS, "Return how many creatures has the player in his/her PC"},
+        {"giveObject", giveObject, METH_VARARGS, "Give an object to the player. Need the id of the object, the quantity to give, and in which pocket (id) it will be put"},
+        {"turnPlayer", turnPlayer, METH_VARARGS, "Turn the player in the specified direction. 0: up, 1: down, 2: left, 3: right"},
+        {"createText", createText, METH_VARARGS, "Create a text at (x, y) of a number of characters/lines given, with the text of a font size, and a color given, the whole thing having a string id given"},
+        {"writeText", writeText, METH_VARARGS, "Write a text, giving the id of a created text"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };

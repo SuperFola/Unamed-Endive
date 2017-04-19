@@ -13,12 +13,12 @@ AR = ar
 LD = g++
 WINDRES = windres
 
-INC = -I\$\$SFML_DIR/include -IC:/Python34/include
-CFLAGS = -Wall -std=gnu++14
+INC = -I\$\$SFML_DIR/include -IC:/Python36/include
+CFLAGS = -Wall -std=gnu++11
 RESINC = 
-LIBDIR = -L\$\$SFML_DIR/lib -LC:/Python34/libs -Ldlls/
+LIBDIR = -L\$\$SFML_DIR/lib -LC:/Python36/libs -Ldlls/
 LIB = 
-LDFLAGS = -lPython34
+LDFLAGS = -lPython36
 
 INC_DEBUGUNIX = $(INC)
 CFLAGS_DEBUGUNIX = $(CFLAGS) -g
@@ -42,9 +42,9 @@ OBJDIR_RELEASEUNIX = obj/ReleaseUnix
 DEP_RELEASEUNIX = 
 OUT_RELEASEUNIX = bin/ReleaseUnix/main
 
-OBJ_DEBUGUNIX = $(OBJDIR_DEBUGUNIX)/src/scripting/scripting_game.o $(OBJDIR_DEBUGUNIX)/src/scripting/scripting.o $(OBJDIR_DEBUGUNIX)/src/scripting/pythonscripting.o $(OBJDIR_DEBUGUNIX)/src/particles/particles.o $(OBJDIR_DEBUGUNIX)/src/objects/messenger.o $(OBJDIR_DEBUGUNIX)/src/objects/dex.o $(OBJDIR_DEBUGUNIX)/src/network/network.o $(OBJDIR_DEBUGUNIX)/src/map/tilemap.o $(OBJDIR_DEBUGUNIX)/src/map/reader.o $(OBJDIR_DEBUGUNIX)/src/map/map.o $(OBJDIR_DEBUGUNIX)/src/map/blocks/block.o $(OBJDIR_DEBUGUNIX)/src/jsoncpp.o $(OBJDIR_DEBUGUNIX)/src/views/view.o $(OBJDIR_DEBUGUNIX)/src/views/shop.o $(OBJDIR_DEBUGUNIX)/src/views/save.o $(OBJDIR_DEBUGUNIX)/src/views/map.o $(OBJDIR_DEBUGUNIX)/src/views/inventory.o $(OBJDIR_DEBUGUNIX)/src/views/huds/menu.o $(OBJDIR_DEBUGUNIX)/src/views/huds/hud.o $(OBJDIR_DEBUGUNIX)/src/views/fight.o $(OBJDIR_DEBUGUNIX)/src/views/dex.o $(OBJDIR_DEBUGUNIX)/src/views/default.o $(OBJDIR_DEBUGUNIX)/src/views/creatures.o $(OBJDIR_DEBUGUNIX)/src/bag/bag.o $(OBJDIR_DEBUGUNIX)/src/abstract/types_table.o $(OBJDIR_DEBUGUNIX)/src/abstract/statemachine.o $(OBJDIR_DEBUGUNIX)/src/abstract/point.o $(OBJDIR_DEBUGUNIX)/src/abstract/musicplayer.o $(OBJDIR_DEBUGUNIX)/src/abstract/functions.o $(OBJDIR_DEBUGUNIX)/src/abstract/equip.o $(OBJDIR_DEBUGUNIX)/src/abstract/creatures_loader.o $(OBJDIR_DEBUGUNIX)/src/abstract/convert_events.o $(OBJDIR_DEBUGUNIX)/src/abstract/competence.o $(OBJDIR_DEBUGUNIX)/main.o $(OBJDIR_DEBUGUNIX)/src/game.o $(OBJDIR_DEBUGUNIX)/src/entities/pnjmanager.o $(OBJDIR_DEBUGUNIX)/src/entities/pnj.o $(OBJDIR_DEBUGUNIX)/src/entities/effects/sort.o $(OBJDIR_DEBUGUNIX)/src/entities/creature.o $(OBJDIR_DEBUGUNIX)/src/entities/character.o $(OBJDIR_DEBUGUNIX)/src/entities/animatedentity.o $(OBJDIR_DEBUGUNIX)/src/constants.o $(OBJDIR_DEBUGUNIX)/src/bag/pockets/pocket.o $(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects/object.o $(OBJDIR_DEBUGUNIX)/src/bag/objectstable.o
+OBJ_DEBUGUNIX = $(OBJDIR_DEBUGUNIX)/src/scripting/scripting.o $(OBJDIR_DEBUGUNIX)/src/scripting/pythonscripting.o $(OBJDIR_DEBUGUNIX)/src/particles/particles.o $(OBJDIR_DEBUGUNIX)/src/objects/messenger.o $(OBJDIR_DEBUGUNIX)/src/objects/dex.o $(OBJDIR_DEBUGUNIX)/src/network/network.o $(OBJDIR_DEBUGUNIX)/src/map/tilemap.o $(OBJDIR_DEBUGUNIX)/src/map/reader.o $(OBJDIR_DEBUGUNIX)/src/map/map.o $(OBJDIR_DEBUGUNIX)/src/map/blocks/block.o $(OBJDIR_DEBUGUNIX)/src/jsoncpp.o $(OBJDIR_DEBUGUNIX)/src/views/view.o $(OBJDIR_DEBUGUNIX)/src/views/shop.o $(OBJDIR_DEBUGUNIX)/src/views/save.o $(OBJDIR_DEBUGUNIX)/src/views/map.o $(OBJDIR_DEBUGUNIX)/src/views/inventory.o $(OBJDIR_DEBUGUNIX)/src/views/huds/menu.o $(OBJDIR_DEBUGUNIX)/src/views/huds/hud.o $(OBJDIR_DEBUGUNIX)/src/views/fight.o $(OBJDIR_DEBUGUNIX)/src/views/dex.o $(OBJDIR_DEBUGUNIX)/src/views/default.o $(OBJDIR_DEBUGUNIX)/src/views/creatures.o $(OBJDIR_DEBUGUNIX)/src/scripting/scripting_game.o $(OBJDIR_DEBUGUNIX)/src/abstract/types_table.o $(OBJDIR_DEBUGUNIX)/src/abstract/statemachine.o $(OBJDIR_DEBUGUNIX)/src/abstract/point.o $(OBJDIR_DEBUGUNIX)/src/abstract/musicplayer.o $(OBJDIR_DEBUGUNIX)/src/abstract/gameDataLoader.o $(OBJDIR_DEBUGUNIX)/src/abstract/functions.o $(OBJDIR_DEBUGUNIX)/src/abstract/equip.o $(OBJDIR_DEBUGUNIX)/src/abstract/creatures_loader.o $(OBJDIR_DEBUGUNIX)/src/abstract/convert_events.o $(OBJDIR_DEBUGUNIX)/src/abstract/competence.o $(OBJDIR_DEBUGUNIX)/main.o $(OBJDIR_DEBUGUNIX)/src/game.o $(OBJDIR_DEBUGUNIX)/src/entities/pnjmanager.o $(OBJDIR_DEBUGUNIX)/src/entities/pnj.o $(OBJDIR_DEBUGUNIX)/src/entities/effects/sort.o $(OBJDIR_DEBUGUNIX)/src/entities/creature.o $(OBJDIR_DEBUGUNIX)/src/entities/character.o $(OBJDIR_DEBUGUNIX)/src/entities/animatedentity.o $(OBJDIR_DEBUGUNIX)/src/constants.o $(OBJDIR_DEBUGUNIX)/src/bag/pockets/pocket.o $(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects/object.o $(OBJDIR_DEBUGUNIX)/src/bag/objectstable.o $(OBJDIR_DEBUGUNIX)/src/bag/bag.o
 
-OBJ_RELEASEUNIX = $(OBJDIR_RELEASEUNIX)/src/scripting/scripting_game.o $(OBJDIR_RELEASEUNIX)/src/scripting/scripting.o $(OBJDIR_RELEASEUNIX)/src/scripting/pythonscripting.o $(OBJDIR_RELEASEUNIX)/src/particles/particles.o $(OBJDIR_RELEASEUNIX)/src/objects/messenger.o $(OBJDIR_RELEASEUNIX)/src/objects/dex.o $(OBJDIR_RELEASEUNIX)/src/network/network.o $(OBJDIR_RELEASEUNIX)/src/map/tilemap.o $(OBJDIR_RELEASEUNIX)/src/map/reader.o $(OBJDIR_RELEASEUNIX)/src/map/map.o $(OBJDIR_RELEASEUNIX)/src/map/blocks/block.o $(OBJDIR_RELEASEUNIX)/src/jsoncpp.o $(OBJDIR_RELEASEUNIX)/src/views/view.o $(OBJDIR_RELEASEUNIX)/src/views/shop.o $(OBJDIR_RELEASEUNIX)/src/views/save.o $(OBJDIR_RELEASEUNIX)/src/views/map.o $(OBJDIR_RELEASEUNIX)/src/views/inventory.o $(OBJDIR_RELEASEUNIX)/src/views/huds/menu.o $(OBJDIR_RELEASEUNIX)/src/views/huds/hud.o $(OBJDIR_RELEASEUNIX)/src/views/fight.o $(OBJDIR_RELEASEUNIX)/src/views/dex.o $(OBJDIR_RELEASEUNIX)/src/views/default.o $(OBJDIR_RELEASEUNIX)/src/views/creatures.o $(OBJDIR_RELEASEUNIX)/src/bag/bag.o $(OBJDIR_RELEASEUNIX)/src/abstract/types_table.o $(OBJDIR_RELEASEUNIX)/src/abstract/statemachine.o $(OBJDIR_RELEASEUNIX)/src/abstract/point.o $(OBJDIR_RELEASEUNIX)/src/abstract/musicplayer.o $(OBJDIR_RELEASEUNIX)/src/abstract/functions.o $(OBJDIR_RELEASEUNIX)/src/abstract/equip.o $(OBJDIR_RELEASEUNIX)/src/abstract/creatures_loader.o $(OBJDIR_RELEASEUNIX)/src/abstract/convert_events.o $(OBJDIR_RELEASEUNIX)/src/abstract/competence.o $(OBJDIR_RELEASEUNIX)/main.o $(OBJDIR_RELEASEUNIX)/src/game.o $(OBJDIR_RELEASEUNIX)/src/entities/pnjmanager.o $(OBJDIR_RELEASEUNIX)/src/entities/pnj.o $(OBJDIR_RELEASEUNIX)/src/entities/effects/sort.o $(OBJDIR_RELEASEUNIX)/src/entities/creature.o $(OBJDIR_RELEASEUNIX)/src/entities/character.o $(OBJDIR_RELEASEUNIX)/src/entities/animatedentity.o $(OBJDIR_RELEASEUNIX)/src/constants.o $(OBJDIR_RELEASEUNIX)/src/bag/pockets/pocket.o $(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects/object.o $(OBJDIR_RELEASEUNIX)/src/bag/objectstable.o
+OBJ_RELEASEUNIX = $(OBJDIR_RELEASEUNIX)/src/scripting/scripting.o $(OBJDIR_RELEASEUNIX)/src/scripting/pythonscripting.o $(OBJDIR_RELEASEUNIX)/src/particles/particles.o $(OBJDIR_RELEASEUNIX)/src/objects/messenger.o $(OBJDIR_RELEASEUNIX)/src/objects/dex.o $(OBJDIR_RELEASEUNIX)/src/network/network.o $(OBJDIR_RELEASEUNIX)/src/map/tilemap.o $(OBJDIR_RELEASEUNIX)/src/map/reader.o $(OBJDIR_RELEASEUNIX)/src/map/map.o $(OBJDIR_RELEASEUNIX)/src/map/blocks/block.o $(OBJDIR_RELEASEUNIX)/src/jsoncpp.o $(OBJDIR_RELEASEUNIX)/src/views/view.o $(OBJDIR_RELEASEUNIX)/src/views/shop.o $(OBJDIR_RELEASEUNIX)/src/views/save.o $(OBJDIR_RELEASEUNIX)/src/views/map.o $(OBJDIR_RELEASEUNIX)/src/views/inventory.o $(OBJDIR_RELEASEUNIX)/src/views/huds/menu.o $(OBJDIR_RELEASEUNIX)/src/views/huds/hud.o $(OBJDIR_RELEASEUNIX)/src/views/fight.o $(OBJDIR_RELEASEUNIX)/src/views/dex.o $(OBJDIR_RELEASEUNIX)/src/views/default.o $(OBJDIR_RELEASEUNIX)/src/views/creatures.o $(OBJDIR_RELEASEUNIX)/src/scripting/scripting_game.o $(OBJDIR_RELEASEUNIX)/src/abstract/types_table.o $(OBJDIR_RELEASEUNIX)/src/abstract/statemachine.o $(OBJDIR_RELEASEUNIX)/src/abstract/point.o $(OBJDIR_RELEASEUNIX)/src/abstract/musicplayer.o $(OBJDIR_RELEASEUNIX)/src/abstract/gameDataLoader.o $(OBJDIR_RELEASEUNIX)/src/abstract/functions.o $(OBJDIR_RELEASEUNIX)/src/abstract/equip.o $(OBJDIR_RELEASEUNIX)/src/abstract/creatures_loader.o $(OBJDIR_RELEASEUNIX)/src/abstract/convert_events.o $(OBJDIR_RELEASEUNIX)/src/abstract/competence.o $(OBJDIR_RELEASEUNIX)/main.o $(OBJDIR_RELEASEUNIX)/src/game.o $(OBJDIR_RELEASEUNIX)/src/entities/pnjmanager.o $(OBJDIR_RELEASEUNIX)/src/entities/pnj.o $(OBJDIR_RELEASEUNIX)/src/entities/effects/sort.o $(OBJDIR_RELEASEUNIX)/src/entities/creature.o $(OBJDIR_RELEASEUNIX)/src/entities/character.o $(OBJDIR_RELEASEUNIX)/src/entities/animatedentity.o $(OBJDIR_RELEASEUNIX)/src/constants.o $(OBJDIR_RELEASEUNIX)/src/bag/pockets/pocket.o $(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects/object.o $(OBJDIR_RELEASEUNIX)/src/bag/objectstable.o $(OBJDIR_RELEASEUNIX)/src/bag/bag.o
 
 all: before_build build_debugunix build_releaseunix after_build
 
@@ -67,13 +67,13 @@ before_debugunix:
 	test -d $(OBJDIR_DEBUGUNIX)/src || mkdir -p $(OBJDIR_DEBUGUNIX)/src
 	test -d $(OBJDIR_DEBUGUNIX)/src/views || mkdir -p $(OBJDIR_DEBUGUNIX)/src/views
 	test -d $(OBJDIR_DEBUGUNIX)/src/views/huds || mkdir -p $(OBJDIR_DEBUGUNIX)/src/views/huds
-	test -d $(OBJDIR_DEBUGUNIX)/src/bag || mkdir -p $(OBJDIR_DEBUGUNIX)/src/bag
 	test -d $(OBJDIR_DEBUGUNIX)/src/abstract || mkdir -p $(OBJDIR_DEBUGUNIX)/src/abstract
 	test -d $(OBJDIR_DEBUGUNIX) || mkdir -p $(OBJDIR_DEBUGUNIX)
 	test -d $(OBJDIR_DEBUGUNIX)/src/entities || mkdir -p $(OBJDIR_DEBUGUNIX)/src/entities
 	test -d $(OBJDIR_DEBUGUNIX)/src/entities/effects || mkdir -p $(OBJDIR_DEBUGUNIX)/src/entities/effects
 	test -d $(OBJDIR_DEBUGUNIX)/src/bag/pockets || mkdir -p $(OBJDIR_DEBUGUNIX)/src/bag/pockets
 	test -d $(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects || mkdir -p $(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects
+	test -d $(OBJDIR_DEBUGUNIX)/src/bag || mkdir -p $(OBJDIR_DEBUGUNIX)/src/bag
 
 after_debugunix: 
 
@@ -83,9 +83,6 @@ debugunix: before_build build_debugunix after_build
 
 out_debugunix: before_debugunix $(OBJ_DEBUGUNIX) $(DEP_DEBUGUNIX)
 	$(LD) $(LIBDIR_DEBUGUNIX) -o $(OUT_DEBUGUNIX) $(OBJ_DEBUGUNIX)  $(LDFLAGS_DEBUGUNIX) $(LIB_DEBUGUNIX)
-
-$(OBJDIR_DEBUGUNIX)/src/scripting/scripting_game.o: src/scripting/scripting_game.cpp
-	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/scripting/scripting_game.cpp -o $(OBJDIR_DEBUGUNIX)/src/scripting/scripting_game.o
 
 $(OBJDIR_DEBUGUNIX)/src/scripting/scripting.o: src/scripting/scripting.cpp
 	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/scripting/scripting.cpp -o $(OBJDIR_DEBUGUNIX)/src/scripting/scripting.o
@@ -153,8 +150,8 @@ $(OBJDIR_DEBUGUNIX)/src/views/default.o: src/views/default.cpp
 $(OBJDIR_DEBUGUNIX)/src/views/creatures.o: src/views/creatures.cpp
 	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/views/creatures.cpp -o $(OBJDIR_DEBUGUNIX)/src/views/creatures.o
 
-$(OBJDIR_DEBUGUNIX)/src/bag/bag.o: src/bag/bag.cpp
-	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/bag/bag.cpp -o $(OBJDIR_DEBUGUNIX)/src/bag/bag.o
+$(OBJDIR_DEBUGUNIX)/src/scripting/scripting_game.o: src/scripting/scripting_game.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/scripting/scripting_game.cpp -o $(OBJDIR_DEBUGUNIX)/src/scripting/scripting_game.o
 
 $(OBJDIR_DEBUGUNIX)/src/abstract/types_table.o: src/abstract/types_table.cpp
 	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/types_table.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/types_table.o
@@ -167,6 +164,9 @@ $(OBJDIR_DEBUGUNIX)/src/abstract/point.o: src/abstract/point.cpp
 
 $(OBJDIR_DEBUGUNIX)/src/abstract/musicplayer.o: src/abstract/musicplayer.cpp
 	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/musicplayer.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/musicplayer.o
+
+$(OBJDIR_DEBUGUNIX)/src/abstract/gameDataLoader.o: src/abstract/gameDataLoader.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/gameDataLoader.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/gameDataLoader.o
 
 $(OBJDIR_DEBUGUNIX)/src/abstract/functions.o: src/abstract/functions.cpp
 	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/abstract/functions.cpp -o $(OBJDIR_DEBUGUNIX)/src/abstract/functions.o
@@ -219,6 +219,9 @@ $(OBJDIR_DEBUGUNIX)/src/bag/pockets/objects/object.o: src/bag/pockets/objects/ob
 $(OBJDIR_DEBUGUNIX)/src/bag/objectstable.o: src/bag/objectstable.cpp
 	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/bag/objectstable.cpp -o $(OBJDIR_DEBUGUNIX)/src/bag/objectstable.o
 
+$(OBJDIR_DEBUGUNIX)/src/bag/bag.o: src/bag/bag.cpp
+	$(CXX) $(CFLAGS_DEBUGUNIX) $(INC_DEBUGUNIX) -c src/bag/bag.cpp -o $(OBJDIR_DEBUGUNIX)/src/bag/bag.o
+
 clean_debugunix: 
 	rm -f $(OBJ_DEBUGUNIX) $(OUT_DEBUGUNIX)
 
@@ -233,13 +236,13 @@ before_releaseunix:
 	test -d $(OBJDIR_RELEASEUNIX)/src || mkdir -p $(OBJDIR_RELEASEUNIX)/src
 	test -d $(OBJDIR_RELEASEUNIX)/src/views || mkdir -p $(OBJDIR_RELEASEUNIX)/src/views
 	test -d $(OBJDIR_RELEASEUNIX)/src/views/huds || mkdir -p $(OBJDIR_RELEASEUNIX)/src/views/huds
-	test -d $(OBJDIR_RELEASEUNIX)/src/bag || mkdir -p $(OBJDIR_RELEASEUNIX)/src/bag
 	test -d $(OBJDIR_RELEASEUNIX)/src/abstract || mkdir -p $(OBJDIR_RELEASEUNIX)/src/abstract
 	test -d $(OBJDIR_RELEASEUNIX) || mkdir -p $(OBJDIR_RELEASEUNIX)
 	test -d $(OBJDIR_RELEASEUNIX)/src/entities || mkdir -p $(OBJDIR_RELEASEUNIX)/src/entities
 	test -d $(OBJDIR_RELEASEUNIX)/src/entities/effects || mkdir -p $(OBJDIR_RELEASEUNIX)/src/entities/effects
 	test -d $(OBJDIR_RELEASEUNIX)/src/bag/pockets || mkdir -p $(OBJDIR_RELEASEUNIX)/src/bag/pockets
 	test -d $(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects || mkdir -p $(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects
+	test -d $(OBJDIR_RELEASEUNIX)/src/bag || mkdir -p $(OBJDIR_RELEASEUNIX)/src/bag
 
 after_releaseunix: 
 
@@ -249,9 +252,6 @@ releaseunix: before_build build_releaseunix after_build
 
 out_releaseunix: before_releaseunix $(OBJ_RELEASEUNIX) $(DEP_RELEASEUNIX)
 	$(LD) $(LIBDIR_RELEASEUNIX) -o $(OUT_RELEASEUNIX) $(OBJ_RELEASEUNIX)  $(LDFLAGS_RELEASEUNIX) $(LIB_RELEASEUNIX)
-
-$(OBJDIR_RELEASEUNIX)/src/scripting/scripting_game.o: src/scripting/scripting_game.cpp
-	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/scripting/scripting_game.cpp -o $(OBJDIR_RELEASEUNIX)/src/scripting/scripting_game.o
 
 $(OBJDIR_RELEASEUNIX)/src/scripting/scripting.o: src/scripting/scripting.cpp
 	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/scripting/scripting.cpp -o $(OBJDIR_RELEASEUNIX)/src/scripting/scripting.o
@@ -319,8 +319,8 @@ $(OBJDIR_RELEASEUNIX)/src/views/default.o: src/views/default.cpp
 $(OBJDIR_RELEASEUNIX)/src/views/creatures.o: src/views/creatures.cpp
 	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/views/creatures.cpp -o $(OBJDIR_RELEASEUNIX)/src/views/creatures.o
 
-$(OBJDIR_RELEASEUNIX)/src/bag/bag.o: src/bag/bag.cpp
-	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/bag/bag.cpp -o $(OBJDIR_RELEASEUNIX)/src/bag/bag.o
+$(OBJDIR_RELEASEUNIX)/src/scripting/scripting_game.o: src/scripting/scripting_game.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/scripting/scripting_game.cpp -o $(OBJDIR_RELEASEUNIX)/src/scripting/scripting_game.o
 
 $(OBJDIR_RELEASEUNIX)/src/abstract/types_table.o: src/abstract/types_table.cpp
 	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/types_table.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/types_table.o
@@ -333,6 +333,9 @@ $(OBJDIR_RELEASEUNIX)/src/abstract/point.o: src/abstract/point.cpp
 
 $(OBJDIR_RELEASEUNIX)/src/abstract/musicplayer.o: src/abstract/musicplayer.cpp
 	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/musicplayer.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/musicplayer.o
+
+$(OBJDIR_RELEASEUNIX)/src/abstract/gameDataLoader.o: src/abstract/gameDataLoader.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/gameDataLoader.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/gameDataLoader.o
 
 $(OBJDIR_RELEASEUNIX)/src/abstract/functions.o: src/abstract/functions.cpp
 	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/abstract/functions.cpp -o $(OBJDIR_RELEASEUNIX)/src/abstract/functions.o
@@ -384,6 +387,9 @@ $(OBJDIR_RELEASEUNIX)/src/bag/pockets/objects/object.o: src/bag/pockets/objects/
 
 $(OBJDIR_RELEASEUNIX)/src/bag/objectstable.o: src/bag/objectstable.cpp
 	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/bag/objectstable.cpp -o $(OBJDIR_RELEASEUNIX)/src/bag/objectstable.o
+
+$(OBJDIR_RELEASEUNIX)/src/bag/bag.o: src/bag/bag.cpp
+	$(CXX) $(CFLAGS_RELEASEUNIX) $(INC_RELEASEUNIX) -c src/bag/bag.cpp -o $(OBJDIR_RELEASEUNIX)/src/bag/bag.o
 
 clean_releaseunix: 
 	rm -f $(OBJ_RELEASEUNIX) $(OUT_RELEASEUNIX)

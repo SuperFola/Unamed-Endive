@@ -30,7 +30,7 @@ bool DexView::load()
     this->sprites[this->BCKG].setPosition(20.0f, 20.0f);
 
     // texts
-    if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
+    if (!this->font.loadFromFile(FONTPATH))
         return false;
     this->text.setFont(this->font);
     this->text.setString("Dexeur");

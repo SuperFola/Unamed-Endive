@@ -12,6 +12,14 @@ changeBlockAttribute
 --------------------
 To change attributes of a specified block on the current map
 
+countCreaturesInEquip
+---------------------
+Return how many creatures has the player in his/her equip
+
+countCreaturesInPC
+------------------
+Return how many creatures has the player in his/her PC
+
 createGlobal
 ------------
 Create a global value from a given id (of type char*), with a specified value (int, float and char* are currently supported)
@@ -19,6 +27,10 @@ Create a global value from a given id (of type char*), with a specified value (i
 createPNJ
 ---------
 Create a PNJ (refer to the wiki to learn more about the PNJkind)
+
+createText
+----------
+Create a text at (x, y) of a number of characters/lines given, with the text of a font size, and a color given, the whole thing having a string id given
 
 displayImage
 ------------
@@ -64,6 +76,10 @@ getPlayerName
 -------------
 Return the name of the player
 
+giveObject
+----------
+Give an object to the player. Need the id of the object, the quantity to give, and in which pocket (id) it will be put
+
 hasActiveHud
 ------------
 Check if a view, with a given id, has currently an active HUD
@@ -82,11 +98,15 @@ Start a song from its name
 
 registerScript
 --------------
-Register a script in the PyScripting singleton, as a specific kind given as an argument, with an id also given
+Register a script in the PyScripting singleton, as a specific kind given as an argument, with a string id also given
 
 screenshot
 ----------
 Take a screenshot and save it to screenshots/. Return the name of the file
+
+setCurrentView
+--------------
+Set the current view. Take the id of the new view
 
 stopMusic
 ---------
@@ -96,6 +116,14 @@ tpPlayerOn
 ----------
 Take two integers (x, y). Will teleport the player on this position, on the current map
 
+turnPlayer
+----------
+Turn the player in the specified direction. 0: up, 1: down, 2: left, 3: right
+
 upr
 ---
 Print function using std::cout
+
+writeText
+---------
+Write a text, giving the id of a created text

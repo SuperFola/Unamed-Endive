@@ -10,6 +10,8 @@ import ast, socket, hashlib
 # game stuff                                                                  #
 ###############################################################################
 
+oprint = print
+print = lambda *args, **kw: oprint("PY>", *args, **kw)
 include = lambda n: __import__("assets/scripts/" + n)
 sha256 = lambda w: hashlib.sha256(w.encode()).hexdigest()
 playername = Unamed.getPlayerName()
@@ -18,7 +20,7 @@ playername = Unamed.getPlayerName()
 PRGS_SAVING_PATH = "saves/" + playername + "/progess"
 SWITCHS_SAVING_PATH = "saves/" + playername + "/switchs"
 VARS_SAVING_PATH = "saves/" + playername + "/vars"
-keys_ev_code = ast.literal_eval(open("assets/scripts/keysevents.json").read())
+keys_ev_code = ast.literal_eval(open("assets/scripts/data/keysevents.json").read())
 PNJkind = {"normal": 0, "special": 1, "system": 2}
 BUFFER = 2 ** 10
 HOST, PORT = "", 0
@@ -27,8 +29,8 @@ HOST, PORT = "", 0
 # useful if you want to create an event at a specific moment of the game
 #     see events-defining.md (at root top) to know how it is working
 _progress = {}
-_switchs = {}  # TODO : create switchs or load them from file
-_vars = {}     # TODO : same
+_switchs = {}
+_vars = {}
 
 # socket for the network
 sock = None
@@ -67,7 +69,7 @@ def save_stuff():
 # function to trigger an event from the C++ code
 def trigger_event(mid, x, y, triggtype):
     global _progress
-    print("PY> trying to trigger an event on map id", mid, ", x", x, ", y", y, ", triggtype", triggtype)
+    print("trying to trigger an event on map id", mid, ", x", x, ", y", y, ", triggtype", triggtype)
     ev_onmap = _progress.get(mid, {})
     if ev_onmap and ((x, y) in ev_onmap.keys() or triggtype == "autorun"):
         # triggering the autorun events
@@ -93,8 +95,8 @@ def netconnect(h, p, proto="TCP"):
 # handle the errors about the network
 def nethandle_error(func, *args):
     try: return func(*args)
-    except socket.gaierror as sge: print("PY>", sge)
-    except ConnectionResetError as cre: print("PY> Socket not opened")
+    except socket.gaierror as sge: print(sge)
+    except ConnectionResetError as cre: print("Socket not opened")
 
 # function to send messages through network
 def netsend(message, proto="TCP"):
@@ -110,17 +112,17 @@ def netrecv():
     return str(r)
 
 # scripts only for the game do not modify/delete them
-Unamed.registerScript("runOnceWhenClosing", "closing.py")
 Unamed.registerScript("runOnceWhenStarting", "doc_extract.py")
 Unamed.registerScript("runOnceWhenStarting", "addpnjs.py")
+Unamed.registerScript("runOnceWhenStarting", "textures.py")
 Unamed.registerScript("runWhenUpdatingGame", "ev_checking.py")
+Unamed.registerScript("runOnceWhenClosing", "closing.py")
 
 ###############################################################################
 # your own scripts here                                                       #
 ###############################################################################
 
-Unamed.registerScript("runOnceWhenStarting", "img_loader.py")
-Unamed.registerScript("runWhenProcessingEvents", "script.py")
+Unamed.registerScript("runWhenRenderingView", "script.py")
 
 ###############################################################################
 # functions that need to be execute after everything has been loaded          #
@@ -128,7 +130,6 @@ Unamed.registerScript("runWhenProcessingEvents", "script.py")
 
 load_stuff()
 
-print("PY> cwd", os.getcwd())
-print("PY> PYTHONHOME", os.environ.get("PYTHONHOME"))
-print("PY> HOME", os.environ.get("HOME"))
-
+print("cwd", os.getcwd())
+print("PYTHONHOME", os.environ.get("PYTHONHOME"))
+print("HOME", os.environ.get("HOME"))

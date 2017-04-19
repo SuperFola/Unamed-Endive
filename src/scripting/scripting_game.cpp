@@ -36,8 +36,11 @@ int PyScripting::loadImage(const char* name, const char* id)
  {
      std::string tid = std::string(id);
 
-    instance.sprites[tid].setPosition(x, y);
-    instance.window->draw(instance.sprites[tid]);
+    if (instance.sprites.find(tid) != instance.sprites.end())
+    {
+        instance.sprites[tid].setPosition(x, y);
+        instance.window->draw(instance.sprites[tid]);
+    }
 
     return 0;
  }
@@ -46,9 +49,12 @@ int PyScripting::loadImage(const char* name, const char* id)
  {
      std::string tid = std::string(id);
 
-    sf::Vector2f p2 = instance.window->mapPixelToCoords(sf::Vector2i(x, y));
-    instance.sprites[tid].setPosition(p2);
-    instance.window->draw(instance.sprites[tid]);
+    if (instance.sprites.find(tid) != instance.sprites.end())
+    {
+        sf::Vector2f p2 = instance.window->mapPixelToCoords(sf::Vector2i(x, y));
+        instance.sprites[tid].setPosition(p2);
+        instance.window->draw(instance.sprites[tid]);
+    }
 
     return 0;
  }
@@ -256,4 +262,68 @@ std::string PyScripting::sha256crypt(const char* word)
 {
     std::string n = std::string(PyScripting::run_code_and_get_out(("upr(sha256('" + std::string(word)+ "'))").c_str()));
     return n.substr(1, n.size() - 2);
+}
+
+void PyScripting::setCurrentView(int vid)
+{
+    instance.sm->change_view(vid);
+}
+
+int PyScripting::countCreaturesInEquip()
+{
+    return instance.player->getEquip()->getSize();
+}
+
+int PyScripting::countCreaturesInPC()
+{
+    return instance.player->getPC()->getSize();
+}
+
+void PyScripting::giveObject(int id, int qu, int pocket)
+{
+    instance.player->getBag()->getPocket(pocket)->add_object(id, qu);
+}
+
+void PyScripting::turnPlayer(int dir)
+{
+    instance.player->setDir(static_cast<DIRECTION>(dir));
+}
+
+void PyScripting::createText(int x, int y, int words, const char* text, int fs, int color, const char* id)
+{
+    int r = 0, g = 0, b = 0;
+    sf::Text ntext;
+    ntext.setFont(instance.font);
+
+    r = (color & 0xff0000) >> 16;
+    g = (color & 0x00ff00) >> 8;
+    b = (color & 0x0000ff);
+
+    ntext.setFillColor(sf::Color(r, g, b));
+    ntext.setString(wrapText(sf::String(text), words, instance.font, fs));
+    ntext.setCharacterSize(fs);
+    ntext.setPosition(x, y);
+
+    instance.texts.add(std::string(id), ntext);
+}
+
+void PyScripting::writeText(const char* id)
+{
+    if (instance.texts.contains(std::string(id)))
+    {
+        if (instance.sm->getId() == DEFAULT_VIEW_ID)
+        {
+            sf::Vector2f n;
+            n.x = instance.texts.get(std::string(id)).getPosition().x;
+            n.y = instance.texts.get(std::string(id)).getPosition().y;
+
+            sf::Vector2f p2 = instance.window->mapPixelToCoords(sf::Vector2i(instance.texts.get(std::string(id)).getPosition()));
+            instance.texts.get(std::string(id)).setPosition(p2);
+
+            instance.window->draw(instance.texts.get(std::string(id)));
+            instance.texts.get(std::string(id)).setPosition(n);
+        }
+        else
+            instance.window->draw(instance.texts.get(std::string(id)));
+    }
 }

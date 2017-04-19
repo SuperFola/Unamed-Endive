@@ -55,7 +55,7 @@ bool CreaView::load()
     this->sprites[this->BTN_CREA].setPosition(238.0f, 10.0f);
 
     // texts
-    if (!this->font.loadFromFile("assets/fonts/pkmnemn.ttf"))
+    if (!this->font.loadFromFile(FONTPATH))
         return false;
 
     this->cnam.setFont(this->font);

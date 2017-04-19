@@ -54,7 +54,7 @@ void PNJ::_load()
     this->bckg_speak = sf::Sprite(this->textures.get("bubble"));
     this->bckg_speak.setPosition(WIN_W / 2 - 310, WIN_H - 100 - 10);
 
-    this->font.loadFromFile("assets/fonts/pkmnemn.ttf");
+    this->font.loadFromFile(FONTPATH);
 
     this->render_text.setFont(this->font);
     this->render_text.setCharacterSize(24);
