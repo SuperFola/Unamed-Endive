@@ -14,6 +14,7 @@
 #include "abstract/container.hpp"
 #include "objects/messenger.hpp"
 #include "network/network.hpp"
+#include "abstract/defines.hpp"
 
 class Game {
 private:

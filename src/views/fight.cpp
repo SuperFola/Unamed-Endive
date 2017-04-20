@@ -11,6 +11,10 @@
 FightView::FightView() :
     View(FIGHT_VIEW_ID)
     , env(FightEnv::Forest)
+    , __c(0)
+    , __selected(-1)
+    , selectingcrea(false)
+    , selectingadv(true)
 {
 
 }
@@ -81,19 +85,13 @@ bool FightView::load()
     if (!this->font.loadFromFile(FONTPATH))
         return false;
 
-    this->action.setFont(this->font);
-    this->action.setFillColor(sf::Color::Black);
-    this->action.setCharacterSize(24);
+    setupFont(this->action, this->font, sf::Color::Black, 24)
     this->action.setPosition(5.0f, WIN_H - 155.0f);
     this->action.setString("Ceci est un message d'action");
 
-    this->ennemy.setFont(this->font);
-    this->ennemy.setFillColor(sf::Color::Black);
-    this->ennemy.setCharacterSize(24);
+    setupFont(this->ennemy, this->font, sf::Color::Black, 24)
 
-    this->me.setFont(this->font);
-    this->me.setFillColor(sf::Color::Black);
-    this->me.setCharacterSize(24);
+    setupFont(this->me, this->font, sf::Color::Black, 24)
 
     return true;
 }
@@ -135,6 +133,19 @@ void FightView::render(sf::RenderWindow& window)
     window.draw(this->action);
     window.draw(this->ennemy);
     window.draw(this->me);
+
+    if (this->selectingcrea)
+    {
+        // draw interface to select a crea
+        if (this->selectingadv)
+        {
+            //
+        }
+        else
+        {
+            //
+        }
+    }
 }
 
 int FightView::process_event(sf::Event& event, sf::Time elapsed)
@@ -155,23 +166,42 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            if (__Y >= 490 + 75 && __Y <= 490 + 125)
+            if (!this->selectingcrea)
             {
-                if (__X >= 5 && __X <= 157)
+                if (__Y >= 490 + 75 && __Y <= 490 + 125)
                 {
-                    // attack button
+                    if (__X >= 5 && __X <= 157)
+                    {
+                        // attack button
+                    }
+                    else if (__X >= 164 && __X <= 316)
+                    {
+                        // equip button
+                    }
+                    else if (__X >= 323 && __X <= 475)
+                    {
+                        // bag button
+                    }
+                    else if (__X >= 480 && __X <= 632)
+                    {
+                        // fly away button
+                    }
                 }
-                else if (__X >= 164 && __X <= 316)
+            }
+            else
+            {
+                // handle clic in
+                if (__X >= X_TEXT_SELCREA_UI && __X <= MX_TEXT_SELCREA_UI)
                 {
-                    // equip button
-                }
-                else if (__X >= 323 && __X <= 475)
-                {
-                    // bag button
-                }
-                else if (__X >= 480 && __X <= 632)
-                {
-                    // fly away button
+                    if (__Y >= Y_TEXT_SELCREA_UI && __Y <= MY_TEXT_SELCREA_UI)
+                    {
+                        this->__selected = (__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI;
+                        int m = (this->selectingadv) ? this->adv.size() : this->equip->getSize();
+                        if (this->__selected >= 0 && this->__selected < m)
+                            this->selectingcrea = false;
+                        else
+                            this->__selected = -1;
+                    }
                 }
             }
             break;
@@ -196,7 +226,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         switch (OMessenger::get().type)
         {
         case ObjType::capture:
-            c = OMessenger::get().value;
+            this->__c = OMessenger::get().value;
             break;
 
         default:
@@ -204,16 +234,32 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             DebugLog(SH_WARN, "We land here but we should'nt. What type of object is it ? => " << OMessenger::get().type);
             break;
         }
-        if (c)
+
+        this->selectingcrea = true;
+        this->selectingadv = true;
+
+        if (this->__c && this->__selected != -1)
         {
             OMessenger::empty();
             std::mt19937 rng;
             rng.seed(std::random_device()());
             std::uniform_int_distribution<std::mt19937::result_type> distgotit(0, 100);
-            if (distgotit(rng) >= c)
+            if (distgotit(rng) >= this->__c)
             {
                 // we got the creature let's register it
+                this->dex->register_capture(this->adv[this->__selected]->getId());
+                if (!this->equip->add_creature(this->adv[this->__selected]))
+                {
+                    this->pc->add_creature(this->adv[this->__selected]);
+                    this->action.setString("La créature a été envoyée au PC");
+                }
+                else
+                    this->action.setString("La créature a été ajoutée à l'équipe !");
             }
+            else
+                this->action.setString("La créature n'a pas pu être attrapée ...");
+            this->__c = 0;
+            this->__selected = -1;
         }
     }
 }
@@ -247,12 +293,27 @@ void FightView::set_pc(Equip* pc)
     this->pc = pc;
 }
 
+void FightView::set_crealoader(CreaturesLoader* creal)
+{
+    this->crealoder = creal;
+}
+
 void FightView::start()
 {
+    this->adv.clear();
+
     // generate adv
     float moy_equip = 0.0f;
     for (int i=0; i < this->equip->getSize(); i++)
+    {
+        sf::Text _t;
+        setupFont(_t, this->font, sf::Color::Black, 24)
+        _t.setString(this->equip->getCrea(i)->getName());
+        _t.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
+        this->texts.add(this->equip->getCrea(i)->getName(), _t);
+
         moy_equip += this->equip->getCrea(i)->getLevel();
+    }
     moy_equip /= float(this->equip->getSize());
 
     std::mt19937 rng;
@@ -261,7 +322,7 @@ void FightView::start()
     int _x_ = dist1(rng);
     std::uniform_int_distribution<std::mt19937::result_type> dist2(_x_, _x_ + 4);
     std::uniform_int_distribution<std::mt19937::result_type> distid(0, this->dex->getMaxId());
-    std::uniform_int_distribution<std::mt19937::result_type> diststype(0, SortilegeType::Count);
+    std::uniform_int_distribution<std::mt19937::result_type> diststype(0, SortilegeType::Count - 1);
     std::uniform_int_distribution<std::mt19937::result_type> distcd(3, 6);
     std::uniform_int_distribution<std::mt19937::result_type> disttargets(2, this->equip->getSize());
 
@@ -288,6 +349,12 @@ void FightView::start()
 
         crea->load(id, t, atk, def, life, life, pp, pp, this->dex->getName(id), s, level, exp, st, sdmg, scd, stargets);
         this->adv.push_back(crea);
+
+        sf::Text _t;
+        setupFont(_t, this->font, sf::Color::Black, 24)
+        _t.setString(this->dex->getName(id));
+        _t.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
+        this->texts.add(this->dex->getName(id), _t);
     }
 
     this->encounter();

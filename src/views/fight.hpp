@@ -11,12 +11,21 @@
 #include "../objects/dex.hpp"
 #include "../entities/creature.hpp"
 #include "../abstract/equip.hpp"
+#include "../abstract/creatures_loader.hpp"
+#include "../abstract/defines.hpp"
+
+#define X_TEXT_SELCREA_UI 200
+#define MX_TEXT_SELCREA_UI 400
+#define Y_TEXT_SELCREA_UI 200
+#define MY_TEXT_SELCREA_UI 400
+#define YS_TEXT_SELCREA_UI 30
 
 class FightView : public View
 {
 private:
     Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
+    Container<sf::Text> texts;
     std::vector<Creature*> adv;
     sf::Font font;
     sf::Text action;
@@ -26,6 +35,11 @@ private:
     Dex* dex;
     Equip* equip;
     Equip* pc;
+    CreaturesLoader* crealoder;
+    int __c;
+    int __selected;
+    bool selectingcrea;
+    bool selectingadv;
 
     const std::string BKG1 = "bkg1";
     const std::string BKG2 = "bkg2";
@@ -48,6 +62,7 @@ public:
     void set_dex(Dex*);
     void set_equip(Equip*);
     void set_pc(Equip*);
+    void set_crealoader(CreaturesLoader*);
     void start();
 };
 

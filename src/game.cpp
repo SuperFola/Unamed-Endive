@@ -702,36 +702,25 @@ Game::Game() :
         DebugLog(SH_ERR, "Missing font at " << FONTPATH);
 
     // texts
-    this->loading_text.setFont(this->font);
+    setupFont(this->loading_text, this->font, sf::Color::White, 24)
     this->loading_text.setString("Chargement ...");
-    this->loading_text.setCharacterSize(24);
     this->loading_text.setPosition(5.0f, 5.0f);
 
-    this->cmd.setFont(this->font);
-    this->cmd.setCharacterSize(24);
+    setupFont(this->cmd, this->font, sf::Color::White, 24)
     this->cmd.setPosition(10.0f, 10.0f);
-    this->cmd.setFillColor(sf::Color::White);
 
-    this->menu_user.setFont(this->font);
-    this->menu_user.setCharacterSize(24);
+    setupFont(this->menu_user, this->font, sf::Color::White, 24)
     this->menu_user.setPosition(0.0f, WIN_H / 2.0f - 72.0f);
-    this->menu_user.setFillColor(sf::Color::White);
 
-    this->menu_text.setFont(this->font);
-    this->menu_text.setCharacterSize(24);
+    setupFont(this->menu_text, this->font, sf::Color::White, 24)
     this->menu_text.setPosition(WIN_W / 2.0f - 100.0f, 0.0f);
-    this->menu_text.setFillColor(sf::Color::White);
 
-    this->menu_ask_user.setFont(this->font);
-    this->menu_ask_user.setCharacterSize(24);
+    setupFont(this->menu_ask_user, this->font, sf::Color::White, 24)
     this->menu_ask_user.setString("Quel est votre nom ?");
     this->menu_ask_user.setPosition(WIN_W / 2.0f - this->menu_ask_user.getLocalBounds().width / 2.0f, WIN_H / 2.0f - 100.0f);
-    this->menu_ask_user.setFillColor(sf::Color::White);
 
-    this->cursor.setFont(this->font);
-    this->cursor.setCharacterSize(24);
+    setupFont(this->cursor, this->font, sf::Color::White, 24)
     this->cursor.setString("_");
-    this->cursor.setFillColor(sf::Color::White);
     this->cursor.setPosition(0.0f, WIN_H / 2.0f - 72.0f);
 
     this->blink = false;
@@ -765,6 +754,7 @@ void Game::post_load()
     this->sm.getFight()->set_dex(this->sm.getDefault()->getCharacter()->getDex());
     this->sm.getFight()->set_equip(this->sm.getDefault()->getCharacter()->getEquip());
     this->sm.getFight()->set_pc(this->sm.getDefault()->getCharacter()->getPC());
+    this->sm.getFight()->set_crealoader(&this->crea_load);
 
     // scripting
     PyScripting::setWindow(&this->window);
