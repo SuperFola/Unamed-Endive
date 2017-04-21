@@ -3,6 +3,7 @@
 #include "../../debug.hpp"
 
 #include "reader.hpp"
+#include "../abstract/defines.hpp"
 
 MapReader::MapReader() :
     selected(-1)
@@ -26,9 +27,8 @@ bool MapReader::load()
 
     if (!this->font.loadFromFile(FONTPATH))
         return false;
-    this->text.setFont(this->font);
-    this->text.setFillColor(sf::Color::Black);
-    this->text.setCharacterSize(20);
+
+    setupFont(this->text, this->font, sf::Color::Black, 20)
     this->text.setPosition(10, 5);
 
     if (!this->tileset.loadFromFile("assets/minimap.png"))

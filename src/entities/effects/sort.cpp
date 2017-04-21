@@ -90,7 +90,7 @@ void Sort::act(std::vector<Creature*>& board)
     case SortilegeType::MultipleUsHeal:
         break;
 
-    case SortilegeType::MultipleUsBuffCooldown:
+    case SortilegeType::MultipleUsHealStatus:
         break;
     }
 }

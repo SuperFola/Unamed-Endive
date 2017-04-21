@@ -2,6 +2,7 @@
 
 #include "dex.hpp"
 #include "../constants.hpp"
+#include "../abstract/defines.hpp"
 
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
@@ -32,10 +33,8 @@ bool DexView::load()
     // texts
     if (!this->font.loadFromFile(FONTPATH))
         return false;
-    this->text.setFont(this->font);
+    setupFont(this->text, this->font, sf::Color::Black, 24)
     this->text.setString("Dexeur");
-    this->text.setCharacterSize(24);
-    this->text.setFillColor(sf::Color::Black);
     this->text.setPosition(WIN_W / 2 - this->text.getGlobalBounds().width / 2, 30.0f);
 
     return true;
@@ -174,9 +173,7 @@ void DexView::load_dex_content()
             crea = this->dex->getInfo(current);
 
             sf::Text _text;
-            _text.setFont(this->font);
-            _text.setCharacterSize(20);
-            _text.setFillColor(sf::Color::Black);
+            setupFont(_text, this->font, sf::Color::Black, 20)
 
             sf::Sprite _sprite;
             _sprite.setTexture(this->crealoader->get(crea.file));

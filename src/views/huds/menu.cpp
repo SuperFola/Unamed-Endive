@@ -4,6 +4,7 @@
 
 #include "menu.hpp"
 #include "../../constants.hpp"
+#include "../../abstract/defines.hpp"
 
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
@@ -114,45 +115,33 @@ bool MenuHUD::load()
 
     // creating texts
     sf::Text crea;
-    crea.setFont(this->font);
+    setupFont(crea, this->font, sf::Color::Black, 24)
     crea.setString("Créatures");
-    crea.setCharacterSize(24);
-    crea.setFillColor(sf::Color::Black);
     this->texts[this->TXT_CREA] = crea;
 
     sf::Text invent;
-    invent.setFont(this->font);
+    setupFont(invent, this->font, sf::Color::Black, 24)
     invent.setString("Inventaire");
-    invent.setCharacterSize(24);
-    invent.setFillColor(sf::Color::Black);
     this->texts[this->TXT_INVENT] = invent;
 
     sf::Text carte;
-    carte.setFont(this->font);
+    setupFont(carte, this->font, sf::Color::Black, 24)
     carte.setString("Carte");
-    carte.setCharacterSize(24);
-    carte.setFillColor(sf::Color::Black);
     this->texts[this->TXT_MAP] = carte;
 
     sf::Text save;
-    save.setFont(this->font);
+    setupFont(save, this->font, sf::Color::Black, 24)
     save.setString("Sauvegarder");
-    save.setCharacterSize(24);
-    save.setFillColor(sf::Color::Black);
     this->texts[this->TXT_SAVE] = save;
 
     sf::Text dex;
-    dex.setFont(this->font);
+    setupFont(dex, this->font, sf::Color::Black, 24)
     dex.setString("Indexeur");
-    dex.setCharacterSize(24);
-    dex.setFillColor(sf::Color::Black);
     this->texts[this->TXT_DEX] = dex;
 
     sf::Text goback;
-    goback.setFont(this->font);
+    setupFont(goback, this->font, sf::Color::Black, 24)
     goback.setString("Retour");
-    goback.setCharacterSize(24);
-    goback.setFillColor(sf::Color::Black);
     this->texts[this->TXT_BACK] = goback;
 
     // setting pos (texts)

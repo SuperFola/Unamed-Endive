@@ -3,6 +3,7 @@
 
 #include "save.hpp"
 #include "../constants.hpp"
+#include "../abstract/defines.hpp"
 
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
@@ -32,9 +33,7 @@ bool SaveView::load()
     if (!this->font.loadFromFile(FONTPATH))
         return false;
 
-    this->text.setFont(this->font);
-    this->text.setFillColor(sf::Color::Black);
-    this->text.setCharacterSize(24);
+    setupFont(this->text, this->font, sf::Color::Black, 24)
     this->text.setString("Clique pour sauvegarder ta partie !");
     this->text.setPosition((WIN_W - this->text.getGlobalBounds().width) / 2, 275.0f);
 

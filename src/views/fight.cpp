@@ -306,11 +306,11 @@ void FightView::start()
     float moy_equip = 0.0f;
     for (int i=0; i < this->equip->getSize(); i++)
     {
-        sf::Text _t;
-        setupFont(_t, this->font, sf::Color::Black, 24)
-        _t.setString(this->equip->getCrea(i)->getName());
-        _t.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
-        this->texts.add(this->equip->getCrea(i)->getName(), _t);
+        sf::Text _t1;
+        setupFont(_t1, this->font, sf::Color::Black, 24)
+        _t1.setString(this->equip->getCrea(i)->getName());
+        _t1.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
+        this->texts.add(this->equip->getCrea(i)->getName(), _t1);
 
         moy_equip += this->equip->getCrea(i)->getLevel();
     }
@@ -350,11 +350,11 @@ void FightView::start()
         crea->load(id, t, atk, def, life, life, pp, pp, this->dex->getName(id), s, level, exp, st, sdmg, scd, stargets);
         this->adv.push_back(crea);
 
-        sf::Text _t;
-        setupFont(_t, this->font, sf::Color::Black, 24)
-        _t.setString(this->dex->getName(id));
-        _t.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
-        this->texts.add(this->dex->getName(id), _t);
+        sf::Text _t2;
+        setupFont(_t2, this->font, sf::Color::Black, 24)
+        _t2.setString(this->dex->getName(id));
+        _t2.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
+        this->texts.add(this->dex->getName(id), _t2);
     }
 
     this->encounter();

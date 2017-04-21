@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "inventory.hpp"
+#include "../abstract/defines.hpp"
 
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
@@ -104,27 +105,19 @@ bool InventView::load()
     if (!this->font.loadFromFile(FONTPATH))
         return false;
 
-    this->current_pocket_name.setFont(this->font);
+    setupFont(this->current_pocket_name, this->font, sf::Color::Black, 24)
     this->current_pocket_name.setString("Pocket");
-    this->current_pocket_name.setCharacterSize(24);
-    this->current_pocket_name.setFillColor(sf::Color::Black);
     this->current_pocket_name.setPosition(310.0f - this->current_pocket_name.getLocalBounds().width / 2.0f, 599.0f - this->current_pocket_name.getLocalBounds().height);
 
-    this->object_name.setFont(this->font);
+    setupFont(this->object_name, this->font, sf::Color::Black, 18)
     this->object_name.setString("object0");
-    this->object_name.setCharacterSize(18);
-    this->object_name.setFillColor(sf::Color::Black);
     this->object_name.setPosition(265.0f, 37.0f);
 
-    this->object_desc.setFont(this->font);
+    setupFont(this->object_desc, this->font, sf::Color::Black, 18)
     this->object_desc.setString("");
-    this->object_desc.setCharacterSize(18);
-    this->object_desc.setFillColor(sf::Color::Black);
     this->object_desc.setPosition(30.0f, 300.0f);
 
-    this->errmsg.setFont(this->font);
-    this->errmsg.setCharacterSize(24);
-    this->errmsg.setFillColor(sf::Color::Red);
+    setupFont(this->errmsg, this->font, sf::Color::Red, 24)
     this->errmsg.setPosition(0.0f, 6.0f);
 
     return true;

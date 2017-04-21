@@ -6,6 +6,7 @@
 
 #include "scripting.hpp"
 #include "../constants.hpp"
+#include "../abstract/defines.hpp"
 
 /** Definitions of the functions related to the game **/
 void PyScripting::setEvent(sf::Event& ev)
@@ -293,15 +294,13 @@ void PyScripting::createText(int x, int y, int words, const char* text, int fs, 
 {
     int r = 0, g = 0, b = 0;
     sf::Text ntext;
-    ntext.setFont(instance.font);
 
     r = (color & 0xff0000) >> 16;
     g = (color & 0x00ff00) >> 8;
     b = (color & 0x0000ff);
 
-    ntext.setFillColor(sf::Color(r, g, b));
+    setupFont(ntext, instance.font, sf::Color(r, g, b), fs)
     ntext.setString(wrapText(sf::String(text), words, instance.font, fs));
-    ntext.setCharacterSize(fs);
     ntext.setPosition(x, y);
 
     instance.texts.add(std::string(id), ntext);

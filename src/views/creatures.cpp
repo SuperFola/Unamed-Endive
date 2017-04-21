@@ -2,6 +2,7 @@
 
 #include "creatures.hpp"
 #include "../constants.hpp"
+#include "../abstract/defines.hpp"
 
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
@@ -58,51 +59,33 @@ bool CreaView::load()
     if (!this->font.loadFromFile(FONTPATH))
         return false;
 
-    this->cnam.setFont(this->font);
-    this->cnam.setFillColor(sf::Color::Black);
-    this->cnam.setCharacterSize(18);
+    setupFont(this->cnam, this->font, sf::Color::Black, 18)
     this->cnam.setPosition(388.0f, 155.0f);
 
-    this->clev.setFont(this->font);
-    this->clev.setFillColor(sf::Color::Black);
-    this->clev.setCharacterSize(24);
+    setupFont(this->clev, this->font, sf::Color::Black, 24)
     this->clev.setPosition(565.0f, 150.0f);
 
-    this->ctyp.setFont(this->font);
-    this->ctyp.setFillColor(sf::Color::Black);
-    this->ctyp.setCharacterSize(18);
+    setupFont(this->ctyp, this->font, sf::Color::Black, 18)
     this->ctyp.setPosition(428.0f, 342.0f);
 
-    this->csta.setFont(this->font);
-    this->csta.setFillColor(sf::Color::Black);
-    this->csta.setCharacterSize(18);
+    setupFont(this->csta, this->font, sf::Color::Black, 18)
     this->csta.setPosition(505.0f, 342.0f);
 
-    this->catk.setFont(this->font);
-    this->catk.setFillColor(sf::Color::Black);
-    this->catk.setCharacterSize(24);
+    setupFont(this->catk, this->font, sf::Color::Black, 24)
     this->catk.setPosition(423.0f, 380.0f);
 
-    this->cdef.setFont(this->font);
-    this->cdef.setFillColor(sf::Color::Black);
-    this->cdef.setCharacterSize(24);
+    setupFont(this->cdef, this->font, sf::Color::Black, 24)
     this->cdef.setPosition(423.0f, 427.0f);
 
-    this->clif.setFont(this->font);
-    this->clif.setFillColor(sf::Color::Black);
-    this->clif.setCharacterSize(24);
+    setupFont(this->clif, this->font, sf::Color::Black, 24)
     this->clif.setPosition(423.0f, 474.0f);
 
     this->cimg = sf::Sprite();
     this->cimg.setPosition(416.0f, 194.0f);
 
-    this->lsdata.setFont(this->font);
-    this->lsdata.setFillColor(sf::Color::White);
-    this->lsdata.setCharacterSize(20);
+    setupFont(this->lsdata, this->font, sf::Color::White, 20)
 
-    this->error_msg.setFont(this->font);
-    this->error_msg.setFillColor(sf::Color::Red);
-    this->error_msg.setCharacterSize(26);
+    setupFont(this->error_msg, this->font, sf::Color::Red, 26)
     this->error_msg.setPosition(0.0f, 106.0f);
 
     return true;
