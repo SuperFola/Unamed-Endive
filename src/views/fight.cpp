@@ -15,6 +15,8 @@ FightView::FightView() :
     , __selected(-1)
     , selectingcrea(false)
     , selectingadv(true)
+    , __count_before_flyaway(0)
+    , can_escape(true)
 {
 
 }
@@ -137,20 +139,28 @@ void FightView::render(sf::RenderWindow& window)
     if (this->selectingcrea)
     {
         // draw interface to select a crea
+        /// draw background
+
         if (this->selectingadv)
         {
-            //
+            for (int i=0; i < this->adv.size(); i++)
+            {
+                window.draw(this->texts.get(to_string<int>(i) + this->dex->getName(this->adv[i]->getId())));
+            }
         }
         else
         {
-            //
+            for (int i=0; i < this->equip->getSize(); i++)
+            {
+                window.draw(this->texts.get(to_string<int>(i) + this->equip->getCrea(i)->getName()));
+            }
         }
     }
 }
 
 int FightView::process_event(sf::Event& event, sf::Time elapsed)
 {
-    int new_view = -1;
+    int new_view = -1, m = 0;
 
     switch(event.type)
     {
@@ -170,21 +180,30 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
             {
                 if (__Y >= 490 + 75 && __Y <= 490 + 125)
                 {
-                    if (__X >= 5 && __X <= 157)
+                    /*if (__X >= 5 && __X <= 157)
                     {
                         // attack button
                     }
-                    else if (__X >= 164 && __X <= 316)
+                    else*/ if (__X >= 164 && __X <= 316)
                     {
                         // equip button
+                        new_view = MYCREATURES_VIEW_ID;
+                        OMessenger::setlock(MYCREATURES_VIEW_ID);
                     }
                     else if (__X >= 323 && __X <= 475)
                     {
                         // bag button
+                        new_view = INVENTORY_VIEW_ID;
+                        OMessenger::setlock(INVENTORY_VIEW_ID);
                     }
-                    else if (__X >= 480 && __X <= 632)
+                    else if (__X >= 480 && __X <= 632 && !this->__count_before_flyaway)
                     {
                         // fly away button
+                        this->__count_before_flyaway = 480;
+                        if (this->can_escape)
+                            this->action.setText("Vous vous échapez prestement ...");
+                        else
+                            this->action.setText("Vous ne pouvez pas vous échaper !");
                     }
                 }
             }
@@ -196,7 +215,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                     if (__Y >= Y_TEXT_SELCREA_UI && __Y <= MY_TEXT_SELCREA_UI)
                     {
                         this->__selected = (__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI;
-                        int m = (this->selectingadv) ? this->adv.size() : this->equip->getSize();
+                        m = (this->selectingadv) ? this->adv.size() : this->equip->getSize();
                         if (this->__selected >= 0 && this->__selected < m)
                             this->selectingcrea = false;
                         else
@@ -215,11 +234,22 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
         break;
     }
 
+    if (this->__count_before_flyaway == 1)
+    {
+        this->__count_before_flyaway = 0;
+        if (this->can_escape)
+            return DEFAULT_VIEW_ID;
+        else
+            return -1;
+    }
     return new_view;
 }
 
 void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
+    if (this->__count_before_flyaway)
+        this->__count_before_flyaway -= 1;
+
     if (OMessenger::get().target_view == this->getId())
     {
         int c = 0;
@@ -310,7 +340,7 @@ void FightView::start()
         setupFont(_t1, this->font, sf::Color::Black, 24)
         _t1.setString(this->equip->getCrea(i)->getName());
         _t1.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
-        this->texts.add(this->equip->getCrea(i)->getName(), _t1);
+        this->texts.add(to_string<int>(i) + this->equip->getCrea(i)->getName(), _t1);
 
         moy_equip += this->equip->getCrea(i)->getLevel();
     }
@@ -354,8 +384,13 @@ void FightView::start()
         setupFont(_t2, this->font, sf::Color::Black, 24)
         _t2.setString(this->dex->getName(id));
         _t2.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
-        this->texts.add(this->dex->getName(id), _t2);
+        this->texts.add(to_string<int>(i) + this->dex->getName(id), _t2);
     }
 
     this->encounter();
+}
+
+void FightView::set_escape(bool v)
+{
+    this->can_escape = v;
 }

@@ -186,17 +186,27 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
             else if (__X >= 29 && __X <= 81 && __Y >= 508 && __Y <= 560)
             {
                 // use
-                ObjUDD udd = this->bag->getPocket(this->current)->useObject(this->selected + this->offset);
-                if (udd.target_view != UNREACHABLE_VIEW_ID)
+                if ((ObjectsTable::getType(this->bag->getPocket(this->current)->getObject(this->selected + this->offset)) != ObjType::player && OMessenger::getLock() == this->getId()) ||
+                    OMessenger::getLock() != this->getId())
                 {
-                    // we can see what to do with that now
-                    OMessenger::set(udd);
+                    ObjUDD udd = this->bag->getPocket(this->current)->useObject(this->selected + this->offset);
+                    if (udd.target_view != UNREACHABLE_VIEW_ID)
+                    {
+                        // we can see what to do with that now
+                        OMessenger::set(udd);
+                    }
+                    else
+                    {
+                        // display error message
+                        this->errdisplay = 1;
+                        this->errmsg.setString("Impossible d'utiliser l'objet");
+                        this->errmsg.setPosition(WIN_W / 2.0f - this->errmsg.getGlobalBounds().width / 2.0f, this->errmsg.getPosition().y);
+                    }
                 }
                 else
                 {
-                    // display error message
                     this->errdisplay = 1;
-                    this->errmsg.setString("Impossible d'utiliser l'objet");
+                    this->errmsg.setString("Impossible d'utiliser l'objet, vous êtes en combat");
                     this->errmsg.setPosition(WIN_W / 2.0f - this->errmsg.getGlobalBounds().width / 2.0f, this->errmsg.getPosition().y);
                 }
             }

@@ -167,7 +167,7 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             {
                 // changing the "view" (pc/equip)
                 // we can't change the "view" if we are using an object
-                if (this->curobj["none"] == -1)
+                if (this->curobj["none"] == -1 && OMessenger::getLock() != this->getId())
                 {
                     this->displaying_crea = !this->displaying_crea;
                     this->offset = 0;
@@ -185,7 +185,7 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
             {
                 // transfering creature
                 // we can't transfert any creature if we are using an object
-                if (this->curobj["none"] == -1)
+                if (this->curobj["none"] == -1 && OMessenger::getLock() != this->getId())
                 {
                     this->send_to(this->selected);
                     this->selected -= 1;  // to avoid problem and always have a creature selected
@@ -195,7 +195,10 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
                 }
                 else
                 {
-                    this->error_msg.setString("Impossible de transférer une créature quand un objet\nest en cours d'utilisation");
+                    if (this->curobj["none"] != -1)
+                        this->error_msg.setString("Impossible de transférer une créature quand un objet\nest en cours d'utilisation");
+                    else if (OMessenger::getLock() == this->getId())
+                        this->error_msg.setString("Impossible de transférer une créature quand un combat\nest en cours");
                     this->err_duration = 10.0f;
                     this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
                 }

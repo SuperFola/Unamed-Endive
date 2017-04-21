@@ -40,6 +40,8 @@ private:
     int __selected;
     bool selectingcrea;
     bool selectingadv;
+    int __count_before_flyaway;
+    bool can_escape;
 
     const std::string BKG1 = "bkg1";
     const std::string BKG2 = "bkg2";
@@ -64,6 +66,7 @@ public:
     void set_pc(Equip*);
     void set_crealoader(CreaturesLoader*);
     void start();
+    void set_escape(bool);
 };
 
 #endif // DEF_FIGHT_VIEW

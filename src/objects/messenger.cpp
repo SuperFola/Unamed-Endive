@@ -27,3 +27,18 @@ void OMessenger::empty()
     instance.current.type = -1;
     instance.current.action = ObjAction::nothing;
 }
+
+void OMessenger::lock(int lo)
+{
+    instance.lock = lo;
+}
+
+void OMessenger::unlock()
+{
+    instance.lock = 0;
+}
+
+int OMessenger::getLock()
+{
+    return instance.lock;
+}
