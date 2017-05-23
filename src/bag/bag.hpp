@@ -18,6 +18,7 @@ private:
 
 public:
     Bag();
+    ~Bag();
     bool load(const std::string&);
     void add_pocket(Pocket*);
     Pocket* getPocket(int);

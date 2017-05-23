@@ -179,3 +179,8 @@ void Equip::save(const std::string& path)
     std::ofstream output(path);
     output << value;
 }
+
+Equip::~Equip()
+{
+    CLEAR_PTR_VECT(this->equip)
+}

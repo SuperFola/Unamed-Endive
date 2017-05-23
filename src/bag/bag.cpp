@@ -78,3 +78,8 @@ void Bag::save(const std::string& path)
     std::ofstream output(path);
     output << value;
 }
+
+Bag::~Bag()
+{
+    CLEAR_PTR_VECT(this->pockets)
+}

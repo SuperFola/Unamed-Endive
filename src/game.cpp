@@ -855,3 +855,8 @@ int Game::run()
     hell:
     return 0;
 }
+
+void Game::quit()
+{
+
+}

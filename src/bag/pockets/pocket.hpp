@@ -20,6 +20,7 @@ private:
 
 public:
     Pocket(const std::string&, bool default_one=false);
+    ~Pocket();
     bool load(Json::Value&);
     void add_object(Object*);
     void add_object(int, int);

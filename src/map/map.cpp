@@ -127,7 +127,11 @@ TypeTp Map::findTpOnCase(int rpos)
 int Map::load_map(std::string& map_path)
 {
     this->root.clear();
-    this->tmaps.clear();
+    CLEAR_PTR_VECT(this->tmaps)
+    for (auto& v: this->level)
+    {
+        CLEAR_PTR_VECT(v)
+    }
     this->level.clear();
     this->tp.clear();
 
@@ -214,4 +218,14 @@ void Map::setBlockAttrib(int rid, std::string identifier, bool value)
     {
         this->level[COLLIDING_LAYER][rid]->setSolid(value);
     }
+}
+
+Map::~Map()
+{
+    CLEAR_PTR_VECT(this->tmaps)
+    for (auto& v: this->level)
+    {
+        CLEAR_PTR_VECT(v)
+    }
+    this->level.clear();
 }

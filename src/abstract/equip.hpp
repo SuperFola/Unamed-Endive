@@ -21,6 +21,7 @@ private:
 public:
     // methods
     Equip();
+    ~Equip();
     bool load(const std::string&, bool pc=false);
     void save(const std::string&);
     bool add_creature(Creature*);

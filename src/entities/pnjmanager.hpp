@@ -15,6 +15,7 @@ private:
 
 public:
     PNJManager();
+    ~PNJManager();
     void add_pnj_on_map(int, const std::string&, const std::string&, PNJkind, const std::string&, int x=32, int y=32);
     int countPNJonMap(int);
     PNJ& getPNJonMap(int, int);

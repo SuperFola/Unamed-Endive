@@ -84,6 +84,7 @@ private:
 public:
     // methods
     Game();
+    void quit();
     int run();
 };
 

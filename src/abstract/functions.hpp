@@ -18,6 +18,9 @@
 #endif
 #include "../network/network.hpp"
 
+#define CLEAR_PTR_VECT(v) for(auto it=v.begin(); it != v.end(); ++it) {delete (*it);} v.clear();
+#define CLEAR_PTR_MAP(m) for(auto it=m.begin(); it != m.end(); ++it) {delete (m->second)} m.clear();
+
 template<typename T>
 T pop(std::vector<T>* obj, int i) {
     T element {};

@@ -59,3 +59,12 @@ int PNJManager::find_pnjid_at(int x, int y, int mid)
 
     return -1;
 }
+
+PNJManager::~PNJManager()
+{
+    for (auto& kv: this->pnjs)
+    {
+        CLEAR_PTR_VECT(kv.second)
+    }
+    this->pnjs.clear();
+}

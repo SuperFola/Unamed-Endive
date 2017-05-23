@@ -201,9 +201,9 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                         // fly away button
                         this->__count_before_flyaway = 480;
                         if (this->can_escape)
-                            this->action.setText("Vous vous échapez prestement ...");
+                            this->action.setString("Vous vous échapez prestement ...");
                         else
-                            this->action.setText("Vous ne pouvez pas vous échaper !");
+                            this->action.setString("Vous ne pouvez pas vous échaper !");
                     }
                 }
             }
@@ -393,4 +393,9 @@ void FightView::start()
 void FightView::set_escape(bool v)
 {
     this->can_escape = v;
+}
+
+FightView::~FightView()
+{
+    CLEAR_PTR_VECT(this->adv)
 }

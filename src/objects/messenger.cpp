@@ -28,7 +28,7 @@ void OMessenger::empty()
     instance.current.action = ObjAction::nothing;
 }
 
-void OMessenger::lock(int lo)
+void OMessenger::setlock(int lo)
 {
     instance.lock = lo;
 }
