@@ -54,10 +54,14 @@ autorun             parallel process    null
 ```
 
 action button => appuie sur une touche d'action (SPACE ou clic)         > fait (SPACE dans DefaultView)
+
 autorun => se lance quand on arrive sur la map de l'event               > fait (quand on change de map, dès le changement, dans Map)
+
 player touch => le joueur entre dans la case où il y a l'event          > fait (Character, quand on change de case seulement)
+
 parallel process => se lance automatiquement en laissant les autres     >
                     events tourner en parallèle
+
 event touch => ??                                                       >
 
 les event sont stockés par map et par case
