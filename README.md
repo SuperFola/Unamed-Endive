@@ -19,9 +19,9 @@ You will need to be patient to get out of the dungeons, and the best creatures p
 
 Requirements
 ============
-This game needs an up-to-date compiler for C++ and the SFML 2.3 to run correctly, if you want to install it from the source.
+This game needs an up-to-date compiler for C++ and the SFML 2.4 to run correctly, if you want to install it from the source.
 
-Ohterwise, you just have to download the latest release working on your platform and running the game !
+Otherwise, you just have to download the latest release working on your platform and run the game !
 
 Compiling the project
 =====================
@@ -29,6 +29,7 @@ If you want to compile the project, you will need to install the SFML lib and fo
 
 Credits
 =======
+* logo of the game : Izaliia
 * outside tiles : WesleyFG (at the beginning for project Marnian)
 * inside tiles : Slahs
 * graphical interface (inventory, dex, equip/PC) : vulvoch

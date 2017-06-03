@@ -16,6 +16,12 @@ branches:
   only:
   - master
 
+before_script:
+  - wget https://www.sfml-dev.org/files/SFML-2.4.2-linux-gcc-64-bit.tar.gz -O /tmp/sfml.tar.bz2
+  - tar -xjvf /tmp/sfml.tar.bz2
+  - sudo cp -r SFML-2.4/* /usr/
+  - sudo apt-get install -y libjpeg62-dev libsndfile1-dev libglew1.5 libglew1.5-dev libfreetype6 libjpeg-turbo8 libjpeg8 libopenal-data libopenal1  libxrandr2 libxrender1 libsoil1 
+
 before_install:
 - sudo apt-get update -qq
 
@@ -24,3 +30,6 @@ script:
 - g++-6 -v
 - make -f makefiles/make.unix
 - bin/DebugUnix/main
+
+notifications:
+- email: false
