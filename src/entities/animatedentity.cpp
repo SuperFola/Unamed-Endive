@@ -3,6 +3,8 @@
 
 #include "animatedentity.hpp"
 
+#define PLAYER_SPEED 3
+
 void AnimatedEntity::update_anim(sf::Time elapsed)
 {
     this->elapsed_mvt_time += elapsed;
@@ -71,8 +73,8 @@ AnimatedEntity::AnimatedEntity(int x, int y) :
     , state(ChState::idle)
     , anim_cursor(MvState::idle)
     , direction(DIRECTION::down)
-    , speed(1)
-    , defaultspeed(1)
+    , speed(PLAYER_SPEED)
+    , defaultspeed(PLAYER_SPEED)
     , frame_time(sf::seconds(0.043f))
 {
 }
@@ -143,7 +145,7 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
     this->not_moving_time = sf::seconds(0.0f);  // reset it
     this->update_anim(elapsed);
 
-    float speed = ((this->speed / 32.0f) * TILE_SIZE * 3.0f);
+    float speed = ((this->speed / float(this->_size)) * TILE_SIZE * 3.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
     std::vector<float> vect {0, 0};

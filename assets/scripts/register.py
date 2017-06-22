@@ -12,7 +12,26 @@ import ast, socket, hashlib
 
 oprint = print
 print = lambda *args, **kw: oprint("PY>", *args, **kw)
-include = lambda n: __import__("assets/scripts/" + n)
+
+class UnamedScript:
+    pass
+
+def include(filename):
+    f = open("assets/scripts/" + filename)
+    fc = f.read()
+    c = compile(fc + "\n", filename, "exec")
+    glo, loc, t = {}, {}, UnamedScript()
+    exec(c, glo, loc)
+    t.__dict__.update(glo)
+    t.__dict__.update(loc)
+    t.__dict__.update({
+        "unr_filename": filename,
+        "unr_file_length": len(fc),
+        "unr_file_content": fc
+    })
+    f.close()
+    return t
+
 sha256 = lambda w: hashlib.sha256(w.encode()).hexdigest()
 playername = Unamed.getPlayerName()
 
@@ -94,9 +113,12 @@ def netconnect(h, p, proto="TCP"):
 
 # handle the errors about the network
 def nethandle_error(func, *args):
-    try: return func(*args)
-    except socket.gaierror as sge: print(sge)
-    except ConnectionResetError as cre: print("Socket not opened")
+    try:
+        return func(*args)
+    except socket.gaierror as sge:
+        print(sge); return ""
+    except ConnectionResetError as cre:
+        print("Socket not opened"); return ""
 
 # function to send messages through network
 def netsend(message, proto="TCP"):

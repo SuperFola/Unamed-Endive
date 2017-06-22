@@ -32,9 +32,7 @@ if ev_onmap:
                 if ok == len(sws) and var:
                     # execute the commands, giving the global env
                     #    + the locals switchs used by the event
-                    for line in page["commands"]:
-                        eval(line, globals(), {"self_switch": data["local_switchs"]})
-                    
+                    eval(page["commands"], globals(), {"self_switch": data["local_switchs"]})
                     # we have found an executable page, so we stop searching for one
                     break
             

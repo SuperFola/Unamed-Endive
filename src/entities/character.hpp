@@ -25,6 +25,7 @@ enum class Sex {
 class Character : public AnimatedEntity {
 private:
     // variables
+    std::string folder;
     std::string name;
     Sex sex;
     Bag bag;
@@ -40,7 +41,7 @@ public:
     void chara_send_player_touch(Map&) override;
     bool pass_pnj(Map&, std::vector<float>) override;
     int save();
-    void setName(const std::string);
+    void setFolder(const std::string&);
     std::string getName();
     void _load() override;
     Bag* getBag();

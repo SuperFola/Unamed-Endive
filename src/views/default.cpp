@@ -31,11 +31,11 @@ DefaultView::DefaultView() :
 
 bool DefaultView::load() { return true; }
 
-bool DefaultView::load(sf::String playername)
+bool DefaultView::load(sf::String folder)
 {
-    if (is_file_existing("saves/" + playername.toAnsiString() + "/map.json"))
+    if (is_file_existing("saves/" + folder.toAnsiString() + "/map.json"))
     {
-        std::ifstream file("saves/" + playername.toAnsiString() + "/map.json");
+        std::ifstream file("saves/" + folder.toAnsiString() + "/map.json");
         Json::Value root;
         file >> root;
         this->level.setMapPath("assets/map/" + to_string<int>(root["id"].asInt()) + ".umd");
@@ -49,7 +49,7 @@ bool DefaultView::load(sf::String playername)
         return false;
     }
 
-    this->player.setName(playername.toAnsiString());
+    this->player.setFolder(folder.toAnsiString());
     if (!this->player.load())
     {
         DebugLog(SH_ERR, "An error occured while loading the player");
@@ -157,7 +157,7 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed, sf::RenderWin
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
-        case sf::Keyboard::E:
+        case sf::Keyboard::Escape:
             this->menu_hud.setTrigger(true);
             has_triggered_hud = true;
             break;

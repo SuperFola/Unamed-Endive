@@ -499,8 +499,10 @@ void Game::menu()
                         this->menu_userentry.erase(this->menu_userentry.getSize() - 1, 1);
                     else if (event.text.unicode == 13)  // validate
                         quit = true;
-                    else
+                    else if (this->menu_userentry.getSize() < 30)
+                    {
                         this->menu_userentry.insert(this->menu_userentry.getSize(), event.text.unicode);
+                    }
                     this->menu_user.setString(this->menu_userentry);
                 }
                 break;

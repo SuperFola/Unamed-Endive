@@ -7,6 +7,7 @@
 // public
 Character::Character(Sex sex_) :
     AnimatedEntity(16, 16)
+    , folder("")
     , name("Someone")
     , sex(sex_)
 {
@@ -64,9 +65,9 @@ void Character::chara_send_player_touch(Map& map_)
     }
 }
 
-void Character::setName(const std::string new_name)
+void Character::setFolder(const std::string& folder)
 {
-    this->name = new_name;
+    this->folder = folder;
 }
 
 std::string Character::getName()
@@ -76,17 +77,17 @@ std::string Character::getName()
 
 void Character::_load()
 {
-    DebugLog(SH_INFO, "creating \"saves/" << this->name << "\"");
-    PyScripting::run_code(("if not os.path.exists(\"saves/" + this->name + "\"): os.mkdir(\"saves/" + this->name + "\")").c_str());
+    DebugLog(SH_INFO, "creating \"saves/" << this->folder << "\"");
+    PyScripting::run_code(("if not os.path.exists(\"saves/" + this->folder + "\"): os.mkdir(\"saves/" + this->folder + "\")").c_str());
 
-    this->bag.load("saves/" + this->name + "/bag.json");
-    this->equip.load("saves/" + this->name + "/equip.json");
-    this->pc.load("saves/" + this->name + "/pc.json", true);
-    this->dex.load("saves/" + this->name + "/dex.json");
+    this->bag.load("saves/" + this->folder + "/bag.json");
+    this->equip.load("saves/" + this->folder + "/equip.json");
+    this->pc.load("saves/" + this->folder + "/pc.json", true);
+    this->dex.load("saves/" + this->folder + "/dex.json");
 
-    if (is_file_existing("saves/" + this->name + "/player.json"))
+    if (is_file_existing("saves/" + this->folder + "/player.json"))
     {
-        std::ifstream file("saves/" + this->name + "/player.json");
+        std::ifstream file("saves/" + this->folder + "/player.json");
         Json::Value root;
         file >> root;
 
@@ -94,6 +95,7 @@ void Character::_load()
         this->sex = static_cast<Sex>(root["sex"].asInt());
         this->path = root["asset"].asString();
         this->speed = root["speed"].asInt();
+        this->name = root["name"].asString();
     }
 
 }
@@ -101,10 +103,10 @@ void Character::_load()
 int Character::save()
 {
     // save to "saves/player_name/"
-    this->bag.save("saves/" + this->name + "/bag.json");
-    this->equip.save("saves/" + this->name + "/equip.json");
-    this->pc.save("saves/" + this->name + "/pc.json");
-    this->dex.save("saves/" + this->name + "/dex.json");
+    this->bag.save("saves/" + this->folder + "/bag.json");
+    this->equip.save("saves/" + this->folder + "/equip.json");
+    this->pc.save("saves/" + this->folder + "/pc.json");
+    this->dex.save("saves/" + this->folder + "/dex.json");
 
     Json::Value value;
     Json::Value pos;
@@ -114,8 +116,9 @@ int Character::save()
     value["asset"] = this->path;
     value["pos"] = pos;
     value["speed"] = this->speed;
+    value["name"] = this->name;
 
-    std::ofstream output("saves/" + this->name + "/player.json");
+    std::ofstream output("saves/" + this->folder + "/player.json");
     output << value;
 
     return 0;
