@@ -748,7 +748,7 @@ void Game::post_load()
     this->sm.getCrea()->add_dex(this->sm.getDefault()->getCharacter()->getDex());
     // we add the dex to the dex view from the player
     this->sm.getDex()->add_dex(this->sm.getDefault()->getCharacter()->getDex());
-    // we add a pointer on the creatures loader to the dex /!/
+    // we add a pointer on the creatures loader to the dex .|^!^|.
     this->sm.getDex()->add_crealoader(&this->crea_load);
     // pointer to sm to save
     this->sm.getSave()->setdefv(this->sm.getDefault());

@@ -68,6 +68,11 @@ bool FightView::load()
         return false;
     this->textures.add("lifebar", lifebar);
 
+    sf::Texture bkg_select;
+    if (!bkg_select.loadFromFile("assets/gui/fight/selectui.png"))
+        return false;
+    this->textures.add("select", bkg_select);
+
     this->sprites[this->BKG1] = sf::Sprite(this->textures.get("bk1"));
     this->sprites[this->BKG2] = sf::Sprite(this->textures.get("bk2"));
     this->sprites[this->BKG3] = sf::Sprite(this->textures.get("bk3"));
@@ -77,12 +82,14 @@ bool FightView::load()
     this->sprites[this->TOOLS] = sf::Sprite(this->textures.get("tool"));
     this->sprites[this->OVERLAY] = sf::Sprite(this->textures.get("overlay"));
     this->sprites[this->LIFEBAR] = sf::Sprite(this->textures.get("lifebar"));
+    this->sprites[this->BKG_SELECT] = sf::Sprite(this->textures.get("select"));
 
     this->sprites[this->BKG1].setPosition(0.0f, 0.0f);
     this->sprites[this->BKG2].setPosition(0.0f, 0.0f);
     this->sprites[this->BKG3].setPosition(0.0f, 0.0f);
     this->sprites[this->OVERLAY].setPosition(0.0f, 0.0f);
     this->sprites[this->TOOLS].setPosition(0.0f, WIN_H - 150.0f);
+    this->sprites[this->BKG_SELECT].setPosition(60.0f, 60.0f);
 
     if (!this->font.loadFromFile(FONTPATH))
         return false;
@@ -139,7 +146,7 @@ void FightView::render(sf::RenderWindow& window)
     if (this->selectingcrea)
     {
         // draw interface to select a crea
-        /// draw background
+        window.draw(this->sprites[this->BKG_SELECT]);
 
         if (this->selectingadv)
         {

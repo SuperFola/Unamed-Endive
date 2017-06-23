@@ -52,6 +52,7 @@ private:
     const std::string TOOLS = "toolbar";
     const std::string LIFEBAR = "lifebar";
     const std::string OVERLAY = "overlay";
+    const std::string BKG_SELECT = "background_select";
 
 public:
     FightView();
