@@ -246,3 +246,9 @@ void DexView::load_dex_content()
 
     hell_again:;
 }
+
+DexView::~DexView()
+{
+    this->dex = NULL;
+    this->crealoader = NULL;
+}

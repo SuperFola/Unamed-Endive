@@ -30,6 +30,7 @@ private:
 public:
     // methods
     SaveView();
+    ~SaveView();
     bool load() override;
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;

@@ -48,6 +48,7 @@ private:
 public:
     // methods
     CreaView();
+    ~CreaView();
     bool load() override;
     void post_load();
     void render(sf::RenderWindow&) override;

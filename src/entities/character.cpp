@@ -149,3 +149,8 @@ void Character::setPNJm(PNJManager* _pnjm)
     this->pnjm = _pnjm;
     DebugLog(SH_INFO, "Adding pnj manager to character");
 }
+
+Character::~Character()
+{
+    this->pnjm = NULL;
+}

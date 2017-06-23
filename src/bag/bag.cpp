@@ -82,4 +82,5 @@ void Bag::save(const std::string& path)
 Bag::~Bag()
 {
     CLEAR_PTR_VECT(this->pockets)
+    this->pockets.clear();
 }

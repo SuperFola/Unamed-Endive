@@ -322,3 +322,8 @@ void InventView::add_bag(Bag* bag)
     this->bag = bag;
     this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
 }
+
+InventView::~InventView()
+{
+    this->bag = NULL;
+}

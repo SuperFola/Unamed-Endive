@@ -168,4 +168,5 @@ int Pocket::getSize()
 Pocket::~Pocket()
 {
     CLEAR_PTR_VECT(this->objects)
+    this->objects.clear();
 }

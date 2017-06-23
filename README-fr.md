@@ -48,31 +48,7 @@ En cas de bug
 Si vous rencontrez un bug, merci de créer une nouvelle [issue](https://github.com/Loodoor/Unamed-Endive/issues/new) 
 et de l'y décrire comme suit :
 
-```
-Système d'exploitation | Version (32/64bits) | Message d'erreur (oui/non)
------------------------|---------------------|---------------------------
-Nom du système         | Version du système  | Y avait il un message d'erreur ?
-
-Fichier log généré
-==================
-*contenu ici*
-
-Erreur donnée par le système
-============================
-*si oui dans le tableau*
-
-Résultat de la commande (sous Windows uniquement)
-=================================================
-Ouvrir un terminal en pressant `WIN` et `R` en même temps. Taper `cmd` puis appuyer sur `ENTREE`. Ensuite taper `cd PATH` avec `PATH` le chemin absolu vers le dossier principal du jeu.
-
-commande : `echo base dir & dir /D & echo saves & dir saves /D & echo scripts & dir "assets/scripts" /D & echo register script & type ".\assets\scripts\register.py"`
-
-*résultat ici*
-
-Comment reproduire le bug
-=========================
-*si vous avez une idée de ce qui a pu déclencher le bug seulement*
-```
+[CONTRIBUTING](.github/CONTRIBUTING.md)
 
 Liens
 =====

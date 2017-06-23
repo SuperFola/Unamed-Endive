@@ -28,11 +28,6 @@ PyScripting::PyScripting():
     Py_SetProgramName(this->program);
 }
 
-PyScripting& PyScripting::Instance()
-{
-    return instance;
-}
-
 void PyScripting::load_all_modules()
 {
     std::string directory = "assets/scripts/";
@@ -140,6 +135,7 @@ bool PyScripting::disconnect()
             var.second.clear();
         }
         instance.modules_kinds.clear();
+        instance.uninitialize();
 
         return true;
     }
@@ -332,4 +328,14 @@ svar_t PyScripting::getGlobal(const char* name)
 void PyScripting::print(const char* thing)
 {
     std::cout << thing;
+}
+
+void PyScripting::uninitialize()
+{
+    instance.window = NULL;
+    instance.music_player = NULL;
+    instance.sm = NULL;
+    instance.pnjm = NULL;
+    instance.level = NULL;
+    instance.player = NULL;
 }

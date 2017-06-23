@@ -207,3 +207,8 @@ void SaveView::save()
     std::ofstream output("saves/" + this->defv->getCharacter()->getName() + "/map.json");
     output << root;
 }
+
+SaveView::~SaveView()
+{
+    this->defv = NULL;
+}

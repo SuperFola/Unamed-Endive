@@ -860,5 +860,5 @@ int Game::run()
 
 void Game::quit()
 {
-
+    PyScripting::disconnect();
 }

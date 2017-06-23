@@ -57,10 +57,9 @@ private:
 
     // methods
     void load_all_modules();
+    void uninitialize();
 
 public:
-    static PyScripting& Instance();
-
     // methods
     static bool connect();
     static void load();

@@ -481,3 +481,11 @@ void CreaView::add_dex(Dex* dex)
 {
     this->dex = dex;
 }
+
+CreaView::~CreaView()
+{
+    this->equip = NULL;
+    this->pc = NULL;
+    this->dex = NULL;
+    this->creaload = NULL;
+}

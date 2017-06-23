@@ -35,6 +35,7 @@ private:
 public:
     // methods
     DexView();
+    ~DexView();
     bool load() override;
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;

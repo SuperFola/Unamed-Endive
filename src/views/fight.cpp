@@ -398,4 +398,8 @@ void FightView::set_escape(bool v)
 FightView::~FightView()
 {
     CLEAR_PTR_VECT(this->adv)
+    this->dex = NULL;
+    this->equip = NULL;
+    this->pc = NULL;
+    this->crealoder = NULL;
 }
