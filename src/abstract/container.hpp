@@ -40,7 +40,10 @@ bool Container<ContainerType>::contains(const std::string& name)
 template <typename ContainerType>
 void Container<ContainerType>::add(const std::string& name, ContainerType& value)
 {
-    this->content.emplace(name, value);
+    if (this->content.find(name) == this->content.end())
+        this->content.emplace(name, value);
+    else
+        this->content.erase(this->content.find(name));
 }
 
 template <typename ContainerType>

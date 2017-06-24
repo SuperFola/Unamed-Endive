@@ -144,13 +144,13 @@ void FightView::render(sf::RenderWindow& window)
     window.draw(this->me);
 
     // draw the creatures
-    for (Creature* crea : this->adv)
+    for (int i =0; i < this->adv.size(); ++i)
     {
-        //this->crealoader->get(crea->get)
+        window.draw(this->sprites[this->__adv + to_string<int>(i)]);
     }
     for (int i=0; i < this->equip->getSize(); ++i)
     {
-        //Creature* crea = this->equip->getCrea(i);
+        window.draw(this->sprites[this->__me + to_string<int>(i)]);
     }
 
     // draw interface to select a crea
@@ -162,14 +162,24 @@ void FightView::render(sf::RenderWindow& window)
         {
             for (int i=0; i < this->adv.size(); i++)
             {
-                window.draw(this->texts.get(to_string<int>(i) + this->dex->getName(this->adv[i]->getId())));
+                if (i != this->__selected)
+                    this->texts.get(this->__adv + to_string<int>(i)).setFillColor(sf::Color::Black);
+                else
+                    this->texts.get(this->__adv + to_string<int>(i)).setFillColor(sf::Color::Green);
+
+                window.draw(this->texts.get(this->__adv + to_string<int>(i)));
             }
         }
         else
         {
             for (int i=0; i < this->equip->getSize(); ++i)
             {
-                window.draw(this->texts.get(to_string<int>(i) + this->equip->getCrea(i)->getName()));
+                if (i != this->__selected)
+                    this->texts.get(this->__me + to_string<int>(i)).setFillColor(sf::Color::Black);
+                else
+                    this->texts.get(this->__me + to_string<int>(i)).setFillColor(sf::Color::Green);
+
+                window.draw(this->texts.get(this->__me + to_string<int>(i)));
             }
         }
     }
@@ -360,16 +370,23 @@ void FightView::start()
         setupFont(_t1, this->font, sf::Color::Black, 24)
         _t1.setString(this->equip->getCrea(i)->getName());
         _t1.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
-        this->texts.add(to_string<int>(i) + this->equip->getCrea(i)->getName(), _t1);
+        this->texts.add(this->__me + to_string<int>(i), _t1);
 
         moy_equip += this->equip->getCrea(i)->getLevel();
+
+        this->sprites[this->__me + to_string<int>(i)] = sf::Sprite(this->crealoader->get(this->dex->getInfo(this->equip->getCrea(i)->getId()).file));
+        float factor = CREATURE_HEIGHT / this->crealoader->get(this->dex->getInfo(this->equip->getCrea(i)->getId()).file).getSize().y;
+        this->sprites[this->__me + to_string<int>(i)].setScale(factor, factor);
+        /// calculate position of the sprite regarding to the index
+        this->sprites[this->__me + to_string<int>(i)].setPosition(i * CREATURE_HEIGHT, 45.0f);
     }
     moy_equip /= float(this->equip->getSize());
 
     std::mt19937 rng;
     rng.seed(std::random_device()());
-    std::uniform_int_distribution<std::mt19937::result_type> dist1(int(moy_equip), moy_equip + 10);
+    std::uniform_int_distribution<std::mt19937::result_type> dist1((moy_equip - 4 > 0) ? int(moy_equip) - 4 : int(moy_equip), moy_equip + 6);
     int _x_ = dist1(rng);
+    _x_ = (_x_ - 2 > 0) ? _x_ - 2 : _x_;
     std::uniform_int_distribution<std::mt19937::result_type> dist2(_x_, _x_ + 4);
     std::uniform_int_distribution<std::mt19937::result_type> distid(0, this->dex->getMaxId());
     std::uniform_int_distribution<std::mt19937::result_type> diststype(0, SortilegeType::Count - 1);
@@ -404,9 +421,13 @@ void FightView::start()
         setupFont(_t2, this->font, sf::Color::Black, 24)
         _t2.setString(this->dex->getName(id));
         _t2.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
-        this->texts.add(to_string<int>(i) + this->dex->getName(id), _t2);
+        this->texts.add(this->__adv + to_string<int>(i), _t2);
 
-        DebugLog(SH_SPE, id);
+        this->sprites[this->__adv + to_string<int>(i)] = sf::Sprite(this->crealoader->get(this->dex->getInfo(crea->getId()).file));
+        float factor = CREATURE_HEIGHT / this->crealoader->get(this->dex->getInfo(crea->getId()).file).getSize().y;
+        this->sprites[this->__adv + to_string<int>(i)].setScale(factor, factor);
+        /// calculate position of the sprite regarding to the index
+        this->sprites[this->__adv + to_string<int>(i)].setPosition(i * CREATURE_HEIGHT, 45.0f);
     }
 
     this->encounter();

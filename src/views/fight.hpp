@@ -19,6 +19,7 @@
 #define Y_TEXT_SELCREA_UI 200
 #define MY_TEXT_SELCREA_UI 400
 #define YS_TEXT_SELCREA_UI 30
+#define CREATURE_HEIGHT 180.0f
 
 class FightView : public View
 {
@@ -42,6 +43,9 @@ private:
     bool selectingadv;
     int __count_before_flyaway;
     bool can_escape;
+
+    const std::string __adv = "adv";
+    const std::string __me = "me";
 
     const std::string BKG1 = "bkg1";
     const std::string BKG2 = "bkg2";
