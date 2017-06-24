@@ -133,7 +133,8 @@ void Dex::register_viewed(int id)
 {
     if (this->id_name.find(id) != this->id_name.end())
         this->content[this->id_name[id]].viewed = true;
-    DebugLog(SH_ERR, "Can not find creature with id " << id << " while trying to set it as viewed");
+    else
+        DebugLog(SH_ERR, "Can not find creature with id " << id << " while trying to set it as viewed");
 }
 
 void Dex::register_capture(int id)

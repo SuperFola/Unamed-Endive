@@ -35,7 +35,7 @@ private:
     Dex* dex;
     Equip* equip;
     Equip* pc;
-    CreaturesLoader* crealoder;
+    CreaturesLoader* crealoader;
     int __c;
     int __selected;
     bool selectingcrea;

@@ -143,9 +143,19 @@ void FightView::render(sf::RenderWindow& window)
     window.draw(this->ennemy);
     window.draw(this->me);
 
+    // draw the creatures
+    for (Creature* crea : this->adv)
+    {
+        //this->crealoader->get(crea->get)
+    }
+    for (int i=0; i < this->equip->getSize(); ++i)
+    {
+        //Creature* crea = this->equip->getCrea(i);
+    }
+
+    // draw interface to select a crea
     if (this->selectingcrea)
     {
-        // draw interface to select a crea
         window.draw(this->sprites[this->BKG_SELECT]);
 
         if (this->selectingadv)
@@ -157,7 +167,7 @@ void FightView::render(sf::RenderWindow& window)
         }
         else
         {
-            for (int i=0; i < this->equip->getSize(); i++)
+            for (int i=0; i < this->equip->getSize(); ++i)
             {
                 window.draw(this->texts.get(to_string<int>(i) + this->equip->getCrea(i)->getName()));
             }
@@ -169,76 +179,79 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
 {
     int new_view = -1, m = 0;
 
-    switch(event.type)
+    if (this->__count_before_flyaway == 0)  // disable controls when escaping
     {
-    case sf::Event::KeyPressed:
-        switch(event.key.code)
+        switch(event.type)
         {
-        default:
-            break;
-        }
-        break;
-
-    case sf::Event::MouseButtonPressed:
-        switch(event.mouseButton.button)
-        {
-        case sf::Mouse::Button::Left:
-            if (!this->selectingcrea)
+        case sf::Event::KeyPressed:
+            switch(event.key.code)
             {
-                if (__Y >= 490 + 75 && __Y <= 490 + 125)
-                {
-                    /*if (__X >= 5 && __X <= 157)
-                    {
-                        // attack button
-                    }
-                    else*/ if (__X >= 164 && __X <= 316)
-                    {
-                        // equip button
-                        new_view = MYCREATURES_VIEW_ID;
-                        OMessenger::setlock(MYCREATURES_VIEW_ID);
-                    }
-                    else if (__X >= 323 && __X <= 475)
-                    {
-                        // bag button
-                        new_view = INVENTORY_VIEW_ID;
-                        OMessenger::setlock(INVENTORY_VIEW_ID);
-                    }
-                    else if (__X >= 480 && __X <= 632 && !this->__count_before_flyaway)
-                    {
-                        // fly away button
-                        this->__count_before_flyaway = 480;
-                        if (this->can_escape)
-                            this->action.setString("Vous vous échapez prestement ...");
-                        else
-                            this->action.setString("Vous ne pouvez pas vous échaper !");
-                    }
-                }
-            }
-            else
-            {
-                // handle clic in
-                if (__X >= X_TEXT_SELCREA_UI && __X <= MX_TEXT_SELCREA_UI)
-                {
-                    if (__Y >= Y_TEXT_SELCREA_UI && __Y <= MY_TEXT_SELCREA_UI)
-                    {
-                        this->__selected = (__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI;
-                        m = (this->selectingadv) ? this->adv.size() : this->equip->getSize();
-                        if (this->__selected >= 0 && this->__selected < m)
-                            this->selectingcrea = false;
-                        else
-                            this->__selected = -1;
-                    }
-                }
+            default:
+                break;
             }
             break;
 
+        case sf::Event::MouseButtonPressed:
+            switch(event.mouseButton.button)
+            {
+            case sf::Mouse::Button::Left:
+                if (!this->selectingcrea)
+                {
+                    if (__Y >= 490 + 75 && __Y <= 490 + 125)
+                    {
+                        if (__X >= 5 && __X <= 157)
+                        {
+                            // attack button
+                        }
+                        else if (__X >= 164 && __X <= 316)
+                        {
+                            // equip button
+                            new_view = MYCREATURES_VIEW_ID;
+                            OMessenger::setlock(MYCREATURES_VIEW_ID);
+                        }
+                        else if (__X >= 323 && __X <= 475)
+                        {
+                            // bag button
+                            new_view = INVENTORY_VIEW_ID;
+                            OMessenger::setlock(INVENTORY_VIEW_ID);
+                        }
+                        else if (__X >= 480 && __X <= 632)
+                        {
+                            // fly away button
+                            this->__count_before_flyaway = 220;
+                            if (this->can_escape)
+                                this->action.setString("Vous vous échapez prestement ...");
+                            else
+                                this->action.setString("Vous ne pouvez pas vous échaper !");
+                        }
+                    }
+                }
+                else
+                {
+                    // handle clic in
+                    if (__X >= X_TEXT_SELCREA_UI && __X <= MX_TEXT_SELCREA_UI)
+                    {
+                        if (__Y >= Y_TEXT_SELCREA_UI && __Y <= MY_TEXT_SELCREA_UI)
+                        {
+                            this->__selected = (__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI;
+                            m = (this->selectingadv) ? this->adv.size() : this->equip->getSize();
+                            if (this->__selected >= 0 && this->__selected < m)
+                                this->selectingcrea = false;
+                            else
+                                this->__selected = -1;
+                        }
+                    }
+                }
+                break;
+
+            default:
+                break;
+            }
+            break;
+
         default:
             break;
         }
-        break;
-
-    default:
-        break;
     }
 
     if (this->__count_before_flyaway == 1)
@@ -254,12 +267,11 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
 
 void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-    if (this->__count_before_flyaway)
+    if (this->__count_before_flyaway > 1)
         this->__count_before_flyaway -= 1;
 
     if (OMessenger::get().target_view == this->getId())
     {
-        int c = 0;
         switch (OMessenger::get().type)
         {
         case ObjType::capture:
@@ -275,6 +287,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->selectingcrea = true;
         this->selectingadv = true;
 
+        // capturing
         if (this->__c && this->__selected != -1)
         {
             OMessenger::empty();
@@ -332,7 +345,7 @@ void FightView::set_pc(Equip* pc)
 
 void FightView::set_crealoader(CreaturesLoader* creal)
 {
-    this->crealoder = creal;
+    this->crealoader = creal;
 }
 
 void FightView::start()
@@ -341,7 +354,7 @@ void FightView::start()
 
     // generate adv
     float moy_equip = 0.0f;
-    for (int i=0; i < this->equip->getSize(); i++)
+    for (int i=0; i < this->equip->getSize(); ++i)
     {
         sf::Text _t1;
         setupFont(_t1, this->font, sf::Color::Black, 24)
@@ -392,6 +405,8 @@ void FightView::start()
         _t2.setString(this->dex->getName(id));
         _t2.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
         this->texts.add(to_string<int>(i) + this->dex->getName(id), _t2);
+
+        DebugLog(SH_SPE, id);
     }
 
     this->encounter();
@@ -408,5 +423,5 @@ FightView::~FightView()
     this->dex = NULL;
     this->equip = NULL;
     this->pc = NULL;
-    this->crealoder = NULL;
+    this->crealoader = NULL;
 }
