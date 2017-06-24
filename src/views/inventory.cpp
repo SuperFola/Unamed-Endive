@@ -151,19 +151,15 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
             break;
 
         case sf::Keyboard::Left:
-            this->offset -= 1;
-            if (this->offset <= -1)
-                this->offset = 0;
-            else if (this->offset >= this->bag->getPocket(this->current)->getSize())
-                this->offset = (this->bag->getPocket(this->current)->getSize() != 0) ? (this->bag->getPocket(this->current)->getSize() - 1): 0;
+            this->current--;
+            this->change_pocket();
+            this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             break;
 
         case sf::Keyboard::Right:
-            this->offset += 1;
-            if (this->offset <= -1)
-                this->offset = 0;
-            else if (this->offset >= this->bag->getPocket(this->current)->getSize())
-                this->offset = (this->bag->getPocket(this->current)->getSize() != 0) ? (this->bag->getPocket(this->current)->getSize() - 1): 0;
+            this->current++;
+            this->change_pocket();
+            this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             break;
 
         default:
