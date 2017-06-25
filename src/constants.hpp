@@ -1,7 +1,7 @@
 #ifndef DEF_CONSTANTS
 
 #ifndef __cplusplus
-#error A C++ compiler is required!
+    #error A C++ compiler is required!
 #endif
 
 #define DEF_CONSTANTS
@@ -54,6 +54,14 @@
     // linux, unix and apple systems should be recognized this way
     #define PLATFORM_POSIX
 #endif
+
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif // PLATFORM_WIN
+
+#ifdef PLATFORM_POSIX
+    #include <dirent.h>
+#endif // PLATFORM_POSIX
 
 // directions
 enum class DIRECTION {

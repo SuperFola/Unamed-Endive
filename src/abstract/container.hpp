@@ -17,6 +17,7 @@ public:
     Container();
     bool contains(const std::string&);
     void add(const std::string&, ContainerType&);
+    void add(const std::string&);
     ContainerType& get(const std::string&);
 };
 
@@ -38,12 +39,17 @@ bool Container<ContainerType>::contains(const std::string& name)
 }
 
 template <typename ContainerType>
+void Container<ContainerType>::add(const std::string& name)
+{
+    this->content.emplace(name, ContainerType());
+}
+
+template <typename ContainerType>
 void Container<ContainerType>::add(const std::string& name, ContainerType& value)
 {
-    if (this->content.find(name) == this->content.end())
-        this->content.emplace(name, value);
-    else
+    if (this->content.find(name) != this->content.end())
         this->content.erase(this->content.find(name));
+    this->content.emplace(name, value);
 }
 
 template <typename ContainerType>

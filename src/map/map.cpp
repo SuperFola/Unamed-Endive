@@ -42,7 +42,7 @@ int Map::load_map_at(std::string path)
     return this->load_map(this->map_data_path);
 }
 
-void Map::render(sf::RenderWindow& window)
+void Map::render(sf::RenderTexture& window)
 {
     window.draw(*this->tmaps[2]);
     window.draw(*this->tmaps[1]);
@@ -54,7 +54,7 @@ void Map::micro_render(sf::RenderTexture& window)
     window.draw(*this->tmaps[1]);
 }
 
-void Map::render_top(sf::RenderWindow& window)
+void Map::render_top(sf::RenderTexture& window)
 {
     window.draw(*this->tmaps[0]);
 }

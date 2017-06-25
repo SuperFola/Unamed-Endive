@@ -9,6 +9,47 @@
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
 
+std::vector<std::string> glob_frag(const std::string& directory)
+{
+    std::vector<std::string> files;
+
+    #ifdef PLATFORM_WIN
+    WIN32_FIND_DATA File;
+    HANDLE hSearch;
+
+    hSearch = FindFirstFile((directory + "/*.frag").data(), &File);
+    if (hSearch != INVALID_HANDLE_VALUE)
+    {
+        do {
+                if (std::string(File.cFileName) != "." && std::string(File.cFileName) != "..")
+                    files.push_back(std::string(File.cFileName));
+        } while (FindNextFile(hSearch, &File));
+
+        FindClose(hSearch);
+    }
+    #endif // PLATFORM_WIN
+
+    #ifdef PLATFORM_POSIX
+    DIR* rep = opendir(directory.data());
+
+    if (rep != NULL)
+    {
+        struct dirent* ent;
+
+        while ((ent = readdir(rep)) != NULL)
+        {
+            std::string t = std::string(ent->d_name);
+            if (t.substr(t.size() - 4, t.size()) == "frag")
+                files.push_back(ent->d_name);
+        }
+
+        closedir(rep);
+    }
+    #endif // PLATFORM_POSIX
+
+    return files;
+}
+
 void DefaultView::set_view(sf::RenderWindow& window)
 {
     this->view.setCenter(this->player.getPos().getX() + TILE_SIZE, this->player.getPos().getY() + TILE_SIZE);
@@ -23,9 +64,10 @@ void DefaultView::unset_view(sf::RenderWindow& window)
 DefaultView::DefaultView() :
     View(DEFAULT_VIEW_ID)
     , view(sf::FloatRect(0, 0, WIN_W, WIN_H))
-    , level("assets/map/0.umd")
+    , level("assets/map/0.umd")         // default map
     , display_mmap(false)
     , _speaking_to_pnj(false, -1, -1)
+    , current_shader("")
 {
 }
 
@@ -33,6 +75,14 @@ bool DefaultView::load() { return true; }
 
 bool DefaultView::load(sf::String folder)
 {
+    // loading shaders
+    if (sf::Shader::isAvailable())
+    {
+        for (auto& frag : glob_frag("assets/shaders"))
+            this->shaders.push_back(frag);
+    }
+
+    // loading game data
     if (is_file_existing("saves/" + folder.toAnsiString() + "/map.json"))
     {
         std::ifstream file("saves/" + folder.toAnsiString() + "/map.json");
@@ -40,15 +90,16 @@ bool DefaultView::load(sf::String folder)
         file >> root;
         this->level.setMapPath("assets/map/" + to_string<int>(root["id"].asInt()) + ".umd");
     }
-
     this->level.load_map_at();  // empty will cause to load the map given by default
 
+    // loading UI
     if (!this->menu_hud.load())
     {
         DebugLog(SH_ERR, "An error occured while loading the menu");
         return false;
     }
 
+    // configuring stuff
     this->player.setFolder(folder.toAnsiString());
     if (!this->player.load())
     {
@@ -61,9 +112,12 @@ bool DefaultView::load(sf::String folder)
         return false;
     if (!this->minimap.create(MINIMAP_X, MINIMAP_Y))
         return false;
+    if (!this->world.create(WIN_W, WIN_H))
+        return false;
 
     this->offsprite.setTexture(this->offscreen.getTexture());
     this->minisprite.setTexture(this->minimap.getTexture());
+    this->worldsprite.setTexture(this->world.getTexture());
 
     return true;
 }
@@ -89,23 +143,32 @@ void DefaultView::render(sf::RenderWindow& window)
     this->minimap.display();
 
     // normal rendering (level and chara)
-    this->level.render(window);
-    window.draw(this->player.getCurrentSprite());
+    this->level.render(this->world);
+    this->world.draw(this->player.getCurrentSprite());
 
     // pnj rendering
     int mid = this->level.getId();
     for (int i=0; i < this->pnjmgr.countPNJonMap(this->level.getId()); i++)
     {
-        window.draw(this->pnjmgr.getPNJonMap(mid, i).getCurrentSprite());
+        this->world.draw(this->pnjmgr.getPNJonMap(mid, i).getCurrentSprite());
         this->pnjmgr.getPNJonMap(mid, i).render(this->offscreen);
     }
-    this->level.render_top(window);
+    this->level.render_top(this->world);
 
+    // rendering with our shaders now !! :D
+    this->world.display();
+    if (this->current_shader != "")
+        window.draw(this->worldsprite, &this->shader);
+    else
+        window.draw(this->worldsprite);
+
+    // drawing stuff relative to the top left corner of the window, not the top left corner of the view ;)
     this->offscreen.display();
     sf::Vector2f p = window.mapPixelToCoords(sf::Vector2i(0, 0));
     this->offsprite.setPosition(p);
     window.draw(this->offsprite);
 
+    // displaying (or not) the mini map
     if (this->display_mmap && !this->menu_hud.isTriggered())
     {
         sf::Vector2f p2 = window.mapPixelToCoords(sf::Vector2i(WIN_W - MINIMAP_X - 4, 4));
@@ -277,4 +340,21 @@ void DefaultView::disable_pnj_speaking()
 
         this->_speaking_to_pnj = std::make_tuple(false, -1, -1);
     }
+}
+
+void DefaultView::setShader(const std::string& name)
+{
+    if (name == "" || std::find(this->shaders.begin(), this->shaders.end(), name) != this->shaders.end())
+    {
+        this->current_shader = name;
+        if (!this->shader.loadFromFile(this->shaders_path + name, sf::Shader::Fragment))
+            DebugLog(SH_ERR, "Could not load shader at " << this->shaders_path << name);
+        else
+            this->setShaderParameter("texture", this->world.getTexture());
+    }
+}
+
+const std::string& DefaultView::getCurrentShader()
+{
+    return this->current_shader;
 }

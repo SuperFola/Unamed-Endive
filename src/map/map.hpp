@@ -35,9 +35,9 @@ public:
     ~Map();
     void setMapPath(const std::string&);
     int load_map_at(std::string path="default");
-    void render(sf::RenderWindow&);
+    void render(sf::RenderTexture&);
     void micro_render(sf::RenderTexture&);
-    void render_top(sf::RenderWindow&);
+    void render_top(sf::RenderTexture&);
     void update(sf::RenderWindow&, sf::Time);
     int getWidth();
     int getHeight();

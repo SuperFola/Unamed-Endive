@@ -15,6 +15,8 @@
 #include "../json/json.h"
 #include "../entities/character.hpp"
 
+std::vector<std::string> glob_frag(const std::string& directory);
+
 class DefaultView : public View
 {
 private:
@@ -22,17 +24,24 @@ private:
     sf::View view;
     sf::RenderTexture offscreen;
     sf::RenderTexture minimap;
+    sf::RenderTexture world;
     sf::Sprite offsprite;
     sf::Sprite minisprite;
+    sf::Sprite worldsprite;
     Character player;
     Map level;
     PNJManager pnjmgr;
     MenuHUD menu_hud;
     bool display_mmap;
     std::tuple <bool, int, int> _speaking_to_pnj;
+    std::vector<std::string> shaders;
+    std::string current_shader;
+    sf::Shader shader;
     // methods
     void set_view(sf::RenderWindow&);
     void unset_view(sf::RenderWindow&);
+
+    const std::string shaders_path = "assets/shaders/";
 
 public:
     // methods
@@ -54,6 +63,15 @@ public:
     void draw_on_offscreen(const sf::Drawable&);
     void resolve_pnjspeak(int, int, sf::RenderWindow&);
     void disable_pnj_speaking();
+
+    template <typename T>
+    void setShaderParameter(const std::string& param, T& value)
+    {
+        if (this->current_shader != "")
+            this->shader.setParameter(param, value);
+    }
+    void setShader(const std::string& name);
+    const std::string& getCurrentShader();
 };
 
 #endif // DEF_DEFAULT_VIEW

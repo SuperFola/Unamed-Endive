@@ -9,14 +9,6 @@
 #define __X event.mouseButton.x
 #define __Y event.mouseButton.y
 
-#ifdef PLATFORM_WIN
-#include <windows.h>
-#endif // PLATFORM_WIN
-
-#ifdef PLATFORM_POSIX
-#include <dirent.h>
-#endif // PLATFORM_POSIX
-
 std::vector<std::string> glob(const std::string& directory)
 {
     std::vector<std::string> files;
@@ -810,8 +802,11 @@ int Game::run()
         this->post_load();
 
     int _fps_update = 0;
-
     sf::Event event;
+
+    /// testing !!
+    this->sm.getDefault()->setShader("distorsion.frag");
+    float timer = 1.0f;
 
     if (this->has_requested_quit)
         goto hell;
@@ -850,6 +845,9 @@ int Game::run()
         this->window.clear();
         this->render();
         this->window.display();
+
+        timer += 1.0f;
+        this->sm.getDefault()->setShaderParameter("timer", timer);
     }
 
     this->on_end();
