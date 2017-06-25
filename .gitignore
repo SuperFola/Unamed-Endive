@@ -1,49 +1,59 @@
 # Project folders and files
-credentials.json
-comments.txt
 *.layout
 *.depend
 *.cbp
 *.backup
 .vs
-/assets/.dontupload
-/obj/
-/screenshots/
-/dlls/Lib/*
-/saves/
+assets/.dontupload
+obj/
+screenshots/
+dlls/Lib/
+saves/
 .temp/
+.scripts/
+.other/
+.pytools/
+
 # Prerequisites
 *.d
+
 # Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
+
 # Precompiled Headers
 *.gch
 *.pch
+
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
+
 # Compiled Static libraries
 *.lai
 *.la
 *.a
 *.lib
+
 # Executables
 *.exe
 *.out
 *.app
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
 # C extensions
 *.so
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -54,17 +64,23 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+
 # pyenv
 .python-version
+
 # dotenv
 .env
+
 # virtualenv
 .venv/
 venv/
 ENV/
+
 # Spyder project settings
 .spyderproject
+
 # Rope project settings
 .ropeproject
+
 # PyCharm project settings
 .idea

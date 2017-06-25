@@ -1,1 +1,0 @@
-py -3.4 "py-tools/checkrelease.py"
