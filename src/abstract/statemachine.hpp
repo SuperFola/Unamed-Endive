@@ -17,6 +17,7 @@
 #include "../views/map.hpp"
 #include "../views/fight.hpp"
 #include "../views/shop.hpp"
+#include "../views/settings.hpp"
 
 #include "functions.hpp"
 
@@ -35,6 +36,7 @@ private:
     MapView mapv;
     FightView fightv;
     ShopView shopv;
+    SettingsView settingsv;
 
 public:
     // methods
@@ -55,6 +57,7 @@ public:
     MapView* getMap();
     FightView* getFight();
     ShopView* getShop();
+    SettingsView* getSettings();
 };
 
 #endif // DEF_STATEMACHINE

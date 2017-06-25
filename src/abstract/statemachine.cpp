@@ -55,11 +55,16 @@ bool StateMachine::load(sf::String playername)
         id = this->shopv.getId();
         this->shopv.load();
         break;
+
+    case 8:
+        id = this->settingsv.getId();
+        this->settingsv.load();
+        break;
     }
     DebugLog(SH_INFO, "Loading view " << id);
     this->loaded++;
 
-    return this->loaded == 8;
+    return this->loaded == 9;
 }
 
 int StateMachine::getId()
@@ -105,6 +110,10 @@ bool StateMachine::hasActiveHud(int vid)
         ret_val = this->fightv.hasActiveHud();
         break;
 
+    case SETTINGS_VIEW_ID:
+        ret_val = this->settingsv.hasActiveHud();
+        break;
+
     default:
         ret_val = -1;
         break;
@@ -136,6 +145,7 @@ int StateMachine::change_view(int new_view)
     case INVENTORY_VIEW_ID:
     case SHOP_VIEW_ID:
     case MAP_VIEW_ID:
+    case SETTINGS_VIEW_ID:
         this->history.push_back(this->current_view);
         this->current_view = new_view;
         DebugLog(SH_OK, "Changing view from id " << this->history[this->history.size() - 1] << " to id " << new_view);
@@ -215,6 +225,10 @@ int StateMachine::process_event_current(sf::Event& event, sf::Time elapsed, sf::
         ret_val = this->shopv.process_event(event, elapsed);
         break;
 
+    case SETTINGS_VIEW_ID:
+        ret_val = this->settingsv.process_event(event, elapsed);
+        break;
+
     default:
         ret_val = -1;
         break;
@@ -257,6 +271,10 @@ void StateMachine::render_current(sf::RenderWindow& window)
 
     case SHOP_VIEW_ID:
         this->shopv.render(window);
+        break;
+
+    case SETTINGS_VIEW_ID:
+        this->settingsv.render(window);
         break;
 
     default:
@@ -302,6 +320,9 @@ void StateMachine::update_current(sf::RenderWindow& window, sf::Time elapsed)
     case SHOP_VIEW_ID:
         this->shopv.update(window, elapsed);
         break;
+
+    case SETTINGS_VIEW_ID:
+        this->settingsv.update(window, elapsed);
 
     default:
         break;
@@ -353,3 +374,7 @@ ShopView* StateMachine::getShop()
     return &this->shopv;
 }
 
+SettingsView* StateMachine::getSettings()
+{
+    return &this->settingsv;
+}

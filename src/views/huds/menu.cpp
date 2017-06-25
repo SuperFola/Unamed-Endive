@@ -82,6 +82,11 @@ bool MenuHUD::load()
         return false;
     this->textures.add(this->BG_CAT_SEL_SAVE, cat12);
 
+    sf::Texture param;
+    if (!param.loadFromFile("assets/gui/menu/fd_parametres.png"))
+        return false;
+    this->textures.add(this->BG_PARAM, param);
+
     // creating sprites
     this->sprites[this->BG_CAT_CREA] = sf::Sprite(this->textures.get(this->BG_CAT_CREA));
     this->sprites[this->BG_CAT_SEL_CREA] = sf::Sprite(this->textures.get(this->BG_CAT_SEL_CREA));
@@ -95,6 +100,7 @@ bool MenuHUD::load()
     this->sprites[this->BG_CAT_SEL_BACK] = sf::Sprite(this->textures.get(this->BG_CAT_SEL_BACK));
     this->sprites[this->BG_CAT_SAVE] = sf::Sprite(this->textures.get(this->BG_CAT_SAVE));
     this->sprites[this->BG_CAT_SEL_SAVE] = sf::Sprite(this->textures.get(this->BG_CAT_SEL_SAVE));
+    this->sprites[this->BG_PARAM] = sf::Sprite(this->textures.get(this->BG_PARAM));
 
     // setting pos
     float y = 11.0f + WIN_H / 2 - 220.0f;
@@ -112,6 +118,8 @@ bool MenuHUD::load()
     this->sprites[this->BG_CAT_SEL_DEX].setPosition(30.0f, y);
     this->sprites[this->BG_CAT_BACK].setPosition(325.0f, y);
     this->sprites[this->BG_CAT_SEL_BACK].setPosition(325.0f, y);
+    //
+    this->sprites[this->BG_PARAM].setPosition(WIN_W - 200.0f, 0.0f);
 
     // creating texts
     sf::Text crea;
@@ -166,6 +174,7 @@ void MenuHUD::render(sf::RenderTexture& window)
     window.draw(this->sprites[this->BG_CAT_MAP]);
     window.draw(this->sprites[this->BG_CAT_BACK]);
     window.draw(this->sprites[this->BG_CAT_SAVE]);
+    window.draw(this->sprites[this->BG_PARAM]);
 
     // drawing cases
     switch (this->current)
@@ -308,6 +317,11 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
 // private
 void MenuHUD::clic(int x, int y)
 {
+    if (WIN_W - 200 <= x <= WIN_W && 0 <= y <= 30)
+    {
+        return SETTINGS_VIEW_ID;
+    }
+
     bool left = (x >= 30) && (x <= 320);
     int nb = (y - 11 - (WIN_H / 2 - 220.0f)) / 143;
 

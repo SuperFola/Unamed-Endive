@@ -38,6 +38,7 @@ private:
     const std::string TXT_SAVE = "save";
     const std::string TXT_DEX = "dex";
     const std::string TXT_BACK = "back";
+    const std::string BG_PARAM = "parametres";
 
     // methods
     void clic(int, int);

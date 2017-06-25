@@ -1,5 +1,5 @@
-#ifndef DEF_SHOP_VIEW
-#define DEF_SHOP_VIEW
+#ifndef DEF_SETTINGS_VIEW
+#define DEF_SETTINGS_VIEW
 
 #include <SFML/Graphics.hpp>
 #include <string>
@@ -9,18 +9,18 @@
 #include "../abstract/container.hpp"
 #include "../json/json.h"
 
-class ShopView : public View
+class SettingsView : public View
 {
 private:
     Container<sf::Texture> textures;
     std::map<std::string, sf::Sprite> sprites;
 
 public:
-    ShopView();
+    SettingsView();
     bool load() override;
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
 };
 
-#endif // DEF_SHOP_VIEW
+#endif // DEF_SETTINGS_VIEW

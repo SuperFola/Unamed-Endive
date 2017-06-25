@@ -19,6 +19,7 @@
 #define SAVING_VIEW_ID 6
 #define FIGHT_VIEW_ID 7
 #define SHOP_VIEW_ID 8
+#define SETTINGS_VIEW_ID 9
 
 // HUD
 #define MENU_VIEW_ID 2
