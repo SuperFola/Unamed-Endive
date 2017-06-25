@@ -1,4 +1,4 @@
-**[french README](README-fr.md)**
+**[Version française](.github/README-fr.md)**
 
 # Unamed Rebirth [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ae66540cc8d040b7955c6b93c0f9da2e)](https://www.codacy.com/app/folaefolc/Unamed-Endive/dashboard) [![Build Status](https://travis-ci.org/Loodoor/Unamed-Endive.svg?branch=master)](https://travis-ci.org/Loodoor/Unamed-Endive) [![Discord badge](https://img.shields.io/badge/Discord-Unamed__Rebirth-brightgreen.svg?style=flat)](https://discord.gg/AWSWvgU)
 

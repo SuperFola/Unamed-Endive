@@ -26,7 +26,7 @@ before_install:
 - sudo apt-get update -qq
 
 script:
-- sudo bash configure
+- sudo bash .travis/configure
 - g++-6 -v
 - make -f makefiles/make.unix
 - bin/DebugUnix/main
