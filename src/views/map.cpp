@@ -3,9 +3,6 @@
 #include "map.hpp"
 #include "../constants.hpp"
 
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
-
 // public
 MapView::MapView() :
     View(MAP_VIEW_ID)
@@ -48,7 +45,7 @@ int MapView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            this->mr.clic(int(__X), int(__Y));
+            this->mr.clic(int(m__X), int(m__Y));
             break;
 
         default:

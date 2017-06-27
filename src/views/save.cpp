@@ -5,9 +5,6 @@
 #include "../constants.hpp"
 #include "../abstract/defines.hpp"
 
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
-
 // public
 SaveView::SaveView() :
     View(SAVING_VIEW_ID)

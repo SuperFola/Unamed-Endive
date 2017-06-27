@@ -3,9 +3,6 @@
 #include "shop.hpp"
 #include "../constants.hpp"
 
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
-
 // public
 ShopView::ShopView() :
     View(SHOP_VIEW_ID)

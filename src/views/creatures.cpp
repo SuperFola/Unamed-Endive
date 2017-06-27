@@ -4,9 +4,6 @@
 #include "../constants.hpp"
 #include "../abstract/defines.hpp"
 
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
-
 // public
 CreaView::CreaView() :
     View(MYCREATURES_VIEW_ID)
@@ -163,7 +160,7 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            if (__X >= 238 && __X <= 393 && __Y >= 10 && __Y <= 90)
+            if (m__X >= 238 && m__X <= 393 && m__Y >= 10 && m__Y <= 90)
             {
                 // changing the "view" (pc/equip)
                 // we can't change the "view" if we are using an object
@@ -181,7 +178,7 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
                     this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
                 }
             }
-            else if (__X >= 464 && __X <= 531 && __Y >= 523 && __Y <= 588)
+            else if (m__X >= 464 && m__X <= 531 && m__Y >= 523 && m__Y <= 588)
             {
                 // transfering creature
                 // we can't transfert any creature if we are using an object
@@ -203,11 +200,11 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
                     this->error_msg.setPosition(WIN_W / 2 - this->error_msg.getGlobalBounds().width / 2, this->error_msg.getPosition().y);
                 }
             }
-            else if (__X >= 18 && __X <= 234 && __Y >= 144 && __Y <= 601)
+            else if (m__X >= 18 && m__X <= 234 && m__Y >= 144 && m__Y <= 601)
             {
                 // selecting a creature
                 int lim = (this->displaying_crea) ? 0 : this->offset;
-                int ry = (__Y - 144) / 79;
+                int ry = (m__Y - 144) / 79;
                 if (!this->displaying_crea)
                     ry += this->offset;
                 int sz = (this->displaying_crea) ? this->equip->getSize() : this->pc->getSize();

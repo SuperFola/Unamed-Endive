@@ -6,9 +6,6 @@
 #include "../../constants.hpp"
 #include "../../abstract/defines.hpp"
 
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
-
 // public
 MenuHUD::MenuHUD() :
     Hud(MENU_VIEW_ID)
@@ -285,7 +282,7 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            this->clic(__X, __Y);
+            this->clic(m__X, m__Y);
             if (this->current != -1)
                 new_view = this->current;
             break;
@@ -317,11 +314,6 @@ int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
 // private
 void MenuHUD::clic(int x, int y)
 {
-    if (WIN_W - 200 <= x <= WIN_W && 0 <= y <= 30)
-    {
-        return SETTINGS_VIEW_ID;
-    }
-
     bool left = (x >= 30) && (x <= 320);
     int nb = (y - 11 - (WIN_H / 2 - 220.0f)) / 143;
 
@@ -342,6 +334,9 @@ void MenuHUD::clic(int x, int y)
         else this->current = 4;
         break;
     }
+
+    if (WIN_W - 200 <= x && x <= WIN_W && 0 <= y && y <= 30)
+        this->current = 6;
 }
 
 int MenuHUD::id_to_vid(int value)
@@ -375,6 +370,10 @@ int MenuHUD::id_to_vid(int value)
 
     case 5:
         ret = DEFAULT_VIEW_ID;
+        break;
+
+    case 6:
+        ret = SETTINGS_VIEW_ID;
         break;
 
     default:

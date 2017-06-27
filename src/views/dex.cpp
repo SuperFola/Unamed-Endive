@@ -4,9 +4,6 @@
 #include "../constants.hpp"
 #include "../abstract/defines.hpp"
 
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
-
 // public
 DexView::DexView() :
     View(DEX_VIEW_ID)
@@ -70,9 +67,9 @@ int DexView::process_event(sf::Event& event, sf::Time elapsed)
         {
         case sf::Mouse::Button::Left:
             // selecting a creature
-            if (__X >= 30 && __X <= WIN_W - 30 && __Y >= this->text.getPosition().y + 84.0f && __Y <= WIN_H - 30)
+            if (m__X >= 30 && m__X <= WIN_W - 30 && m__Y >= this->text.getPosition().y + 84.0f && m__Y <= WIN_H - 30)
             {
-                int ry = (__Y - (this->text.getPosition().y + 84.0f)) / 64;
+                int ry = (m__Y - (this->text.getPosition().y + 84.0f)) / 64;
                 if (ry >= 0 && ry < 8)
                 {
                     // ok the selected creature is in range

@@ -3,9 +3,6 @@
 #include "inventory.hpp"
 #include "../abstract/defines.hpp"
 
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
-
 // public
 InventView::InventView() :
     View(INVENTORY_VIEW_ID)
@@ -107,7 +104,7 @@ bool InventView::load()
 
     setupFont(this->current_pocket_name, this->font, sf::Color::Black, 24)
     this->current_pocket_name.setString("Pocket");
-    this->current_pocket_name.setPosition(310.0f - this->current_pocket_name.getLocalBounds().width / 2.0f, 599.0f - this->current_pocket_name.getLocalBounds().height);
+    this->current_pocket_name.setPosition(310.0f - this->current_pocket_name.getGlobalBounds().width / 2.0f, 599.0f - this->current_pocket_name.getGlobalBounds().height);
 
     setupFont(this->object_name, this->font, sf::Color::Black, 18)
     this->object_name.setString("object0");
@@ -171,31 +168,31 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
-            if (__X >= 115 && __X <= 135 && __Y >= 589 && __Y <= 609)
+            if (m__X >= 115 && m__X <= 135 && m__Y >= 589 && m__Y <= 609)
             {
                 // previous
                 this->current--;
                 this->change_pocket();
                 this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             }
-            else if (__X >= 500 && __X <= 520 && __Y >= 589 && __Y <= 609)
+            else if (m__X >= 500 && m__X <= 520 && m__Y >= 589 && m__Y <= 609)
             {
                 // next
                 this->current++;
                 this->change_pocket();
                 this->current_pocket_name.setString(this->bag->getPocket(this->current)->getName());
             }
-            else if (__X >= 97 && __X <= 149 && __Y >= 508 && __Y <= 560)
+            else if (m__X >= 97 && m__X <= 149 && m__Y >= 508 && m__Y <= 560)
             {
                 // drop
                 this->bag->getPocket(this->current)->drop_object(this->selected + this->offset);
             }
-            else if (__X >= 165 && __X <= 217 && __Y >= 508 && __Y <= 560)
+            else if (m__X >= 165 && m__X <= 217 && m__Y >= 508 && m__Y <= 560)
             {
                 // dropping all
                 this->bag->getPocket(this->current)->dropall_object(this->selected + this->offset);
             }
-            else if (__X >= 29 && __X <= 81 && __Y >= 508 && __Y <= 560)
+            else if (m__X >= 29 && m__X <= 81 && m__Y >= 508 && m__Y <= 560)
             {
                 // use
                 if ((ObjectsTable::getType(this->bag->getPocket(this->current)->getObject(this->selected + this->offset)) != ObjType::player && OMessenger::getLock() == this->getId()) ||
@@ -222,10 +219,10 @@ int InventView::process_event(sf::Event& event, sf::Time elapsed)
                     this->errmsg.setPosition(WIN_W / 2.0f - this->errmsg.getGlobalBounds().width / 2.0f, this->errmsg.getPosition().y);
                 }
             }
-            else if (__X >= 258 && __X <= 619 && __Y >= 30 && __Y <= 554)
+            else if (m__X >= 258 && m__X <= 619 && m__Y >= 30 && m__Y <= 554)
             {
                 // clic in the objects list, need to find which one was picked
-                int r = (__Y - 37) / (this->object_name.getCharacterSize() + 4);
+                int r = (m__Y - 37) / (this->object_name.getCharacterSize() + 4);
 
                 if (0 <= r + this->offset && r + this->offset <= bag->getPocket(this->current)->getSize())
                     this->selected = r;

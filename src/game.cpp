@@ -1,13 +1,11 @@
 #include <iostream>
 #include <ctime>
 #include <string>
+#include <cstdlib>
 
 #include "../debug.hpp"
 
 #include "game.hpp"
-
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
 
 std::vector<std::string> glob(const std::string& directory)
 {
@@ -337,7 +335,7 @@ void Game::update_menu(sf::Time elapsed, int s, bool new_game)
     // centering text
     if (new_game)
     {
-        this->menu_user.setPosition(WIN_W / 2.0f - this->menu_user.getLocalBounds().width / 2.0f, this->menu_user.getPosition().y);
+        this->menu_user.setPosition(WIN_W / 2.0f - this->menu_user.getGlobalBounds().width / 2.0f, this->menu_user.getPosition().y);
     }
     this->blinking++;
 
@@ -506,21 +504,21 @@ void Game::menu()
                     // activate buttons only if not in a submenu
                     if (!play_game && !del_game && !new_game)
                     {
-                        if (__X >= this->menu_btn_new_s.getPosition().x && __X <= this->menu_btn_new_s.getPosition().x + this->menu_btn_new_s.getLocalBounds().width &&
-                             __Y >= this->menu_btn_new_s.getPosition().y && __Y <= this->menu_btn_new_s.getPosition().y + this->menu_btn_new_s.getLocalBounds().height)
+                        if (m__X >= this->menu_btn_new_s.getPosition().x && m__X <= this->menu_btn_new_s.getPosition().x + this->menu_btn_new_s.getGlobalBounds().width &&
+                             m__Y >= this->menu_btn_new_s.getPosition().y && m__Y <= this->menu_btn_new_s.getPosition().y + this->menu_btn_new_s.getGlobalBounds().height)
                         {
                             // clic on button new
                             new_game = true;
                             this->menu_userentry.clear();
                         }
-                        if (__X >= this->menu_btn_del_s.getPosition().x && __X <= this->menu_btn_del_s.getPosition().x + this->menu_btn_del_s.getLocalBounds().width &&
-                             __Y >= this->menu_btn_del_s.getPosition().y && __Y <= this->menu_btn_del_s.getPosition().y + this->menu_btn_del_s.getLocalBounds().height)
+                        if (m__X >= this->menu_btn_del_s.getPosition().x && m__X <= this->menu_btn_del_s.getPosition().x + this->menu_btn_del_s.getGlobalBounds().width &&
+                             m__Y >= this->menu_btn_del_s.getPosition().y && m__Y <= this->menu_btn_del_s.getPosition().y + this->menu_btn_del_s.getGlobalBounds().height)
                         {
                             // clic on button delete
                             del_game = true;
                         }
-                        if (__X >= this->menu_btn_start_s.getPosition().x && __X <= this->menu_btn_start_s.getPosition().x + this->menu_btn_start_s.getLocalBounds().width &&
-                             __Y >= this->menu_btn_start_s.getPosition().y && __Y <= this->menu_btn_start_s.getPosition().y + this->menu_btn_start_s.getLocalBounds().height)
+                        if (m__X >= this->menu_btn_start_s.getPosition().x && m__X <= this->menu_btn_start_s.getPosition().x + this->menu_btn_start_s.getGlobalBounds().width &&
+                             m__Y >= this->menu_btn_start_s.getPosition().y && m__Y <= this->menu_btn_start_s.getPosition().y + this->menu_btn_start_s.getGlobalBounds().height)
                         {
                             // clic on button start
                             play_game = true;
@@ -528,10 +526,10 @@ void Game::menu()
                     }
                     else
                     {
-                        if (__X >= WIN_W / 2.0f - 200.0f && __X <= WIN_W / 2.0f + 200.0f && __Y >= 250.0f && __Y <= 250.0f + saves.size() * (4.0f + this->menu_text.getCharacterSize()))
+                        if (m__X >= WIN_W / 2.0f - 200.0f && m__X <= WIN_W / 2.0f + 200.0f && m__Y >= 250.0f && m__Y <= 250.0f + saves.size() * (4.0f + this->menu_text.getCharacterSize()))
                         {
                             // clic on an existing save
-                            int ry = (__Y - 250) / (4.0f + this->menu_text.getCharacterSize());
+                            int ry = (m__Y - 250) / (4.0f + this->menu_text.getCharacterSize());
 
                             if (play_game || del_game)
                             {
@@ -711,7 +709,7 @@ Game::Game() :
 
     setupFont(this->menu_ask_user, this->font, sf::Color::White, 24)
     this->menu_ask_user.setString("Quel est votre nom ?");
-    this->menu_ask_user.setPosition(WIN_W / 2.0f - this->menu_ask_user.getLocalBounds().width / 2.0f, WIN_H / 2.0f - 100.0f);
+    this->menu_ask_user.setPosition(WIN_W / 2.0f - this->menu_ask_user.getGlobalBounds().width / 2.0f, WIN_H / 2.0f - 100.0f);
 
     setupFont(this->cursor, this->font, sf::Color::White, 24)
     this->cursor.setString("_");
@@ -722,6 +720,8 @@ Game::Game() :
 
     ObjectsTable::load();
     this->ttable.load();
+
+    srand(static_cast<unsigned int>(time(0)));
 }
 
 void Game::post_load()

@@ -1,0 +1,12 @@
+{
+    "music": 1,
+    "aa": 1,
+    "v-sync": 1,
+    "shader": "none",
+    "fps": 120,
+    "menu": "escape",
+    "up": "z",
+    "down": "s",
+    "right": "d",
+    "left": "q"
+}

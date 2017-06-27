@@ -1,12 +1,11 @@
 #include <iostream>
 #include <random>
+#include <ctime>
+#include <cstdlib>
 #include "../../debug.hpp"
 
 #include "fight.hpp"
 #include "../constants.hpp"
-
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
 
 FightView::FightView() :
     View(FIGHT_VIEW_ID)
@@ -207,25 +206,25 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
             case sf::Mouse::Button::Left:
                 if (!this->selectingcrea)
                 {
-                    if (__Y >= 490 + 75 && __Y <= 490 + 125)
+                    if (m__Y >= 490 + 75 && m__Y <= 490 + 125)
                     {
-                        if (__X >= 5 && __X <= 157)
+                        if (m__X >= 5 && m__X <= 157)
                         {
                             // attack button
                         }
-                        else if (__X >= 164 && __X <= 316)
+                        else if (m__X >= 164 && m__X <= 316)
                         {
                             // equip button
                             new_view = MYCREATURES_VIEW_ID;
                             OMessenger::setlock(MYCREATURES_VIEW_ID);
                         }
-                        else if (__X >= 323 && __X <= 475)
+                        else if (m__X >= 323 && m__X <= 475)
                         {
                             // bag button
                             new_view = INVENTORY_VIEW_ID;
                             OMessenger::setlock(INVENTORY_VIEW_ID);
                         }
-                        else if (__X >= 480 && __X <= 632)
+                        else if (m__X >= 480 && m__X <= 632)
                         {
                             // fly away button
                             this->__count_before_flyaway = 220;
@@ -239,11 +238,11 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                 else
                 {
                     // handle clic in
-                    if (__X >= X_TEXT_SELCREA_UI && __X <= MX_TEXT_SELCREA_UI)
+                    if (m__X >= X_TEXT_SELCREA_UI && m__X <= MX_TEXT_SELCREA_UI)
                     {
-                        if (__Y >= Y_TEXT_SELCREA_UI && __Y <= MY_TEXT_SELCREA_UI)
+                        if (m__Y >= Y_TEXT_SELCREA_UI && m__Y <= MY_TEXT_SELCREA_UI)
                         {
-                            this->__selected = (__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI;
+                            this->__selected = (m__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI;
                             m = (this->selectingadv) ? this->adv.size() : this->equip->getSize();
                             if (this->__selected >= 0 && this->__selected < m)
                                 this->selectingcrea = false;
@@ -377,35 +376,31 @@ void FightView::start()
         this->sprites[this->__me + to_string<int>(i)] = sf::Sprite(this->crealoader->get(this->dex->getInfo(this->equip->getCrea(i)->getId()).file));
         float factor = CREATURE_HEIGHT / this->crealoader->get(this->dex->getInfo(this->equip->getCrea(i)->getId()).file).getSize().y;
         this->sprites[this->__me + to_string<int>(i)].setScale(factor, factor);
+        // reversing our creatures to make them look to the right (to the others creatures)
+        int width = this->sprites[this->__me + to_string<int>(i)].getGlobalBounds().width,
+             height = this->sprites[this->__me + to_string<int>(i)].getGlobalBounds().height;
+        this->sprites[this->__me + to_string<int>(i)].setTextureRect(sf::IntRect(width, 0, -width, height));
         /// calculate position of the sprite regarding to the index
         this->sprites[this->__me + to_string<int>(i)].setPosition(i * CREATURE_HEIGHT, 45.0f);
     }
     moy_equip /= float(this->equip->getSize());
 
-    std::mt19937 rng;
-    rng.seed(std::random_device()());
-    std::uniform_int_distribution<std::mt19937::result_type> dist1((moy_equip - 4 > 0) ? int(moy_equip) - 4 : int(moy_equip), moy_equip + 6);
-    int _x_ = dist1(rng);
+    int _x_ = rand() % 10 + ((moy_equip - 4 > 0) ? int(moy_equip) - 4 : int(moy_equip), moy_equip + 6);
     _x_ = (_x_ - 2 > 0) ? _x_ - 2 : _x_;
-    std::uniform_int_distribution<std::mt19937::result_type> dist2(_x_, _x_ + 4);
-    std::uniform_int_distribution<std::mt19937::result_type> distid(0, this->dex->getMaxId());
-    std::uniform_int_distribution<std::mt19937::result_type> diststype(0, SortilegeType::Count - 1);
-    std::uniform_int_distribution<std::mt19937::result_type> distcd(3, 6);
-    std::uniform_int_distribution<std::mt19937::result_type> disttargets(2, this->equip->getSize());
 
     for (int i=0; i < this->equip->getMaxSize(); i++)
     {
         Creature* crea = new Creature();
-        int  id = distid(rng)
+        int  id = rand() % (this->dex->getMaxId() + 1)
               , _t = this->dex->getInfo(id).type
               ,  _s = this->dex->getInfo(id).stade
-              , _st = diststype(rng)  // SortilegeType::UniqueTargetAdvDamage
-              , level = dist2(rng)
-              , life = 2 * level + int(distcd(rng))  // mlife = life
+              , _st = rand() % SortilegeType::Count  // SortilegeType::UniqueTargetAdvDamage
+              , level = (rand() % 4) + _x_
+              , life = 2 * level + (rand() % 4) + 3  // mlife = life
               , pp = Creature::calculatePPFromLevel(level) // mpp = pp
-              , scd = distcd(rng)  // cooldown for the sortilege
+              , scd = (rand() % 4) + 3  // cooldown for the sortilege
               , sdmg = ceil(scd * 0.125 * level + 1)  // damages for the sortilege
-              , stargets = disttargets(rng)  // targets for the sortilege
+              , stargets = rand() % (this->equip->getSize()+ 1)  // targets for the sortilege
               , atk = Creature::calculateStatFromLevel(level)  // attack of the creature
               , def = Creature::calculateStatFromLevel(level);  // defense
         long int exp = Creature::calculateExpFromLevel(level);

@@ -64,6 +64,10 @@
     #include <dirent.h>
 #endif // PLATFORM_POSIX
 
+// sfml related
+#define m__X event.mouseButton.x
+#define m__Y event.mouseButton.y
+
 // directions
 enum class DIRECTION {
     up,

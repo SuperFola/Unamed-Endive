@@ -6,9 +6,6 @@
 #include "default.hpp"
 #include "../scripting/scripting.hpp"
 
-#define __X event.mouseButton.x
-#define __Y event.mouseButton.y
-
 std::vector<std::string> glob_frag(const std::string& directory)
 {
     std::vector<std::string> files;
@@ -262,7 +259,7 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed, sf::RenderWin
         case sf::Event::MouseButtonPressed:
             if (event.mouseButton.button == sf::Mouse::Left)
             {
-                this->resolve_pnjspeak(__X, __Y, window);
+                this->resolve_pnjspeak(m__X, m__Y, window);
             }
             break;
 

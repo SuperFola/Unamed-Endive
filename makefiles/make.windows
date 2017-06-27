@@ -42,9 +42,9 @@ OBJDIR_RELEASEWIN = obj\\ReleaseWin
 DEP_RELEASEWIN = 
 OUT_RELEASEWIN = bin\\ReleaseWin\\main.exe
 
-OBJ_DEBUGWIN = $(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting.o $(OBJDIR_DEBUGWIN)\\src\\scripting\\pythonscripting.o $(OBJDIR_DEBUGWIN)\\src\\particles\\particles.o $(OBJDIR_DEBUGWIN)\\src\\objects\\messenger.o $(OBJDIR_DEBUGWIN)\\src\\objects\\dex.o $(OBJDIR_DEBUGWIN)\\src\\network\\network.o $(OBJDIR_DEBUGWIN)\\src\\map\\tilemap.o $(OBJDIR_DEBUGWIN)\\src\\map\\reader.o $(OBJDIR_DEBUGWIN)\\src\\map\\map.o $(OBJDIR_DEBUGWIN)\\src\\map\\blocks\\block.o $(OBJDIR_DEBUGWIN)\\src\\jsoncpp.o $(OBJDIR_DEBUGWIN)\\src\\views\\view.o $(OBJDIR_DEBUGWIN)\\src\\views\\shop.o $(OBJDIR_DEBUGWIN)\\src\\views\\save.o $(OBJDIR_DEBUGWIN)\\src\\views\\map.o $(OBJDIR_DEBUGWIN)\\src\\views\\inventory.o $(OBJDIR_DEBUGWIN)\\src\\views\\huds\\menu.o $(OBJDIR_DEBUGWIN)\\src\\views\\huds\\hud.o $(OBJDIR_DEBUGWIN)\\src\\views\\fight.o $(OBJDIR_DEBUGWIN)\\src\\views\\dex.o $(OBJDIR_DEBUGWIN)\\src\\views\\default.o $(OBJDIR_DEBUGWIN)\\src\\views\\creatures.o $(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting_game.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\types_table.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\statemachine.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\point.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\musicplayer.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\gameDataLoader.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\functions.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\equip.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\creatures_loader.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\convert_events.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\competence.o $(OBJDIR_DEBUGWIN)\\resource.o $(OBJDIR_DEBUGWIN)\\main.o $(OBJDIR_DEBUGWIN)\\src\\game.o $(OBJDIR_DEBUGWIN)\\src\\entities\\pnjmanager.o $(OBJDIR_DEBUGWIN)\\src\\entities\\pnj.o $(OBJDIR_DEBUGWIN)\\src\\entities\\effects\\sort.o $(OBJDIR_DEBUGWIN)\\src\\entities\\creature.o $(OBJDIR_DEBUGWIN)\\src\\entities\\character.o $(OBJDIR_DEBUGWIN)\\src\\entities\\animatedentity.o $(OBJDIR_DEBUGWIN)\\src\\constants.o $(OBJDIR_DEBUGWIN)\\src\\bag\\pockets\\pocket.o $(OBJDIR_DEBUGWIN)\\src\\bag\\pockets\\objects\\object.o $(OBJDIR_DEBUGWIN)\\src\\bag\\objectstable.o $(OBJDIR_DEBUGWIN)\\src\\bag\\bag.o
+OBJ_DEBUGWIN = $(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting_game.o $(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting.o $(OBJDIR_DEBUGWIN)\\src\\scripting\\pythonscripting.o $(OBJDIR_DEBUGWIN)\\src\\particles\\particles.o $(OBJDIR_DEBUGWIN)\\src\\objects\\messenger.o $(OBJDIR_DEBUGWIN)\\src\\objects\\dex.o $(OBJDIR_DEBUGWIN)\\src\\network\\network.o $(OBJDIR_DEBUGWIN)\\src\\map\\tilemap.o $(OBJDIR_DEBUGWIN)\\src\\map\\reader.o $(OBJDIR_DEBUGWIN)\\src\\map\\map.o $(OBJDIR_DEBUGWIN)\\src\\map\\blocks\\block.o $(OBJDIR_DEBUGWIN)\\src\\jsoncpp.o $(OBJDIR_DEBUGWIN)\\src\\views\\view.o $(OBJDIR_DEBUGWIN)\\src\\views\\shop.o $(OBJDIR_DEBUGWIN)\\src\\views\\settings.o $(OBJDIR_DEBUGWIN)\\src\\views\\save.o $(OBJDIR_DEBUGWIN)\\src\\views\\map.o $(OBJDIR_DEBUGWIN)\\src\\views\\inventory.o $(OBJDIR_DEBUGWIN)\\src\\views\\huds\\menu.o $(OBJDIR_DEBUGWIN)\\src\\views\\huds\\hud.o $(OBJDIR_DEBUGWIN)\\src\\views\\fight.o $(OBJDIR_DEBUGWIN)\\src\\views\\dex.o $(OBJDIR_DEBUGWIN)\\src\\views\\default.o $(OBJDIR_DEBUGWIN)\\src\\views\\creatures.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\types_table.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\statemachine.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\point.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\musicplayer.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\gameDataLoader.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\functions.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\equip.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\creatures_loader.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\convert_events.o $(OBJDIR_DEBUGWIN)\\src\\abstract\\competence.o $(OBJDIR_DEBUGWIN)\\resource.o $(OBJDIR_DEBUGWIN)\\main.o $(OBJDIR_DEBUGWIN)\\src\\game.o $(OBJDIR_DEBUGWIN)\\src\\entities\\pnjmanager.o $(OBJDIR_DEBUGWIN)\\src\\entities\\pnj.o $(OBJDIR_DEBUGWIN)\\src\\entities\\effects\\sort.o $(OBJDIR_DEBUGWIN)\\src\\entities\\creature.o $(OBJDIR_DEBUGWIN)\\src\\entities\\character.o $(OBJDIR_DEBUGWIN)\\src\\entities\\animatedentity.o $(OBJDIR_DEBUGWIN)\\src\\constants.o $(OBJDIR_DEBUGWIN)\\src\\bag\\pockets\\pocket.o $(OBJDIR_DEBUGWIN)\\src\\bag\\pockets\\objects\\object.o $(OBJDIR_DEBUGWIN)\\src\\bag\\objectstable.o $(OBJDIR_DEBUGWIN)\\src\\bag\\bag.o
 
-OBJ_RELEASEWIN = $(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting.o $(OBJDIR_RELEASEWIN)\\src\\scripting\\pythonscripting.o $(OBJDIR_RELEASEWIN)\\src\\particles\\particles.o $(OBJDIR_RELEASEWIN)\\src\\objects\\messenger.o $(OBJDIR_RELEASEWIN)\\src\\objects\\dex.o $(OBJDIR_RELEASEWIN)\\src\\network\\network.o $(OBJDIR_RELEASEWIN)\\src\\map\\tilemap.o $(OBJDIR_RELEASEWIN)\\src\\map\\reader.o $(OBJDIR_RELEASEWIN)\\src\\map\\map.o $(OBJDIR_RELEASEWIN)\\src\\map\\blocks\\block.o $(OBJDIR_RELEASEWIN)\\src\\jsoncpp.o $(OBJDIR_RELEASEWIN)\\src\\views\\view.o $(OBJDIR_RELEASEWIN)\\src\\views\\shop.o $(OBJDIR_RELEASEWIN)\\src\\views\\save.o $(OBJDIR_RELEASEWIN)\\src\\views\\map.o $(OBJDIR_RELEASEWIN)\\src\\views\\inventory.o $(OBJDIR_RELEASEWIN)\\src\\views\\huds\\menu.o $(OBJDIR_RELEASEWIN)\\src\\views\\huds\\hud.o $(OBJDIR_RELEASEWIN)\\src\\views\\fight.o $(OBJDIR_RELEASEWIN)\\src\\views\\dex.o $(OBJDIR_RELEASEWIN)\\src\\views\\default.o $(OBJDIR_RELEASEWIN)\\src\\views\\creatures.o $(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting_game.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\types_table.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\statemachine.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\point.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\musicplayer.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\gameDataLoader.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\functions.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\equip.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\creatures_loader.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\convert_events.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\competence.o $(OBJDIR_RELEASEWIN)\\resource.o $(OBJDIR_RELEASEWIN)\\main.o $(OBJDIR_RELEASEWIN)\\src\\game.o $(OBJDIR_RELEASEWIN)\\src\\entities\\pnjmanager.o $(OBJDIR_RELEASEWIN)\\src\\entities\\pnj.o $(OBJDIR_RELEASEWIN)\\src\\entities\\effects\\sort.o $(OBJDIR_RELEASEWIN)\\src\\entities\\creature.o $(OBJDIR_RELEASEWIN)\\src\\entities\\character.o $(OBJDIR_RELEASEWIN)\\src\\entities\\animatedentity.o $(OBJDIR_RELEASEWIN)\\src\\constants.o $(OBJDIR_RELEASEWIN)\\src\\bag\\pockets\\pocket.o $(OBJDIR_RELEASEWIN)\\src\\bag\\pockets\\objects\\object.o $(OBJDIR_RELEASEWIN)\\src\\bag\\objectstable.o $(OBJDIR_RELEASEWIN)\\src\\bag\\bag.o
+OBJ_RELEASEWIN = $(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting_game.o $(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting.o $(OBJDIR_RELEASEWIN)\\src\\scripting\\pythonscripting.o $(OBJDIR_RELEASEWIN)\\src\\particles\\particles.o $(OBJDIR_RELEASEWIN)\\src\\objects\\messenger.o $(OBJDIR_RELEASEWIN)\\src\\objects\\dex.o $(OBJDIR_RELEASEWIN)\\src\\network\\network.o $(OBJDIR_RELEASEWIN)\\src\\map\\tilemap.o $(OBJDIR_RELEASEWIN)\\src\\map\\reader.o $(OBJDIR_RELEASEWIN)\\src\\map\\map.o $(OBJDIR_RELEASEWIN)\\src\\map\\blocks\\block.o $(OBJDIR_RELEASEWIN)\\src\\jsoncpp.o $(OBJDIR_RELEASEWIN)\\src\\views\\view.o $(OBJDIR_RELEASEWIN)\\src\\views\\shop.o $(OBJDIR_RELEASEWIN)\\src\\views\\settings.o $(OBJDIR_RELEASEWIN)\\src\\views\\save.o $(OBJDIR_RELEASEWIN)\\src\\views\\map.o $(OBJDIR_RELEASEWIN)\\src\\views\\inventory.o $(OBJDIR_RELEASEWIN)\\src\\views\\huds\\menu.o $(OBJDIR_RELEASEWIN)\\src\\views\\huds\\hud.o $(OBJDIR_RELEASEWIN)\\src\\views\\fight.o $(OBJDIR_RELEASEWIN)\\src\\views\\dex.o $(OBJDIR_RELEASEWIN)\\src\\views\\default.o $(OBJDIR_RELEASEWIN)\\src\\views\\creatures.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\types_table.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\statemachine.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\point.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\musicplayer.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\gameDataLoader.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\functions.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\equip.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\creatures_loader.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\convert_events.o $(OBJDIR_RELEASEWIN)\\src\\abstract\\competence.o $(OBJDIR_RELEASEWIN)\\resource.o $(OBJDIR_RELEASEWIN)\\main.o $(OBJDIR_RELEASEWIN)\\src\\game.o $(OBJDIR_RELEASEWIN)\\src\\entities\\pnjmanager.o $(OBJDIR_RELEASEWIN)\\src\\entities\\pnj.o $(OBJDIR_RELEASEWIN)\\src\\entities\\effects\\sort.o $(OBJDIR_RELEASEWIN)\\src\\entities\\creature.o $(OBJDIR_RELEASEWIN)\\src\\entities\\character.o $(OBJDIR_RELEASEWIN)\\src\\entities\\animatedentity.o $(OBJDIR_RELEASEWIN)\\src\\constants.o $(OBJDIR_RELEASEWIN)\\src\\bag\\pockets\\pocket.o $(OBJDIR_RELEASEWIN)\\src\\bag\\pockets\\objects\\object.o $(OBJDIR_RELEASEWIN)\\src\\bag\\objectstable.o $(OBJDIR_RELEASEWIN)\\src\\bag\\bag.o
 
 all: before_build build_debugwin build_releasewin after_build
 
@@ -53,8 +53,8 @@ clean: clean_debugwin clean_releasewin
 before_build: 
 
 after_build: 
-	"..\tools\genmakefile.bat"
-	"makerelease.bat"
+	".scripts\genmakefile.bat"
+	".scripts\makerelease.bat"
 
 before_debugwin: 
 	cmd /c if not exist bin\\DebugWin md bin\\DebugWin
@@ -83,6 +83,9 @@ debugwin: before_build build_debugwin after_build
 
 out_debugwin: before_debugwin $(OBJ_DEBUGWIN) $(DEP_DEBUGWIN)
 	$(LD) $(LIBDIR_DEBUGWIN) -o $(OUT_DEBUGWIN) $(OBJ_DEBUGWIN)  $(LDFLAGS_DEBUGWIN) $(LIB_DEBUGWIN)
+
+$(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting_game.o: src\\scripting\\scripting_game.cpp
+	$(CXX) $(CFLAGS_DEBUGWIN) $(INC_DEBUGWIN) -c src\\scripting\\scripting_game.cpp -o $(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting_game.o
 
 $(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting.o: src\\scripting\\scripting.cpp
 	$(CXX) $(CFLAGS_DEBUGWIN) $(INC_DEBUGWIN) -c src\\scripting\\scripting.cpp -o $(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting.o
@@ -123,6 +126,9 @@ $(OBJDIR_DEBUGWIN)\\src\\views\\view.o: src\\views\\view.cpp
 $(OBJDIR_DEBUGWIN)\\src\\views\\shop.o: src\\views\\shop.cpp
 	$(CXX) $(CFLAGS_DEBUGWIN) $(INC_DEBUGWIN) -c src\\views\\shop.cpp -o $(OBJDIR_DEBUGWIN)\\src\\views\\shop.o
 
+$(OBJDIR_DEBUGWIN)\\src\\views\\settings.o: src\\views\\settings.cpp
+	$(CXX) $(CFLAGS_DEBUGWIN) $(INC_DEBUGWIN) -c src\\views\\settings.cpp -o $(OBJDIR_DEBUGWIN)\\src\\views\\settings.o
+
 $(OBJDIR_DEBUGWIN)\\src\\views\\save.o: src\\views\\save.cpp
 	$(CXX) $(CFLAGS_DEBUGWIN) $(INC_DEBUGWIN) -c src\\views\\save.cpp -o $(OBJDIR_DEBUGWIN)\\src\\views\\save.o
 
@@ -149,9 +155,6 @@ $(OBJDIR_DEBUGWIN)\\src\\views\\default.o: src\\views\\default.cpp
 
 $(OBJDIR_DEBUGWIN)\\src\\views\\creatures.o: src\\views\\creatures.cpp
 	$(CXX) $(CFLAGS_DEBUGWIN) $(INC_DEBUGWIN) -c src\\views\\creatures.cpp -o $(OBJDIR_DEBUGWIN)\\src\\views\\creatures.o
-
-$(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting_game.o: src\\scripting\\scripting_game.cpp
-	$(CXX) $(CFLAGS_DEBUGWIN) $(INC_DEBUGWIN) -c src\\scripting\\scripting_game.cpp -o $(OBJDIR_DEBUGWIN)\\src\\scripting\\scripting_game.o
 
 $(OBJDIR_DEBUGWIN)\\src\\abstract\\types_table.o: src\\abstract\\types_table.cpp
 	$(CXX) $(CFLAGS_DEBUGWIN) $(INC_DEBUGWIN) -c src\\abstract\\types_table.cpp -o $(OBJDIR_DEBUGWIN)\\src\\abstract\\types_table.o
@@ -256,6 +259,9 @@ releasewin: before_build build_releasewin after_build
 out_releasewin: before_releasewin $(OBJ_RELEASEWIN) $(DEP_RELEASEWIN)
 	$(LD) $(LIBDIR_RELEASEWIN) -o $(OUT_RELEASEWIN) $(OBJ_RELEASEWIN)  $(LDFLAGS_RELEASEWIN) -mwindows $(LIB_RELEASEWIN)
 
+$(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting_game.o: src\\scripting\\scripting_game.cpp
+	$(CXX) $(CFLAGS_RELEASEWIN) $(INC_RELEASEWIN) -c src\\scripting\\scripting_game.cpp -o $(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting_game.o
+
 $(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting.o: src\\scripting\\scripting.cpp
 	$(CXX) $(CFLAGS_RELEASEWIN) $(INC_RELEASEWIN) -c src\\scripting\\scripting.cpp -o $(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting.o
 
@@ -295,6 +301,9 @@ $(OBJDIR_RELEASEWIN)\\src\\views\\view.o: src\\views\\view.cpp
 $(OBJDIR_RELEASEWIN)\\src\\views\\shop.o: src\\views\\shop.cpp
 	$(CXX) $(CFLAGS_RELEASEWIN) $(INC_RELEASEWIN) -c src\\views\\shop.cpp -o $(OBJDIR_RELEASEWIN)\\src\\views\\shop.o
 
+$(OBJDIR_RELEASEWIN)\\src\\views\\settings.o: src\\views\\settings.cpp
+	$(CXX) $(CFLAGS_RELEASEWIN) $(INC_RELEASEWIN) -c src\\views\\settings.cpp -o $(OBJDIR_RELEASEWIN)\\src\\views\\settings.o
+
 $(OBJDIR_RELEASEWIN)\\src\\views\\save.o: src\\views\\save.cpp
 	$(CXX) $(CFLAGS_RELEASEWIN) $(INC_RELEASEWIN) -c src\\views\\save.cpp -o $(OBJDIR_RELEASEWIN)\\src\\views\\save.o
 
@@ -321,9 +330,6 @@ $(OBJDIR_RELEASEWIN)\\src\\views\\default.o: src\\views\\default.cpp
 
 $(OBJDIR_RELEASEWIN)\\src\\views\\creatures.o: src\\views\\creatures.cpp
 	$(CXX) $(CFLAGS_RELEASEWIN) $(INC_RELEASEWIN) -c src\\views\\creatures.cpp -o $(OBJDIR_RELEASEWIN)\\src\\views\\creatures.o
-
-$(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting_game.o: src\\scripting\\scripting_game.cpp
-	$(CXX) $(CFLAGS_RELEASEWIN) $(INC_RELEASEWIN) -c src\\scripting\\scripting_game.cpp -o $(OBJDIR_RELEASEWIN)\\src\\scripting\\scripting_game.o
 
 $(OBJDIR_RELEASEWIN)\\src\\abstract\\types_table.o: src\\abstract\\types_table.cpp
 	$(CXX) $(CFLAGS_RELEASEWIN) $(INC_RELEASEWIN) -c src\\abstract\\types_table.cpp -o $(OBJDIR_RELEASEWIN)\\src\\abstract\\types_table.o
