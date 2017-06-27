@@ -19,7 +19,7 @@
 #define Y_TEXT_SELCREA_UI 200
 #define MY_TEXT_SELCREA_UI 400
 #define YS_TEXT_SELCREA_UI 30
-#define CREATURE_HEIGHT 180.0f
+#define CREATURE_HEIGHT 160.0f
 
 class FightView : public View
 {
