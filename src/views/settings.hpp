@@ -9,11 +9,11 @@
 #include "../abstract/container.hpp"
 #include "../json/json.h"
 #include "../abstract/functions.hpp"
+#include "../abstract/config.hpp"
 
 class SettingsView : public View
 {
 private:
-    Json::Value root;
     Container<sf::Texture> textures;
     Container<sf::Text> texts;
     std::map<std::string, sf::Sprite> sprites;

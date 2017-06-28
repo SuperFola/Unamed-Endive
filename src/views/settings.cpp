@@ -129,23 +129,16 @@ bool SettingsView::load()
 
 void SettingsView::update_texts()
 {
-    // loading config file
-    this->root.clear();
-    std::ifstream config("config.json");
-    config >> this->root;
-
-    this->texts.get(this->VMU).setString((this->root["music"].asInt() == 1) ? "on" : "off");
-    this->texts.get(this->VAA).setString((this->root["aa"].asInt() == 1) ? "on" : "off");
-    this->texts.get(this->VVS).setString((this->root["v-sync"].asInt() == 1) ? "on" : "off");
-    this->texts.get(this->VSHADER).setString(this->root["shader"].asString());
-    this->texts.get(this->VFPS).setString(to_string<int>(this->root["fps"].asInt()));
-    this->texts.get(this->VMENU).setString(this->root["menu"].asString());
-    this->texts.get(this->VUP).setString(this->root["up"].asString());
-    this->texts.get(this->VDW).setString(this->root["down"].asString());
-    this->texts.get(this->VRI).setString(this->root["right"].asString());
-    this->texts.get(this->VLE).setString(this->root["left"].asString());
-
-    config.close();
+    this->texts.get(this->VMU).setString((Config::get("music").asInt() == 1) ? "on" : "off");
+    this->texts.get(this->VAA).setString((Config::get("aa").asInt() == 1) ? "on" : "off");
+    this->texts.get(this->VVS).setString((Config::get("v-sync").asInt() == 1) ? "on" : "off");
+    this->texts.get(this->VSHADER).setString(Config::get("shader").asString());
+    this->texts.get(this->VFPS).setString(to_string<int>(Config::get("fps").asInt()));
+    this->texts.get(this->VMENU).setString(Config::get("menu").asString());
+    this->texts.get(this->VUP).setString(Config::get("up").asString());
+    this->texts.get(this->VDW).setString(Config::get("down").asString());
+    this->texts.get(this->VRI).setString(Config::get("right").asString());
+    this->texts.get(this->VLE).setString(Config::get("left").asString());
 }
 
 void SettingsView::render(sf::RenderWindow& window)

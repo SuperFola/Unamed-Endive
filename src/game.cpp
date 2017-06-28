@@ -621,6 +621,8 @@ Game::Game() :
     , _got_coderet(false)
     , menu_game_selected(-1)
 {
+    Config::load();
+
     // OMessenger
     OMessenger::empty();
 
@@ -791,6 +793,8 @@ void Game::on_end()
 
     // saving, JIC
     this->sm.getSave()->save();
+
+    Config::close();
 }
 
 int Game::run()

@@ -341,7 +341,7 @@ void DefaultView::disable_pnj_speaking()
 
 void DefaultView::setShader(const std::string& name)
 {
-    if (name == "" || std::find(this->shaders.begin(), this->shaders.end(), name) != this->shaders.end())
+    if ((name == "" || std::find(this->shaders.begin(), this->shaders.end(), name) != this->shaders.end()) && sf::Shader::isAvailable())
     {
         this->current_shader = name;
         if (!this->shader.loadFromFile(this->shaders_path + name, sf::Shader::Fragment))
