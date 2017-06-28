@@ -8,5 +8,6 @@
     "up": "z",
     "down": "s",
     "right": "d",
-    "left": "q"
+    "left": "q",
+    "sigma": 0.5
 }

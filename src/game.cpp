@@ -769,6 +769,8 @@ void Game::post_load()
     this->sm.getCrea()->post_load();
     this->sm.getDefault()->getCharacter()->getPC()->increase_size(MAX_SIZE_PC);
 
+    this->sm.getDefault()->setShader(Config::get("shader").asString());
+
     #ifdef PLATFORM_WIN
         DebugLog(SH_INFO, "Platform: Windows");
     #endif // PLATFORM_WIN
@@ -808,8 +810,6 @@ int Game::run()
     int _fps_update = 0;
     sf::Event event;
 
-    /// testing !!
-    this->sm.getDefault()->setShader("distorsion.frag");
     float timer = 1.0f;
 
     if (this->has_requested_quit)
@@ -850,6 +850,7 @@ int Game::run()
         this->render();
         this->window.display();
 
+        // shaders things
         timer += 1.0f;
         this->sm.getDefault()->setShaderParameter("timer", timer);
     }

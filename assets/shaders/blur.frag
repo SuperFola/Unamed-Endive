@@ -1,10 +1,9 @@
 uniform sampler2D texture;
 uniform float sigma;  // (1.0 += 0.5 | 0.01 | 0.001) % 6.0
-uniform float teta;  // 1.0
 uniform float width;
 
 const int KERNEL_SIZE = 5;
-float glow = teta / (sigma * sqrt(2.0 * 3.14159));
+float glow = 1.0 / (sigma * sqrt(2.0 * 3.14159));
 
 float blurWeight(float x){
     return (glow * exp(-(x*x) / (2.0 * sigma * sigma)));

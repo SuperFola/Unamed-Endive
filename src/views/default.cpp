@@ -78,6 +78,8 @@ bool DefaultView::load(sf::String folder)
         for (auto& frag : glob_frag("assets/shaders"))
             this->shaders.push_back(frag);
     }
+    if (!this->distortionMap.loadFromFile("assets/shaders/textures/noiseWater.png"))
+        return false;
 
     // loading game data
     if (is_file_existing("saves/" + folder.toAnsiString() + "/map.json"))
@@ -347,7 +349,12 @@ void DefaultView::setShader(const std::string& name)
         if (!this->shader.loadFromFile(this->shaders_path + name, sf::Shader::Fragment))
             DebugLog(SH_ERR, "Could not load shader at " << this->shaders_path << name);
         else
+        {
             this->setShaderParameter("texture", this->world.getTexture());
+            this->setShaderParameter("distortionMapTexture", this->distortionMap);
+            this->setShaderParameter("width", float(WIN_W));
+            this->setShaderParameter("sigma", 0.5f);
+        }
     }
 }
 

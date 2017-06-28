@@ -37,6 +37,7 @@ private:
     std::vector<std::string> shaders;
     std::string current_shader;
     sf::Shader shader;
+    sf::Texture distortionMap;
     // methods
     void set_view(sf::RenderWindow&);
     void unset_view(sf::RenderWindow&);
