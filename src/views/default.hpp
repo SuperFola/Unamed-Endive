@@ -69,7 +69,7 @@ public:
     void setShaderParameter(const std::string& param, T& value)
     {
         if (this->current_shader != "")
-            this->shader.setParameter(param, value);
+            this->shader.setUniform(param, value);
     }
     void setShader(const std::string& name);
     const std::string& getCurrentShader();

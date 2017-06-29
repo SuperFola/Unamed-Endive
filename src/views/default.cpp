@@ -350,10 +350,14 @@ void DefaultView::setShader(const std::string& name)
             DebugLog(SH_ERR, "Could not load shader at " << this->shaders_path << name);
         else
         {
-            this->setShaderParameter("texture", this->world.getTexture());
-            this->setShaderParameter("distortionMapTexture", this->distortionMap);
-            this->setShaderParameter("width", float(WIN_W));
-            this->setShaderParameter("sigma", 0.5f);
+            this->shader.setUniform("texture", this->world.getTexture());
+//            this->setShaderParameter("texture", this->world.getTexture());
+            this->shader.setUniform("distorsionMapTexture", this->distortionMap);
+//            this->setShaderParameter("distortionMapTexture", this->distortionMap);
+            this->shader.setUniform("width", float(WIN_W));
+//            this->setShaderParameter(std::string("width"), WIN_W);
+            this->shader.setUniform("sigma", 0.5f);
+//            this->setShaderParameter(std::string("sigma"), 0.5f);
         }
     }
 }

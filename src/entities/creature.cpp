@@ -153,11 +153,8 @@ int Creature::getDef()
 
 void Creature::update(std::vector<Creature*>& board)
 {
-    if (!this->sortilege.getCooldown())
-        // attack
-        this->sortilege.act(board);
-    else
-        ;
+    /// FAKE
+    this->sortilege.act(board);
 }
 
 Json::Value Creature::serialize()

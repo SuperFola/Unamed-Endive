@@ -14,7 +14,7 @@ Config::Config() :
 void Config::load()
 {
     self.root.clear();
-    self.config >> self.root;
+    self.file >> self.root;
 }
 
 void Config::close()

@@ -329,5 +329,5 @@ void PyScripting::writeText(const char* id)
 
 void PyScripting::setFightEnv(int id)
 {
-    instance.sm->getFight()->set_env(static_cast<FightEnv>(id % FightEnv::FECount));
+    instance.sm->getFight()->set_env(static_cast<FightEnv>(id % static_cast<int>(FightEnv::FECount)));
 }

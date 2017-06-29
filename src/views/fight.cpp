@@ -366,7 +366,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     this->enemy.setString(this->adv[this->ui_enemy_selected]->getName());
     this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName());
     this->e_pv.setString(to_string<int>(this->adv[this->ui_enemy_selected]->getLife()) + "/" + to_string<int>(this->adv[this->ui_enemy_selected]->getMaxLife()));
-    this->m_pv.setString(to_string<int>(this->equip->get(this->ui_my_selected)->getLife()) + "/" + to_string<int>(this->equip->get(this->ui_my_selected)->getMaxLife()));
+    this->m_pv.setString(to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLife()) + "/" + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
 }
 
 void FightView::encounter()

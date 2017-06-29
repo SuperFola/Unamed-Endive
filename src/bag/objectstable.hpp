@@ -13,6 +13,8 @@ class ObjectsTable
 {
 private:
     // variables
+    ObjectsTable& operator=(const ObjectsTable&) {return instance;}
+    ObjectsTable(const ObjectsTable&) {}
     std::vector<struct ObjData> objects_name;
     static class ObjectsTable instance;
     Json::Value root;

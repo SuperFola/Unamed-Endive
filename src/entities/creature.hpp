@@ -13,6 +13,8 @@
 
 #define LIFEBAR_WIDTH 124.0f
 #define LIFEBAR_HEIGHT 19.0f
+#define DEFAULT_LIFE 100
+#define DEFAULT_PP 30
 
 class Creature {
 private:

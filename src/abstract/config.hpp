@@ -8,9 +8,11 @@
 class Config
 {
 private:
+    Config& operator=(const Config&) {return self;}
+    Config(const Config&) {}
     Json::Value root;
     std::ifstream file;
-    static Config self;
+    static class Config self;
     Config();
 
 public:
