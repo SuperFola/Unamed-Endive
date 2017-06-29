@@ -82,7 +82,6 @@ ObjUDD Pocket::useObject(int id)
             case ObjType::healpp:
             case ObjType::healstatus:
             case ObjType::levelup:
-            case ObjType::lowercooldown:
                 ret.target_view = MYCREATURES_VIEW_ID;
                 ret.action = ObjAction::selectone;
                 break;

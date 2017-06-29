@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <string>
 
 #include "../../abstract/type.hpp"
 #include "../../json/json.h"
@@ -14,17 +15,15 @@ private:
     // variables
     SortilegeType type;
     int damages;
-    int cooldown;
-    int current_cooldown;
     int targets;
+    /// only if we add a competences' tree :
+    std::string name;
 
 public:
     // methods
     Sort();
-    bool load(SortilegeType, int, int, int);
+    bool load(SortilegeType, int, int);
     bool loadfrom(Sort&);
-    int getCooldown();
-    bool lowercooldown(int);
     void update();
     void act(std::vector<Creature*>&);
     Json::Value serialize();

@@ -10,7 +10,6 @@ enum ObjType {
     healstatus,
     capture,
     levelup,
-    lowercooldown,
     none
 };
 

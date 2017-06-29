@@ -21,7 +21,7 @@ Creature::Creature() :
 
 }
 
-bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, int pp, int mpp, std::string name, State& s, int level, long int exp, SortilegeType& stype, int sdmg, int scd, int stargets)
+bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, int pp, int mpp, std::string name, State& s, int level, long int exp, SortilegeType& stype, int sdmg, int stargets)
 {
     DebugLog(SH_INFO, "Loading creature " << name);
     this->id = id;
@@ -36,7 +36,7 @@ bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, int 
     this->state = s;
     this->level = level;
     this->exp = exp;
-    return this->sortilege.load(stype, sdmg, scd, stargets);
+    return this->sortilege.load(stype, sdmg, stargets);
 }
 
 bool Creature::loadfrom(Creature* other)
@@ -315,7 +315,3 @@ bool Creature::levelUP(int value)
     return true;
 }
 
-bool Creature::lowercooldown(int value)
-{
-    return this->sortilege.lowercooldown(value);
-}

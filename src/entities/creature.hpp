@@ -1,9 +1,6 @@
 #ifndef DEF_CREATURE
 #define DEF_CREATURE
 
-#define DEFAULT_LIFE 100
-#define DEFAULT_PP 30
-
 #include <string>
 #include <vector>
 #include <math.h>
@@ -13,6 +10,9 @@
 #include "effects/sort.hpp"
 #include "states.hpp"
 #include "../json/json.h"
+
+#define LIFEBAR_WIDTH 124.0f
+#define LIFEBAR_HEIGHT 19.0f
 
 class Creature {
 private:
@@ -35,7 +35,7 @@ private:
 public:
     // methods
     Creature();
-    bool load(int, Type&, int, int, int, int, int, int, std::string, State&, int, long int, SortilegeType&, int, int, int);
+    bool load(int, Type&, int, int, int, int, int, int, std::string, State&, int, long int, SortilegeType&, int, int);
     bool loadfrom(Creature*);
     int getLife();
     int getMaxLife();
@@ -63,7 +63,6 @@ public:
     bool healPP(int);
     bool healStatus(int);
     bool levelUP(int);
-    bool lowercooldown(int);
 };
 
 #endif // DEF_CREATURE

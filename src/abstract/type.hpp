@@ -19,16 +19,13 @@ enum SortilegeType {
     UniqueTargetAdvPoison,
     UniqueTargetAdvBurn,
     UniqueTargetAdvParalize,
-    UniqueTargetAdvNerfCooldown,
 
     UniqueTargetUsHeal,
-    UniqueTargetUsBuffCooldown,
 
     MultipleAdvDamage,
     MultipleAdvPoison,
     MultipleAdvBurn,
     MultipleAdvParalize,
-    MultipleAdvNerfCooldown,
 
     MultipleUsHeal,
     MultipleUsHealStatus,

@@ -4,24 +4,15 @@
 Sort::Sort() :
     type(SortilegeType::UniqueTargetAdvDamage)
     , damages(0)
-    , cooldown(0)
-    , current_cooldown(0)
     , targets(0)
 {
 
 }
 
-int Sort::getCooldown()
-{
-    return this->current_cooldown;
-}
-
-bool Sort::load(SortilegeType stype, int dmg, int cd, int targets)
+bool Sort::load(SortilegeType stype, int dmg, int targets)
 {
     this->type = stype;
     this->damages = dmg;
-    this->cooldown = cd;
-    this->current_cooldown = 0;
     this->targets = targets;
 
     return true;
@@ -31,8 +22,6 @@ bool Sort::loadfrom(Sort& other)
 {
     this->type = other.type;
     this->damages = other.damages;
-    this->cooldown = other.cooldown;
-    this->current_cooldown = other.current_cooldown;
     this->targets = other.targets;
 
     return true;
@@ -40,7 +29,7 @@ bool Sort::loadfrom(Sort& other)
 
 void Sort::update()
 {
-    // update cooldown
+    // update things
 }
 
 void Sort::act(std::vector<Creature*>& board)
@@ -60,14 +49,8 @@ void Sort::act(std::vector<Creature*>& board)
     case SortilegeType::UniqueTargetAdvParalize:
         break;
 
-    case SortilegeType::UniqueTargetAdvNerfCooldown:
-        break;
-
     // unique us
     case SortilegeType::UniqueTargetUsHeal:
-        break;
-
-    case SortilegeType::UniqueTargetUsBuffCooldown:
         break;
 
     // multiple adv
@@ -81,9 +64,6 @@ void Sort::act(std::vector<Creature*>& board)
         break;
 
     case SortilegeType::MultipleAdvParalize:
-        break;
-
-    case SortilegeType::MultipleAdvNerfCooldown:
         break;
 
     // multiple us
@@ -101,32 +81,7 @@ Json::Value Sort::serialize()
 
     value["type"] = static_cast<int>(this->type);
     value["damages"] = this->damages;
-    value["cooldown"] = this->cooldown;
     value["targets"] = this->targets;
 
     return value;
-}
-
-bool Sort::lowercooldown(int value)
-{
-    bool r = false;
-
-    switch (value)
-    {
-    case -1:
-        this->current_cooldown = 0;
-        break;
-
-    default:
-        if (value > 0)
-        {
-            this->current_cooldown -= value;
-            if (this->current_cooldown < 0)
-                this->current_cooldown = 0;
-            r = true;
-        }
-        break;
-    }
-
-    return r;
 }

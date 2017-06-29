@@ -43,7 +43,6 @@ bool Equip::load(const std::string& fpath, bool pc)
                   , level = 1
                   , exp = 0
                   , sdmg = 5  // damages for the sortilege
-                  , scd = 4  // cooldown for the sortilege
                   , stargets = 1  // targets for the sortilege
                   , atk = 10  // attack of the creature
                   , def = 10;  // defense
@@ -52,7 +51,7 @@ bool Equip::load(const std::string& fpath, bool pc)
             State s = static_cast<State>(_s % 4);
             SortilegeType st = static_cast<SortilegeType>(_st % 14);
 
-            crea->load(id, t, atk, def, life, life, pp, pp, "first creature", s, level, exp, st, sdmg, scd, stargets);
+            crea->load(id, t, atk, def, life, life, pp, pp, "first creature", s, level, exp, st, sdmg, stargets);
             this->equip.push_back(crea);
         }
 
@@ -79,7 +78,6 @@ bool Equip::load(const std::string& fpath, bool pc)
                       , mpp = this->root["creatures"][i]["max_pp"].asInt()
                       , level = this->root["creatures"][i]["level"].asInt()
                       , sdmg = this->root["creatures"][i]["sort"]["damages"].asInt()
-                      , scd = this->root["creatures"][i]["sort"]["cooldown"].asInt()
                       , stargets = this->root["creatures"][i]["sort"]["targets"].asInt()
                       , atk = this->root["creatures"][i]["atk"].asInt()
                       , def = this->root["creatures"][i]["def"].asInt();
@@ -89,7 +87,7 @@ bool Equip::load(const std::string& fpath, bool pc)
                 State s = static_cast<State>(_s % 4);
                 SortilegeType st = static_cast<SortilegeType>(_st % 14);
 
-                crea->load(id, t, atk, def, life, mlife, pp, mpp, this->root["creatures"][i]["name"].asString(), s, level, exp, st, sdmg, scd, stargets);
+                crea->load(id, t, atk, def, life, mlife, pp, mpp, this->root["creatures"][i]["name"].asString(), s, level, exp, st, sdmg, stargets);
                 this->equip.push_back(crea);
 
                 DebugLog(SH_OK, "Loaded creature (" << i << ") " << this->root["creatures"][i]["name"].asString());

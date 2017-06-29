@@ -30,19 +30,25 @@ private:
     std::vector<Creature*> adv;
     sf::Font font;
     sf::Text action;
-    sf::Text ennemy;
+    sf::Text enemy;
     sf::Text me;
+    sf::Text e_pv;
+    sf::Text m_pv;
     FightEnv env;
     Dex* dex;
     Equip* equip;
     Equip* pc;
     CreaturesLoader* crealoader;
-    int __c;
-    int __selected;
-    bool selectingcrea;
-    bool selectingadv;
-    int __count_before_flyaway;
+    int __c;        // for the capture
+    int __selected;  // for the UI when we select an enemy
+    bool selectingcrea; // are we selected a creature (change it)
+    bool selectingadv; // or the enemy (to attack it)
+    int __count_before_flyaway;  // count down in frames
     bool can_escape;
+    sf::RectangleShape life1;
+    sf::RectangleShape life2;
+    int ui_my_selected;     // to know which creature we are currently displaying the stats
+    int ui_enemy_selected;  // same
 
     const std::string __adv = "adv";
     const std::string __me = "me";
@@ -55,6 +61,7 @@ private:
     const std::string GRD3 = "grd3";
     const std::string TOOLS = "toolbar";
     const std::string LIFEBAR = "lifebar";
+    const std::string LIFEBAR2 = "lifebar2";
     const std::string OVERLAY = "overlay";
     const std::string BKG_SELECT = "background_select";
 

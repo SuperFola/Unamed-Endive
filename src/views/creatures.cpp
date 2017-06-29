@@ -238,10 +238,6 @@ int CreaView::process_event(sf::Event& event, sf::Time elapsed)
                             crea->levelUP(this->curobj["value"]);
                             break;
 
-                        case ObjType::lowercooldown:
-                            crea->lowercooldown(this->curobj["value"]);
-                            break;
-
                         default:
                             DebugLog(SH_WARN, "Unrecognized object type : " << this->curobj["type"]);
                             this->error_msg.setString("Objet inutilisable");

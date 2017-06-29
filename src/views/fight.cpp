@@ -16,6 +16,10 @@ FightView::FightView() :
     , selectingadv(true)
     , __count_before_flyaway(0)
     , can_escape(true)
+    , life1(sf::Vector2f(LIFEBAR_WIDTH, LIFEBAR_HEIGHT))
+    , life2(sf::Vector2f(LIFEBAR_WIDTH, LIFEBAR_HEIGHT))
+    , ui_my_selected(0)
+    , ui_enemy_selected(0)
 {
 
 }
@@ -81,6 +85,7 @@ bool FightView::load()
     this->sprites[this->TOOLS] = sf::Sprite(this->textures.get("tool"));
     this->sprites[this->OVERLAY] = sf::Sprite(this->textures.get("overlay"));
     this->sprites[this->LIFEBAR] = sf::Sprite(this->textures.get("lifebar"));
+    this->sprites[this->LIFEBAR2] = sf::Sprite(this->textures.get("lifebar"));
     this->sprites[this->BKG_SELECT] = sf::Sprite(this->textures.get("select"));
 
     this->sprites[this->BKG1].setPosition(0.0f, 0.0f);
@@ -89,6 +94,11 @@ bool FightView::load()
     this->sprites[this->OVERLAY].setPosition(0.0f, 0.0f);
     this->sprites[this->TOOLS].setPosition(0.0f, WIN_H - 150.0f);
     this->sprites[this->BKG_SELECT].setPosition(60.0f, 60.0f);
+    this->sprites[this->LIFEBAR].setPosition(6.0f, 111.0f);
+    this->sprites[this->LIFEBAR2].setPosition(507.0f, 348.0f);
+
+    this->life1.setPosition(8.0f, 113.0f);
+    this->life2.setPosition(509.0f, 350.0f);
 
     if (!this->font.loadFromFile(FONTPATH))
         return false;
@@ -97,9 +107,15 @@ bool FightView::load()
     this->action.setPosition(5.0f, WIN_H - 155.0f);
     this->action.setString("Ceci est un message d'action");
 
-    setupFont(this->ennemy, this->font, sf::Color::Black, 24)
+    setupFont(this->enemy, this->font, sf::Color::Black, 20)
+    this->enemy.setPosition(3.0f, 90.0f);
+    setupFont(this->me, this->font, sf::Color::Black, 20)
+    this->me.setPosition(419.0f, 327.0f);
 
-    setupFont(this->me, this->font, sf::Color::Black, 24)
+    setupFont(this->e_pv, this->font, sf::Color::Black, 20)
+    this->e_pv.setPosition(188.0f, 117.0f);
+    setupFont(this->m_pv, this->font, sf::Color::Black, 20)
+    this->m_pv.setPosition(398.0f, 354.0f);
 
     return true;
 }
@@ -139,7 +155,7 @@ void FightView::render(sf::RenderWindow& window)
     window.draw(this->sprites[this->OVERLAY]);
     window.draw(this->sprites[this->TOOLS]);
     window.draw(this->action);
-    window.draw(this->ennemy);
+    window.draw(this->enemy);
     window.draw(this->me);
 
     // draw the creatures
@@ -151,6 +167,30 @@ void FightView::render(sf::RenderWindow& window)
     {
         window.draw(this->sprites[this->__me + to_string<int>(i)]);
     }
+
+    // draw the life bars AND the "life" inside (life <-> color matching)
+    // enemy
+    float e_life = LIFEBAR_WIDTH * (float(this->adv[this->ui_enemy_selected]->getLife()) / float(this->adv[this->ui_enemy_selected]->getMaxLife()));
+    this->life1.setSize(sf::Vector2f(e_life, LIFEBAR_HEIGHT));
+    if (e_life / LIFEBAR_WIDTH <= 0.33f)
+        this->life1.setFillColor(sf::Color(220, 40, 20));
+    else if (e_life / LIFEBAR_WIDTH <= 0.66f)
+        this->life1.setFillColor(sf::Color(255, 130, 50));
+    else
+        this->life1.setFillColor(sf::Color(40, 220, 20));
+    window.draw(this->life1);
+    window.draw(this->sprites[this->LIFEBAR]);
+    // me
+    float m_life = LIFEBAR_WIDTH * (float(this->equip->getCrea(this->ui_my_selected)->getLife()) / float(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
+    this->life2.setSize(sf::Vector2f(m_life, LIFEBAR_HEIGHT));
+    if (m_life / LIFEBAR_WIDTH <= 0.33f)
+        this->life2.setFillColor(sf::Color(220, 40, 20));
+    else if (m_life / LIFEBAR_WIDTH <= 0.66f)
+        this->life2.setFillColor(sf::Color(255, 130, 50));
+    else
+        this->life2.setFillColor(sf::Color(40, 220, 20));
+    window.draw(this->life2);
+    window.draw(this->sprites[this->LIFEBAR2]);
 
     // draw interface to select a crea
     if (this->selectingcrea)
@@ -321,6 +361,12 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             this->__selected = -1;
         }
     }
+
+    // updating stats (name, PV)
+    this->enemy.setString(this->adv[this->ui_enemy_selected]->getName());
+    this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName());
+    this->e_pv.setString(to_string<int>(this->adv[this->ui_enemy_selected]->getLife()) + "/" + to_string<int>(this->adv[this->ui_enemy_selected]->getMaxLife()));
+    this->m_pv.setString(to_string<int>(this->equip->get(this->ui_my_selected)->getLife()) + "/" + to_string<int>(this->equip->get(this->ui_my_selected)->getMaxLife()));
 }
 
 void FightView::encounter()
@@ -398,8 +444,7 @@ void FightView::start()
               , level = (rand() % 4) + _x_
               , life = 2 * level + (rand() % 4) + 3  // mlife = life
               , pp = Creature::calculatePPFromLevel(level) // mpp = pp
-              , scd = (rand() % 4) + 3  // cooldown for the sortilege
-              , sdmg = ceil(scd * 0.125 * level + 1)  // damages for the sortilege
+              , sdmg = ceil(((rand() % 4) + 3) * 0.125 * level + 1)  // damages for the sortilege
               , stargets = rand() % (this->equip->getSize()+ 1)  // targets for the sortilege
               , atk = Creature::calculateStatFromLevel(level)  // attack of the creature
               , def = Creature::calculateStatFromLevel(level);  // defense
@@ -409,7 +454,7 @@ void FightView::start()
         State s = static_cast<State>(_s % 4);
         SortilegeType st = static_cast<SortilegeType>(_st % 14);
 
-        crea->load(id, t, atk, def, life, life, pp, pp, this->dex->getName(id), s, level, exp, st, sdmg, scd, stargets);
+        crea->load(id, t, atk, def, life, life, pp, pp, this->dex->getName(id), s, level, exp, st, sdmg, stargets);
         this->adv.push_back(crea);
 
         sf::Text _t2;
