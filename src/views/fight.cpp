@@ -108,14 +108,14 @@ bool FightView::load()
     this->action.setString("Ceci est un message d'action");
 
     setupFont(this->enemy, this->font, sf::Color::Black, 20)
-    this->enemy.setPosition(3.0f, 90.0f);
+    this->enemy.setPosition(6.0f, 86.0f);
     setupFont(this->me, this->font, sf::Color::Black, 20)
-    this->me.setPosition(419.0f, 327.0f);
+    this->me.setPosition(421.0f, 323.0f);
 
     setupFont(this->e_pv, this->font, sf::Color::Black, 20)
-    this->e_pv.setPosition(188.0f, 117.0f);
+    this->e_pv.setPosition(188.0f, 115.0f);
     setupFont(this->m_pv, this->font, sf::Color::Black, 20)
-    this->m_pv.setPosition(398.0f, 354.0f);
+    this->m_pv.setPosition(398.0f, 353.0f);
 
     return true;
 }
@@ -180,6 +180,7 @@ void FightView::render(sf::RenderWindow& window)
         this->life1.setFillColor(sf::Color(40, 220, 20));
     window.draw(this->life1);
     window.draw(this->sprites[this->LIFEBAR]);
+    window.draw(this->e_pv);
     // me
     float m_life = LIFEBAR_WIDTH * (float(this->equip->getCrea(this->ui_my_selected)->getLife()) / float(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
     this->life2.setSize(sf::Vector2f(m_life, LIFEBAR_HEIGHT));
@@ -191,6 +192,7 @@ void FightView::render(sf::RenderWindow& window)
         this->life2.setFillColor(sf::Color(40, 220, 20));
     window.draw(this->life2);
     window.draw(this->sprites[this->LIFEBAR2]);
+    window.draw(this->m_pv);
 
     // draw interface to select a crea
     if (this->selectingcrea)
@@ -246,6 +248,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
             case sf::Mouse::Button::Left:
                 if (!this->selectingcrea)
                 {
+                    // click on the buttons sections
                     if (m__Y >= 490 + 75 && m__Y <= 490 + 125)
                     {
                         if (m__X >= 5 && m__X <= 157)
@@ -273,6 +276,18 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                             else
                                 this->action.setString("Vous ne pouvez pas vous échaper !");
                         }
+                    }
+                    // click on one of my creatures
+                    else if (458 - CREATURE_HEIGHT <= m__Y && 458 <= m__Y && 47 <= m__X )
+                    {
+                        ///         this->sprites[this->__me + to_string<int>(i)].setPosition(47.0f + i * SPACEMENT_X, 458.0f - CREATURE_HEIGHT);
+                        this->ui_my_selected = int((m__X - 47) / SPACEMENT_X) % this->equip->getSize();
+                    }
+                    // click on a creature which belongs to the enemy
+                    else if (206 - CREATURE_HEIGHT <= m__Y && m__Y <= 206 && START_X <= m__X)
+                    {
+                        ///         this->sprites[this->__adv + to_string<int>(i)].setPosition(START_X + i * SPACEMENT_X, 206.0f - CREATURE_HEIGHT);
+                        this->ui_enemy_selected = int((m__X - START_X) / SPACEMENT_X) % this->adv.size();
                     }
                 }
                 else
@@ -340,10 +355,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         if (this->__c && this->__selected != -1)
         {
             OMessenger::empty();
-            std::mt19937 rng;
-            rng.seed(std::random_device()());
-            std::uniform_int_distribution<std::mt19937::result_type> distgotit(0, 100);
-            if (distgotit(rng) >= this->__c)
+            if ((rand() % 101) >= this->__c)
             {
                 // we got the creature let's register it
                 this->dex->register_capture(this->adv[this->__selected]->getId());
@@ -426,8 +438,8 @@ void FightView::start()
         int width = this->sprites[this->__me + to_string<int>(i)].getGlobalBounds().width,
              height = this->sprites[this->__me + to_string<int>(i)].getGlobalBounds().height;
         this->sprites[this->__me + to_string<int>(i)].setTextureRect(sf::IntRect(width, 0, -width, height));
-        /// calculate position of the sprite regarding to the index
-        this->sprites[this->__me + to_string<int>(i)].setPosition(i * CREATURE_HEIGHT, 45.0f);
+        // calculate position of the sprite regarding to the index
+        this->sprites[this->__me + to_string<int>(i)].setPosition(47.0f + i * SPACEMENT_X, 458.0f - CREATURE_HEIGHT);
     }
     moy_equip /= float(this->equip->getSize());
 
@@ -466,8 +478,8 @@ void FightView::start()
         this->sprites[this->__adv + to_string<int>(i)] = sf::Sprite(this->crealoader->get(this->dex->getInfo(crea->getId()).file));
         float factor = CREATURE_HEIGHT / this->crealoader->get(this->dex->getInfo(crea->getId()).file).getSize().y;
         this->sprites[this->__adv + to_string<int>(i)].setScale(factor, factor);
-        /// calculate position of the sprite regarding to the index
-        this->sprites[this->__adv + to_string<int>(i)].setPosition(i * CREATURE_HEIGHT, 45.0f);
+        // calculate position of the sprite regarding to the index
+        this->sprites[this->__adv + to_string<int>(i)].setPosition(START_X + i * SPACEMENT_X, 206.0f - CREATURE_HEIGHT);
     }
 
     this->encounter();

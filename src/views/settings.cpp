@@ -129,9 +129,9 @@ bool SettingsView::load()
 
 void SettingsView::update_texts()
 {
-    this->texts.get(this->VMU).setString((Config::get("music").asInt() == 1) ? "on" : "off");
-    this->texts.get(this->VAA).setString((Config::get("aa").asInt() == 1) ? "on" : "off");
-    this->texts.get(this->VVS).setString((Config::get("v-sync").asInt() == 1) ? "on" : "off");
+    this->texts.get(this->VMU).setString((Config::get("music").asBool()) ? "on" : "off");
+    this->texts.get(this->VAA).setString((Config::get("aa").asInt() > 0) ? "on" : "off");
+    this->texts.get(this->VVS).setString((Config::get("v-sync").asBool()) ? "on" : "off");
     this->texts.get(this->VSHADER).setString(Config::get("shader").asString());
     this->texts.get(this->VFPS).setString(to_string<int>(Config::get("fps").asInt()));
     this->texts.get(this->VMENU).setString(Config::get("menu").asString());
@@ -198,4 +198,8 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
 
 void SettingsView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
+    /// faudra faire ca quelque part quand on change les settings :
+    window.setVerticalSyncEnabled(Config::get("v-sync").asBool());
+    window.getSettings().antialiasingLevel = Config::get("aa").asInt();
+    window.setFramerateLimit(Config::get("fps").asInt());
 }

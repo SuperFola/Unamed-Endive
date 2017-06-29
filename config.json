@@ -1,7 +1,7 @@
 {
-    "music": 1,
+    "music": true,
     "aa": 1,
-    "v-sync": 1,
+    "v-sync": true,
     "shader": "none",
     "fps": 120,
     "menu": "escape",

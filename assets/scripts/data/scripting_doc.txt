@@ -108,6 +108,10 @@ setCurrentView
 --------------
 Set the current view. Take the id of the new view
 
+setFightEnv
+-----------
+Set the environment for a fight
+
 stopMusic
 ---------
 Stop the current, if one is playing

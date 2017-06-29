@@ -20,6 +20,8 @@
 #define MY_TEXT_SELCREA_UI 400
 #define YS_TEXT_SELCREA_UI 30
 #define CREATURE_HEIGHT 160.0f
+#define START_X 269.0f
+#define SPACEMENT_X 100.0f
 
 class FightView : public View
 {
