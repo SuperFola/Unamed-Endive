@@ -29,6 +29,7 @@ If you want to compile the project, you will need to install the SFML lib and fo
 
 Credits
 =======
+* copyright Pokémon Company ©, Game Freak inc (using the term "Pokémon" to define the kind of game)
 * logo of the game : Izaliia
 * outside tiles : WesleyFG (at the beginning for project Marnian)
 * inside tiles : Slahs

@@ -200,6 +200,6 @@ void SettingsView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     /// faudra faire ca quelque part quand on change les settings :
     window.setVerticalSyncEnabled(Config::get("v-sync").asBool());
-    window.getSettings().antialiasingLevel = Config::get("aa").asInt();
+    //window.getSettings().antialiasingLevel = Config::get("aa").asInt();
     window.setFramerateLimit(Config::get("fps").asInt());
 }
