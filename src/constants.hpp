@@ -92,7 +92,8 @@ enum class ChState {
 enum class FightEnv {
     CityWithForest,
     Forest,
-    Sea
+    Sea,
+    FECount
 };
 
 #endif // DEF_CONSTANTS

@@ -326,3 +326,8 @@ void PyScripting::writeText(const char* id)
             instance.window->draw(instance.texts.get(std::string(id)));
     }
 }
+
+void PyScripting::setFightEnv(int id)
+{
+    instance.sm->getFight()->set_env(static_cast<FightEnv>(id % FightEnv::FECount));
+}

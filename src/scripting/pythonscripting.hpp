@@ -41,6 +41,7 @@ extern "C"
     PYFUNC(turnPlayer);
     PYFUNC(createText);
     PYFUNC(writeText);
+    PYFUNC(setFightEnv);
 
     PyMODINIT_FUNC PyInit_Unamed(void);
 }

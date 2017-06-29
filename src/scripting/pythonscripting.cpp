@@ -418,6 +418,19 @@ extern "C"
         RETURN_NONE
     }
 
+    static PyObject* setFightEnv(PyObject* self, PyObject* args)
+    {
+        int i;
+        if (!PyArg_ParseTuple(args, "i", &i))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need an int representing the type of environment to set");
+            return NULL;
+        }
+        PyScripting::setFightEnv(i);
+
+        RETURN_NONE
+    }
+
     static PyMethodDef UnamedMethods[] = {
         // ...
         {"upr", print, METH_VARARGS, "Print function using std::cout"},
@@ -450,6 +463,7 @@ extern "C"
         {"turnPlayer", turnPlayer, METH_VARARGS, "Turn the player in the specified direction. 0: up, 1: down, 2: left, 3: right"},
         {"createText", createText, METH_VARARGS, "Create a text at (x, y) of a number of characters/lines given, with the text of a font size, and a color given, the whole thing having a string id given"},
         {"writeText", writeText, METH_VARARGS, "Write a text, giving the id of a created text"},
+        {"setFightEnv", setFightEnv, METH_VARARGS, "Set the environment for a fight"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };

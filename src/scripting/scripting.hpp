@@ -131,6 +131,8 @@ public:
     static void turnPlayer(int);
     static void createText(int, int, int, const char*, int, int, const char*);
     static void writeText(const char*);
+
+    static void setFightEnv(int);
 };
 
 #endif // DEF_SCRIPTING

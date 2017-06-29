@@ -783,7 +783,8 @@ void Game::post_load()
         Network::Connection::init(this->nethost, this->netport, this->netprotoc);
         Network::Connection::start();
         Network::Connection::connect();
-        // we skip Network::Connection::isSecured() and getInfo(), only useful when playing with other players, not in solo
+        // il y a longtemps : we skip Network::Connection::isSecured() and getInfo(), only useful when playing with other players, not in solo
+        // 29/06 ah ok je viens de comprendre, je voulais mettre le jeu sur un serveur permanent mdr
         Network::Connection::auth(this->sm.getDefault()->getCharacter()->getName(), "");
     }
 }
