@@ -58,6 +58,9 @@ public:
     int gainExp(Creature*);
     void attack(Creature*);
     Sort* getSort();
+    void setStatus(State);
+    void atk_heal_pv(int);
+    void atk_heal_status();
 
     static long int calculateExpFromLevel(int);
     static int calculateLevelFromXp(long int);

@@ -28,52 +28,54 @@ bool Sort::loadfrom(Sort& other)
     return true;
 }
 
-void Sort::act(Creature*)
+int Sort::act(Creature* other)
 {
+    int r = this->damages;
+
     switch (this->type)
     {
-    // unique adv
+    case SortilegeType::MultipleAdvDamage:
     case SortilegeType::UniqueTargetAdvDamage:
         break;
 
-    case SortilegeType::UniqueTargetAdvPoison:
-        break;
-
-    case SortilegeType::UniqueTargetAdvBurn:
-        break;
-
-    case SortilegeType::UniqueTargetAdvParalize:
-        break;
-
-    // unique us
-    case SortilegeType::UniqueTargetUsHeal:
-        break;
-
-    // multiple adv
-    case SortilegeType::MultipleAdvDamage:
-        break;
-
     case SortilegeType::MultipleAdvPoison:
+    case SortilegeType::UniqueTargetAdvPoison:
+        other->setStatus(POISONED);
         break;
 
     case SortilegeType::MultipleAdvBurn:
+    case SortilegeType::UniqueTargetAdvBurn:
+        other->setStatus(BURNED);
         break;
 
     case SortilegeType::MultipleAdvParalize:
+    case SortilegeType::UniqueTargetAdvParalize:
+        other->setStatus(PARALYSED);
         break;
 
-    // multiple us
     case SortilegeType::MultipleUsHeal:
+    case SortilegeType::UniqueTargetUsHeal:
+        r = 0;
+        other->atk_heal_pv(this->damages);
         break;
 
     case SortilegeType::MultipleUsHealStatus:
+        r = 0;
+        other->atk_heal_status();
         break;
     }
+
+    return r;
 }
 
 SortilegeType Sort::getType()
 {
     return this->type;
+}
+
+int Sort::getTargets()
+{
+    return this->targets;
 }
 
 Json::Value Sort::serialize()

@@ -24,8 +24,9 @@ public:
     Sort();
     bool load(SortilegeType, int, int/*, const std::string&*/);
     bool loadfrom(Sort&);
-    void act(Creature*);
+    int act(Creature*);
     SortilegeType getType();
+    int getTargets();
     Json::Value serialize();
 };
 

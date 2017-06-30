@@ -169,7 +169,7 @@ bool FightView::load()
 
     setupFont(this->action, this->font, sf::Color::Black, 24)
     this->action.setPosition(5.0f, WIN_H - 155.0f);
-    this->action.setString("Ceci est un message d'action");
+    this->action.setString("C'est à votre tour d'attaquer !");
 
     setupFont(this->enemy, this->font, sf::Color::Black, 20)
     this->enemy.setPosition(6.0f, 86.0f);
@@ -342,9 +342,10 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                         {
                             // attack button
                             this->attacking = true;
-                            for (int i=0; i < this->equip->getSize(); ++i)
+                            this->attacks_used.clear();
+                            for (int i=0; i < this->equip->getSize(); i++)
                             {
-                                this->attacks_used[i] = false;
+                                this->attacks_used.push_back(false);
                             }
                         }
                         else if (m__X >= 164 && m__X <= 316)
@@ -524,7 +525,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     if (this->my_turn)
     {
         int c = 0;
-        for (int i=0; i < this->attacks_used.size(); ++i)
+        for (int i=0; i < this->attacks_used.size(); i++)
         {
             if (this->attacks_used[i])
                 ++c;
@@ -533,6 +534,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         {
             // it is not our turn anymore, let the AI play !
             this->my_turn = false;
+            this->action.setString("Votre adversaire attaque !");
         }
     }
 
@@ -561,14 +563,44 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 
 void FightView::attack(int selected, int index_my_creatures)
 {
-    /// our creature attacking
-    this->equip->getCrea(index_my_creatures);
-    /// the enemy
-    if (this->attacking_enemy)
-        this->adv[selected];
+    // our creature attacking
+    Creature* my = this->equip->getCrea(index_my_creatures);
+    this->action.setString(my->getName() + " attaque");
+    if (selected == 42) // magic code, we need to select random creatures
+    {
+        int targets = my->getSort()->getTargets();
+        std::vector<int> enemies;
+        int m = (this->attacking_enemy) ? this->adv.size() : this->equip->getSize();
+
+        for (int i=0; i < targets; ++i)
+        {
+            int r = rand() % m;
+            for (int k=0; k < enemies.size(); ++k)
+            {
+                if (enemies[k] == r)
+                {
+                    r = rand() % m;
+                    k = 0;
+                }
+            }
+            enemies.push_back(r);
+
+            for (auto& e : enemies)
+            {
+                my->attack(this->adv[e]);
+            }
+        }
+    }
     else
-        this->equip->getCrea(selected);
-    /// apply sort + type's damages + def ... etc
+    {
+        // the enemy
+        Creature* enemy;
+        if (this->attacking_enemy)
+            enemy = this->adv[selected];
+        else
+            enemy = this->equip->getCrea(selected);
+        my->attack(enemy);
+    }
 
     /// WHEN DUEL IS FINISHED, GIVE EXP OR FLY AWAY TO HEAL THE CREATURES
 }
@@ -612,11 +644,14 @@ void FightView::start()
     CLEAR_PTR_VECT(this->adv)
     this->adv.clear();
 
+    this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());
-    for (int i=0; i < this->equip->getSize(); ++i)
+    for (int i=0; i < this->equip->getSize(); i++)
     {
-        this->attacks_used[i] = false;
+        this->attacks_used.push_back(false);
     }
+    this->my_turn = true;
+    DebugLog(SH_INFO, this->equip->getSize() << " " << this->attacks_used.size());
 
     // generate adv
     float moy_equip = 0.0f;
@@ -632,8 +667,11 @@ void FightView::start()
 
         this->sprites[this->__me + to_string<int>(i)] = sf::Sprite(this->crealoader->get(this->dex->getInfo(this->equip->getCrea(i)->getId()).file));
         float factor = CREATURE_HEIGHT / this->crealoader->get(this->dex->getInfo(this->equip->getCrea(i)->getId()).file).getSize().y;
+        int width = this->sprites[this->__me + to_string<int>(i)].getGlobalBounds().width,
+             height = this->sprites[this->__me + to_string<int>(i)].getGlobalBounds().height;
         // reversing our creatures to make them look to the right (to the others creatures)
         this->sprites[this->__me + to_string<int>(i)].setScale(-factor, factor);
+        this->sprites[this->__me + to_string<int>(i)].setOrigin(width, 0.0f);
         // calculate position of the sprite regarding to the index
         this->sprites[this->__me + to_string<int>(i)].setPosition(47.0f + i * SPACEMENT_X, 458.0f - CREATURE_HEIGHT);
     }

@@ -211,7 +211,14 @@ int Creature::gainExp(Creature* other)
 void Creature::attack(Creature* other)
 {
     float amplifier = TypesTable::atktype_on_deftype(this->type, other->type);
-    this->sortilege.act(other);
+    int out = this->sortilege.act(other);
+    if (out != 0)
+    {
+        float real_damages = (((2.0f * this->level + 10.0f) / 250.0f) * (float(this->atk) / float(other->def)) * out + 2) * amplifier * (0.88f + float(rand() % 13) / 100.0f);
+        other->life -= real_damages;
+        if (other->life < other->max_life)
+            other->life = 0;
+    }
 }
 
 Sort* Creature::getSort()
@@ -338,5 +345,22 @@ bool Creature::levelUP(int value)
     this->exp = Creature::calculateExpFromLevel(this->level);
 
     return true;
+}
+
+void Creature::setStatus(State s)
+{
+    this->state = s;
+}
+
+void Creature::atk_heal_pv(int pv)
+{
+    this->life += pv;
+    if (this->life > this->max_life)
+        this->life = this->max_life;
+}
+
+void Creature::atk_heal_status()
+{
+    this->state = State::STD;
 }
 
