@@ -60,6 +60,7 @@ private:
     int attack_frames_count;
     bool display_attack;
     bool my_turn;
+    bool attacking_enemy;
 
     const std::string __adv = "adv";
     const std::string __me = "me";

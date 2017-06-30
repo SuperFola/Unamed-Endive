@@ -151,12 +151,6 @@ int Creature::getDef()
     return this->def;
 }
 
-void Creature::update(std::vector<Creature*>& board)
-{
-    /// FAKE
-    this->sortilege.act(board);
-}
-
 Json::Value Creature::serialize()
 {
     Json::Value value;
@@ -189,6 +183,17 @@ int Creature::gainExp(Creature* other)
     this->level = Creature::calculateLevelFromXp(this->exp);
 
     return this->level - old;
+}
+
+void Creature::attack(Creature* other)
+{
+    float amplifier = TypesTable::atktype_on_deftype(this->type, other->type);
+    this->sortilege.act(other);
+}
+
+Sort* Creature::getSort()
+{
+    return &this->sortilege;
 }
 
 bool Creature::healPV(int value)

@@ -3,6 +3,8 @@
 
 #include "types_table.hpp"
 
+TypesTable TypesTable::self = TypesTable();
+
 TypesTable::TypesTable()
 {
 
@@ -11,18 +13,18 @@ TypesTable::TypesTable()
 bool TypesTable::load()
 {
     std::ifstream file("assets/config/typestable.json");
-    file >> this->root;
+    file >> self.root;
 
-    for (int i=0; i < this->root.size(); i++)
+    for (int i=0; i < self.root.size(); i++)
     {
         std::vector<float> c_content;
 
-        for (int j=0; j < this->root[i].size(); j++)
+        for (int j=0; j < self.root[i].size(); j++)
         {
-            c_content.push_back(this->root[i][j].asFloat());
+            c_content.push_back(self.root[i][j].asFloat());
         }
 
-        this->content.push_back(c_content);
+        self.content.push_back(c_content);
     }
 
     return true;
@@ -30,5 +32,5 @@ bool TypesTable::load()
 
 float TypesTable::atktype_on_deftype(Type atk, Type def)
 {
-    return this->content[static_cast<int>(atk)][static_cast<int>(def)];
+    return self.content[static_cast<int>(atk)][static_cast<int>(def)];
 }

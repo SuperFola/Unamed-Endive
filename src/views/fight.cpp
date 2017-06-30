@@ -26,6 +26,7 @@ FightView::FightView() :
     , attack_frames_count(0)
     , display_attack(false)
     , my_turn(true)
+    , attacking_enemy(true)
 {
 }
 
@@ -212,6 +213,7 @@ void FightView::render(sf::RenderWindow& window)
         {
             /// CHANGE THIS LINE IF WE ADD COMPETENCES' TREE, TO SET THE NAME OF THE ATTACK REGARDING
             /// TO THE TREE OF THE `SORT`
+            /// afficher le type de sort
             this->attack_name.setString(std::string("Sort de : ") + this->equip->getCrea(i)->getName());
             if (this->attacks_used[i])
                 this->attack_name.setColor(sf::Color::Green);
@@ -352,8 +354,10 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                     {
                         this->atk_using_sort_of = pos_atk_sel;
                         this->attacks_used[pos_atk_sel] = true;
+                        SortilegeType s = this->equip->getCrea(this->atk_using_sort_of)->getSort()->getType();
+                        this->attacking_enemy = !(s == UniqueTargetUsHeal || s == MultipleUsHeal || s == MultipleUsHealStatus);
                         this->selectingcrea = true;
-                        this->selectingadv = true;
+                        this->selectingadv = this->attacking_enemy;
                         this->action.setString("Sur quelle créature souhaitez-vous utiliser le sort ?");
                         this->has_selected_an_atk = true;
                         this->display_attack = true;
@@ -473,7 +477,10 @@ void FightView::attack(int selected, int index_my_creatures)
     /// our creature attacking
     this->equip->getCrea(index_my_creatures);
     /// the enemy
-    this->adv[selected];
+    if (this->attacking_enemy)
+        this->adv[selected];
+    else
+        this->equip->getCrea(selected);
     /// apply sort + type's damages + def ... etc
 
     /// WHEN DUEL IS FINISHED, GIVE EXP OR FLY AWAY TO HEAL THE CREATURES

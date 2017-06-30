@@ -9,11 +9,12 @@ Sort::Sort() :
 
 }
 
-bool Sort::load(SortilegeType stype, int dmg, int targets)
+bool Sort::load(SortilegeType stype, int dmg, int targets/*, const std::string& name*/)
 {
     this->type = stype;
     this->damages = dmg;
     this->targets = targets;
+    /*this->name = name;*/
 
     return true;
 }
@@ -27,12 +28,7 @@ bool Sort::loadfrom(Sort& other)
     return true;
 }
 
-void Sort::update()
-{
-    // update things
-}
-
-void Sort::act(std::vector<Creature*>& board)
+void Sort::act(Creature*)
 {
     switch (this->type)
     {
@@ -73,6 +69,11 @@ void Sort::act(std::vector<Creature*>& board)
     case SortilegeType::MultipleUsHealStatus:
         break;
     }
+}
+
+SortilegeType Sort::getType()
+{
+    return this->type;
 }
 
 Json::Value Sort::serialize()

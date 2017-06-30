@@ -10,6 +10,7 @@
 #include "effects/sort.hpp"
 #include "states.hpp"
 #include "../json/json.h"
+#include "../abstract/types_table.hpp"
 
 #define LIFEBAR_WIDTH 124.0f
 #define LIFEBAR_HEIGHT 19.0f
@@ -51,10 +52,11 @@ public:
     Type getType();
     int getAtk();
     int getDef();
-    void update(std::vector<Creature*>&);
     void print();
     Json::Value serialize();
     int gainExp(Creature*);
+    void attack(Creature*);
+    Sort* getSort();
 
     static long int calculateExpFromLevel(int);
     static int calculateLevelFromXp(long int);

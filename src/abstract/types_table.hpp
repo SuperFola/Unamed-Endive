@@ -9,13 +9,16 @@
 class TypesTable
 {
 private:
+    TypesTable& operator=(const TypesTable&) {return self;}
+    TypesTable(const TypesTable&) {}
     Json::Value root;
     std::vector<std::vector<float>> content;
+    static class TypesTable self;
+    TypesTable();
 
 public:
-    TypesTable();
-    bool load();
-    float atktype_on_deftype(Type, Type);
+    static bool load();
+    static float atktype_on_deftype(Type, Type);
 };
 
 #endif // DEF_TYPES_TABLE

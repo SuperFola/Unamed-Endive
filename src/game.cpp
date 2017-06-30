@@ -621,7 +621,10 @@ Game::Game() :
     , _got_coderet(false)
     , menu_game_selected(-1)
 {
+    // configuration file
     Config::load();
+    // loading types tables (percentage of +/- by type1 on type2)
+    TypesTable::load();
 
     // OMessenger
     OMessenger::empty();

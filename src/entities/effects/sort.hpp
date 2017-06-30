@@ -22,10 +22,10 @@ private:
 public:
     // methods
     Sort();
-    bool load(SortilegeType, int, int);
+    bool load(SortilegeType, int, int/*, const std::string&*/);
     bool loadfrom(Sort&);
-    void update();
-    void act(std::vector<Creature*>&);
+    void act(Creature*);
+    SortilegeType getType();
     Json::Value serialize();
 };
 
