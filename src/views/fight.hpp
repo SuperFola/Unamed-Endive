@@ -22,6 +22,7 @@
 #define CREATURE_HEIGHT 160.0f
 #define START_X 269.0f
 #define SPACEMENT_X 100.0f
+#define SPACING_ATK_LISTING_Y 30
 
 class FightView : public View
 {
@@ -51,6 +52,14 @@ private:
     sf::RectangleShape life2;
     int ui_my_selected;     // to know which creature we are currently displaying the stats
     int ui_enemy_selected;  // same
+    bool attacking;
+    sf::Text attack_name;
+    std::vector<bool> attacks_used;
+    bool has_selected_an_atk;
+    int atk_using_sort_of;
+    int attack_frames_count;
+    bool display_attack;
+    bool my_turn;
 
     const std::string __adv = "adv";
     const std::string __me = "me";
@@ -66,6 +75,8 @@ private:
     const std::string LIFEBAR2 = "lifebar2";
     const std::string OVERLAY = "overlay";
     const std::string BKG_SELECT = "background_select";
+
+    void attack(int, int);
 
 public:
     FightView();

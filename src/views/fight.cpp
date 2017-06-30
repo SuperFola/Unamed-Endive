@@ -20,8 +20,13 @@ FightView::FightView() :
     , life2(sf::Vector2f(LIFEBAR_WIDTH, LIFEBAR_HEIGHT))
     , ui_my_selected(0)
     , ui_enemy_selected(0)
+    , attacking(false)
+    , has_selected_an_atk(false)
+    , atk_using_sort_of(-1)
+    , attack_frames_count(0)
+    , display_attack(false)
+    , my_turn(true)
 {
-
 }
 
 bool FightView::load()
@@ -93,7 +98,7 @@ bool FightView::load()
     this->sprites[this->BKG3].setPosition(0.0f, 0.0f);
     this->sprites[this->OVERLAY].setPosition(0.0f, 0.0f);
     this->sprites[this->TOOLS].setPosition(0.0f, WIN_H - 150.0f);
-    this->sprites[this->BKG_SELECT].setPosition(60.0f, 60.0f);
+    this->sprites[this->BKG_SELECT].setPosition(120.0f, 120.0f);
     this->sprites[this->LIFEBAR].setPosition(6.0f, 111.0f);
     this->sprites[this->LIFEBAR2].setPosition(507.0f, 348.0f);
 
@@ -113,9 +118,11 @@ bool FightView::load()
     this->me.setPosition(421.0f, 323.0f);
 
     setupFont(this->e_pv, this->font, sf::Color::Black, 20)
-    this->e_pv.setPosition(188.0f, 115.0f);
+    this->e_pv.setPosition(188.0f, 110.0f);
     setupFont(this->m_pv, this->font, sf::Color::Black, 20)
-    this->m_pv.setPosition(398.0f, 353.0f);
+    this->m_pv.setPosition(398.0f, 348.0f);
+
+    setupFont(this->attack_name, this->font, sf::Color::Black, 20)
 
     return true;
 }
@@ -194,6 +201,26 @@ void FightView::render(sf::RenderWindow& window)
     window.draw(this->sprites[this->LIFEBAR2]);
     window.draw(this->m_pv);
 
+    // draw interface to select an attack
+    if (this->attacking)
+    {
+        window.draw(this->sprites[this->BKG_SELECT]);
+        this->attack_name.setString("Sortilèges disponnibles");
+        this->attack_name.setPosition(120.0f + float(int((400.0f - this->attack_name.getGlobalBounds().width) / 2.0f)), 130.0f);
+        window.draw(this->attack_name);
+        for (int i=0; i < this->equip->getSize(); ++i)
+        {
+            /// CHANGE THIS LINE IF WE ADD COMPETENCES' TREE, TO SET THE NAME OF THE ATTACK REGARDING
+            /// TO THE TREE OF THE `SORT`
+            this->attack_name.setString(std::string("Sort de : ") + this->equip->getCrea(i)->getName());
+            if (this->attacks_used[i])
+                this->attack_name.setColor(sf::Color::Green);
+            else
+                this->attack_name.setColor(sf::Color::Black);
+            this->attack_name.setPosition(140.0f, 140.0f + SPACING_ATK_LISTING_Y * i);
+        }
+    }
+
     // draw interface to select a crea
     if (this->selectingcrea)
     {
@@ -224,11 +251,17 @@ void FightView::render(sf::RenderWindow& window)
             }
         }
     }
+
+    // displaying particules for the attack
+    if (this->display_attack)
+    {
+        //
+    }
 }
 
 int FightView::process_event(sf::Event& event, sf::Time elapsed)
 {
-    int new_view = -1, m = 0;
+    int new_view = -1, m = 0, pos_atk_sel = 0;
 
     if (this->__count_before_flyaway == 0)  // disable controls when escaping
     {
@@ -246,7 +279,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
             switch(event.mouseButton.button)
             {
             case sf::Mouse::Button::Left:
-                if (!this->selectingcrea)
+                if (!this->selectingcrea && !this->attacking && this->my_turn)
                 {
                     // click on the buttons sections
                     if (m__Y >= 490 + 75 && m__Y <= 490 + 125)
@@ -254,6 +287,11 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                         if (m__X >= 5 && m__X <= 157)
                         {
                             // attack button
+                            this->attacking = true;
+                            for (int i=0; i < this->equip->getSize(); ++i)
+                            {
+                                this->attacks_used[i] = false;
+                            }
                         }
                         else if (m__X >= 164 && m__X <= 316)
                         {
@@ -280,30 +318,46 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                     // click on one of my creatures
                     else if (458 - CREATURE_HEIGHT <= m__Y && 458 <= m__Y && 47 <= m__X )
                     {
-                        ///         this->sprites[this->__me + to_string<int>(i)].setPosition(47.0f + i * SPACEMENT_X, 458.0f - CREATURE_HEIGHT);
+                        // this->sprites[this->__me + to_string<int>(i)].setPosition(47.0f + i * SPACEMENT_X, 458.0f - CREATURE_HEIGHT);
                         this->ui_my_selected = int((m__X - 47) / SPACEMENT_X) % this->equip->getSize();
                     }
                     // click on a creature which belongs to the enemy
                     else if (206 - CREATURE_HEIGHT <= m__Y && m__Y <= 206 && START_X <= m__X)
                     {
-                        ///         this->sprites[this->__adv + to_string<int>(i)].setPosition(START_X + i * SPACEMENT_X, 206.0f - CREATURE_HEIGHT);
+                        // this->sprites[this->__adv + to_string<int>(i)].setPosition(START_X + i * SPACEMENT_X, 206.0f - CREATURE_HEIGHT);
                         this->ui_enemy_selected = int((m__X - START_X) / SPACEMENT_X) % this->adv.size();
                     }
                 }
-                else
+                else if (this->selectingcrea)
                 {
-                    // handle clic in
+                    // handle click in
                     if (m__X >= X_TEXT_SELCREA_UI && m__X <= MX_TEXT_SELCREA_UI)
                     {
                         if (m__Y >= Y_TEXT_SELCREA_UI && m__Y <= MY_TEXT_SELCREA_UI)
                         {
-                            this->__selected = (m__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI;
+                            this->__selected = int((m__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI);
                             m = (this->selectingadv) ? this->adv.size() : this->equip->getSize();
                             if (this->__selected >= 0 && this->__selected < m)
                                 this->selectingcrea = false;
                             else
                                 this->__selected = -1;
                         }
+                    }
+                }
+                else if (this->attacking)
+                {
+                    // handle click in attack selection ui
+                    pos_atk_sel = int((m__Y - 140) / SPACING_ATK_LISTING_Y);
+                    if (0 <= pos_atk_sel && pos_atk_sel < this->equip->getSize())
+                    {
+                        this->atk_using_sort_of = pos_atk_sel;
+                        this->attacks_used[pos_atk_sel] = true;
+                        this->selectingcrea = true;
+                        this->selectingadv = true;
+                        this->action.setString("Sur quelle créature souhaitez-vous utiliser le sort ?");
+                        this->has_selected_an_atk = true;
+                        this->display_attack = true;
+                        this->attack_frames_count = 120;
                     }
                 }
                 break;
@@ -331,6 +385,16 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
 
 void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
+    // updating the number of frames in which we "display" the attack
+    if (this->attack_frames_count > 0)
+        this->attack_frames_count -= 1;
+    if (this->attack_frames_count == 1)
+    {
+        this->attack_frames_count = 0;
+        this->display_attack = false;
+    }
+
+    // updating countdown before quitting duel
     if (this->__count_before_flyaway > 1)
         this->__count_before_flyaway -= 1;
 
@@ -379,6 +443,40 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName());
     this->e_pv.setString(to_string<int>(this->adv[this->ui_enemy_selected]->getLife()) + "/" + to_string<int>(this->adv[this->ui_enemy_selected]->getMaxLife()));
     this->m_pv.setString(to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLife()) + "/" + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
+
+    // check if it is still our turn to play
+    if (this->my_turn)
+    {
+        int c = 0;
+        for (int i=0; i < this->attacks_used.size(); ++i)
+        {
+            if (this->attacks_used[i])
+                ++c;
+        }
+        if (c == this->attacks_used.size())
+        {
+            // it is not our turn anymore, let the AI play !
+            this->my_turn = false;
+        }
+    }
+
+    // attack !
+    if (this->has_selected_an_atk && this->__selected != -1 && !this->selectingcrea && this->my_turn)
+    {
+        this->has_selected_an_atk = false;
+        this->attack(this->__selected, this->atk_using_sort_of);
+    }
+}
+
+void FightView::attack(int selected, int index_my_creatures)
+{
+    /// our creature attacking
+    this->equip->getCrea(index_my_creatures);
+    /// the enemy
+    this->adv[selected];
+    /// apply sort + type's damages + def ... etc
+
+    /// WHEN DUEL IS FINISHED, GIVE EXP OR FLY AWAY TO HEAL THE CREATURES
 }
 
 void FightView::encounter()
@@ -403,6 +501,7 @@ void FightView::set_dex(Dex* _dex)
 void FightView::set_equip(Equip* eq)
 {
     this->equip = eq;
+    this->attacks_used.reserve(this->equip->getSize());
 }
 
 void FightView::set_pc(Equip* pc)
@@ -417,6 +516,7 @@ void FightView::set_crealoader(CreaturesLoader* creal)
 
 void FightView::start()
 {
+    CLEAR_PTR_VECT(this->adv)
     this->adv.clear();
 
     // generate adv
