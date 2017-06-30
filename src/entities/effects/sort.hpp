@@ -1,5 +1,4 @@
-#ifndef DEF_SORT
-#define DEF_SORT
+#pragma once
 
 #include <string>
 #include <vector>
@@ -29,5 +28,3 @@ public:
     int getTargets();
     Json::Value serialize();
 };
-
-#endif // DEF_SORT

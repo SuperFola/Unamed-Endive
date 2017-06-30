@@ -1,4 +1,5 @@
 #include "sort.hpp"
+#include "../creature.hpp"
 
 // public
 Sort::Sort() :
@@ -62,6 +63,10 @@ int Sort::act(Creature* other)
     case SortilegeType::MultipleUsHealStatus:
         r = 0;
         other->atk_heal_status();
+        break;
+
+    default:
+        r = 0;
         break;
     }
 
