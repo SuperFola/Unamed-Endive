@@ -24,6 +24,7 @@
 #define START_X 269.0f
 #define SPACEMENT_X 100.0f
 #define SPACING_ATK_LISTING_Y 30
+#define ATK_FR_CNT 120
 
 std::string convert_sort(SortilegeType);
 
@@ -66,6 +67,8 @@ private:
     bool attacking_enemy;
     ParticleSystem particles;
     int ending;
+    bool enemy_is_attacking;
+    int enemy_wait_until_next;
 
     const std::string __adv = "adv";
     const std::string __me = "me";
@@ -83,6 +86,7 @@ private:
     const std::string BKG_SELECT = "background_select";
 
     void attack(int, int);
+    void e_attack(int);
 
 public:
     FightView();

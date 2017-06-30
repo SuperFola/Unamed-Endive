@@ -431,6 +431,19 @@ extern "C"
         RETURN_NONE
     }
 
+    static PyObject* setFightEsc(PyObject* self, PyObject* args)
+    {
+        int e;
+        if (!PyArg_ParseTuple(args, "p", &e))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need a boolean to set the escape mode");
+            return NULL;
+        }
+        PyScripting::setFightEscape(e == 1);
+
+        RETURN_NONE
+    }
+
     static PyMethodDef UnamedMethods[] = {
         // ...
         {"upr", print, METH_VARARGS, "Print function using std::cout"},
@@ -464,6 +477,7 @@ extern "C"
         {"createText", createText, METH_VARARGS, "Create a text at (x, y) of a number of characters/lines given, with the text of a font size, and a color given, the whole thing having a string id given"},
         {"writeText", writeText, METH_VARARGS, "Write a text, giving the id of a created text"},
         {"setFightEnv", setFightEnv, METH_VARARGS, "Set the environment for a fight"},
+        {"setFightEscape", setFightEsc, METH_VARARGS, "Set the fight escape mode"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };

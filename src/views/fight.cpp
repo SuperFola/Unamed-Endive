@@ -86,6 +86,8 @@ FightView::FightView() :
     , attacking_enemy(true)
     , particles(500)
     , ending(0)
+    , enemy_is_attacking(false)
+    , enemy_wait_until_next(0)
 {
 }
 
@@ -235,31 +237,33 @@ void FightView::render(sf::RenderWindow& window)
 
     // draw the life bars AND the "life" inside (life <-> color matching) AND state (burned ...)
     // enemy
-    window.draw(this->enemy);
-    float e_life = LIFEBAR_WIDTH * (float(this->adv[this->ui_enemy_selected]->getLife()) / float(this->adv[this->ui_enemy_selected]->getMaxLife()));
-    this->life1.setSize(sf::Vector2f(e_life, LIFEBAR_HEIGHT));
-    if (e_life / LIFEBAR_WIDTH <= 0.33f)
-        this->life1.setFillColor(sf::Color(220, 40, 20));
-    else if (e_life / LIFEBAR_WIDTH <= 0.66f)
-        this->life1.setFillColor(sf::Color(255, 130, 50));
-    else
-        this->life1.setFillColor(sf::Color(40, 220, 20));
-    window.draw(this->life1);
-    window.draw(this->sprites[this->LIFEBAR]);
-    window.draw(this->e_pv);
-    // me
-    window.draw(this->me);
-    float m_life = LIFEBAR_WIDTH * (float(this->equip->getCrea(this->ui_my_selected)->getLife()) / float(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
-    this->life2.setSize(sf::Vector2f(m_life, LIFEBAR_HEIGHT));
-    if (m_life / LIFEBAR_WIDTH <= 0.33f)
-        this->life2.setFillColor(sf::Color(220, 40, 20));
-    else if (m_life / LIFEBAR_WIDTH <= 0.66f)
-        this->life2.setFillColor(sf::Color(255, 130, 50));
-    else
-        this->life2.setFillColor(sf::Color(40, 220, 20));
-    window.draw(this->life2);
-    window.draw(this->sprites[this->LIFEBAR2]);
-    window.draw(this->m_pv);
+    {
+        window.draw(this->enemy);
+        float e_life = LIFEBAR_WIDTH * (float(this->adv[this->ui_enemy_selected]->getLife()) / float(this->adv[this->ui_enemy_selected]->getMaxLife()));
+        this->life1.setSize(sf::Vector2f(e_life, LIFEBAR_HEIGHT));
+        if (e_life / LIFEBAR_WIDTH <= 0.33f)
+            this->life1.setFillColor(sf::Color(220, 40, 20));
+        else if (e_life / LIFEBAR_WIDTH <= 0.66f)
+            this->life1.setFillColor(sf::Color(255, 130, 50));
+        else
+            this->life1.setFillColor(sf::Color(40, 220, 20));
+        window.draw(this->life1);
+        window.draw(this->sprites[this->LIFEBAR]);
+        window.draw(this->e_pv);
+        // me
+        window.draw(this->me);
+        float m_life = LIFEBAR_WIDTH * (float(this->equip->getCrea(this->ui_my_selected)->getLife()) / float(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
+        this->life2.setSize(sf::Vector2f(m_life, LIFEBAR_HEIGHT));
+        if (m_life / LIFEBAR_WIDTH <= 0.33f)
+            this->life2.setFillColor(sf::Color(220, 40, 20));
+        else if (m_life / LIFEBAR_WIDTH <= 0.66f)
+            this->life2.setFillColor(sf::Color(255, 130, 50));
+        else
+            this->life2.setFillColor(sf::Color(40, 220, 20));
+        window.draw(this->life2);
+        window.draw(this->sprites[this->LIFEBAR2]);
+        window.draw(this->m_pv);
+    }
 
     // draw interface to select an attack
     if (this->attacking)
@@ -311,13 +315,18 @@ void FightView::render(sf::RenderWindow& window)
             }
         }
     }
+
+    if (this->ending)
+    {
+        // animation
+    }
 }
 
 int FightView::process_event(sf::Event& event, sf::Time elapsed)
 {
     int new_view = -1, m = 0, pos_atk_sel = 0;
 
-    if (this->__count_before_flyaway == 0)  // disable controls when escaping
+    if (this->__count_before_flyaway == 0 && this->ending == 0)  // disable controls when escaping or quitting
     {
         switch(event.type)
         {
@@ -426,7 +435,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
 
                         this->has_selected_an_atk = true;
                         this->display_attack = true;
-                        this->attack_frames_count = 120;
+                        this->attack_frames_count = ATK_FR_CNT;
                     }
                 }
                 break;
@@ -449,6 +458,11 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
         else
             return -1;
     }
+    if (this->ending == 1)
+    {
+        this->ending = 0;
+        return DEFAULT_VIEW_ID;
+    }
     return new_view;
 }
 
@@ -456,19 +470,28 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     // updating the number of frames in which we "display" the attack
     if (this->attack_frames_count > 0)
-        this->attack_frames_count -= 1;
+        --this->attack_frames_count;
     if (this->attack_frames_count == 1)
     {
         this->attack_frames_count = 0;
         this->display_attack = false;
     }
 
+    // updating the number of frames during which the AI attacks
+    if (this->enemy_wait_until_next > 0)
+        --this->enemy_wait_until_next;
+    if (this->enemy_wait_until_next == 1)
+    {
+        this->enemy_wait_until_next = 0;
+        this->enemy_is_attacking = false;
+    }
+
     // updating countdown before quitting duel
     if (this->__count_before_flyaway > 1)
-        this->__count_before_flyaway -= 1;
+        --this->__count_before_flyaway;
 
     if (this->ending > 1)
-        this->ending -= 1;
+        --this->ending;
 
     if (OMessenger::get().target_view == this->getId())
     {
@@ -511,19 +534,21 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     }
 
     // updating stats (name, PV)
-    std::string s;
-    s = this->adv[this->ui_enemy_selected]->getStringState();
-    if (s != "none")
-        this->enemy.setString(this->adv[this->ui_enemy_selected]->getName() + " (" + s + ")");
-    else
-        this->enemy.setString(this->adv[this->ui_enemy_selected]->getName());
-    s = this->equip->getCrea(this->ui_my_selected)->getStringState();
-    if (s != "none")
-        this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName() + " (" + s + ")");
-    else
-        this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName());
-    this->e_pv.setString(to_string<int>(this->adv[this->ui_enemy_selected]->getLife()) + "/" + to_string<int>(this->adv[this->ui_enemy_selected]->getMaxLife()));
-    this->m_pv.setString(to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLife()) + "/" + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
+    {
+        std::string s;
+        s = this->adv[this->ui_enemy_selected]->getStringState();
+        if (s != "none")
+            this->enemy.setString(this->adv[this->ui_enemy_selected]->getName() + " (" + s + ")");
+        else
+            this->enemy.setString(this->adv[this->ui_enemy_selected]->getName());
+        s = this->equip->getCrea(this->ui_my_selected)->getStringState();
+        if (s != "none")
+            this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName() + " (" + s + ")");
+        else
+            this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName());
+        this->e_pv.setString(to_string<int>(this->adv[this->ui_enemy_selected]->getLife()) + "/" + to_string<int>(this->adv[this->ui_enemy_selected]->getMaxLife()));
+        this->m_pv.setString(to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLife()) + "/" + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
+    }
 
     // check if it is still our turn to play
     if (this->my_turn)
@@ -549,9 +574,19 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->__selected = -1;
         this->has_selected_an_atk = false;
     }
-    else if (!this->my_turn)
+    else if (!this->my_turn && !this->enemy_is_attacking)
     {
         // the AI must attack
+        this->enemy_is_attacking = true;
+        this->enemy_wait_until_next = this->adv.size() * ATK_FR_CNT;
+    }
+
+    if (this->enemy_is_attacking)
+    {
+        if ((this->enemy_wait_until_next % ATK_FR_CNT) == 0 && )
+        {
+            this->e_attack(int(this->enemy_wait_until_next / ATK_FR_CNT));
+        }
     }
 
     // check if we are dead or if it is the enemy who's dead
@@ -620,6 +655,49 @@ void FightView::attack(int selected, int index_my_creatures)
     }
 }
 
+void FightView::e_attack(int selected)
+{
+    // enemy
+    Creature* my = this->adv[selected];
+    this->action.setString(std::string("L'ennemi ") + my->getName() + " attaque");
+
+    /// FAKE
+    this->display_attack = true;
+    this->attack_frames_count = ATK_FR_CNT;
+
+    int targets = my->getSort()->getTargets();
+    if (targets > 1)
+    {
+        std::vector<int> enemies;
+        int m = (this->attacking_enemy) ? this->adv.size() : this->equip->getSize();
+
+        for (int i=0; i < targets; ++i)
+        {
+            int r = rand() % m;
+            for (int k=0; k < enemies.size(); ++k)
+            {
+                if (enemies[k] == r)
+                {
+                    r = rand() % m;
+                    k = 0;
+                }
+            }
+            enemies.push_back(r);
+
+            for (auto& e : enemies)
+            {
+                my->attack(this->adv[e]);
+            }
+        }
+    }
+    else
+    {
+        // the enemy
+        Creature* enemy = this->equip->getCrea(rand() % this->equip->getSize());
+        my->attack(enemy);
+    }
+}
+
 void FightView::encounter()
 {
     if (this->dex)
@@ -674,6 +752,8 @@ void FightView::start()
     this->display_attack = false;
     this->my_turn = true;
     this->attacking_enemy = true;
+    this->enemy_wait_until_next = 0;
+    this->enemy_is_attacking = false;
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());

@@ -133,6 +133,7 @@ public:
     static void writeText(const char*);
 
     static void setFightEnv(int);
+    static void setFightEscape(bool);
 };
 
 #endif // DEF_SCRIPTING

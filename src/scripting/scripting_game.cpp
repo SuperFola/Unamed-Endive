@@ -331,3 +331,8 @@ void PyScripting::setFightEnv(int id)
 {
     instance.sm->getFight()->set_env(static_cast<FightEnv>(id % static_cast<int>(FightEnv::FECount)));
 }
+
+void PyScripting::setFightEscape(bool e)
+{
+    instance.sm->getFight()->set_escape(e);
+}

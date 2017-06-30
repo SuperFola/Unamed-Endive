@@ -351,13 +351,9 @@ void DefaultView::setShader(const std::string& name)
         else
         {
             this->shader.setUniform("texture", this->world.getTexture());
-//            this->setShaderParameter("texture", this->world.getTexture());
             this->shader.setUniform("distorsionMapTexture", this->distortionMap);
-//            this->setShaderParameter("distortionMapTexture", this->distortionMap);
             this->shader.setUniform("width", float(WIN_W));
-//            this->setShaderParameter(std::string("width"), WIN_W);
             this->shader.setUniform("sigma", 0.5f);
-//            this->setShaderParameter(std::string("sigma"), 0.5f);
         }
     }
 }
