@@ -7,6 +7,63 @@
 #include "fight.hpp"
 #include "../constants.hpp"
 
+std::string convert_sort(SortilegeType s)
+{
+    std::string o = "none";
+    switch (s)
+    {
+    // unique adv
+    case SortilegeType::UniqueTargetAdvDamage:
+        o = "attaque";
+        break;
+
+    case SortilegeType::UniqueTargetAdvPoison:
+        o = "empoisonne";
+        break;
+
+    case SortilegeType::UniqueTargetAdvBurn:
+        o = "brûle";
+        break;
+
+    case SortilegeType::UniqueTargetAdvParalize:
+        o = "paralyse";
+        break;
+
+    // unique us
+    case SortilegeType::UniqueTargetUsHeal:
+        o = "soigne";
+        break;
+
+    // multiple adv
+    case SortilegeType::MultipleAdvDamage:
+        o = "[multi] attaque";
+        break;
+
+    case SortilegeType::MultipleAdvPoison:
+        o = "[multi] empoisonne";
+        break;
+
+    case SortilegeType::MultipleAdvBurn:
+        o = "[multi] brûle";
+        break;
+
+    case SortilegeType::MultipleAdvParalize:
+        o = "[multi] paralyse";
+        break;
+
+    // multiple us
+    case SortilegeType::MultipleUsHeal:
+        o = "[multi] soigne";
+        break;
+
+    case SortilegeType::MultipleUsHealStatus:
+        o = "[multi] soigne statuts";
+        break;
+    }
+
+    return o;
+}
+
 FightView::FightView() :
     View(FIGHT_VIEW_ID)
     , env(FightEnv::Forest)
@@ -27,6 +84,7 @@ FightView::FightView() :
     , display_attack(false)
     , my_turn(true)
     , attacking_enemy(true)
+    , particles(500)
 {
 }
 
@@ -119,9 +177,9 @@ bool FightView::load()
     this->me.setPosition(421.0f, 323.0f);
 
     setupFont(this->e_pv, this->font, sf::Color::Black, 20)
-    this->e_pv.setPosition(188.0f, 110.0f);
+    this->e_pv.setPosition(188.0f, 112.0f);
     setupFont(this->m_pv, this->font, sf::Color::Black, 20)
-    this->m_pv.setPosition(398.0f, 348.0f);
+    this->m_pv.setPosition(398.0f, 350.0f);
 
     setupFont(this->attack_name, this->font, sf::Color::Black, 20)
 
@@ -163,8 +221,6 @@ void FightView::render(sf::RenderWindow& window)
     window.draw(this->sprites[this->OVERLAY]);
     window.draw(this->sprites[this->TOOLS]);
     window.draw(this->action);
-    window.draw(this->enemy);
-    window.draw(this->me);
 
     // draw the creatures
     for (int i =0; i < this->adv.size(); ++i)
@@ -176,8 +232,9 @@ void FightView::render(sf::RenderWindow& window)
         window.draw(this->sprites[this->__me + to_string<int>(i)]);
     }
 
-    // draw the life bars AND the "life" inside (life <-> color matching)
+    // draw the life bars AND the "life" inside (life <-> color matching) AND state (burned ...)
     // enemy
+    window.draw(this->enemy);
     float e_life = LIFEBAR_WIDTH * (float(this->adv[this->ui_enemy_selected]->getLife()) / float(this->adv[this->ui_enemy_selected]->getMaxLife()));
     this->life1.setSize(sf::Vector2f(e_life, LIFEBAR_HEIGHT));
     if (e_life / LIFEBAR_WIDTH <= 0.33f)
@@ -190,6 +247,7 @@ void FightView::render(sf::RenderWindow& window)
     window.draw(this->sprites[this->LIFEBAR]);
     window.draw(this->e_pv);
     // me
+    window.draw(this->me);
     float m_life = LIFEBAR_WIDTH * (float(this->equip->getCrea(this->ui_my_selected)->getLife()) / float(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
     this->life2.setSize(sf::Vector2f(m_life, LIFEBAR_HEIGHT));
     if (m_life / LIFEBAR_WIDTH <= 0.33f)
@@ -206,15 +264,14 @@ void FightView::render(sf::RenderWindow& window)
     if (this->attacking)
     {
         window.draw(this->sprites[this->BKG_SELECT]);
-        this->attack_name.setString("Sortilèges disponnibles");
+        this->attack_name.setString("Sortilèges disponibles");
         this->attack_name.setPosition(120.0f + float(int((400.0f - this->attack_name.getGlobalBounds().width) / 2.0f)), 130.0f);
         window.draw(this->attack_name);
         for (int i=0; i < this->equip->getSize(); ++i)
         {
             /// CHANGE THIS LINE IF WE ADD COMPETENCES' TREE, TO SET THE NAME OF THE ATTACK REGARDING
             /// TO THE TREE OF THE `SORT`
-            /// afficher le type de sort
-            this->attack_name.setString(std::string("Sort de : ") + this->equip->getCrea(i)->getName());
+            this->attack_name.setString(std::string("(") + convert_sort(this->equip->getCrea(i)->getSort()->getType()) + ") " + this->equip->getCrea(i)->getName());
             if (this->attacks_used[i])
                 this->attack_name.setColor(sf::Color::Green);
             else
@@ -253,12 +310,6 @@ void FightView::render(sf::RenderWindow& window)
             }
         }
     }
-
-    // displaying particules for the attack
-    if (this->display_attack)
-    {
-        //
-    }
 }
 
 int FightView::process_event(sf::Event& event, sf::Time elapsed)
@@ -281,6 +332,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
             switch(event.mouseButton.button)
             {
             case sf::Mouse::Button::Left:
+                // to control the UI, it must be our turn, AND not attacking
                 if (!this->selectingcrea && !this->attacking && this->my_turn)
                 {
                     // click on the buttons sections
@@ -354,11 +406,22 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                     {
                         this->atk_using_sort_of = pos_atk_sel;
                         this->attacks_used[pos_atk_sel] = true;
+
                         SortilegeType s = this->equip->getCrea(this->atk_using_sort_of)->getSort()->getType();
                         this->attacking_enemy = !(s == UniqueTargetUsHeal || s == MultipleUsHeal || s == MultipleUsHealStatus);
-                        this->selectingcrea = true;
-                        this->selectingadv = this->attacking_enemy;
-                        this->action.setString("Sur quelle créature souhaitez-vous utiliser le sort ?");
+                        if (s == UniqueTargetAdvDamage || s == UniqueTargetAdvPoison || s == UniqueTargetAdvBurn ||
+                             s == UniqueTargetAdvParalize || s == UniqueTargetUsHeal)
+                        {
+                            this->selectingcrea = true;
+                            this->selectingadv = this->attacking_enemy;
+                            this->action.setString("Sur quelle créature souhaitez-vous utiliser le sort ?");
+                        }
+                        else
+                        {
+                            this->__selected = 42;  // special code to tell the engine to chose random creatures
+                            this->action.setString("Attaque multiple déclenchée");
+                        }
+
                         this->has_selected_an_atk = true;
                         this->display_attack = true;
                         this->attack_frames_count = 120;
@@ -443,8 +506,17 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     }
 
     // updating stats (name, PV)
-    this->enemy.setString(this->adv[this->ui_enemy_selected]->getName());
-    this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName());
+    std::string s;
+    s = this->adv[this->ui_enemy_selected]->getStringState();
+    if (s != "none")
+        this->enemy.setString(this->adv[this->ui_enemy_selected]->getName() + " (" + s + ")");
+    else
+        this->enemy.setString(this->adv[this->ui_enemy_selected]->getName());
+    s = this->equip->getCrea(this->ui_my_selected)->getStringState();
+    if (s != "none")
+        this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName() + " (" + s + ")");
+    else
+        this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName());
     this->e_pv.setString(to_string<int>(this->adv[this->ui_enemy_selected]->getLife()) + "/" + to_string<int>(this->adv[this->ui_enemy_selected]->getMaxLife()));
     this->m_pv.setString(to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLife()) + "/" + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
 
@@ -467,8 +539,23 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     // attack !
     if (this->has_selected_an_atk && this->__selected != -1 && !this->selectingcrea && this->my_turn)
     {
-        this->has_selected_an_atk = false;
         this->attack(this->__selected, this->atk_using_sort_of);
+        this->__selected = -1;
+        this->has_selected_an_atk = false;
+    }
+    else if (!this->my_turn)
+    {
+        // the AI must attack
+    }
+
+    // displaying particules for the attack
+    if (this->display_attack)
+    {
+        /// FAKE
+        sf::Vector2i mouse = sf::Mouse::getPosition(window);
+        this->particles.setEmitter(window.mapPixelToCoords(mouse));
+        this->particles.update(elapsed);
+        window.draw(this->particles);
     }
 }
 
@@ -508,7 +595,6 @@ void FightView::set_dex(Dex* _dex)
 void FightView::set_equip(Equip* eq)
 {
     this->equip = eq;
-    this->attacks_used.reserve(this->equip->getSize());
 }
 
 void FightView::set_pc(Equip* pc)
@@ -526,6 +612,12 @@ void FightView::start()
     CLEAR_PTR_VECT(this->adv)
     this->adv.clear();
 
+    this->attacks_used.reserve(this->equip->getSize());
+    for (int i=0; i < this->equip->getSize(); ++i)
+    {
+        this->attacks_used[i] = false;
+    }
+
     // generate adv
     float moy_equip = 0.0f;
     for (int i=0; i < this->equip->getSize(); ++i)
@@ -540,11 +632,8 @@ void FightView::start()
 
         this->sprites[this->__me + to_string<int>(i)] = sf::Sprite(this->crealoader->get(this->dex->getInfo(this->equip->getCrea(i)->getId()).file));
         float factor = CREATURE_HEIGHT / this->crealoader->get(this->dex->getInfo(this->equip->getCrea(i)->getId()).file).getSize().y;
-        this->sprites[this->__me + to_string<int>(i)].setScale(factor, factor);
         // reversing our creatures to make them look to the right (to the others creatures)
-        int width = this->sprites[this->__me + to_string<int>(i)].getGlobalBounds().width,
-             height = this->sprites[this->__me + to_string<int>(i)].getGlobalBounds().height;
-        this->sprites[this->__me + to_string<int>(i)].setTextureRect(sf::IntRect(width, 0, -width, height));
+        this->sprites[this->__me + to_string<int>(i)].setScale(-factor, factor);
         // calculate position of the sprite regarding to the index
         this->sprites[this->__me + to_string<int>(i)].setPosition(47.0f + i * SPACEMENT_X, 458.0f - CREATURE_HEIGHT);
     }
@@ -558,7 +647,6 @@ void FightView::start()
         Creature* crea = new Creature();
         int  id = rand() % (this->dex->getMaxId() + 1)
               , _t = this->dex->getInfo(id).type
-              ,  _s = this->dex->getInfo(id).stade
               , _st = rand() % SortilegeType::Count  // SortilegeType::UniqueTargetAdvDamage
               , level = (rand() % 4) + _x_
               , life = 2 * level + (rand() % 4) + 3  // mlife = life
@@ -570,10 +658,9 @@ void FightView::start()
         long int exp = Creature::calculateExpFromLevel(level);
 
         Type t = static_cast<Type>(_t % 8);
-        State s = static_cast<State>(_s % 4);
         SortilegeType st = static_cast<SortilegeType>(_st % 14);
 
-        crea->load(id, t, atk, def, life, life, pp, pp, this->dex->getName(id), s, level, exp, st, sdmg, stargets);
+        crea->load(id, t, atk, def, life, life, pp, pp, this->dex->getName(id), State::STD, level, exp, st, sdmg, stargets);
         this->adv.push_back(crea);
 
         sf::Text _t2;

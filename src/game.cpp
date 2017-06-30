@@ -625,6 +625,8 @@ Game::Game() :
     Config::load();
     // loading types tables (percentage of +/- by type1 on type2)
     TypesTable::load();
+    // loading objects table
+    ObjectsTable::load();
 
     // OMessenger
     OMessenger::empty();
@@ -722,9 +724,6 @@ Game::Game() :
 
     this->blink = false;
     this->blinking = 0;
-
-    ObjectsTable::load();
-    this->ttable.load();
 
     srand(static_cast<unsigned int>(time(0)));
 }

@@ -24,7 +24,6 @@ private:
     sf::Clock clock;
     StateMachine sm;
     MusicPlayer mplayer;
-    TypesTable ttable;
     CreaturesLoader crea_load;
     Container<sf::Texture> textures;
     bool has_requested_quit;

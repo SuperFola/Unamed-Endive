@@ -21,7 +21,7 @@ Creature::Creature() :
 
 }
 
-bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, int pp, int mpp, std::string name, State& s, int level, long int exp, SortilegeType& stype, int sdmg, int stargets)
+bool Creature::load(int id, Type& t, int atk, int def, int life, int mlife, int pp, int mpp, std::string name, State s, int level, long int exp, SortilegeType& stype, int sdmg, int stargets)
 {
     DebugLog(SH_INFO, "Loading creature " << name);
     this->id = id;
@@ -134,6 +134,29 @@ int Creature::getId()
 State Creature::getState()
 {
     return this->state;
+}
+
+std::string Creature::getStringState()
+{
+    std::string s = "none";
+    switch (this->state)
+    {
+    case BURNED:
+        s = "brûlé";
+        break;
+
+    case PARALYSED:
+        s = "paralysé";
+        break;
+
+    case POISONED:
+        s = "empoisonné";
+        break;
+
+    case STD:
+        break;
+    }
+    return s;
 }
 
 Type Creature::getType()

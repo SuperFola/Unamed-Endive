@@ -13,6 +13,7 @@
 #include "../abstract/equip.hpp"
 #include "../abstract/creatures_loader.hpp"
 #include "../abstract/defines.hpp"
+#include "../particles/particles.hpp"
 
 #define X_TEXT_SELCREA_UI 200
 #define MX_TEXT_SELCREA_UI 400
@@ -23,6 +24,8 @@
 #define START_X 269.0f
 #define SPACEMENT_X 100.0f
 #define SPACING_ATK_LISTING_Y 30
+
+std::string convert_sort(SortilegeType);
 
 class FightView : public View
 {
@@ -61,6 +64,7 @@ private:
     bool display_attack;
     bool my_turn;
     bool attacking_enemy;
+    ParticleSystem particles;
 
     const std::string __adv = "adv";
     const std::string __me = "me";

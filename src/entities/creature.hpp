@@ -38,7 +38,7 @@ private:
 public:
     // methods
     Creature();
-    bool load(int, Type&, int, int, int, int, int, int, std::string, State&, int, long int, SortilegeType&, int, int);
+    bool load(int, Type&, int, int, int, int, int, int, std::string, State, int, long int, SortilegeType&, int, int);
     bool loadfrom(Creature*);
     int getLife();
     int getMaxLife();
@@ -49,6 +49,7 @@ public:
     std::string& getName();
     int getId();
     State getState();
+    std::string getStringState();
     Type getType();
     int getAtk();
     int getDef();
