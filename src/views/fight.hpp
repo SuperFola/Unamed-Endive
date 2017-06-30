@@ -65,6 +65,7 @@ private:
     bool my_turn;
     bool attacking_enemy;
     ParticleSystem particles;
+    int ending;
 
     const std::string __adv = "adv";
     const std::string __me = "me";

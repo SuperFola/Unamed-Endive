@@ -85,6 +85,7 @@ FightView::FightView() :
     , my_turn(true)
     , attacking_enemy(true)
     , particles(500)
+    , ending(0)
 {
 }
 
@@ -466,6 +467,9 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     if (this->__count_before_flyaway > 1)
         this->__count_before_flyaway -= 1;
 
+    if (this->ending > 1)
+        this->ending -= 1;
+
     if (OMessenger::get().target_view == this->getId())
     {
         switch (OMessenger::get().type)
@@ -550,6 +554,19 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         // the AI must attack
     }
 
+    // check if we are dead or if it is the enemy who's dead
+    int d = 0;
+    for (int i=0; i < this->adv.size(); ++i)
+    {
+        if (this->adv[i]->getLife() == 0)
+            ++d;
+    }
+    if (d == this->adv.size() && this->adv.size() != 0)
+    {
+        this->action.setString("Les créatures ennemies ont perdues !");
+        this->ending = 120;
+    }
+
     // displaying particules for the attack
     if (this->display_attack)
     {
@@ -601,8 +618,6 @@ void FightView::attack(int selected, int index_my_creatures)
             enemy = this->equip->getCrea(selected);
         my->attack(enemy);
     }
-
-    /// WHEN DUEL IS FINISHED, GIVE EXP OR FLY AWAY TO HEAL THE CREATURES
 }
 
 void FightView::encounter()
@@ -643,6 +658,22 @@ void FightView::start()
 {
     CLEAR_PTR_VECT(this->adv)
     this->adv.clear();
+    this->ending = 0;
+    this->__c = 0;
+    this->__selected = -1;
+    this->selectingcrea = false;
+    this->selectingadv = true;
+    this->__count_before_flyaway = 0;
+    this->can_escape = true;
+    this->ui_my_selected = 0;
+    this->ui_enemy_selected = 0;
+    this->attacking = false;
+    this->has_selected_an_atk = false;
+    this->atk_using_sort_of = -1;
+    this->attack_frames_count = 0;
+    this->display_attack = false;
+    this->my_turn = true;
+    this->attacking_enemy = true;
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());
