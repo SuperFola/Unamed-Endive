@@ -57,11 +57,14 @@ bool Dex::load(const std::string& path)
         dexi.evolution = value["evolution"].asString();
         dexi.file = value["file"].asString();
 
-        this->content[key.asString()] = dexi;
-        this->names.push_back(key.asString());
-        this->id_name[_id] = key.asString();
+        if (key.asString() != "default")
+        {
+            this->content[key.asString()] = dexi;
+            this->names.push_back(key.asString());
+            this->id_name[_id] = key.asString();
 
-        _id++;
+            ++_id;
+        }
     }
 
     struct DexInfo default_inf;

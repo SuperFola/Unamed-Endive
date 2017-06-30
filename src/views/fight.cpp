@@ -281,7 +281,8 @@ void FightView::render(sf::RenderWindow& window)
                 this->attack_name.setColor(sf::Color::Green);
             else
                 this->attack_name.setColor(sf::Color::Black);
-            this->attack_name.setPosition(140.0f, 140.0f + SPACING_ATK_LISTING_Y * i);
+            this->attack_name.setPosition(140.0f, 150.0f + SPACING_ATK_LISTING_Y * i);
+            window.draw(this->attack_name);
         }
     }
 
@@ -289,10 +290,13 @@ void FightView::render(sf::RenderWindow& window)
     if (this->selectingcrea)
     {
         window.draw(this->sprites[this->BKG_SELECT]);
-
+        this->attack_name.setString("Cible");
+        this->attack_name.setPosition(120.0f + float(int((400.0f - this->attack_name.getGlobalBounds().width) / 2.0f)), 130.0f);
+        this->attack_name.setColor(sf::Color::Black);
+        window.draw(this->attack_name);
         if (this->selectingadv)
         {
-            for (int i=0; i < this->adv.size(); i++)
+            for (int i=0; i < this->adv.size(); ++i)
             {
                 if (i != this->__selected)
                     this->texts.get(this->__adv + to_string<int>(i)).setFillColor(sf::Color::Black);
@@ -400,42 +404,52 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                     {
                         if (m__Y >= Y_TEXT_SELCREA_UI && m__Y <= MY_TEXT_SELCREA_UI)
                         {
+                            DebugLog(SH_INFO, "test");
                             this->__selected = int((m__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI);
                             m = (this->selectingadv) ? this->adv.size() : this->equip->getSize();
                             if (this->__selected >= 0 && this->__selected < m)
                                 this->selectingcrea = false;
                             else
                                 this->__selected = -1;
+                            DebugLog(SH_INFO, this->__selected);
                         }
                     }
                 }
                 else if (this->attacking)
                 {
-                    // handle click in attack selection ui
-                    pos_atk_sel = int((m__Y - 140) / SPACING_ATK_LISTING_Y);
-                    if (0 <= pos_atk_sel && pos_atk_sel < this->equip->getSize())
+                    if ((0 <= m__X && m__X <= 120) || (WIN_W - 120 <= m__X && m__X <= WIN_W) ||
+                         (0 <= m__Y && m__Y <= 120) || (WIN_H - 120 <= m__Y && m__Y <= WIN_H))
                     {
-                        this->atk_using_sort_of = pos_atk_sel;
-                        this->attacks_used[pos_atk_sel] = true;
-
-                        SortilegeType s = this->equip->getCrea(this->atk_using_sort_of)->getSort()->getType();
-                        this->attacking_enemy = !(s == UniqueTargetUsHeal || s == MultipleUsHeal || s == MultipleUsHealStatus);
-                        if (s == UniqueTargetAdvDamage || s == UniqueTargetAdvPoison || s == UniqueTargetAdvBurn ||
-                             s == UniqueTargetAdvParalize || s == UniqueTargetUsHeal)
+                            this->attacking = false;
+                    }
+                    else
+                    {
+                        // handle click in attack selection ui
+                        pos_atk_sel = int((m__Y - 150) / SPACING_ATK_LISTING_Y);
+                        if (0 <= pos_atk_sel && pos_atk_sel < this->equip->getSize())
                         {
-                            this->selectingcrea = true;
-                            this->selectingadv = this->attacking_enemy;
-                            this->action.setString("Sur quelle créature souhaitez-vous utiliser le sort ?");
-                        }
-                        else
-                        {
-                            this->__selected = 42;  // special code to tell the engine to chose random creatures
-                            this->action.setString("Attaque multiple déclenchée");
-                        }
+                            this->atk_using_sort_of = pos_atk_sel;
+                            this->attacks_used[pos_atk_sel] = true;
 
-                        this->has_selected_an_atk = true;
-                        this->display_attack = true;
-                        this->attack_frames_count = ATK_FR_CNT;
+                            SortilegeType s = this->equip->getCrea(this->atk_using_sort_of)->getSort()->getType();
+                            this->attacking_enemy = !(s == UniqueTargetUsHeal || s == MultipleUsHeal || s == MultipleUsHealStatus);
+                            if (s == UniqueTargetAdvDamage || s == UniqueTargetAdvPoison || s == UniqueTargetAdvBurn ||
+                                 s == UniqueTargetAdvParalize || s == UniqueTargetUsHeal)
+                            {
+                                this->selectingcrea = true;
+                                this->selectingadv = this->attacking_enemy;
+                                this->action.setString("Sur quelle créature souhaitez-vous utiliser le sort ?");
+                            }
+                            else
+                            {
+                                this->__selected = 42;  // special code to tell the engine to chose random creatures
+                                this->action.setString("Attaque multiple déclenchée");
+                            }
+
+                            this->has_selected_an_atk = true;
+                            this->display_attack = true;
+                            this->attack_frames_count = ATK_FR_CNT;
+                        }
                     }
                 }
                 break;
@@ -583,9 +597,9 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 
     if (this->enemy_is_attacking)
     {
-        if ((this->enemy_wait_until_next % ATK_FR_CNT) == 0 && )
+        if ((this->enemy_wait_until_next % ATK_FR_CNT) == 0 && this->enemy_wait_until_next != 0)
         {
-            this->e_attack(int(this->enemy_wait_until_next / ATK_FR_CNT));
+            this->e_attack(int(this->enemy_wait_until_next / ATK_FR_CNT) - 1);
         }
     }
 
@@ -636,11 +650,10 @@ void FightView::attack(int selected, int index_my_creatures)
                 }
             }
             enemies.push_back(r);
-
-            for (auto& e : enemies)
-            {
-                my->attack(this->adv[e]);
-            }
+        }
+        for (auto& e : enemies)
+        {
+            my->attack(this->adv[e]);
         }
     }
     else
@@ -658,14 +671,17 @@ void FightView::attack(int selected, int index_my_creatures)
 void FightView::e_attack(int selected)
 {
     // enemy
-    Creature* my = this->adv[selected];
+    Creature* my = this->adv[selected % this->adv.size()];
     this->action.setString(std::string("L'ennemi ") + my->getName() + " attaque");
+
+    DebugLog(SH_INFO, "e_attack");
 
     /// FAKE
     this->display_attack = true;
     this->attack_frames_count = ATK_FR_CNT;
 
     int targets = my->getSort()->getTargets();
+
     if (targets > 1)
     {
         std::vector<int> enemies;
@@ -683,11 +699,11 @@ void FightView::e_attack(int selected)
                 }
             }
             enemies.push_back(r);
+        }
 
-            for (auto& e : enemies)
-            {
-                my->attack(this->adv[e]);
-            }
+        for (auto& e : enemies)
+        {
+            my->attack(this->adv[e]);
         }
     }
     else
@@ -794,7 +810,7 @@ void FightView::start()
     for (int i=0; i < this->equip->getMaxSize(); i++)
     {
         Creature* crea = new Creature();
-        int  id = rand() % (this->dex->getMaxId() + 1)
+        int  id = rand() % (this->dex->getMaxId())
               , _t = this->dex->getInfo(id).type
               , _st = rand() % SortilegeType::Count  // SortilegeType::UniqueTargetAdvDamage
               , level = (rand() % 4) + _x_

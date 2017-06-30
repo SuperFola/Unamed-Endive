@@ -112,6 +112,10 @@ setFightEnv
 -----------
 Set the environment for a fight
 
+setFightEscape
+--------------
+Set the fight escape mode
+
 stopMusic
 ---------
 Stop the current, if one is playing
