@@ -490,7 +490,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     }
 
     // updating the number of frames during which the AI attacks
-    if (this->enemy_wait_until_next > 0)
+    if (this->enemy_wait_until_next > 1)
         --this->enemy_wait_until_next;
     if (this->enemy_wait_until_next == 1)
     {
@@ -593,6 +593,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     else if (!this->my_turn && !this->enemy_is_attacking)
     {
         // the AI must attack
+        DebugLog(SH_SPE, this->enemy_wait_until_next);
         this->enemy_is_attacking = true;
         this->enemy_wait_until_next = this->adv.size() * ATK_FR_CNT;
     }
@@ -601,6 +602,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     {
         if ((this->enemy_wait_until_next % ATK_FR_CNT) == 0 && this->enemy_wait_until_next != 0)
         {
+            DebugLog(SH_WARN, "no!");
             this->e_attack(int(this->enemy_wait_until_next / ATK_FR_CNT) - 1);
         }
     }
@@ -626,6 +628,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         }
         if (d == this->equip->getSize() && this->equip->getSize() != 0 && this->ending == 0)
         {
+            DebugLog(SH_WARN, "ok");
             this->action.setString("Vous avez perdu ...");
             this->ending = ENDING_CNT;
             this->my_turn = false;
