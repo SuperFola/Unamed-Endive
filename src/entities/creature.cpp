@@ -212,12 +212,14 @@ void Creature::attack(Creature* other)
 {
     float amplifier = TypesTable::atktype_on_deftype(this->type, other->type);
     int out = this->sortilege.act(other);
+    DebugLog(SH_OK, this->name << " : " << "x" << amplifier << ", dmg: " << out);
     if (out != 0)
     {
-        float real_damages = (((2.0f * this->level + 10.0f) / 250.0f) * (float(this->atk) / float(other->def)) * out + 2) * amplifier * (0.88f + float(rand() % 13) / 100.0f);
+        float real_damages = (0.85f + (rand() % 16) / 100.0f) * amplifier * ((((((this->level + 1) * 0.4f + 2) * out * this->atk) / 50.0f) / other->def) + 2);
         other->life -= real_damages;
-        if (other->life < other->max_life)
+        if (other->life < 0)
             other->life = 0;
+        DebugLog(SH_OK, "      applied: " << real_damages << ", atk: " << this->atk << ", (other) def: " << other->def);
     }
 }
 

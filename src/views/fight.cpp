@@ -472,7 +472,6 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
     }
     if (this->ending == 1)
     {
-        DebugLog(SH_SPE, "ok");
         this->ending = 0;
         return DEFAULT_VIEW_ID;
     }
@@ -631,6 +630,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             this->ending = ENDING_CNT;
             this->my_turn = false;
             this->enemy_is_attacking = false;
+            this->enemy_wait_until_next = 0;
             this->attacking = false;
             this->selectingcrea = false;
             this->__selected = -1;
