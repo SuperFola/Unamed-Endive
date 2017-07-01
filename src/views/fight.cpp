@@ -555,11 +555,13 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     // updating stats (name, PV)
     {
         std::string s;
+
         s = this->adv[this->ui_enemy_selected]->getStringState();
         if (s != "none")
             this->enemy.setString(this->adv[this->ui_enemy_selected]->getName() + " (" + s + ") niv." + to_string<int>(this->adv[this->ui_enemy_selected]->getLevel()));
         else
             this->enemy.setString(this->adv[this->ui_enemy_selected]->getName() + " niv." + to_string<int>(this->adv[this->ui_enemy_selected]->getLevel()));
+
         s = this->equip->getCrea(this->ui_my_selected)->getStringState();
         if (s != "none")
             this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName() + " (" + s + ") niv." + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLevel()));
@@ -567,6 +569,26 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName() + " niv." + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLevel()));
         this->e_pv.setString(to_string<int>(this->adv[this->ui_enemy_selected]->getLife()) + "/" + to_string<int>(this->adv[this->ui_enemy_selected]->getMaxLife()));
         this->m_pv.setString(to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLife()) + "/" + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
+    }
+
+    // changing the current selected creature to display its stats if it is dead, to a living one
+    {
+        int c = 0;
+        while (this->adv[this->ui_enemy_selected]->getLife() == 0)
+        {
+            this->ui_enemy_selected = (this->ui_enemy_selected + 1) % this->adv.size();
+
+            if (++c == this->adv.size())
+                break;
+        }
+        c = 0;
+        while (this->equip->getCrea(this->ui_my_selected)->getLife() == 0)
+        {
+            this->ui_my_selected = (this->ui_my_selected + 1) % this->equip->getSize();
+
+            if (++c == this->adv.size())
+                break;
+        }
     }
 
     // check if it is still our turn to play
@@ -610,6 +632,17 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             DebugLog(SH_WARN, "no!");
             this->e_attack(int(this->enemy_wait_until_next / ATK_FR_CNT) - 1);
         }
+
+        if (this->enemy_wait_until_next == 0)
+        {
+            DebugLog(SH_INFO, "Giving back the turn to the player");
+            this->enemy_is_attacking = false;
+            this->my_turn = true;
+            for (int i=0; i < this->attacks_used.size(); ++i)
+            {
+                this->attacks_used[i] = false;
+            }
+        }
     }
 
     // check if we are dead or if it is the enemy who's dead
@@ -636,8 +669,8 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             DebugLog(SH_WARN, "ok");
             this->action.setString("Vous avez perdu ...");
             this->ending = ENDING_CNT;
-            this->my_turn = true;
-            this->enemy_is_attacking = false;
+            this->my_turn = false;
+            this->enemy_is_attacking = true;
             this->enemy_wait_until_next = 0;
             this->attacking = false;
             this->selectingcrea = false;
