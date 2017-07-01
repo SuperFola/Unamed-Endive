@@ -452,6 +452,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                             }
 
                             this->has_selected_an_atk = true;
+                            this->lock = true;
                             this->display_attack = true;
                             this->attack_frames_count = ATK_FR_CNT;
                         }
@@ -488,7 +489,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
 void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     // updating the number of frames in which we "display" the attack
-    if (this->attack_frames_count > 0)
+    if (this->attack_frames_count > 1 && !this->lock)
         --this->attack_frames_count;
     if (this->attack_frames_count == 1)
     {
@@ -502,8 +503,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     if (this->enemy_wait_until_next == 1)
     {
         this->enemy_wait_until_next = 0;
-        this->enemy_is_attacking = false;
-        this->my_turn = true;
     }
 
     // updating countdown before quitting duel
@@ -647,6 +646,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
                 this->attacks_used[i] = false;
             }
             this->lock = true;
+            this->action.setString("C'est à votre tour d'attaquer !");
         }
     }
 
@@ -851,6 +851,7 @@ void FightView::start()
     this->enemy_wait_until_next = 0;
     this->enemy_is_attacking = false;
     this->lock = false;
+    this->action.setString("C'est à votre tour d'attaquer !");
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());
