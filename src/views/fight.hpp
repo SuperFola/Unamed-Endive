@@ -70,6 +70,7 @@ private:
     int ending;
     bool enemy_is_attacking;
     int enemy_wait_until_next;
+    bool lock;
 
     const std::string __adv = "adv";
     const std::string __me = "me";

@@ -88,6 +88,7 @@ FightView::FightView() :
     , ending(0)
     , enemy_is_attacking(false)
     , enemy_wait_until_next(0)
+    , lock(false)
 {
 }
 
@@ -614,20 +615,23 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     // attack !
     if (this->has_selected_an_atk && this->__selected != -1 && !this->selectingcrea && this->my_turn)
     {
+        DebugLog(SH_INFO, "You are attacking");
         this->attack(this->__selected, this->atk_using_sort_of);
         this->__selected = -1;
         this->has_selected_an_atk = false;
+        this->lock = false;
     }
-    else if (!this->my_turn && !this->enemy_is_attacking)
+    else if (!this->my_turn && !this->enemy_is_attacking && !this->lock)
     {
         // the AI must attack
+        DebugLog(SH_INFO, "Turning on the AI");
         this->enemy_is_attacking = true;
         this->enemy_wait_until_next = this->adv.size() * ATK_FR_CNT;
     }
 
     if (this->enemy_is_attacking)
     {
-        if ((this->enemy_wait_until_next % ATK_FR_CNT) == 0 && this->enemy_wait_until_next != 0)
+        if ((this->enemy_wait_until_next % ATK_FR_CNT) == 0 && this->enemy_wait_until_next != 0 && !this->lock)
         {
             DebugLog(SH_WARN, "no!");
             this->e_attack(int(this->enemy_wait_until_next / ATK_FR_CNT) - 1);
@@ -642,6 +646,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             {
                 this->attacks_used[i] = false;
             }
+            this->lock = true;
         }
     }
 
@@ -657,6 +662,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         {
             this->action.setString("Les créatures ennemies ont perdues !");
             this->ending = ENDING_CNT;
+            this->lock = true;
         }
         d= 0;
         for (int i=0; i < this->equip->getSize(); ++i)
@@ -670,11 +676,12 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             this->action.setString("Vous avez perdu ...");
             this->ending = ENDING_CNT;
             this->my_turn = false;
-            this->enemy_is_attacking = true;
+            this->enemy_is_attacking = false;
             this->enemy_wait_until_next = 0;
             this->attacking = false;
             this->selectingcrea = false;
             this->__selected = -1;
+            this->lock = true;
         }
     }
 
@@ -843,6 +850,7 @@ void FightView::start()
     this->attacking_enemy = true;
     this->enemy_wait_until_next = 0;
     this->enemy_is_attacking = false;
+    this->lock = false;
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());
