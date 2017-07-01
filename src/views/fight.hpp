@@ -25,6 +25,7 @@
 #define SPACEMENT_X 100.0f
 #define SPACING_ATK_LISTING_Y 30
 #define ATK_FR_CNT 120
+#define ENDING_CNT 260
 
 std::string convert_sort(SortilegeType);
 

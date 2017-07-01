@@ -404,14 +404,12 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                     {
                         if (m__Y >= Y_TEXT_SELCREA_UI && m__Y <= MY_TEXT_SELCREA_UI)
                         {
-                            DebugLog(SH_INFO, "test");
                             this->__selected = int((m__Y - Y_TEXT_SELCREA_UI) / YS_TEXT_SELCREA_UI);
                             m = (this->selectingadv) ? this->adv.size() : this->equip->getSize();
                             if (this->__selected >= 0 && this->__selected < m)
                                 this->selectingcrea = false;
                             else
                                 this->__selected = -1;
-                            DebugLog(SH_INFO, this->__selected);
                         }
                     }
                 }
@@ -474,6 +472,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
     }
     if (this->ending == 1)
     {
+        DebugLog(SH_SPE, "ok");
         this->ending = 0;
         return DEFAULT_VIEW_ID;
     }
@@ -498,6 +497,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     {
         this->enemy_wait_until_next = 0;
         this->enemy_is_attacking = false;
+        this->my_turn = true;
     }
 
     // updating countdown before quitting duel
@@ -552,14 +552,14 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         std::string s;
         s = this->adv[this->ui_enemy_selected]->getStringState();
         if (s != "none")
-            this->enemy.setString(this->adv[this->ui_enemy_selected]->getName() + " (" + s + ")");
+            this->enemy.setString(this->adv[this->ui_enemy_selected]->getName() + " (" + s + ") niv." + to_string<int>(this->adv[this->ui_enemy_selected]->getLevel()));
         else
-            this->enemy.setString(this->adv[this->ui_enemy_selected]->getName());
+            this->enemy.setString(this->adv[this->ui_enemy_selected]->getName() + " niv." + to_string<int>(this->adv[this->ui_enemy_selected]->getLevel()));
         s = this->equip->getCrea(this->ui_my_selected)->getStringState();
         if (s != "none")
-            this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName() + " (" + s + ")");
+            this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName() + " (" + s + ") niv." + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLevel()));
         else
-            this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName());
+            this->me.setString(this->equip->getCrea(this->ui_my_selected)->getName() + " niv." + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLevel()));
         this->e_pv.setString(to_string<int>(this->adv[this->ui_enemy_selected]->getLife()) + "/" + to_string<int>(this->adv[this->ui_enemy_selected]->getMaxLife()));
         this->m_pv.setString(to_string<int>(this->equip->getCrea(this->ui_my_selected)->getLife()) + "/" + to_string<int>(this->equip->getCrea(this->ui_my_selected)->getMaxLife()));
     }
@@ -573,10 +573,13 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             if (this->attacks_used[i])
                 ++c;
         }
-        if (c == this->attacks_used.size())
+        if (c == this->attacks_used.size() && !this->display_attack && this->attack_frames_count == 0)
         {
             // it is not our turn anymore, let the AI play !
             this->my_turn = false;
+            this->selectingcrea = false;
+            this->attacking = false;
+            this->__selected = -1;
             this->action.setString("Votre adversaire attaque !");
         }
     }
@@ -604,16 +607,34 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     }
 
     // check if we are dead or if it is the enemy who's dead
-    int d = 0;
-    for (int i=0; i < this->adv.size(); ++i)
     {
-        if (this->adv[i]->getLife() == 0)
-            ++d;
-    }
-    if (d == this->adv.size() && this->adv.size() != 0)
-    {
-        this->action.setString("Les créatures ennemies ont perdues !");
-        this->ending = 120;
+        int d = 0;
+        for (int i=0; i < this->adv.size(); ++i)
+        {
+            if (this->adv[i]->getLife() == 0)
+                ++d;
+        }
+        if (d == this->adv.size() && this->adv.size() != 0 && this->ending == 0)
+        {
+            this->action.setString("Les créatures ennemies ont perdues !");
+            this->ending = ENDING_CNT;
+        }
+        d= 0;
+        for (int i=0; i < this->equip->getSize(); ++i)
+        {
+            if (this->equip->getCrea(i)->getLife() == 0)
+                ++d;
+        }
+        if (d == this->equip->getSize() && this->equip->getSize() != 0 && this->ending == 0)
+        {
+            this->action.setString("Vous avez perdu ...");
+            this->ending = ENDING_CNT;
+            this->my_turn = false;
+            this->enemy_is_attacking = false;
+            this->attacking = false;
+            this->selectingcrea = false;
+            this->__selected = -1;
+        }
     }
 
     // displaying particules for the attack
@@ -673,8 +694,6 @@ void FightView::e_attack(int selected)
     // enemy
     Creature* my = this->adv[selected % this->adv.size()];
     this->action.setString(std::string("L'ennemi ") + my->getName() + " attaque");
-
-    DebugLog(SH_INFO, "e_attack");
 
     /// FAKE
     this->display_attack = true;
