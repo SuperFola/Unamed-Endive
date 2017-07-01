@@ -681,11 +681,13 @@ void FightView::e_attack(int selected)
     this->attack_frames_count = ATK_FR_CNT;
 
     int targets = my->getSort()->getTargets();
+    SortilegeType s = my->getSort()->getType();
+    bool us = (s == UniqueTargetUsHeal) || (s == MultipleUsHeal) || (s == MultipleUsHealStatus);
 
     if (targets > 1)
     {
         std::vector<int> enemies;
-        int m = (this->attacking_enemy) ? this->adv.size() : this->equip->getSize();
+        int m = (us) ? this->adv.size() : this->equip->getSize();
 
         for (int i=0; i < targets; ++i)
         {
@@ -703,14 +705,25 @@ void FightView::e_attack(int selected)
 
         for (auto& e : enemies)
         {
-            my->attack(this->adv[e]);
+            if (us)
+                my->attack(this->adv[e]);
+            else
+                my->attack(this->equip->getCrea(e));
         }
     }
     else
     {
         // the enemy
-        Creature* enemy = this->equip->getCrea(rand() % this->equip->getSize());
-        my->attack(enemy);
+        if (!us)
+        {
+            Creature* enemy = this->equip->getCrea(rand() % this->equip->getSize());
+            my->attack(enemy);
+        }
+        else
+        {
+            Creature* enemy = this->adv[rand() % this->adv.size()];
+            my->attack(enemy);
+        }
     }
 }
 
