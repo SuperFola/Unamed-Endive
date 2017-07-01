@@ -228,11 +228,13 @@ void FightView::render(sf::RenderWindow& window)
     // draw the creatures
     for (int i =0; i < this->adv.size(); ++i)
     {
-        window.draw(this->sprites[this->__adv + to_string<int>(i)]);
+        if (this->adv[i]->getLife() > 0)
+            window.draw(this->sprites[this->__adv + to_string<int>(i)]);
     }
     for (int i=0; i < this->equip->getSize(); ++i)
     {
-        window.draw(this->sprites[this->__me + to_string<int>(i)]);
+        if (this->equip->getCrea(i)->getLife() > 0)
+            window.draw(this->sprites[this->__me + to_string<int>(i)]);
     }
 
     // draw the life bars AND the "life" inside (life <-> color matching) AND state (burned ...)
@@ -328,7 +330,7 @@ void FightView::render(sf::RenderWindow& window)
 
 int FightView::process_event(sf::Event& event, sf::Time elapsed)
 {
-    int new_view = -1, m = 0, pos_atk_sel = 0;
+    int new_view = -1, m = 0, pos_atk_sel = 0, t = 0;
 
     if (this->__count_before_flyaway == 0 && this->ending == 0)  // disable controls when escaping or quitting
     {
@@ -388,13 +390,17 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                     else if (458 - CREATURE_HEIGHT <= m__Y && 458 <= m__Y && 47 <= m__X )
                     {
                         // this->sprites[this->__me + to_string<int>(i)].setPosition(47.0f + i * SPACEMENT_X, 458.0f - CREATURE_HEIGHT);
-                        this->ui_my_selected = int((m__X - 47) / SPACEMENT_X) % this->equip->getSize();
+                        t = int((m__X - 47) / SPACEMENT_X) % this->equip->getSize();
+                        if (this->equip->getCrea(t)->getLife() > 0)
+                            this->ui_my_selected = t;
                     }
                     // click on a creature which belongs to the enemy
                     else if (206 - CREATURE_HEIGHT <= m__Y && m__Y <= 206 && START_X <= m__X)
                     {
                         // this->sprites[this->__adv + to_string<int>(i)].setPosition(START_X + i * SPACEMENT_X, 206.0f - CREATURE_HEIGHT);
-                        this->ui_enemy_selected = int((m__X - START_X) / SPACEMENT_X) % this->adv.size();
+                        t = int((m__X - START_X) / SPACEMENT_X) % this->adv.size();
+                        if (this->adv[t]->getLife() > 0)
+                            this->ui_enemy_selected = t;
                     }
                 }
                 else if (this->selectingcrea)
@@ -593,7 +599,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     else if (!this->my_turn && !this->enemy_is_attacking)
     {
         // the AI must attack
-        DebugLog(SH_SPE, this->enemy_wait_until_next);
         this->enemy_is_attacking = true;
         this->enemy_wait_until_next = this->adv.size() * ATK_FR_CNT;
     }
@@ -631,7 +636,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             DebugLog(SH_WARN, "ok");
             this->action.setString("Vous avez perdu ...");
             this->ending = ENDING_CNT;
-            this->my_turn = false;
+            this->my_turn = true;
             this->enemy_is_attacking = false;
             this->enemy_wait_until_next = 0;
             this->attacking = false;
