@@ -628,7 +628,13 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         // the AI must attack
         DebugLog(SH_INFO, "Turning on the AI");
         this->enemy_is_attacking = true;
-        this->enemy_wait_until_next = this->adv.size() * ATK_FR_CNT;
+        int c = 0;
+        for (int i=0; i < this->adv.size(); ++i)
+        {
+            if (this->adv[i]->getLife() > 0)
+                ++c;
+        }
+        this->enemy_wait_until_next = c * ATK_FR_CNT;
     }
 
     if (this->enemy_is_attacking)
@@ -636,7 +642,30 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         if ((this->enemy_wait_until_next % ATK_FR_CNT) == 0 && this->enemy_wait_until_next != 0 && !this->lock)
         {
             DebugLog(SH_WARN, "no!");
-            this->e_attack(int(this->enemy_wait_until_next / ATK_FR_CNT) - 1);
+            // counting dead ones
+            int c = 0;
+            for (int i=0; i < this->adv.size(); ++i)
+            {
+                if (this->adv[i]->getLife() > 0)
+                    ++c;
+            }
+            int choosen = c - int(this->enemy_wait_until_next / ATK_FR_CNT) + 1;
+            int c_alive = 0;
+            for (int i=0; i < this->adv.size(); ++i)
+            {
+                if (this->adv[i]->getLife() > 0)
+                    ++c_alive;
+
+                if (c_alive == choosen)
+                {
+                    choosen = i;
+                    break;
+                }
+            }
+            if (c_alive == 0)
+                DebugLog(SH_WARN, "Found no creatures alive to attack, that's not normal !");
+            else
+                this->e_attack(choosen);
         }
 
         if (this->enemy_wait_until_next == 0)
@@ -875,7 +904,6 @@ void FightView::start()
     this->my_turn = true;
     DebugLog(SH_INFO, this->equip->getSize() << " " << this->attacks_used.size());
 
-    // generate adv
     float moy_equip = 0.0f;
     for (int i=0; i < this->equip->getSize(); ++i)
     {
@@ -899,8 +927,9 @@ void FightView::start()
     }
     moy_equip /= float(this->equip->getSize());
 
-    int _x_ = (moy_equip - 2 > 0) ? moy_equip - 2 : moy_equip + 2;
+    int _x_ = (moy_equip - 2 > 0) ? moy_equip - 2 : moy_equip;
 
+    // generate adv
     for (int i=0; i < this->equip->getMaxSize(); i++)
     {
         Creature* crea = new Creature();
