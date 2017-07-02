@@ -218,7 +218,10 @@ void Creature::attack(Creature* other)
         float real_damages = (0.85f + (rand() % 16) / 100.0f) * amplifier * ((((((this->level + 1) * 0.4f + 2) * out * this->atk) / 50.0f) / other->def) + 2);
         other->life -= real_damages;
         if (other->life < 0)
+        {
             other->life = 0;
+            other->state = STD;
+        }
         DebugLog(SH_OK, "      applied: " << real_damages << ", atk: " << this->atk << ", (other) def: " << other->def);
     }
 }

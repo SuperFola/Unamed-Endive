@@ -280,12 +280,16 @@ void FightView::render(sf::RenderWindow& window)
             /// CHANGE THIS LINE IF WE ADD COMPETENCES' TREE, TO SET THE NAME OF THE ATTACK REGARDING
             /// TO THE TREE OF THE `SORT`
             this->attack_name.setString(std::string("(") + convert_sort(this->equip->getCrea(i)->getSort()->getType()) + ") " + this->equip->getCrea(i)->getName());
-            if (this->attacks_used[i])
-                this->attack_name.setColor(sf::Color::Green);
-            else
-                this->attack_name.setColor(sf::Color::Black);
-            this->attack_name.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * SPACING_ATK_LISTING_Y);
-            window.draw(this->attack_name);
+
+            if (this->equip->getCrea(i)->getLife() > 0)
+            {
+                if (this->attacks_used[i])
+                    this->attack_name.setColor(sf::Color::Red);
+                else
+                    this->attack_name.setColor(sf::Color::Black);
+                this->attack_name.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * SPACING_ATK_LISTING_Y);
+                window.draw(this->attack_name);
+            }
         }
     }
 
@@ -301,24 +305,30 @@ void FightView::render(sf::RenderWindow& window)
         {
             for (int i=0; i < this->adv.size(); ++i)
             {
-                if (i != this->__selected)
-                    this->texts.get(this->__adv + to_string<int>(i)).setFillColor(sf::Color::Black);
-                else
-                    this->texts.get(this->__adv + to_string<int>(i)).setFillColor(sf::Color::Green);
+                if (this->adv[i]->getLife() > 0)
+                {
+                    if (i != this->__selected)
+                        this->texts.get(this->__adv + to_string<int>(i)).setFillColor(sf::Color::Black);
+                    else
+                        this->texts.get(this->__adv + to_string<int>(i)).setFillColor(sf::Color::Green);
 
-                window.draw(this->texts.get(this->__adv + to_string<int>(i)));
+                    window.draw(this->texts.get(this->__adv + to_string<int>(i)));
+                }
             }
         }
         else
         {
             for (int i=0; i < this->equip->getSize(); ++i)
             {
-                if (i != this->__selected)
-                    this->texts.get(this->__me + to_string<int>(i)).setFillColor(sf::Color::Black);
-                else
-                    this->texts.get(this->__me + to_string<int>(i)).setFillColor(sf::Color::Green);
+                if (this->equip->getCrea(i)->getLife() > 0)
+                {
+                    if (i != this->__selected)
+                        this->texts.get(this->__me + to_string<int>(i)).setFillColor(sf::Color::Black);
+                    else
+                        this->texts.get(this->__me + to_string<int>(i)).setFillColor(sf::Color::Green);
 
-                window.draw(this->texts.get(this->__me + to_string<int>(i)));
+                    window.draw(this->texts.get(this->__me + to_string<int>(i)));
+                }
             }
         }
     }
@@ -616,6 +626,11 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             this->__selected = -1;
             this->action.setString("Votre adversaire attaque !");
         }
+    }
+
+    // updating statuses
+    {
+        // http://www.pokepedia.fr/Statut#Br.C3.BBlure
     }
 
     // attack !
