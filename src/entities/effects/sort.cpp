@@ -41,17 +41,17 @@ int Sort::act(Creature* other)
 
     case SortilegeType::MultipleAdvPoison:
     case SortilegeType::UniqueTargetAdvPoison:
-        other->setStatus(POISONED);
+        if (other->getState() == STD) other->setStatus(POISONED);
         break;
 
     case SortilegeType::MultipleAdvBurn:
     case SortilegeType::UniqueTargetAdvBurn:
-        other->setStatus(BURNED);
+        if (other->getState() == STD) other->setStatus(BURNED);
         break;
 
     case SortilegeType::MultipleAdvParalize:
     case SortilegeType::UniqueTargetAdvParalize:
-        other->setStatus(PARALYSED);
+        if (other->getState() == STD) other->setStatus(PARALYSED);
         break;
 
     case SortilegeType::MultipleUsHeal:
