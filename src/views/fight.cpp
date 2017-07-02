@@ -542,6 +542,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
                 {
                     this->pc->add_creature(this->adv[this->__selected]);
                     this->action.setString("La créature a été envoyée au PC");
+                    pop(&this->adv, this->__selected);
                 }
                 else
                     this->action.setString("La créature a été ajoutée à l'équipe !");
@@ -702,9 +703,10 @@ void FightView::attack(int selected, int index_my_creatures)
 {
     // our creature attacking
     Creature* my = this->equip->getCrea(index_my_creatures);
-    this->action.setString(my->getName() + " attaque");
     if (selected == 42) // magic code, we need to select random creatures
     {
+        this->action.setString(my->getName() + " attaque");
+
         int targets = my->getSort()->getTargets();
         std::vector<int> enemies;
         int m = (this->attacking_enemy) ? this->adv.size() : this->equip->getSize();
@@ -732,9 +734,15 @@ void FightView::attack(int selected, int index_my_creatures)
         // the enemy
         Creature* enemy;
         if (this->attacking_enemy)
+        {
             enemy = this->adv[selected];
+            this->action.setString(my->getName() + " attaque " + enemy->getName());
+        }
         else
+        {
             enemy = this->equip->getCrea(selected);
+            this->action.setString(my->getName() + " aide " + enemy->getName());
+        }
         my->attack(enemy);
     }
 }
@@ -743,7 +751,6 @@ void FightView::e_attack(int selected)
 {
     // enemy
     Creature* my = this->adv[selected % this->adv.size()];
-    this->action.setString(std::string("L'ennemi ") + my->getName() + " attaque");
 
     /// FAKE
     this->display_attack = true;
@@ -755,6 +762,8 @@ void FightView::e_attack(int selected)
 
     if (targets > 1)
     {
+        this->action.setString(std::string("L'ennemi ") + my->getName() + " attaque");
+
         std::vector<int> enemies;
         int m = (us) ? this->adv.size() : this->equip->getSize();
 
@@ -786,11 +795,13 @@ void FightView::e_attack(int selected)
         if (!us)
         {
             Creature* enemy = this->equip->getCrea(rand() % this->equip->getSize());
+            this->action.setString(std::string("L'ennemi ") + my->getName() + " attaque " + enemy->getName());
             my->attack(enemy);
         }
         else
         {
             Creature* enemy = this->adv[rand() % this->adv.size()];
+            this->action.setString(std::string("L'ennemi ") + my->getName() + " aide son allié " + enemy->getName());
             my->attack(enemy);
         }
     }
