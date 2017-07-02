@@ -24,6 +24,9 @@ int TileMap::load_map(sf::Vector2u tileSize, std::vector<Block*> tiles, unsigned
         {
             int tileNumber = (tiles[i + j * width])->getId();
 
+            if (tileNumber == -1)
+                tileNumber = TRANSPARENT_TILE;
+
             int tu = tileNumber % (this->tileset.getSize().x / tileSize.x);
             int tv = tileNumber / (this->tileset.getSize().x / tileSize.x);
 

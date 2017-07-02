@@ -9,7 +9,7 @@
 
 std::string convert_sort(SortilegeType s)
 {
-    std::string o = "none";
+    std::string o = "null";
     switch (s)
     {
     // unique adv
@@ -449,12 +449,13 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                             {
                                 this->__selected = 42;  // special code to tell the engine to chose random creatures
                                 this->action.setString("Attaque multiple déclenchée");
+                                this->display_attack = true;
+                                this->attack_frames_count = ATK_FR_CNT;
                             }
 
                             this->has_selected_an_atk = true;
                             this->lock = true;
-                            this->display_attack = true;
-                            this->attack_frames_count = ATK_FR_CNT;
+                            this->attacking = false;
                         }
                     }
                 }
@@ -600,7 +601,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             if (this->attacks_used[i])
                 ++c;
         }
-        if (c == this->attacks_used.size() && !this->display_attack && this->attack_frames_count == 0)
+        if (c == this->attacks_used.size() && !this->lock && !this->display_attack && this->attack_frames_count == 0)
         {
             // it is not our turn anymore, let the AI play !
             this->my_turn = false;
@@ -612,12 +613,13 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     }
 
     // attack !
-    if (this->has_selected_an_atk && this->__selected != -1 && !this->selectingcrea && this->my_turn)
+    if (this->has_selected_an_atk && this->__selected != -1 && this->my_turn)
     {
         DebugLog(SH_INFO, "You are attacking");
         this->attack(this->__selected, this->atk_using_sort_of);
         this->__selected = -1;
         this->has_selected_an_atk = false;
+        this->selectingcrea = false;
         this->lock = false;
     }
     else if (!this->my_turn && !this->enemy_is_attacking && !this->lock)
@@ -886,8 +888,7 @@ void FightView::start()
     }
     moy_equip /= float(this->equip->getSize());
 
-    int _x_ = rand() % 10 + ((moy_equip - 4 > 0) ? int(moy_equip) - 4 : int(moy_equip), moy_equip + 6);
-    _x_ = (_x_ - 2 > 0) ? _x_ - 2 : _x_;
+    int _x_ = (moy_equip - 2 > 0) ? moy_equip - 2 : moy_equip + 2;
 
     for (int i=0; i < this->equip->getMaxSize(); i++)
     {
@@ -895,7 +896,7 @@ void FightView::start()
         int  id = rand() % (this->dex->getMaxId())
               , _t = this->dex->getInfo(id).type
               , _st = rand() % SortilegeType::Count  // SortilegeType::UniqueTargetAdvDamage
-              , level = (rand() % 4) + _x_
+              , level = (rand() % 6) + _x_ + 1
               , life = 2 * level + (rand() % 4) + 3  // mlife = life
               , pp = Creature::calculatePPFromLevel(level) // mpp = pp
               , sdmg = ceil(((rand() % 4) + 3) * 0.125 * level + 1)  // damages for the sortilege

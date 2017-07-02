@@ -52,7 +52,7 @@ Maintenant il faut configurer le nombre de calques :
         
         - n'hésitez donc pas à renommer un calque (sélectionnez le, puis à gauche, section Propriétés > Nom)
         
-        - créez 3 calques
+        - créez 4 calques
     
     - le `calque1` est le premier layer affiché (au dessus du joueur même)
     
@@ -60,7 +60,9 @@ Maintenant il faut configurer le nombre de calques :
     
     - le `calque3` est en dessous du calque 2
     
-- le `calque4` est spécial, car c'est lui qui va définir les téléporteurs, il faut faire clic droit > Nouveau > Calque d'Objets
+    - le `calque4` servira à régler les tag de collision
+    
+- le `calque5` est spécial, car c'est lui qui va définir les téléporteurs, il faut faire clic droit > Nouveau > Calque d'Objets
 
 Définir les données pour le calque de téléporteurs (obligatoire) :
 
@@ -78,17 +80,19 @@ Définir les données pour le calque de téléporteurs (obligatoire) :
             
                 - dans la boite Ajouter une propriété :
                 
-                    - écrivez `x` et comme type : int
+                    - écrivez `x_dest` et comme type : int
                     
                     - faites OK
                     
                 - laissez la valeur par défaut
                 
-                - faites pareil et ajoutez `y` (type int), `x_dest` (type int), `y_dest` (type int), `dest_map_id` (type int)
+                - faites pareil et ajoutez `y_dest` (type int), `dest_map_id` (type int)
                 
     - fermez cette fenêtre
 
-Sur votre `calque4`, placez les objets (carrés, 1 case sur 1, réglez la largeur en 16 pix et la hauteur en 16 pix dans la colonne propriété de gauche) que vous voulez pour indiquer un téléporteur, puis pour indiquer sa destination :
+Sur le `calque4`, n'importe quel tile qui n'est pas la tile 0 signifiera que la case sur laquelle elle est, est solide.
+
+Sur votre `calque5`, placez les objets (carrés, 1 case sur 1, réglez la largeur en 16 pix et la hauteur en 16 pix dans la colonne propriété de gauche) que vous voulez pour indiquer un téléporteur, puis pour indiquer sa destination :
 
 - sélectionnez votre objet (doit être exactement placé sur une case, au pixel près)
 

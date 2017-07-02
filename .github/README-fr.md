@@ -30,6 +30,7 @@ Si vous souhaitez compiler le projet, il vous faut installer la SFML et suivre c
 Crédits
 =======
 * copyright Pokémon Company ©, Game Freak inc (utilisation du mot "Pokémon" pour définir le type de projet)
+* aide constante et soutien : OverSurge, Pacific Void, Nuri Yuri, AhzeLeSteak, yyyyj, DarkCisum, the_new_sky, Deakcor, ralandel, Qames, WDguy45
 * logo du jeu : Izaliia
 * tiles d'extérieur : WesleyFG (à la base pour le projet Marnian)
 * tiles d'intérieur : Slahs

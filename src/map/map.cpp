@@ -20,7 +20,8 @@ Map::Map(std::string path) :
     this->id = atoi(this->map_data_path.substr(11, this->map_data_path.size() - 4).data());
 
     this->default_tp.fromcase = -1;
-    this->default_tp.tocase = -1;
+    this->default_tp.tocasex = -1;
+    this->default_tp.tocasey = -1;
     this->default_tp.tomap = -1;
 }
 
@@ -99,8 +100,9 @@ int Map::post_colliding_test_to_check_tp(int tx, int ty)
 
     if (_tp)
     {
-        nrpos = this->findTpOnCase(rpos).tocase;
+        TypeTp ttp = this->findTpOnCase(rpos);
         DebugLog(SH_SPE, "0 ?= " << this->load_map_at("assets/map/" + to_string<int>(this->getMapFromTp(rpos)) + ".umd"));
+        nrpos = ttp.tocasex + ttp.tocasey * this->getWidth();
         if (nrpos != -1)
         {
             PyScripting::run_code(("trigger_event(" +
@@ -174,7 +176,8 @@ int Map::load_map(std::string& map_path)
     {
         struct TypeTp ttp;
         ttp.tomap = this->root["tp"][i]["tomap"].asInt();
-        ttp.tocase = this->root["tp"][i]["tocase"].asInt();
+        ttp.tocasex = this->root["tp"][i]["tocasex"].asInt();
+        ttp.tocasey = this->root["tp"][i]["tocasey"].asInt();
         ttp.fromcase = this->root["tp"][i]["oncase"].asInt();
         this->tp.push_back(ttp);
     }
@@ -190,7 +193,8 @@ bool Map::is_tp(int x, int y)
 
     struct TypeTp ttp = this->findTpOnCase(rpos);
 
-    if (ttp.fromcase != this->default_tp.fromcase && ttp.tocase != this->default_tp.tocase && ttp.tomap != this->default_tp.tomap)
+    if (ttp.fromcase != this->default_tp.fromcase && ttp.tocasex != this->default_tp.tocasex &&
+         ttp.tocasey != this->default_tp.tocasey && ttp.tomap != this->default_tp.tomap)
         return true;
     return false;
 }

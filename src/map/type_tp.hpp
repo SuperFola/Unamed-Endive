@@ -3,7 +3,8 @@
 
 struct TypeTp {
     int tomap;
-    int tocase;
+    int tocasex;
+    int tocasey;
     int fromcase;
 };
 

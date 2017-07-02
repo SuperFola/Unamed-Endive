@@ -142,15 +142,15 @@ std::string Creature::getStringState()
     switch (this->state)
     {
     case BURNED:
-        s = "brûlé";
+        s = "BRU";
         break;
 
     case PARALYSED:
-        s = "paralysé";
+        s = "PAR";
         break;
 
     case POISONED:
-        s = "empoisonné";
+        s = "PSN";
         break;
 
     case STD:
