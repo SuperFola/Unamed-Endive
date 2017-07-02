@@ -284,7 +284,7 @@ void FightView::render(sf::RenderWindow& window)
                 this->attack_name.setColor(sf::Color::Green);
             else
                 this->attack_name.setColor(sf::Color::Black);
-            this->attack_name.setPosition(140.0f, 150.0f + SPACING_ATK_LISTING_Y * i);
+            this->attack_name.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * SPACING_ATK_LISTING_Y);
             window.draw(this->attack_name);
         }
     }
@@ -417,6 +417,11 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                                 this->selectingcrea = false;
                             else
                                 this->__selected = -1;
+
+                            if (this->selectingadv && this->adv[this->__selected]->getLife() == 0)
+                                this->__selected = -1;
+                            if (!this->selectingadv && this->equip->getCrea(this->__selected)->getLife() == 0)
+                                this->__selected = -1;
                         }
                     }
                 }
@@ -430,8 +435,8 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                     else
                     {
                         // handle click in attack selection ui
-                        pos_atk_sel = int((m__Y - 150) / SPACING_ATK_LISTING_Y);
-                        if (0 <= pos_atk_sel && pos_atk_sel < this->equip->getSize())
+                        pos_atk_sel = int((m__Y - Y_TEXT_SELCREA_UI) / SPACING_ATK_LISTING_Y);
+                        if (0 <= pos_atk_sel && pos_atk_sel < this->equip->getSize() && this->equip->getCrea(pos_atk_sel)->getLife() > 0)
                         {
                             this->atk_using_sort_of = pos_atk_sel;
                             this->attacks_used[pos_atk_sel] = true;
