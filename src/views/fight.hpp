@@ -89,6 +89,7 @@ private:
 
     void attack(int, int);
     void e_attack(int);
+    void check_statuses();
 
 public:
     FightView();

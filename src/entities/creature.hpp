@@ -17,6 +17,12 @@
 #define DEFAULT_LIFE 100
 #define DEFAULT_PP 30
 
+#define DEAD_BUR 1
+#define DEAD_PSN 2
+#define LOST_BUR 1
+#define LOST_PAR 2
+#define LOST_PSN 3
+
 class Creature {
 private:
     // variables
@@ -61,6 +67,7 @@ public:
     void setStatus(State);
     void atk_heal_pv(int);
     void atk_heal_status();
+    int updateState();
 
     static long int calculateExpFromLevel(int);
     static int calculateLevelFromXp(long int);

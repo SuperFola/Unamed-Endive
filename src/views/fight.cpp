@@ -628,11 +628,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         }
     }
 
-    // updating statuses
-    {
-        // http://www.pokepedia.fr/Statut#Br.C3.BBlure
-    }
-
     // attack !
     if (this->has_selected_an_atk && this->__selected != -1 && this->my_turn)
     {
@@ -655,6 +650,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
                 ++c;
         }
         this->enemy_wait_until_next = c * ATK_FR_CNT;
+        this->check_statuses();
     }
 
     if (this->enemy_is_attacking)
@@ -699,6 +695,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             }
             this->lock = true;
             this->action.setString("C'est à votre tour d'attaquer !");
+            this->check_statuses();
         }
     }
 
@@ -745,6 +742,66 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->particles.setEmitter(window.mapPixelToCoords(mouse));
         this->particles.update(elapsed);
         window.draw(this->particles);
+    }
+}
+
+void FightView::check_statuses()
+{
+    // updating statuses
+
+    bool c = false;
+    for (int i=0; i < this->adv.size(); ++i)
+    {
+        int r = this->adv[i]->updateState();
+        switch(r)
+        {
+        case DEAD_BUR:
+            break;
+
+        case DEAD_PSN:
+            break;
+
+        case LOST_BUR:
+            break;
+
+        case LOST_PAR:
+            break;
+
+        case LOST_PSN:
+            break;
+
+        default:
+            c = true;
+            break;
+        }
+    }
+    c = false;
+    for (int i=0; i < this->equip->getSize(); ++i)
+    {
+        int r = this->equip->getCrea(i)->updateState();
+        switch(r)
+        {
+        case DEAD_BUR:
+            break;
+
+        case DEAD_PSN:
+            break;
+
+        case LOST_BUR:
+            break;
+
+        case LOST_PAR:
+            break;
+
+        case LOST_PSN:
+            break;
+
+        default:
+            c= true;
+            break;
+        }
+        if (!c)
+            break;
     }
 }
 

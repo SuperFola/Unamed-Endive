@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../../debug.hpp"
+#include <cstdlib>
 
 #include "creature.hpp"
 
@@ -367,5 +368,59 @@ void Creature::atk_heal_pv(int pv)
 void Creature::atk_heal_status()
 {
     this->state = State::STD;
+}
+
+int Creature::updateState()
+{
+    int r = 0;
+    switch (this->state)
+    {
+    case BURNED:
+        this->life -= int(this->max_life / 10.0f);
+        if (this->life < 0)
+        {
+            this->life = 0;
+            this->state = STD;
+            r = DEAD_BUR;
+        }
+        else
+        {
+            if ((rand() % 101) <= 30)
+                this->state = STD;
+            r = LOST_BUR;
+        }
+        break;
+
+    case POISONED:
+        this->life -= int(this->max_life / 8.0f);
+        if (this->life < 0)
+        {
+            this->life = 0;
+            this->state = STD;
+            r = DEAD_PSN;
+        }
+        else
+        {
+            if ((rand() % 101) <= 40)
+            {
+                this->state = STD;
+                r = LOST_PSN;
+            }
+        }
+        break;
+
+    case PARALYSED:
+        if ((rand() % 101) <= 45)
+            {
+                this->state = STD;
+                r = LOST_PAR;
+            }
+        break;
+
+    default:
+        break;
+    }
+
+    return r;
 }
 
