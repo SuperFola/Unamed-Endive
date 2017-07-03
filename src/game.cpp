@@ -5,6 +5,8 @@
 
 #include "../debug.hpp"
 
+#include "../version.h"
+
 #include "game.hpp"
 
 std::vector<std::string> glob(const std::string& directory)
@@ -348,9 +350,10 @@ void Game::update_menu(sf::Time elapsed, int s, bool new_game)
 
 void Game::render_menu(const std::vector<std::string>& s, bool new_game, bool del_game, bool play_game, bool valid_delete)
 {
-    // background + logo
+    // background + logo + version number
     this->window.draw(this->menu_bckg_s);
     this->window.draw(this->menu_logo_s);
+    this->window.draw(this->ver);
 
     // alphablack if we are doing anything
     if (new_game || del_game || play_game)
@@ -621,6 +624,8 @@ Game::Game() :
     , _got_coderet(false)
     , menu_game_selected(-1)
 {
+    DebugLog(SH_INFO, "Running on " << AutoVersion::FULLVERSION_STRING);
+
     // configuration file
     Config::load();
     // loading types tables (percentage of +/- by type1 on type2)
@@ -721,6 +726,10 @@ Game::Game() :
     setupFont(this->cursor, this->font, sf::Color::White, 24)
     this->cursor.setString("_");
     this->cursor.setPosition(0.0f, WIN_H / 2.0f - 72.0f);
+
+    setupFont(this->ver, this->font, sf::Color::White, 20)
+    this->ver.setString(std::string("v") + std::string(AutoVersion::FULLVERSION_STRING));
+    this->ver.setPosition(WIN_W - 10.0f - this->ver.getGlobalBounds().width, WIN_H - 10.0f - this->ver.getGlobalBounds().height);
 
     this->blink = false;
     this->blinking = 0;

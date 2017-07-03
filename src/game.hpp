@@ -50,6 +50,7 @@ private:
     sf::Text cursor;
     sf::String menu_userentry;
     sf::Text menu_ask_user;
+    sf::Text ver;
     sf::Sprite menu_bckg_s;
     sf::Sprite menu_logo_s;
     sf::Sprite menu_btn_del_s;
