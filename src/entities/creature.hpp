@@ -19,9 +19,9 @@
 
 #define DEAD_BUR 1
 #define DEAD_PSN 2
-#define LOST_BUR 1
-#define LOST_PAR 2
-#define LOST_PSN 3
+#define LOST_BUR 3
+#define LOST_PAR 4
+#define LOST_PSN 5
 
 class Creature {
 private:
