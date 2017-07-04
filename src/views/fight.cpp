@@ -89,6 +89,10 @@ FightView::FightView() :
     , enemy_is_attacking(false)
     , enemy_wait_until_next(0)
     , lock(false)
+    , wait_give_xp(0)
+    , whoisdead(NODEAD)
+    , iamattacking(false)
+    , finished_atk(true)
 {
 }
 
@@ -229,12 +233,12 @@ void FightView::render(sf::RenderWindow& window)
     // draw the creatures
     for (int i =0; i < this->adv.size(); ++i)
     {
-        if (this->adv[i]->getLife() > 0)
+        if (this->adv[i]->getLife() > 0 && this->finished_atk)
             window.draw(this->sprites[this->__adv + to_string<int>(i)]);
     }
     for (int i=0; i < this->equip->getSize(); ++i)
     {
-        if (this->equip->getCrea(i)->getLife() > 0)
+        if (this->equip->getCrea(i)->getLife() > 0 && this->finished_atk)
             window.draw(this->sprites[this->__me + to_string<int>(i)]);
     }
 
@@ -511,10 +515,25 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     {
         this->attack_frames_count = 0;
         this->display_attack = false;
+        if (this->iamattacking)
+            this->iamattacking = false;
+        this->finished_atk = true;
+    }
+
+    if (this->wait_give_xp > 1)
+        --this->wait_give_xp;
+    if (this->wait_give_xp == 1)
+    {
+        this->wait_give_xp = 0;
+        this->ending = ENDING_CNT;
+        if (this->whoisdead == DEADOTH)
+            this->action.setString("Les créatures ennemies ont perdues !");
+        else if (this->whoisdead == DEADME)
+            this->action.setString("Vous avez perdu ...");
     }
 
     // updating the number of frames during which the AI attacks
-    if (this->enemy_wait_until_next > 1)
+    if (this->enemy_wait_until_next > 1 && !this->lock)
         --this->enemy_wait_until_next;
     if (this->enemy_wait_until_next == 1)
     {
@@ -525,7 +544,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     if (this->__count_before_flyaway > 1)
         --this->__count_before_flyaway;
 
-    if (this->ending > 1)
+    if (this->ending > 1 && this->wait_give_xp == 0)
         --this->ending;
 
     if (OMessenger::get().target_view == this->getId())
@@ -637,8 +656,10 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->has_selected_an_atk = false;
         this->selectingcrea = false;
         this->lock = false;
+        this->iamattacking = true;
+        this->finished_atk = false;
     }
-    else if (!this->my_turn && !this->enemy_is_attacking && !this->lock)
+    else if (!this->my_turn && !this->enemy_is_attacking && !this->lock && !this->iamattacking)
     {
         // the AI must attack
         DebugLog(SH_INFO, "Turning on the AI");
@@ -651,6 +672,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         }
         this->enemy_wait_until_next = c * ATK_FR_CNT;
         this->check_statuses();
+        this->finished_atk = false;
     }
 
     if (this->enemy_is_attacking)
@@ -709,10 +731,10 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         }
         if (d == this->adv.size() && this->adv.size() != 0 && this->ending == 0)
         {
-            this->action.setString("Les créatures ennemies ont perdues !");
             this->ending = ENDING_CNT;
             this->lock = true;
             this->give_xp(true);
+            this->whoisdead = DEADOTH;
         }
         d= 0;
         for (int i=0; i < this->equip->getSize(); ++i)
@@ -723,7 +745,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         if (d == this->equip->getSize() && this->equip->getSize() != 0 && this->ending == 0)
         {
             DebugLog(SH_WARN, "ok");
-            this->action.setString("Vous avez perdu ...");
             this->ending = ENDING_CNT;
             this->my_turn = false;
             this->enemy_is_attacking = false;
@@ -733,6 +754,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             this->__selected = -1;
             this->lock = true;
             this->give_xp(false);
+            this->whoisdead = DEADME;
         }
     }
 
@@ -749,14 +771,33 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
 
 void FightView::give_xp(bool me)
 {
-    // set timer ~120 frames par texte de don d'xp ou sinon appuie de touche pour passer ? (non je pense pas)
     if (me)
     {
-        //
+        this->wait_give_xp = this->equip->getSize() * 120;
+
+        for (int i=0; i < this->adv.size(); ++i)
+        {
+            if (i < this->equip->getSize())
+            {
+                int t = this->equip->getCrea(i)->gainExp(this->adv[i]);
+                if (t == 1)
+                    this->action.setString(this->equip->getCrea(i)->getName() + " a gagné " + to_string<int>(t) + " niveau");
+                else if (t > 1)
+                    this->action.setString(this->equip->getCrea(i)->getName() + " a gagné " + to_string<int>(t) + " niveaux");
+            }
+        }
     }
     else
     {
-        //
+        this->wait_give_xp = 0;
+
+        for (int i=0; i < this->adv.size(); ++i)
+        {
+            if (i < this->equip->getSize())
+            {
+                this->adv[i]->gainExp(this->equip->getCrea(i));
+            }
+        }
     }
 }
 
@@ -838,6 +879,11 @@ void FightView::attack(int selected, int index_my_creatures)
 {
     // our creature attacking
     Creature* my = this->equip->getCrea(index_my_creatures);
+
+    /// FAKE
+    this->display_attack = true;
+    this->attack_frames_count = ATK_FR_CNT;
+
     if (selected == 42) // magic code, we need to select random creatures
     {
         this->action.setString(my->getName() + " attaque");
@@ -1000,6 +1046,9 @@ void FightView::start()
     this->enemy_is_attacking = false;
     this->lock = false;
     this->action.setString("C'est à votre tour d'attaquer !");
+    this->wait_give_xp = 0;
+    this->whoisdead = NODEAD;
+    this->iamattacking = false;
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());

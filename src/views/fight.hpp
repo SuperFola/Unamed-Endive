@@ -24,8 +24,12 @@
 #define START_X 269.0f
 #define SPACEMENT_X 100.0f
 #define SPACING_ATK_LISTING_Y 30
-#define ATK_FR_CNT 120
+#define ATK_FR_CNT 200
 #define ENDING_CNT 260
+
+#define NODEAD 0
+#define DEADME 1
+#define DEADOTH 2
 
 std::string convert_sort(SortilegeType);
 
@@ -71,6 +75,10 @@ private:
     bool enemy_is_attacking;
     int enemy_wait_until_next;
     bool lock;
+    int wait_give_xp;
+    int whoisdead;
+    bool iamattacking;
+    bool finished_atk;
 
     const std::string __adv = "adv";
     const std::string __me = "me";

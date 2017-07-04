@@ -118,7 +118,8 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
 
             #ifdef DEV_MODE
             case sf::Keyboard::F:
-                this->sm.change_view(FIGHT_VIEW_ID);
+                if (!this->cheat_on)
+                    this->sm.change_view(FIGHT_VIEW_ID);
                 break;
 
             case sf::Keyboard::F8:
@@ -239,7 +240,7 @@ void Game::update(sf::Time elapsed)
             this->blink = !this->blink;
             this->blinking %= 60;
         }
-        this->cursor.setPosition(this->cmd.getPosition().x + this->cmd.getGlobalBounds().width + 10.0f, this->cmd.getPosition().y);
+        this->cursor.setPosition(this->cmd.getPosition().x + this->cmd.getGlobalBounds().width + 5.0f, this->cmd.getPosition().y);
     }
 }
 
