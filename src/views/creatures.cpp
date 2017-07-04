@@ -67,6 +67,7 @@ bool CreaView::load()
 
     setupFont(this->csta, this->font, sf::Color::Black, 18)
     this->csta.setPosition(505.0f, 342.0f);
+    this->csta.setStyle(sf::Text::Style::Italic);
 
     setupFont(this->catk, this->font, sf::Color::Black, 24)
     this->catk.setPosition(423.0f, 380.0f);

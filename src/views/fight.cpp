@@ -712,6 +712,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             this->action.setString("Les créatures ennemies ont perdues !");
             this->ending = ENDING_CNT;
             this->lock = true;
+            this->give_xp(true);
         }
         d= 0;
         for (int i=0; i < this->equip->getSize(); ++i)
@@ -731,6 +732,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             this->selectingcrea = false;
             this->__selected = -1;
             this->lock = true;
+            this->give_xp(false);
         }
     }
 
@@ -745,29 +747,47 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     }
 }
 
+void FightView::give_xp(bool me)
+{
+    // set timer ~120 frames par texte de don d'xp ou sinon appuie de touche pour passer ? (non je pense pas)
+    if (me)
+    {
+        //
+    }
+    else
+    {
+        //
+    }
+}
+
 void FightView::check_statuses()
 {
     // updating statuses
-
     bool c = false;
+    std::string s = "";
     for (int i=0; i < this->adv.size(); ++i)
     {
         int r = this->adv[i]->updateState();
         switch(r)
         {
         case DEAD_BUR:
+            s += std::string("L'ennemi ") + this->adv[i]->getName() + " est mort de sa brulure\n";
             break;
 
         case DEAD_PSN:
+            s += std::string("L'ennemi ") + this->adv[i]->getName() + " est mort empoisonné\n";
             break;
 
         case LOST_BUR:
+            s += std::string("L'ennemi ") + this->adv[i]->getName() + " n'est plus brûlé !\n";
             break;
 
         case LOST_PAR:
+            s += std::string("L'ennemi ") + this->adv[i]->getName() + " n'est plus paralysé !\n";
             break;
 
         case LOST_PSN:
+            s += std::string("L'ennemi ") + this->adv[i]->getName() + " n'est plus empoisonné !\n";
             break;
 
         default:
@@ -775,6 +795,8 @@ void FightView::check_statuses()
             break;
         }
     }
+    if (s != "")
+        this->action.setString(s);
     c = false;
     for (int i=0; i < this->equip->getSize(); ++i)
     {
@@ -782,18 +804,23 @@ void FightView::check_statuses()
         switch(r)
         {
         case DEAD_BUR:
+            s += this->equip->getCrea(i)->getName() + " est mort de sa brulure\n";
             break;
 
         case DEAD_PSN:
+            s += this->equip->getCrea(i)->getName() + " est mort empoisonné\n";
             break;
 
         case LOST_BUR:
+            s += this->equip->getCrea(i)->getName() + " n'est plus brûlé !\n";
             break;
 
         case LOST_PAR:
+            s += this->equip->getCrea(i)->getName() + " n'est plus paralysé !\n";
             break;
 
         case LOST_PSN:
+            s += this->equip->getCrea(i)->getName() + " n'est plus empoisonné !\n";
             break;
 
         default:
@@ -803,6 +830,8 @@ void FightView::check_statuses()
         if (!c)
             break;
     }
+    if (s != "")
+        this->action.setString(s);
 }
 
 void FightView::attack(int selected, int index_my_creatures)
