@@ -44,6 +44,7 @@ public:
     int save();
     void setFolder(const std::string&);
     std::string getName();
+    std::string getFolder();
     void _load() override;
     Bag* getBag();
     Equip* getEquip();

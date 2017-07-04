@@ -182,6 +182,8 @@ int Map::load_map(std::string& map_path)
         this->tp.push_back(ttp);
     }
 
+    config_doc.close();
+
     DebugLog(SH_OK, "Tp loaded");
 
     return 0;

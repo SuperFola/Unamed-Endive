@@ -809,7 +809,7 @@ void Game::on_end()
     // saving, JIC
     this->sm.getSave()->save();
 
-    Config::close();
+    Config::save();
 }
 
 int Game::run()

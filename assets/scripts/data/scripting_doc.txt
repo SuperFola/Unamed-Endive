@@ -72,6 +72,10 @@ getMapWidth
 -----------
 Return the width of the map (in blocks)
 
+getPlayerFolder
+---------------
+Return the save folder of the player
+
 getPlayerName
 -------------
 Return the name of the player

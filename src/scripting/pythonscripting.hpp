@@ -32,6 +32,7 @@ extern "C"
     PYFUNC(getMapId);
     PYFUNC(changeBlockAttrib);
     PYFUNC(getPlayerName);
+    PYFUNC(getPlayerFolder);
     PYFUNC(tpPlayerOn);
     PYFUNC(screenshot);
     PYFUNC(setCurrentView);

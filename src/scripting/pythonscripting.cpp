@@ -318,6 +318,11 @@ extern "C"
         return Py_BuildValue("s", PyScripting::getPlayerName());
     }
 
+    static PyObject* getPlayerFolder(PyObject* self, PyObject* args)
+    {
+        return Py_BuildValue("s", PyScripting::getPlayerFolder());
+    }
+
     static PyObject* tpPlayerOn(PyObject* self, PyObject* args)
     {
         int x;
@@ -467,6 +472,7 @@ extern "C"
         {"getMapId", getMapId, METH_VARARGS, "Return the id of the map (int)"},
         {"changeBlockAttribute", changeBlockAttrib, METH_VARARGS, "To change attributes of a specified block on the current map"},
         {"getPlayerName", getPlayerName, METH_VARARGS, "Return the name of the player"},
+        {"getPlayerFolder", getPlayerFolder, METH_VARARGS, "Return the save folder of the player"},
         {"tpPlayerOn", tpPlayerOn, METH_VARARGS, "Take two integers (x, y). Will teleport the player on this position, on the current map"},
         {"screenshot", screenshot, METH_VARARGS, "Take a screenshot and save it to screenshots/. Return the name of the file"},
         {"setCurrentView", setCurrentView, METH_VARARGS, "Set the current view. Take the id of the new view"},

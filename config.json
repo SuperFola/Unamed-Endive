@@ -1,13 +1,13 @@
 {
-    "music": true,
-    "aa": 1,
-    "v-sync": true,
-    "shader": "none",
-    "fps": 120,
-    "menu": "escape",
-    "up": "z",
-    "down": "s",
-    "right": "d",
-    "left": "q",
-    "sigma": 0.5
+	"aa" : 1,
+	"down" : "s",
+	"fps" : 120,
+	"left" : "q",
+	"menu" : "escape",
+	"music" : true,
+	"right" : "d",
+	"shader" : "none",
+	"sigma" : 0.5,
+	"up" : "z",
+	"v-sync" : true
 }

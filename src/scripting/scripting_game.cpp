@@ -145,6 +145,11 @@ const char* PyScripting::getPlayerName()
     return instance.player->getName().c_str();
 }
 
+const char* PyScripting::getPlayerFolder()
+{
+    return instance.player->getFolder().c_str();
+}
+
 void PyScripting::map_tpPlayerOn(int rid)
 {
     instance.player->setPos(

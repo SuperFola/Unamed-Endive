@@ -33,7 +33,7 @@ def include(filename):
     return t
 
 sha256 = lambda w: hashlib.sha256(w.encode()).hexdigest()
-playername = Unamed.getPlayerName()
+playername = Unamed.getPlayerFolder()
 
 # CONSTANTS
 PRGS_SAVING_PATH = "saves/" + playername + "/progess"

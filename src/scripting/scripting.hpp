@@ -113,6 +113,7 @@ public:
     static void createPNJ(int, const char*, const char*, int, const char*, int, int);
 
     static const char* getPlayerName();
+    static const char* getPlayerFolder();
 
     static const char* screenshot();
 

@@ -75,6 +75,11 @@ std::string Character::getName()
     return this->name;
 }
 
+std::string Character::getFolder()
+{
+    return this->folder;
+}
+
 void Character::_load()
 {
     DebugLog(SH_INFO, "creating \"saves/" << this->folder << "\"");
