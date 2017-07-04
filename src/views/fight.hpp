@@ -78,7 +78,7 @@ private:
     int wait_give_xp;
     int whoisdead;
     bool iamattacking;
-    bool finished_atk;
+    int wait;
 
     const std::string __adv = "adv";
     const std::string __me = "me";

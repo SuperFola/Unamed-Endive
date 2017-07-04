@@ -92,7 +92,7 @@ FightView::FightView() :
     , wait_give_xp(0)
     , whoisdead(NODEAD)
     , iamattacking(false)
-    , finished_atk(true)
+    , wait(0)
 {
 }
 
@@ -233,12 +233,12 @@ void FightView::render(sf::RenderWindow& window)
     // draw the creatures
     for (int i =0; i < this->adv.size(); ++i)
     {
-        if (this->adv[i]->getLife() > 0 && this->finished_atk)
+        if (this->adv[i]->getLife() > 0)
             window.draw(this->sprites[this->__adv + to_string<int>(i)]);
     }
     for (int i=0; i < this->equip->getSize(); ++i)
     {
-        if (this->equip->getCrea(i)->getLife() > 0 && this->finished_atk)
+        if (this->equip->getCrea(i)->getLife() > 0)
             window.draw(this->sprites[this->__me + to_string<int>(i)]);
     }
 
@@ -517,7 +517,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->display_attack = false;
         if (this->iamattacking)
             this->iamattacking = false;
-        this->finished_atk = true;
     }
 
     if (this->wait_give_xp > 1)
@@ -540,11 +539,16 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->enemy_wait_until_next = 0;
     }
 
+    if (this->wait > 1)
+        --this->wait;
+    if (this->wait == 1)
+        this->wait = 0;
+
     // updating countdown before quitting duel
     if (this->__count_before_flyaway > 1)
         --this->__count_before_flyaway;
 
-    if (this->ending > 1 && this->wait_give_xp == 0)
+    if (this->ending > 1 && this->wait_give_xp == 0 && this->wait == 0)
         --this->ending;
 
     if (OMessenger::get().target_view == this->getId())
@@ -657,7 +661,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->selectingcrea = false;
         this->lock = false;
         this->iamattacking = true;
-        this->finished_atk = false;
     }
     else if (!this->my_turn && !this->enemy_is_attacking && !this->lock && !this->iamattacking)
     {
@@ -672,7 +675,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         }
         this->enemy_wait_until_next = c * ATK_FR_CNT;
         this->check_statuses();
-        this->finished_atk = false;
     }
 
     if (this->enemy_is_attacking)
@@ -804,7 +806,6 @@ void FightView::give_xp(bool me)
 void FightView::check_statuses()
 {
     // updating statuses
-    bool c = false;
     std::string s = "";
     for (int i=0; i < this->adv.size(); ++i)
     {
@@ -832,13 +833,11 @@ void FightView::check_statuses()
             break;
 
         default:
-            c = true;
             break;
         }
     }
     if (s != "")
         this->action.setString(s);
-    c = false;
     for (int i=0; i < this->equip->getSize(); ++i)
     {
         int r = this->equip->getCrea(i)->updateState();
@@ -865,14 +864,14 @@ void FightView::check_statuses()
             break;
 
         default:
-            c= true;
             break;
         }
-        if (!c)
-            break;
     }
     if (s != "")
         this->action.setString(s);
+
+    if (s != "")
+        this->wait = 240;
 }
 
 void FightView::attack(int selected, int index_my_creatures)
@@ -1049,6 +1048,7 @@ void FightView::start()
     this->wait_give_xp = 0;
     this->whoisdead = NODEAD;
     this->iamattacking = false;
+    this->wait = 0;
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());
