@@ -102,7 +102,6 @@ bool SettingsView::load()
     this->texts.add(this->VS, vs);
     this->texts.add(this->SHADER, sh);
     this->texts.add(this->FPS, fps);
-    this->texts.add(this->CTRL, ctrl);
     this->texts.add(this->MENU, menu);
     this->texts.add(this->UP, up);
     this->texts.add(this->DW, dw);
@@ -123,6 +122,27 @@ bool SettingsView::load()
     this->update_texts();
 
     // setting texts position
+    this->texts.get(this->MUSIC).setPosition(SET_START_X, SET_START_Y);
+    this->texts.get(this->AA).setPosition(SET_START_X, SET_START_Y + SET_SPACE_Y);
+    this->texts.get(this->VS).setPosition(SET_START_X, SET_START_Y + 2.0f * SET_SPACE_Y);
+    this->texts.get(this->SHADER).setPosition(SET_START_X, SET_START_Y + 3.0f * SET_SPACE_Y);
+    this->texts.get(this->FPS).setPosition(SET_START_X, SET_START_Y + 4.0f * SET_SPACE_Y);
+    this->texts.get(this->MENU).setPosition(SET_START_X, SET_START_Y + 5.0f * SET_SPACE_Y);
+    this->texts.get(this->UP).setPosition(SET_START_X, SET_START_Y + 6.0f * SET_SPACE_Y);
+    this->texts.get(this->DW).setPosition(SET_START_X, SET_START_Y + 7.0f * SET_SPACE_Y);
+    this->texts.get(this->RI).setPosition(SET_START_X, SET_START_Y + 8.0f * SET_SPACE_Y);
+    this->texts.get(this->LE).setPosition(SET_START_X, SET_START_Y + 9.0f * SET_SPACE_Y);
+
+    this->texts.get(this->VMU).setPosition(SET_START_X2, SET_START_Y);
+    this->texts.get(this->VAA).setPosition(SET_START_X2, SET_START_Y + SET_SPACE_Y);
+    this->texts.get(this->VVS).setPosition(SET_START_X2, SET_START_Y + 2.0f * SET_SPACE_Y);
+    this->texts.get(this->VSHADER).setPosition(SET_START_X2, SET_START_Y + 3.0f * SET_SPACE_Y);
+    this->texts.get(this->VFPS).setPosition(SET_START_X2, SET_START_Y + 4.0f * SET_SPACE_Y);
+    this->texts.get(this->VMENU).setPosition(SET_START_X2, SET_START_Y + 5.0f * SET_SPACE_Y);
+    this->texts.get(this->VUP).setPosition(SET_START_X2, SET_START_Y + 6.0f * SET_SPACE_Y);
+    this->texts.get(this->VDW).setPosition(SET_START_X2, SET_START_Y + 7.0f * SET_SPACE_Y);
+    this->texts.get(this->VRI).setPosition(SET_START_X2, SET_START_Y + 8.0f * SET_SPACE_Y);
+    this->texts.get(this->VLE).setPosition(SET_START_X2, SET_START_Y + 9.0f * SET_SPACE_Y);
 
     return true;
 }
@@ -150,19 +170,43 @@ void SettingsView::render(sf::RenderWindow& window)
     window.draw(this->texts.get(this->VS));
     window.draw(this->texts.get(this->SHADER));
     window.draw(this->texts.get(this->FPS));
-    window.draw(this->texts.get(this->CTRL));
     window.draw(this->texts.get(this->MENU));
     window.draw(this->texts.get(this->UP));
     window.draw(this->texts.get(this->DW));
     window.draw(this->texts.get(this->RI));
     window.draw(this->texts.get(this->LE));
 
-    // display also what it is binded to
+    /*
+        window.draw(this->texts.get(this->VMU));
+        window.draw(this->texts.get(this->VAA));
+        window.draw(this->texts.get(this->VVS));
+    */
+
+    std::string c = (Config::get("music").asBool()) ? this->CHECKED : this->UNCHECKED;
+    this->sprites[c].setPosition(435.0f, 82.0f);
+    window.draw(this->sprites[c]);
+
+    c = (Config::get("aa").asInt() > 0) ? this->CHECKED : this->UNCHECKED;
+    this->sprites[c].setPosition(435.0f, 138.0f);
+    window.draw(this->sprites[c]);
+
+    c = (Config::get("v-sync").asBool()) ? this->CHECKED : this->UNCHECKED;
+    this->sprites[c].setPosition(435.0f, 194.0f);
+    window.draw(this->sprites[c]);
+
+    window.draw(this->texts.get(this->VSHADER));
+    window.draw(this->texts.get(this->VFPS));
+    window.draw(this->texts.get(this->VMENU));
+    window.draw(this->texts.get(this->VUP));
+    window.draw(this->texts.get(this->VDW));
+    window.draw(this->texts.get(this->VRI));
+    window.draw(this->texts.get(this->VLE));
 }
 
 int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
 {
     int new_view = -1;
+    int r = -1;
 
     switch(event.type)
     {
@@ -182,11 +226,71 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
         switch(event.mouseButton.button)
         {
         case sf::Mouse::Button::Left:
+            if (138 <= m__X && m__X <= 501)
+            {
+                // clic on a setting thing
+                r = int((m__Y - 70.0f) / 56.0f);
+                if (0 <= r && r <= 9)
+                {
+                    // everything is fine, we clicked on something good
+                    if (r == 0)
+                    {
+                        // music
+                        Config::set("music", ! Config::get("music").asBool());
+                    }
+                    else if (r == 1)
+                    {
+                        // aa
+                        Config::set("aa", ((Config::get("aa").asInt() > 0) ? 0 : 1));
+                    }
+                    else if (r == 2)
+                    {
+                        // vsync
+                        Config::set("v-sync", ! Config::get("v-sync").asBool());
+                    }
+                    else if (r == 3)
+                    {
+                        // shader
+                        // Config::get("shader").asString()
+                    }
+                    else if (r == 4)
+                    {
+                        // fps
+                        if (Config::get("fps").asInt() == 240)
+                            Config::set("fps", 60);
+                        else if (Config::get("fps").asInt() == 120)
+                            Config::set("fps", 240);
+                        else if (Config::get("fps").asInt() == 60)
+                            Config::set("fps", 120);
+                    }
+                    else if (r == 5)
+                    {
+                        // menu key
+                    }
+                    else if (r == 6)
+                    {
+                        // up key
+                    }
+                    else if (r == 7)
+                    {
+                        // down key
+                    }
+                    else if (r == 8)
+                    {
+                        // right key
+                    }
+                    else if (r == 9)
+                    {
+                        // left key
+                    }
+                }
+            }
             break;
 
         default:
             break;
         }
+        Config::save();
         break;
 
     default:
@@ -198,8 +302,12 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
 
 void SettingsView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-    /// faudra faire ca quelque part quand on change les settings :
     window.setVerticalSyncEnabled(Config::get("v-sync").asBool());
-    //window.getSettings().antialiasingLevel = Config::get("aa").asInt();
+    /*if (Config::get("aa").asInt() > 0)
+        glEnable(GL_MULTISAMPLE_ARB);
+    else
+        glDisable(GL_MULTISAMPLE_ARB);*/
     window.setFramerateLimit(Config::get("fps").asInt());
+
+    this->update_texts();
 }

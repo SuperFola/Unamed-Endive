@@ -21,6 +21,12 @@ public:
     static void load();
     static void save();
     static Json::Value get(const std::string& name);
+
+    template<typename T>
+    static void set(const std::string& name, T v)
+    {
+        self.root[name] = v;
+    }
 };
 
 #endif // DEF_CFG

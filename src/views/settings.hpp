@@ -11,6 +11,11 @@
 #include "../abstract/functions.hpp"
 #include "../abstract/config.hpp"
 
+#define SET_START_X 147.0f
+#define SET_START_X2 345.0f
+#define SET_START_Y 82.0f
+#define SET_SPACE_Y 56.0f
+
 class SettingsView : public View
 {
 private:
@@ -27,7 +32,6 @@ private:
     const std::string VS = "vs";
     const std::string SHADER = "shader";
     const std::string FPS = "fps";
-    const std::string CTRL = "controles";
     const std::string MENU = "menu";
     const std::string UP = "up";
     const std::string DW = "dwn";
