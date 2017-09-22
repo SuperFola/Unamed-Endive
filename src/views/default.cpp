@@ -210,6 +210,7 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed, sf::RenderWin
 {
     bool has_triggered_hud = false;
     bool has_moved = false;
+    std::string k = "";
 
     if (this->menu_hud.isTriggered())
         goto menu_hud_ev_processing;
@@ -219,31 +220,6 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed, sf::RenderWin
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
-        case sf::Keyboard::Escape:
-            this->menu_hud.setTrigger(true);
-            has_triggered_hud = true;
-            break;
-
-        case sf::Keyboard::Z:
-            this->player.move(DIRECTION::up, this->level, elapsed);
-            has_moved = true;
-            break;
-
-        case sf::Keyboard::S:
-            this->player.move(DIRECTION::down, this->level, elapsed);
-            has_moved = true;
-            break;
-
-        case sf::Keyboard::Q:
-            this->player.move(DIRECTION::left, this->level, elapsed);
-            has_moved = true;
-            break;
-
-        case sf::Keyboard::D:
-            this->player.move(DIRECTION::right, this->level, elapsed);
-            has_moved = true;
-            break;
-
         case sf::Keyboard::Space:
             has_moved = true;  // kind of tricky, just to stop speaking to the pnj
             PyScripting::run_code(("trigger_event(" +
@@ -258,12 +234,42 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed, sf::RenderWin
         }
         break;
 
-        case sf::Event::MouseButtonPressed:
-            if (event.mouseButton.button == sf::Mouse::Left)
+        case sf::Event::TextEntered:
+            k = SettingsView::convert_textentered_to_value(event.text.unicode);
+
+            if (Config::get("menu") == k)
             {
-                this->resolve_pnjspeak(m__X, m__Y, window);
+                this->menu_hud.setTrigger(true);
+                has_triggered_hud = true;
+            }
+            else if (Config::get("up") == k)
+            {
+                this->player.move(DIRECTION::up, this->level, elapsed);
+                has_moved = true;
+            }
+            else if (Config::get("down") == k)
+            {
+                this->player.move(DIRECTION::down, this->level, elapsed);
+                has_moved = true;
+            }
+            else if (Config::get("left") == k)
+            {
+                this->player.move(DIRECTION::left, this->level, elapsed);
+                has_moved = true;
+            }
+            else if (Config::get("right") == k)
+            {
+                this->player.move(DIRECTION::right, this->level, elapsed);
+                has_moved = true;
             }
             break;
+
+    case sf::Event::MouseButtonPressed:
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            this->resolve_pnjspeak(m__X, m__Y, window);
+        }
+        break;
 
     default:
         break;

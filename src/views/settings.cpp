@@ -8,6 +8,7 @@
 
 SettingsView::SettingsView() :
     View(SETTINGS_VIEW_ID)
+    , key_needed(k_none)
 {
 
 }
@@ -217,6 +218,14 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
             new_view = LAST_VIEW_ID;
             break;
 
+        case sf::Event::TextEntered:
+            // code to get a key
+            if (this->key_needed != k_none)
+            {
+                this->key = SettingsView::convert_textentered_to_value(event.text.unicode);
+            }
+            break;
+
         default:
             break;
         }
@@ -266,22 +275,27 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
                     else if (r == 5)
                     {
                         // menu key
+                        this->key_needed = k_menu;
                     }
                     else if (r == 6)
                     {
                         // up key
+                        this->key_needed = k_up;
                     }
                     else if (r == 7)
                     {
                         // down key
+                        this->key_needed = k_dwn;
                     }
                     else if (r == 8)
                     {
                         // right key
+                        this->key_needed = k_ri;
                     }
                     else if (r == 9)
                     {
                         // left key
+                        this->key_needed = k_le;
                     }
                 }
             }
@@ -303,11 +317,59 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
 void SettingsView::update(sf::RenderWindow& window, sf::Time elapsed)
 {
     window.setVerticalSyncEnabled(Config::get("v-sync").asBool());
-    /*if (Config::get("aa").asInt() > 0)
+
+    #ifdef BUILD_WITH_OGL
+    if (Config::get("aa").asInt() > 0)
         glEnable(GL_MULTISAMPLE_ARB);
     else
-        glDisable(GL_MULTISAMPLE_ARB);*/
+        glDisable(GL_MULTISAMPLE_ARB);
+    #endif // BUILD_WITH_OGL
+
     window.setFramerateLimit(Config::get("fps").asInt());
 
     this->update_texts();
+
+    if (this->key_needed != k_none && this->key != "")
+    {
+        std::string v = "";
+        switch (this->key_needed)
+        {
+        case k_menu:
+            v = "menu";
+            break;
+
+        case k_up:
+            v = "up";
+            break;
+
+        case k_dwn:
+            v = "down";
+            break;
+
+        case k_ri:
+            v = "right";
+            break;
+
+        case k_le:
+            v = "left";
+            break;
+        }
+
+        Config::set(v, this->key);
+
+        this->key_needed = k_none;
+        this->key = "";
+    }
+}
+
+std::string SettingsView::convert_textentered_to_value(sf::Uint32 e)
+{
+    // handling special cases
+    if (e == '\b')
+        return std::string("backspace");
+    else if (this->key == 13 || this->key == 10)
+        return std::string("return");
+    else if (this->key == 27)
+        return std::string("escape");
+    return std::string(e);
 }

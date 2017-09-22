@@ -6,6 +6,8 @@
 
 #define DEF_CONSTANTS
 
+// #define BUILD_WITH_OGL
+
 #define DEV_MODE
 
 #define TRANSPARENT_TILE 10

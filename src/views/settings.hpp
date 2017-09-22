@@ -16,6 +16,13 @@
 #define SET_START_Y 82.0f
 #define SET_SPACE_Y 56.0f
 
+#define k_none 0
+#define k_menu 1
+#define k_up 2
+#define k_dwn 3
+#define k_ri 4
+#define k_le 5
+
 class SettingsView : public View
 {
 private:
@@ -23,6 +30,9 @@ private:
     Container<sf::Text> texts;
     std::map<std::string, sf::Sprite> sprites;
     sf::Font font;
+
+    int key_needed;
+    std::string key;
 
     const std::string BCKG = "background";
     const std::string CHECKED = "checked";
@@ -56,6 +66,8 @@ public:
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
+
+    static std::string convert_textentered_to_value(sf::Uint32 e);
 };
 
 #endif // DEF_SETTINGS_VIEW
