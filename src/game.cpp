@@ -624,6 +624,7 @@ Game::Game() :
     , cheat_on(false)
     , _got_coderet(false)
     , menu_game_selected(-1)
+    , inner_ballon_prompt_triggered(0)
 {
     DebugLog(SH_INFO, "Running on " << AutoVersion::FULLVERSION_STRING);
 
@@ -675,6 +676,8 @@ Game::Game() :
     delwarn.loadFromFile("assets/menu/deletewarning.png");
     sf::Texture validate;
     validate.loadFromFile("assets/menu/validate.png");
+    sf::Texture inner_balloon_prompt_tex;
+    inner_balloon_prompt_tex.loadFromFile("assets/gui/pnj/bubble.png");
       // saving them
     this->textures.add("bckg", menu_bckg);
     this->textures.add("logo", menu_logo);
@@ -684,6 +687,7 @@ Game::Game() :
     this->textures.add("alphablack", _alphablack);
     this->textures.add("delwarn", delwarn);
     this->textures.add("validate", validate);
+    this->textures.add("inner_balloon_prompt", inner_balloon_prompt_tex);
       // creating the sprites
     this->menu_bckg_s.setTexture(this->textures.get("bckg"));
     this->menu_bckg_s.setPosition(0.0f, 0.0f);
@@ -701,6 +705,8 @@ Game::Game() :
     this->deletewarn.setPosition(0.0f, 0.0f);
     this->validatebtn.setTexture(this->textures.get("validate"));
     this->validatebtn.setPosition(0.0f, 0.0f);
+    this->inner_balloon_prompt_sprite.setTexture(this->textures.get("inner_balloon_prompt"));
+    this->inner_balloon_prompt_sprite.setPosition(10.0f, WIN_H - 110.0f);
 
     // font
     if (!this->font.loadFromFile(FONTPATH))
@@ -731,6 +737,9 @@ Game::Game() :
     setupFont(this->ver, this->font, sf::Color::White, 20)
     this->ver.setString(std::string("v") + std::string(AutoVersion::FULLVERSION_STRING));
     this->ver.setPosition(WIN_W - 10.0f - this->ver.getGlobalBounds().width, WIN_H - 10.0f - this->ver.getGlobalBounds().height);
+
+    setupFont(this->inner_balloon_prompt_txt, this->font, sf::Color::Black, 18)
+    this->inner_balloon_prompt_txt.setPosition(25.0f, WIN_H - 100.0f);
 
     this->blink = false;
     this->blinking = 0;
@@ -773,6 +782,7 @@ void Game::post_load()
     // same here
     PyScripting::setMap(this->sm.getDefault()->getMap());
     PyScripting::setPlayer(this->sm.getDefault()->getCharacter());
+    PyScripting::setGame(this);
     // load them all (the scripts)
     PyScripting::load();
     // launch the scripts
@@ -810,6 +820,36 @@ void Game::on_end()
     this->sm.getSave()->save();
 
     Config::save();
+}
+
+void Game::trigger_inner_balloon_prompt(bool v)
+{
+    this->inner_ballon_prompt_triggered = v ? 1 : 0;
+}
+
+void Game::set_balloon_prompt(const char* text)
+{
+    this->inner_balloon_prompt_txt.setString(std::string(text));
+}
+
+bool Game::get_triggered_inner_balloon_prompt()
+{
+    return inner_ballon_prompt_triggered == 1;
+}
+
+void Game::get_inner_balloon_text(const char* text, int* e)
+{
+    // == 2 means user has validate the entry
+    if (this->inner_ballon_prompt_triggered == 2)
+    {
+        *text = this->inner_balloon_prompt_str.toAnsiString().c_str();
+        *e = 0; // no error
+        // we put back the `sm` into its basic's state
+        this->inner_ballon_prompt_triggered = 0;
+        this->inner_balloon_prompt_str.clear();
+    }
+    else
+        *e = 1; // the text entry wasn't validated
 }
 
 int Game::run()

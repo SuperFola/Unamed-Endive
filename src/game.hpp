@@ -62,6 +62,11 @@ private:
     int blinking;
     bool blink;
     int menu_game_selected;
+      // game inner balloon prompt
+    sf::Text inner_balloon_prompt_txt;
+    sf::String inner_balloon_prompt_str;
+    sf::Sprite inner_balloon_prompt_sprite;
+    int inner_ballon_prompt_triggered;
     // methods
       // commons methods
     void handle_std_events(sf::Event&, sf::Time);
@@ -81,6 +86,11 @@ private:
     void take_screenshot();
     void post_load();
     void on_end();
+      // inner balloon prompt related
+    void trigger_inner_balloon_prompt(bool v);
+    void set_balloon_prompt(const char*);
+    bool get_triggered_inner_balloon_prompt();
+    void get_inner_balloon_text(const char* text, int* e);
 
 public:
     // methods

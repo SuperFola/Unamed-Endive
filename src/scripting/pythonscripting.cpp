@@ -449,14 +449,22 @@ extern "C"
         RETURN_NONE
     }
 
-    PyObject* displayBallonWithPrompt(PyObject* self, PyObject* args)
+    PyObject* triggerBallonPrompt(PyObject* self, PyObject* args)
     {
         const char* s;
         if (!PyArg_ParseTuple(args, "s", &s))
         {
             PyErr_SetString(UnamedError, "Can not parse arguments, need a string fro the prompt")
+            return NULL.
         }
-        return Py_BuildValue("s", PyScripting::displayBallonWithPrompt(s));
+
+        int e = 0;
+        PyScripting::triggerBallonPrompt(s, &e);
+        if (e == 1)
+        {
+            PyErr_SetString(UnamedError, "Balloon prompt is already triggered, can not re-trigger it while it is running")
+            return NULL;
+        }
         RETURN_NONE
     }
 
@@ -495,7 +503,7 @@ extern "C"
         {"writeText", writeText, METH_VARARGS, "Write a text, giving the id of a created text"},
         {"setFightEnv", setFightEnv, METH_VARARGS, "Set the environment for a fight"},
         {"setFightEscape", setFightEsc, METH_VARARGS, "Set the fight escape mode"},
-        {"displayBallonWithPrompt", displayBallonWithPrompt, METH_VARARGS, "Display a ballon message with a given prompt, and return an input (validated by Return key)"},
+        {"triggerBallonPrompt", triggerBallonPrompt, METH_VARARGS, "Display a ballon message with a given prompt, and wait for an input (validated by Return key). Not blocking the main thread"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };

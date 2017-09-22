@@ -26,6 +26,9 @@
 
 #define RETURN_NONE Py_INCREF(Py_None); return Py_None;
 
+// forward declaration
+class Game;
+
 class PyScripting
 {
 private:
@@ -54,6 +57,7 @@ private:
     PNJManager* pnjm;
     Map* level;
     Character* player;
+    Game* game;
 
     // methods
     void load_all_modules();
@@ -84,6 +88,7 @@ public:
     static void setPnjManager(PNJManager*);
     static void setMap(Map*);
     static void setPlayer(Character*);
+    static void setGame(Game*);
 
     static int createGlobal(const char*, struct svar_t);
     static svar_t getGlobal(const char*);
@@ -136,7 +141,8 @@ public:
     static void setFightEnv(int);
     static void setFightEscape(bool);
 
-    static const char* displayBallonWithPrompt(const char*);
+    static void triggerBalloonPrompt(const char*, int*);
+    static void balloonPromptGetOuput(const char*, int*);
 };
 
 #endif // DEF_SCRIPTING

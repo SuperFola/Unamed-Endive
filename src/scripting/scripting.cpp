@@ -13,6 +13,8 @@
 #include <dirent.h>
 #endif // PLATFORM_POSIX
 
+#include "../game.hpp"
+
 namespace PyUnamed {
     #include "pythonscripting.hpp"
 }
@@ -280,6 +282,12 @@ void PyScripting::setPlayer(Character* player)
 {
     DebugLog(SH_INFO, "Adding a pointer on the player to the PyScripting singleton");
     instance.player = player;
+}
+
+void PyScripting::setGame(Game* game)
+{
+    DebugLog(SH_INFO, "Adding a pointer on the game to the PyScripting singleton");
+    instance.game = game;
 }
 
 int PyScripting::setModuleKind(const char* kind, const char* id)

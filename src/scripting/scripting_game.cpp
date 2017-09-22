@@ -7,6 +7,7 @@
 #include "scripting.hpp"
 #include "../constants.hpp"
 #include "../abstract/defines.hpp"
+#include "../game.hpp"
 
 /** Definitions of the functions related to the game **/
 void PyScripting::setEvent(sf::Event& ev)
@@ -342,8 +343,24 @@ void PyScripting::setFightEscape(bool e)
     instance.sm->getFight()->set_escape(e);
 }
 
-const char* PyScripting::displayBallonWithPrompt(const char* prompt)
+void PyScripting::triggerBalloonPrompt(const char* prompt, int* e)
 {
-    /// TODO
-    return "prompt is not working currently";
+    if (!instance.game->get_triggered_inner_balloon_prompt())
+    {
+        instance.game->trigger_inner_balloon_prompt(true);
+        instance.game->set_balloon_prompt(prompt);
+        *e = 0;
+    }
+    else
+        *e = 1;
+}
+
+void PyScripting::balloonPromptGetOuput(const char* out, int* e)
+{
+    if (instance.game->get_triggered_inner_balloon_prompt())
+    {
+        instance.game->get_inner_balloon_text(out, e);
+    }
+    else
+        *e = 1;
 }
