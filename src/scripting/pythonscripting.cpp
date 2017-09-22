@@ -468,9 +468,21 @@ extern "C"
         RETURN_NONE
     }
 
+    PyObject* balloonPromptGetOuput(PyObject* self, PyObject* args)
+    {
+        const char* s;
+        int e = 0;
+        PyScripting::balloonPromptGetOuput(s, &e);
+        if (e == 1)
+        {
+            return Py_BuildValue("i", -1);
+        }
+        Py_BuildValue("s", s);
+    }
+
     static PyMethodDef UnamedMethods[] = {
         // ...
-        {"upr", print, METH_VARARGS, "Print function using std::cout"},
+        {"upr", print, METH_VARARGS, "Print function using std::cout instead of the standard output stream of Python"},
         {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with a string id also given"},
         {"loadImage", loadTexture, METH_VARARGS, "Load an image using a given path, and assigne it to a given id"},
         {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
@@ -504,6 +516,7 @@ extern "C"
         {"setFightEnv", setFightEnv, METH_VARARGS, "Set the environment for a fight"},
         {"setFightEscape", setFightEsc, METH_VARARGS, "Set the fight escape mode"},
         {"triggerBallonPrompt", triggerBallonPrompt, METH_VARARGS, "Display a ballon message with a given prompt, and wait for an input (validated by Return key). Not blocking the main thread"},
+        {"balloonPromptGetOuput", balloonPromptGetOuput, METH_VARARGS, "Get the output of the balloon prompt. -1 if the user did not validate ; if the balloon was not triggered, raises UnamedError"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };

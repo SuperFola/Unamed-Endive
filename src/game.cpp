@@ -208,6 +208,12 @@ void Game::render()
     }
     // launch the scripts
     PyScripting::run_drawing_modules();
+
+    if (this->inner_balloon_prompt_txt == 1)
+    {
+        window.draw(this->inner_balloon_prompt_sprite);
+        window.draw(this->inner_balloon_prompt_txt);
+    }
 }
 
 void Game::render_loading()
