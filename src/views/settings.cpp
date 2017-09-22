@@ -364,12 +364,15 @@ void SettingsView::update(sf::RenderWindow& window, sf::Time elapsed)
 
 std::string SettingsView::convert_textentered_to_value(sf::Uint32 e)
 {
+    sf::String s;
     // handling special cases
     if (e == '\b')
-        return std::string("backspace");
-    else if (this->key == 13 || this->key == 10)
-        return std::string("return");
-    else if (this->key == 27)
-        return std::string("escape");
-    return std::string(e);
+        s.insert(0, "backspace");
+    else if (e == 13 || e == 10)
+        s.insert(0, "return");
+    else if (e == 27)
+        s.insert(0, "escape");
+    else
+        s.insert(0, e);  // otherwise just add the character as a utf 8 one
+    return s.toAnsiString();
 }
