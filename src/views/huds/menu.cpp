@@ -5,6 +5,8 @@
 #include "menu.hpp"
 #include "../../constants.hpp"
 #include "../../abstract/defines.hpp"
+#include "../settings.hpp"
+#include "../../abstract/config.hpp"
 
 // public
 MenuHUD::MenuHUD() :
@@ -223,26 +225,25 @@ void MenuHUD::update(sf::RenderWindow& window, sf::Time elapsed)
 int MenuHUD::process_event(sf::Event& event, sf::Time elapsed)
 {
     int new_view = -1;
+    std::string k;
 
     if (!this->isTriggered())
         goto dont3;
 
     switch(event.type)
     {
+    case sf::Event::TextEntered:
+        k = SettingsView::convert_textentered_to_value(event.text.unicode);
+        if (Config::get("menu") == k)
+            new_view = 5;
+        break;
+
     case sf::Event::KeyPressed:
         switch(event.key.code)
         {
         case sf::Keyboard::Return:
             if (this->current != -1)
                 new_view = this->current;
-            break;
-
-        case sf::Keyboard::Escape:
-            new_view = 5;
-            break;
-
-        case sf::Keyboard::E:
-            new_view = 5;
             break;
 
         case sf::Keyboard::Up:

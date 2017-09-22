@@ -155,11 +155,31 @@ void SettingsView::update_texts()
     this->texts.get(this->VVS).setString((Config::get("v-sync").asBool()) ? "on" : "off");
     this->texts.get(this->VSHADER).setString(Config::get("shader").asString());
     this->texts.get(this->VFPS).setString(to_string<int>(Config::get("fps").asInt()));
-    this->texts.get(this->VMENU).setString(Config::get("menu").asString());
-    this->texts.get(this->VUP).setString(Config::get("up").asString());
-    this->texts.get(this->VDW).setString(Config::get("down").asString());
-    this->texts.get(this->VRI).setString(Config::get("right").asString());
-    this->texts.get(this->VLE).setString(Config::get("left").asString());
+
+    if (this->key_needed != k_menu)
+        this->texts.get(this->VMENU).setString(Config::get("menu").asString());
+    else
+        this->texts.get(this->VMENU).setString("> ??? <");
+
+    if (this->key_needed != k_up)
+        this->texts.get(this->VUP).setString(Config::get("up").asString());
+    else
+        this->texts.get(this->VUP).setString("> ??? <");
+
+    if (this->key_needed != k_dwn)
+        this->texts.get(this->VDW).setString(Config::get("down").asString());
+    else
+        this->texts.get(this->VDW).setString("> ??? <");
+
+    if (this->key_needed != k_ri)
+        this->texts.get(this->VRI).setString(Config::get("right").asString());
+    else
+        this->texts.get(this->VRI).setString("> ??? <");
+
+    if (this->key_needed != k_le)
+        this->texts.get(this->VLE).setString(Config::get("left").asString());
+    else
+        this->texts.get(this->VLE).setString("> ??? <");
 }
 
 void SettingsView::render(sf::RenderWindow& window)
@@ -178,6 +198,7 @@ void SettingsView::render(sf::RenderWindow& window)
     window.draw(this->texts.get(this->LE));
 
     /*
+    unuseful, we are using images instead of those =>
         window.draw(this->texts.get(this->VMU));
         window.draw(this->texts.get(this->VAA));
         window.draw(this->texts.get(this->VVS));
@@ -208,26 +229,21 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
 {
     int new_view = -1;
     int r = -1;
+    std::string k = "";
 
     switch(event.type)
     {
-    case sf::Event::KeyPressed:
-        switch(event.key.code)
+    case sf::Event::TextEntered:
+        // code to get a key
+        if (this->key_needed != k_none)
         {
-        case sf::Keyboard::Escape:
-            new_view = LAST_VIEW_ID;
-            break;
-
-        case sf::Event::TextEntered:
-            // code to get a key
-            if (this->key_needed != k_none)
-            {
-                this->key = SettingsView::convert_textentered_to_value(event.text.unicode);
-            }
-            break;
-
-        default:
-            break;
+            this->key = SettingsView::convert_textentered_to_value(event.text.unicode);
+        }
+        else
+        {
+            k = SettingsView::convert_textentered_to_value(event.text.unicode);
+            if (Config::get("menu") == k)  // escape only if we are not taking an input
+                new_view = LAST_VIEW_ID;
         }
         break;
 
@@ -304,7 +320,10 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
         default:
             break;
         }
-        Config::save();
+        // we save only if we are not asking for a key, otherwise we will save "> ??? <" as a key for an action
+        // resulting in a not working action when trying to call the "chosen" key
+        if (this->key_needed == k_none)
+            Config::save();
         break;
 
     default:
