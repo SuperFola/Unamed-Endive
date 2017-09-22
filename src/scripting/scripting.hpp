@@ -141,8 +141,8 @@ public:
     static void setFightEnv(int);
     static void setFightEscape(bool);
 
-    static void triggerBalloonPrompt(const char*, int*);
-    static void balloonPromptGetOuput(const char*, int*);
+    static void triggerBalloonPrompt(const char*&, int&);
+    static const char* balloonPromptGetOuput();
 };
 
 #endif // DEF_SCRIPTING

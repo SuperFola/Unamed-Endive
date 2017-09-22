@@ -8,6 +8,10 @@ When you receive an event in the python scripting, it is a dict
 
 To check the code of a key event, you can do ev['key'] == keys_ev_code.index('A') (will check if it is the key A)
 
+balloonPromptGetOuput
+---------------------
+Get the output of the balloon prompt. -1 if the user did not validate ; if the balloon was not triggered, raises UnamedError
+
 changeBlockAttribute
 --------------------
 To change attributes of a specified block on the current map
@@ -128,13 +132,17 @@ tpPlayerOn
 ----------
 Take two integers (x, y). Will teleport the player on this position, on the current map
 
+triggerBallonPrompt
+-------------------
+Display a ballon message with a given prompt, and wait for an input (validated by Return key). Not blocking the main thread
+
 turnPlayer
 ----------
 Turn the player in the specified direction. 0: up, 1: down, 2: left, 3: right
 
 upr
 ---
-Print function using std::cout
+Print function using std::cout instead of the standard output stream of Python
 
 writeText
 ---------

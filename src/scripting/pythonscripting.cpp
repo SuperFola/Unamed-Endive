@@ -454,15 +454,15 @@ extern "C"
         const char* s;
         if (!PyArg_ParseTuple(args, "s", &s))
         {
-            PyErr_SetString(UnamedError, "Can not parse arguments, need a string fro the prompt")
-            return NULL.
+            PyErr_SetString(UnamedError, "Can not parse arguments, need a string fro the prompt");
+            return NULL;
         }
 
         int e = 0;
-        PyScripting::triggerBallonPrompt(s, &e);
+        PyScripting::triggerBalloonPrompt(s, e);
         if (e == 1)
         {
-            PyErr_SetString(UnamedError, "Balloon prompt is already triggered, can not re-trigger it while it is running")
+            PyErr_SetString(UnamedError, "Balloon prompt is already triggered, can not re-trigger it while it is running");
             return NULL;
         }
         RETURN_NONE
@@ -470,10 +470,8 @@ extern "C"
 
     PyObject* balloonPromptGetOuput(PyObject* self, PyObject* args)
     {
-        const char* s;
-        int e = 0;
-        PyScripting::balloonPromptGetOuput(s, &e);
-        if (e == 1)
+        const char* s = PyScripting::balloonPromptGetOuput();
+        if (s == 0)
         {
             return Py_BuildValue("i", -1);
         }
