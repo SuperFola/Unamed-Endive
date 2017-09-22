@@ -135,6 +135,8 @@ public:
 
     static void setFightEnv(int);
     static void setFightEscape(bool);
+
+    static const char* displayBallonWithPrompt(const char*);
 };
 
 #endif // DEF_SCRIPTING

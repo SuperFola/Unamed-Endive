@@ -341,3 +341,9 @@ void PyScripting::setFightEscape(bool e)
 {
     instance.sm->getFight()->set_escape(e);
 }
+
+const char* PyScripting::displayBallonWithPrompt(const char* prompt)
+{
+    /// TODO
+    return "prompt is not working currently";
+}

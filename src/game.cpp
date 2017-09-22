@@ -721,7 +721,7 @@ Game::Game() :
     this->menu_text.setPosition(WIN_W / 2.0f - 100.0f, 0.0f);
 
     setupFont(this->menu_ask_user, this->font, sf::Color::White, 24)
-    this->menu_ask_user.setString("Quel est votre nom ?");
+    this->menu_ask_user.setString("Nom de la sauvegarde : ");
     this->menu_ask_user.setPosition(WIN_W / 2.0f - this->menu_ask_user.getGlobalBounds().width / 2.0f, WIN_H / 2.0f - 100.0f);
 
     setupFont(this->cursor, this->font, sf::Color::White, 24)

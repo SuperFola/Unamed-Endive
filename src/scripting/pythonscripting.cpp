@@ -4,7 +4,7 @@
 extern "C"
 {
     // module functions
-    static PyObject* registerScript(PyObject* self, PyObject* args)
+    PyObject* registerScript(PyObject* self, PyObject* args)
     {
         const char* kind;
         const char* id;
@@ -25,7 +25,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* print(PyObject* self, PyObject* args)
+    PyObject* print(PyObject* self, PyObject* args)
     {
         PyObject* content;
         char result[256];
@@ -44,7 +44,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* loadTexture(PyObject* self, PyObject* args)
+    PyObject* loadTexture(PyObject* self, PyObject* args)
     {
         const char* name;
         const char* id;
@@ -66,7 +66,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* displayTexture(PyObject* self, PyObject* args)
+    PyObject* displayTexture(PyObject* self, PyObject* args)
     {
         const char* id;
         int x;
@@ -89,7 +89,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* display_with_view(PyObject* self, PyObject* args)
+    PyObject* display_with_view(PyObject* self, PyObject* args)
     {
         const char* id;
         int x;
@@ -112,7 +112,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* createGlobal(PyObject* self, PyObject* args)
+    PyObject* createGlobal(PyObject* self, PyObject* args)
     {
         const char* name;
         svar_t gvar;
@@ -136,7 +136,7 @@ extern "C"
         return PyLong_FromLong(v);
     }
 
-    static PyObject* getGlobal(PyObject* self, PyObject* args)
+    PyObject* getGlobal(PyObject* self, PyObject* args)
     {
         const char* name;
         if (!PyArg_ParseTuple(args, "s", &name))
@@ -185,7 +185,7 @@ extern "C"
         }
     }
 
-    static PyObject* playMusic(PyObject* self, PyObject* args)
+    PyObject* playMusic(PyObject* self, PyObject* args)
     {
         const char* name;
         if (!PyArg_ParseTuple(args, "s", &name))
@@ -196,24 +196,24 @@ extern "C"
         return Py_BuildValue("i", PyScripting::playMusic(name));
     }
 
-    static PyObject* stopMusic(PyObject* self, PyObject* args)
+    PyObject* stopMusic(PyObject* self, PyObject* args)
     {
         PyScripting::stopMusic();
 
         RETURN_NONE
     }
 
-    static PyObject* getCurrentMusicName(PyObject* self, PyObject* args)
+    PyObject* getCurrentMusicName(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("s", PyScripting::getCurrentMusicName());
     }
 
-    static PyObject* getCurrentView(PyObject* self, PyObject* args)
+    PyObject* getCurrentView(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("i", PyScripting::getCurrentView());
     }
 
-    static PyObject* hasActiveHud(PyObject* self, PyObject* args)
+    PyObject* hasActiveHud(PyObject* self, PyObject* args)
     {
         int vid;
         if (!PyArg_ParseTuple(args, "i", &vid))
@@ -224,7 +224,7 @@ extern "C"
         return Py_BuildValue("i", PyScripting::hasActiveHud(vid));
     }
 
-    static PyObject* getEvent(PyObject* self, PyObject* args)
+    PyObject* getEvent(PyObject* self, PyObject* args)
     {
         sf::Event ev = PyScripting::getEvent();
         std::string sev = eventToString(ev);
@@ -236,7 +236,7 @@ extern "C"
         return result;
     }
 
-    static PyObject* createPNJ(PyObject* self, PyObject* args)
+    PyObject* createPNJ(PyObject* self, PyObject* args)
     {
         int mid;
         const char* name;
@@ -255,7 +255,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* is_tp(PyObject* self, PyObject* args)
+    PyObject* is_tp(PyObject* self, PyObject* args)
     {
         int x;
         int y;
@@ -267,7 +267,7 @@ extern "C"
         return Py_BuildValue("i", PyScripting::map_is_tp(x, y));
     }
 
-    static PyObject* getMapFromTp(PyObject* self, PyObject* args)
+    PyObject* getMapFromTp(PyObject* self, PyObject* args)
     {
         int x;
         int y;
@@ -282,22 +282,22 @@ extern "C"
         return Py_BuildValue("i", v);
     }
 
-    static PyObject* map_width(PyObject* self, PyObject* args)
+    PyObject* map_width(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("i", PyScripting::getMapWidth());
     }
 
-    static PyObject* map_height(PyObject* self, PyObject* args)
+    PyObject* map_height(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("i", PyScripting::getMapHeight());
     }
 
-    static PyObject* getMapId(PyObject* self, PyObject* args)
+    PyObject* getMapId(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("i", PyScripting::getMapId());
     }
 
-    static PyObject* changeBlockAttrib(PyObject* self, PyObject* args)
+    PyObject* changeBlockAttrib(PyObject* self, PyObject* args)
     {
         int rid;
         const char* id;
@@ -313,17 +313,17 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* getPlayerName(PyObject* self, PyObject* args)
+    PyObject* getPlayerName(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("s", PyScripting::getPlayerName());
     }
 
-    static PyObject* getPlayerFolder(PyObject* self, PyObject* args)
+    PyObject* getPlayerFolder(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("s", PyScripting::getPlayerFolder());
     }
 
-    static PyObject* tpPlayerOn(PyObject* self, PyObject* args)
+    PyObject* tpPlayerOn(PyObject* self, PyObject* args)
     {
         int x;
         int y;
@@ -338,12 +338,12 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* screenshot(PyObject* self, PyObject* args)
+    PyObject* screenshot(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("s", PyScripting::screenshot());
     }
 
-    static PyObject* setCurrentView(PyObject* self, PyObject* args)
+    PyObject* setCurrentView(PyObject* self, PyObject* args)
     {
         int vid;
         if (!PyArg_ParseTuple(args, "i", &vid))
@@ -356,17 +356,17 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* countCreaturesInEquip(PyObject* self, PyObject* args)
+    PyObject* countCreaturesInEquip(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("i", PyScripting::countCreaturesInEquip());
     }
 
-    static PyObject* countCreaturesInPC(PyObject* self, PyObject* args)
+    PyObject* countCreaturesInPC(PyObject* self, PyObject* args)
     {
         return Py_BuildValue("i", PyScripting::countCreaturesInPC());
     }
 
-    static PyObject* giveObject(PyObject* self, PyObject* args)
+    PyObject* giveObject(PyObject* self, PyObject* args)
     {
         int id;
         int qu;
@@ -381,7 +381,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* turnPlayer(PyObject* self, PyObject* args)
+    PyObject* turnPlayer(PyObject* self, PyObject* args)
     {
         int o;
         if (!PyArg_ParseTuple(args, "i", &o))
@@ -394,7 +394,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* createText(PyObject* self, PyObject* args)
+    PyObject* createText(PyObject* self, PyObject* args)
     {
         int x, y, w;
         const char* text;
@@ -410,7 +410,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* writeText(PyObject* self, PyObject* args)
+    PyObject* writeText(PyObject* self, PyObject* args)
     {
         const char* id;
         if (!PyArg_ParseTuple(args, "s", &id))
@@ -423,7 +423,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* setFightEnv(PyObject* self, PyObject* args)
+    PyObject* setFightEnv(PyObject* self, PyObject* args)
     {
         int i;
         if (!PyArg_ParseTuple(args, "i", &i))
@@ -436,7 +436,7 @@ extern "C"
         RETURN_NONE
     }
 
-    static PyObject* setFightEsc(PyObject* self, PyObject* args)
+    PyObject* setFightEsc(PyObject* self, PyObject* args)
     {
         int e;
         if (!PyArg_ParseTuple(args, "p", &e))
@@ -446,6 +446,17 @@ extern "C"
         }
         PyScripting::setFightEscape(e == 1);
 
+        RETURN_NONE
+    }
+
+    PyObject* displayBallonWithPrompt(PyObject* self, PyObject* args)
+    {
+        const char* s;
+        if (!PyArg_ParseTuple(args, "s", &s))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need a string fro the prompt")
+        }
+        return Py_BuildValue("s", PyScripting::displayBallonWithPrompt(s));
         RETURN_NONE
     }
 
@@ -484,6 +495,7 @@ extern "C"
         {"writeText", writeText, METH_VARARGS, "Write a text, giving the id of a created text"},
         {"setFightEnv", setFightEnv, METH_VARARGS, "Set the environment for a fight"},
         {"setFightEscape", setFightEsc, METH_VARARGS, "Set the fight escape mode"},
+        {"displayBallonWithPrompt", displayBallonWithPrompt, METH_VARARGS, "Display a ballon message with a given prompt, and return an input (validated by Return key)"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };
