@@ -44,7 +44,7 @@ extern "C"
     PYFUNC(writeText);
     PYFUNC(setFightEnv);
     PYFUNC(setFightEsc);
-    PYFUNC(triggerBallonPrompt);
+    PYFUNC(triggerBalloonPrompt);
     PYFUNC(balloonPromptGetOuput);
 
     PyMODINIT_FUNC PyInit_Unamed(void);

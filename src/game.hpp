@@ -67,7 +67,7 @@ private:
     sf::String inner_balloon_prompt_str_back;
     sf::String inner_balloon_prompt_str;
     sf::Sprite inner_balloon_prompt_sprite;
-    int inner_ballon_prompt_triggered;
+    int inner_balloon_prompt_triggered;
     // methods
       // commons methods
     void handle_std_events(sf::Event&, sf::Time);

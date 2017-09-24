@@ -132,8 +132,8 @@ tpPlayerOn
 ----------
 Take two integers (x, y). Will teleport the player on this position, on the current map
 
-triggerBallonPrompt
--------------------
+triggerBalloonPrompt
+--------------------
 Display a ballon message with a given prompt, and wait for an input (validated by Return key). Not blocking the main thread
 
 turnPlayer

@@ -54,16 +54,14 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
     switch (event.type)
     {
         case sf::Event::TextEntered:
-            if (this->inner_ballon_prompt_triggered == 1)
+            if (this->inner_balloon_prompt_triggered == 1)
             {
                 if (event.text.unicode == '\b' && this->inner_balloon_prompt_str.getSize() > 0)
                     this->inner_balloon_prompt_str.erase(this->inner_balloon_prompt_str.getSize() - 1, 1);
                 else if (event.text.unicode == 13)  // validate
-                    this->inner_ballon_prompt_triggered = 2;
+                    this->inner_balloon_prompt_triggered = 2;
                 else
                     this->inner_balloon_prompt_str.insert(this->inner_balloon_prompt_str.getSize(), event.text.unicode);
-
-                this->inner_balloon_prompt_txt.setString(this->inner_balloon_prompt_str_back + this->inner_balloon_prompt_str);
             }
             #ifdef DEV_MODE
             if (this->cheat_on)
@@ -174,7 +172,7 @@ void Game::dispatch_events(sf::Event& event, sf::Time elapsed)
     {
         int new_view = UNREACHABLE_VIEW_ID;
         /// if cheats on OR balloon prompt showed, do NOT dispatch events !
-        if (!this->cheat_on && this->inner_ballon_prompt_triggered == 0)
+        if (!this->cheat_on && this->inner_balloon_prompt_triggered == 0)
             new_view = this->sm.process_event_current(event, elapsed, this->window);
 
         switch (this->sm.change_view(new_view))
@@ -203,7 +201,7 @@ void Game::render()
 {
     int c_view = this->sm.getId();
 
-    if (this->inner_ballon_prompt_triggered == 1)
+    if (this->inner_balloon_prompt_triggered == 1)
     {
         if (this->sm.getId() == DEFAULT_VIEW_ID)
         {
@@ -259,16 +257,27 @@ void Game::update(sf::Time elapsed)
         DebugLog(SH_ERR, "Unable to find the view " << c_view << " to update it");
     }
 
+    // update blinking thing globally because as we say in french "flemme de le faire plusieurs fois"
+    this->blinking++;
+    if (!(this->blinking % 60))
+    {
+        this->blink = !this->blink;
+        this->blinking %= 60;
+    }
+
     if (this->cheat_on && c_view == DEFAULT_VIEW_ID)
     {
-        this->blinking++;
-        if (!(this->blinking % 60))
-        {
-            this->blink = !this->blink;
-            this->blinking %= 60;
-        }
         this->cursor.setPosition(this->cmd.getPosition().x + this->cmd.getGlobalBounds().width + 5.0f, this->cmd.getPosition().y);
     }
+
+    // update inner_balloon_prompt_txt
+    if (this->inner_balloon_prompt_triggered == 1)
+        this->inner_balloon_prompt_txt.setString(wrapText(this->inner_balloon_prompt_str_back + this->inner_balloon_prompt_str, 600, this->font, this->inner_balloon_prompt_txt.getCharacterSize(), false));
+
+    // add a blinking "_" at the end of the inner_balloon_prompt_txt only if there isn't any and if it is active
+    if (this->inner_balloon_prompt_triggered == 1 && this->blink &&
+                    this->inner_balloon_prompt_txt.getString().substring(this->inner_balloon_prompt_txt.getString().getSize() - 1, 1) != sf::String("_"))
+        this->inner_balloon_prompt_txt.setString(this->inner_balloon_prompt_txt.getString() + sf::String("_"));
 }
 
 void Game::update_loading(sf::Time elapsed)
@@ -651,7 +660,7 @@ Game::Game() :
     , cheat_on(false)
     , _got_coderet(false)
     , menu_game_selected(-1)
-    , inner_ballon_prompt_triggered(0)
+    , inner_balloon_prompt_triggered(0)
 {
     DebugLog(SH_INFO, "Running on " << AutoVersion::FULLVERSION_STRING);
 
@@ -851,7 +860,7 @@ void Game::on_end()
 
 void Game::trigger_inner_balloon_prompt(bool v)
 {
-    this->inner_ballon_prompt_triggered = v ? 1 : 0;
+    this->inner_balloon_prompt_triggered = v ? 1 : 0;
 }
 
 void Game::set_balloon_prompt(const char* text)
@@ -863,18 +872,18 @@ void Game::set_balloon_prompt(const char* text)
 
 bool Game::get_triggered_inner_balloon_prompt()
 {
-    return inner_ballon_prompt_triggered >= 1;
+    return inner_balloon_prompt_triggered >= 1;
 }
 
 const char* Game::get_inner_balloon_text()
 {
     // == 2 means user has validate the entry
-    if (this->inner_ballon_prompt_triggered == 2)
+    if (this->inner_balloon_prompt_triggered == 2)
     {
         DebugLog(SH_INFO, "Returning value for balloon prompt");
         const char* s = this->inner_balloon_prompt_str.toAnsiString().c_str();
         // we put back the `sm` into its basic's state
-        this->inner_ballon_prompt_triggered = 0;
+        this->inner_balloon_prompt_triggered = 0;
         this->inner_balloon_prompt_str.clear();
         this->inner_balloon_prompt_str_back.clear();
         this->inner_balloon_prompt_txt.setString("");
