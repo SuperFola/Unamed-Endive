@@ -140,7 +140,7 @@ void SaveView::update(sf::RenderWindow& window, sf::Time elapsed)
             break;
 
         case 1:
-            if (this->npcway && this->npc.getPos().getX() == 0.0f)
+            if (this->npcway && this->npc.getPos().getX() == 4.0f)
                 n = 2;
             else if (!this->npcway && this->npc.getPos().getX() == 264.0f)
                 n = 0;
@@ -149,14 +149,14 @@ void SaveView::update(sf::RenderWindow& window, sf::Time elapsed)
         case 2:
             if (this->npcway && this->npc.getPos().getX() == 516.0f)
                 n = 3;
-            else if (!this->npcway && this->npc.getPos().getX() == 0.0f)
+            else if (!this->npcway && this->npc.getPos().getX() == 4.0f)
                 n = 1;
             break;
 
         case 3:
             if (!this->npcway && this->npc.getPos().getY() == 290.0f)
                 n = 2;
-            else if (this->npcway && this->npc.getPos().getY() == 0.0f)
+            else if (this->npcway && this->npc.getPos().getY() == 2.0f)
             {
                 this->npcway = false;
             }

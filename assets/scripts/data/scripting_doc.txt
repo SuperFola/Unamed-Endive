@@ -134,7 +134,7 @@ Take two integers (x, y). Will teleport the player on this position, on the curr
 
 triggerBalloonPrompt
 --------------------
-Display a ballon message with a given prompt, and wait for an input (validated by Return key). Not blocking the main thread
+Display a ballon message with a given prompt (possibly a max length to get (in characters), default to 0 which means no limit), and wait for an input (validated by Return key). Not blocking the main thread
 
 turnPlayer
 ----------

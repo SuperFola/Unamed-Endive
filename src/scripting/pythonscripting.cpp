@@ -452,14 +452,22 @@ extern "C"
     PyObject* triggerBalloonPrompt(PyObject* self, PyObject* args)
     {
         const char* s;
-        if (!PyArg_ParseTuple(args, "s", &s))
+        int len;
+        if (!PyArg_ParseTuple(args, "si", &s, &len))
         {
-            PyErr_SetString(UnamedError, "Can not parse arguments, need a string for the prompt");
-            return NULL;
+            // let's try to parse only a "s"
+            if (!PyArg_ParseTuple(args, "s", &s))
+            {
+                PyErr_SetString(UnamedError, "Can not parse arguments, need a string for the prompt");
+                return NULL;
+            }
+
+            // if we're here it means we only parsed a string
+            len = 0; /// max length
         }
 
         int e = 0;
-        PyScripting::triggerBalloonPrompt(s, e);
+        PyScripting::triggerBalloonPrompt(s, e, len);
         if (e == 1)
         {
             PyErr_SetString(UnamedError, "Balloon prompt is already triggered, can not re-trigger it while it is running");
@@ -513,7 +521,7 @@ extern "C"
         {"writeText", writeText, METH_VARARGS, "Write a text, giving the id of a created text"},
         {"setFightEnv", setFightEnv, METH_VARARGS, "Set the environment for a fight"},
         {"setFightEscape", setFightEsc, METH_VARARGS, "Set the fight escape mode"},
-        {"triggerBalloonPrompt", triggerBalloonPrompt, METH_VARARGS, "Display a ballon message with a given prompt, and wait for an input (validated by Return key). Not blocking the main thread"},
+        {"triggerBalloonPrompt", triggerBalloonPrompt, METH_VARARGS, "Display a ballon message with a given prompt (possibly a max length to get (in characters), default to 0 which means no limit), and wait for an input (validated by Return key). Not blocking the main thread"},
         {"balloonPromptGetOuput", balloonPromptGetOuput, METH_VARARGS, "Get the output of the balloon prompt. -1 if the user did not validate ; if the balloon was not triggered, raises UnamedError"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel

@@ -68,6 +68,7 @@ private:
     sf::String inner_balloon_prompt_str;
     sf::Sprite inner_balloon_prompt_sprite;
     int inner_balloon_prompt_triggered;
+    int inner_balloon_prompt_max_length;
     // methods
       // commons methods
     void handle_std_events(sf::Event&, sf::Time);
@@ -96,7 +97,7 @@ public:
 
     // inner balloon prompt related
     void trigger_inner_balloon_prompt(bool v);
-    void set_balloon_prompt(const char*);
+    void set_balloon_prompt(const char*, int);
     bool get_triggered_inner_balloon_prompt();
     const char* get_inner_balloon_text();
 };

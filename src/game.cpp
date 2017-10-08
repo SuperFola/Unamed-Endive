@@ -60,7 +60,7 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                     this->inner_balloon_prompt_str.erase(this->inner_balloon_prompt_str.getSize() - 1, 1);
                 else if (event.text.unicode == 13)  // validate
                     this->inner_balloon_prompt_triggered = 2;
-                else
+                else if (this->inner_balloon_prompt_str.getSize() < this->inner_balloon_prompt_max_length)
                     this->inner_balloon_prompt_str.insert(this->inner_balloon_prompt_str.getSize(), event.text.unicode);
             }
             #ifdef DEV_MODE
@@ -661,6 +661,7 @@ Game::Game() :
     , _got_coderet(false)
     , menu_game_selected(-1)
     , inner_balloon_prompt_triggered(0)
+    , inner_balloon_prompt_max_length(0)
 {
     DebugLog(SH_INFO, "Running on " << AutoVersion::FULLVERSION_STRING);
 
@@ -863,11 +864,12 @@ void Game::trigger_inner_balloon_prompt(bool v)
     this->inner_balloon_prompt_triggered = v ? 1 : 0;
 }
 
-void Game::set_balloon_prompt(const char* text)
+void Game::set_balloon_prompt(const char* text, int len)
 {
     DebugLog(SH_INFO, "set balloon prompt : '" << text << "'");
     this->inner_balloon_prompt_txt.setString(std::string(text));
     this->inner_balloon_prompt_str_back = std::string(text);
+    this->inner_balloon_prompt_max_length = len;
 }
 
 bool Game::get_triggered_inner_balloon_prompt()
