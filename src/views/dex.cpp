@@ -121,9 +121,18 @@ void DexView::draw_content(sf::RenderWindow& window)
     for (int i=this->selected; i < this->selected + 9; i++)
     {
         std::get<0>(this->dex_content[i % this->dex_content.size()]).setPosition(30.0f, this->text.getPosition().y + 84.0f + (i - this->selected) * 64.0f);
+        if (i == this->selected)
+        {
+            if (this->dex->getInfo(std::get<2>(this->dex_content[i % this->dex_content.size()])).viewed)
+            {
+                // let's display some info about the creature because we've already seen it in the past
+                window.draw(std::get<1>(this->dex_content[i % this->dex_content.size()]));
+            }
+            // just turn the thing green to see what is selected
+            std::get<0>(this->dex_content[i % this->dex_content.size()]).setFillColor(sf::Color::Green);
+        }
         window.draw(std::get<0>(this->dex_content[i % this->dex_content.size()]));
-        if (i == this->selected && this->dex->getInfo(std::get<2>(this->dex_content[i % this->dex_content.size()])).viewed)
-            window.draw(std::get<1>(this->dex_content[i % this->dex_content.size()]));
+        std::get<0>(this->dex_content[i % this->dex_content.size()]).setFillColor(sf::Color::Black);
     }
 }
 
@@ -177,44 +186,7 @@ void DexView::load_dex_content()
             float factor = 180.0f / this->crealoader->get(crea.file).getSize().y;
             _sprite.setScale(factor, factor);
 
-            switch (crea.type)
-            {
-            case Type::NORMAL:
-                stype = "Normal";
-                break;
-
-            case Type::FIRE:
-                stype = "Feu";
-                break;
-
-            case Type::WATER:
-                stype = "Eau";
-                break;
-
-            case Type::GRASS:
-                stype = "Plante";
-                break;
-
-            case Type::FLYING:
-                stype = "Vol";
-                break;
-
-            case Type::FIGHTING:
-                stype = "Combat";
-                break;
-
-            case Type::POISON:
-                stype = "Poison";
-                break;
-
-            case Type::ELECTRIC:
-                stype = "Electrique";
-                break;
-
-            default:
-                stype = "???";
-                break;
-            }
+            stype = convert_type_to_str(crea.type);
             vu = (crea.viewed) ? "oui" : "non";
             capture = (crea.captured) ? "oui" : "non";
             evolution = (crea.evolution != "") ? crea.evolution : "Aucune";

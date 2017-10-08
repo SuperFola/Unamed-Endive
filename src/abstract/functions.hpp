@@ -51,4 +51,6 @@ bool is_file_existing(const std::string& file);
 
 sf::String wrapText(sf::String, int, const sf::Font&, int, bool bold=false);
 
+std::string convert_type_to_str(int);
+
 #endif // DEF_ABS_FUNC

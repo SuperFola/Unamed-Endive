@@ -1,4 +1,5 @@
 #include "functions.hpp"
+#include "type.hpp"
 
 bool is_file_existing(const std::string& file)
 {
@@ -42,4 +43,48 @@ sf::String wrapText(sf::String str, int width, const sf::Font& font, int charact
     }
 
     return str;
+}
+
+std::string convert_type_to_str(int t)
+{
+    std::string s = "???";
+    switch (t)
+    {
+    case Type::NORMAL:
+        s = "Normal";
+        break;
+
+    case Type::FIRE:
+        s = "Feu";
+        break;
+
+    case Type::WATER:
+        s = "Eau";
+        break;
+
+    case Type::GRASS:
+        s = "Plante";
+        break;
+
+    case Type::FLYING:
+        s = "Vol";
+        break;
+
+    case Type::FIGHTING:
+        s = "Combat";
+        break;
+
+    case Type::POISON:
+        s = "Poison";
+        break;
+
+    case Type::ELECTRIC:
+        s = "Electrique";
+        break;
+
+    default:
+        s = "???";
+        break;
+    }
+    return s;
 }
