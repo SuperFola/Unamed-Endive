@@ -108,21 +108,33 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
             case sf::Keyboard::F6:
                 // mute the music
                 if (this->mplayer.getState())
+                {
                     this->mplayer.mute();
+                    DebugLog(SH_INFO, "Music muted");
+                }
                 break;
 
             case sf::Keyboard::F10:
                 // shut the music (or unshut it if it has already been used)
                 if (this->mplayer.getState())
+                {
                     this->mplayer.stop();
+                    DebugLog(SH_INFO, "Music stopped");
+                }
                 else
+                {
                     this->mplayer.play(this->mplayer.getCurrentName());
+                    DebugLog(SH_INFO, "Music started");
+                }
                 break;
 
             case sf::Keyboard::M:
                 // display or not the mini map
                 if (!this->cheat_on)
+                {
                     this->sm.getDefault()->change_display_mmap(!this->sm.getDefault()->get_display_mmap());
+                    DebugLog(SH_INFO, "Display minimap : " << (this->sm.getDefault()->get_display_mmap() ? "true" : "false"));
+                }
                 break;
 
             #ifdef DEV_MODE
