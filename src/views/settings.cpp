@@ -266,15 +266,15 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
                         // music
                         Config::set("music", !Config::get("music").asBool());
 
-                        if (Config::get("music").asBool() && this->mp->getVolume() == 0.0f)
+                        if (Config::get("music").asBool() && this->mplayer->getVolume() == 0.0f)
                         {
                             // this will reverse the mute state
-                            this->mp->mute();
+                            this->mplayer->mute();
                             DebugLog(SH_INFO, "Music unmuted from settings view");
                         }
-                        else if (!Config::get("music").asBool() && this->mp->getVolume() != 0.0f)
+                        else if (!Config::get("music").asBool() && this->mplayer->getVolume() != 0.0f)
                         {
-                            this->mp->mute();
+                            this->mplayer->mute();
                             DebugLog(SH_INFO, "Music muted from settings view");
                         }
                     }
