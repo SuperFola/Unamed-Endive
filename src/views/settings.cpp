@@ -49,6 +49,9 @@ bool SettingsView::load()
     sf::Text aa;
     setupFont(aa, this->font, sf::Color::White, 18)
     aa.setString("Anti-aliasing");
+    #ifndef BUILD_WITH_OGL
+        aa.setStyle(sf::Text::StrikeThrough);
+    #endif // BUILD_WITH_OGL
     sf::Text vs;
     setupFont(vs, this->font, sf::Color::White, 18)
     vs.setString("V-Sync");
@@ -60,7 +63,7 @@ bool SettingsView::load()
     fps.setString("FPS");
     sf::Text ctrl;
     setupFont(ctrl, this->font, sf::Color::White, 18)
-    ctrl.setString("Controles");
+    ctrl.setString("Contrôles");
     sf::Text menu;
     setupFont(menu, this->font, sf::Color::White, 18)
     menu.setString("Menu");
