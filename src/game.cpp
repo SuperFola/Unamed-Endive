@@ -110,7 +110,11 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                 if (this->mplayer.getState())
                 {
                     this->mplayer.mute();
-                    DebugLog(SH_INFO, "Music muted");
+
+                    if (this->mplayer.getVolume() == 0.0f)
+                        DebugLog(SH_INFO, "Music muted");
+                    else
+                        DebugLog(SH_INFO, "Music unmuted");
                 }
                 break;
 
@@ -123,7 +127,7 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                 }
                 else
                 {
-                    if (this->mplayer.play(this->mplayer.getCurrentName()))
+                    if (this->mplayer.play((this->mplayer.getCurrentName() != "") ? this->mplayer.getCurrentName() : this->mplayer.getNext()))
                         DebugLog(SH_INFO, "Music started");
                     else
                         DebugLog(SH_ERR, "Could not start music !");
