@@ -36,6 +36,11 @@ void MusicPlayer::setVolumeConst(int vol)
     this->volume = vol;
 }
 
+float MusicPlayer::getVolume()
+{
+    return this->music.getVolume();
+}
+
 void MusicPlayer::mute()
 {
     if (this->music.getVolume() > 0.0f)

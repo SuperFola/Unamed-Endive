@@ -10,6 +10,7 @@
 #include "../json/json.h"
 #include "../abstract/functions.hpp"
 #include "../abstract/config.hpp"
+#include "../abstract/musicplayer.hpp"
 
 #define SET_START_X 147.0f
 #define SET_START_X2 345.0f
@@ -33,6 +34,8 @@ private:
 
     int key_needed;
     std::string key;
+
+    MusicPlayer* mplayer;
 
     const std::string BCKG = "background";
     const std::string CHECKED = "checked";
@@ -66,6 +69,8 @@ public:
     void render(sf::RenderWindow&) override;
     int process_event(sf::Event&, sf::Time) override;
     void update(sf::RenderWindow&, sf::Time) override;
+
+    void set_music_player(MusicPlayer*);
 
     static std::string convert_textentered_to_value(sf::Uint32 e);
 };

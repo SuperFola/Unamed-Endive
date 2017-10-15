@@ -123,8 +123,10 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                 }
                 else
                 {
-                    this->mplayer.play(this->mplayer.getCurrentName());
-                    DebugLog(SH_INFO, "Music started");
+                    if (this->mplayer.play(this->mplayer.getCurrentName()))
+                        DebugLog(SH_INFO, "Music started");
+                    else
+                        DebugLog(SH_ERR, "Could not start music !");
                 }
                 break;
 
@@ -821,6 +823,8 @@ void Game::post_load()
     this->sm.getFight()->set_equip(this->sm.getDefault()->getCharacter()->getEquip());
     this->sm.getFight()->set_pc(this->sm.getDefault()->getCharacter()->getPC());
     this->sm.getFight()->set_crealoader(&this->crea_load);
+    // pointer on the music player for the settings view
+    this->sm.getSettings()->set_music_player(&this->mplayer);
 
     // scripting
     PyScripting::setWindow(&this->window);

@@ -264,7 +264,19 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
                     if (r == 0)
                     {
                         // music
-                        Config::set("music", ! Config::get("music").asBool());
+                        Config::set("music", !Config::get("music").asBool());
+
+                        if (Config::get("music").asBool() && this->mp->getVolume() == 0.0f)
+                        {
+                            // this will reverse the mute state
+                            this->mp->mute();
+                            DebugLog(SH_INFO, "Music unmuted from settings view");
+                        }
+                        else if (!Config::get("music").asBool() && this->mp->getVolume() != 0.0f)
+                        {
+                            this->mp->mute();
+                            DebugLog(SH_INFO, "Music muted from settings view");
+                        }
                     }
                     else if (r == 1)
                     {
@@ -382,6 +394,11 @@ void SettingsView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->key_needed = k_none;
         this->key = "";
     }
+}
+
+void SettingsView::set_music_player(MusicPlayer* mp)
+{
+    this->mplayer = mp;
 }
 
 std::string SettingsView::convert_textentered_to_value(sf::Uint32 e)

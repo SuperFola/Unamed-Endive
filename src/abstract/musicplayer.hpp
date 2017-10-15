@@ -26,6 +26,7 @@ public:
     std::string getNext();
     const std::string& getCurrentName();
     void setVolumeConst(int);
+    float getVolume();
     void mute();
 };
 
