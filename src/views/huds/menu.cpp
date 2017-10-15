@@ -118,7 +118,7 @@ bool MenuHUD::load()
     this->sprites[this->BG_CAT_BACK].setPosition(325.0f, y);
     this->sprites[this->BG_CAT_SEL_BACK].setPosition(325.0f, y);
     //
-    this->sprites[this->BG_PARAM].setPosition(WIN_W - 200.0f, 0.0f);
+    this->sprites[this->BG_PARAM].setPosition(WIN_W - this->sprites[this->BG_PARAM].getGlobalBounds().width - 5.0f, 5.0f);
 
     // creating texts
     sf::Text crea;
@@ -336,7 +336,8 @@ void MenuHUD::clic(int x, int y)
         break;
     }
 
-    if (WIN_W - 200 <= x && x <= WIN_W && 0 <= y && y <= 30)
+    if (WIN_W - this->sprites[this->BG_PARAM].getGlobalBounds().width - 5 <= x && x <= WIN_W &&
+            5 <= y && y <= this->sprites[this->BG_PARAM].getGlobalBounds().height)
         this->current = 6;
 }
 

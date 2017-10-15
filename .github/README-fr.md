@@ -34,8 +34,8 @@ Crédits
 * logo du jeu : Izaliia
 * tiles d'extérieur : WesleyFG (à la base pour le projet Marnian)
 * tiles d'intérieur : Slahs
-* interface graphique (inventaire, dex, équipe/PC) : vulvoch
-* interface graphique (menu) : Eurons ??
+* interfaces graphiques (inventaire, dex, équipe/PC) : vulvoch
+* interfaces graphiques (menu) : Eurons ??, ralandel
 * fond des combats : WesleyFG
 * créatures : Smiley-Fakemon
 * carte du monde : Sansonic
@@ -57,4 +57,5 @@ Liens
 * [PokemonWorkshop](http://pokemonworkshop.com/forum/index.php?topic=3314.0)
 * [ZesteDeSavoir](https://zestedesavoir.com/forums/sujet/7064/unamed-rebirth/)
 * [Trello](https://trello.com/b/JdzEnDJf)
+* [Le forum](http://unamedrebirth.alwaysdata.net/)
 * [Le moteur de scripting conçu pour ce projet](https://github.com/Loodoor/Py3ScriptingEngine)
