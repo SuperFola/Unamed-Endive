@@ -215,9 +215,14 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed, sf::RenderWin
     if (this->menu_hud.isTriggered())
         goto menu_hud_ev_processing;
 
-    switch(event.type)
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
-    case sf::Event::KeyPressed:
+        this->resolve_pnjspeak(m__X, m__Y, window);
+    }
+    else if (event.type == sf::Event::TextEntered)
+        k = SettingsView::convert_textentered_to_value(event.text.unicode);
+    else if (event.type == sf::Event::KeyPressed)
+    {
         switch(event.key.code)
         {
         case sf::Keyboard::Space:
@@ -230,49 +235,38 @@ int DefaultView::process_event(sf::Event& event, sf::Time elapsed, sf::RenderWin
             break;
 
         default:
+            k = SettingsView::convert_textentered_to_value(event.key.code, true);
             break;
         }
-        break;
+    }
 
-        case sf::Event::TextEntered:
-            k = SettingsView::convert_textentered_to_value(event.text.unicode);
-
-            if (Config::get("menu") == k)
-            {
-                this->menu_hud.setTrigger(true);
-                has_triggered_hud = true;
-            }
-            else if (Config::get("up") == k)
-            {
-                this->player.move(DIRECTION::up, this->level, elapsed);
-                has_moved = true;
-            }
-            else if (Config::get("down") == k)
-            {
-                this->player.move(DIRECTION::down, this->level, elapsed);
-                has_moved = true;
-            }
-            else if (Config::get("left") == k)
-            {
-                this->player.move(DIRECTION::left, this->level, elapsed);
-                has_moved = true;
-            }
-            else if (Config::get("right") == k)
-            {
-                this->player.move(DIRECTION::right, this->level, elapsed);
-                has_moved = true;
-            }
-            break;
-
-    case sf::Event::MouseButtonPressed:
-        if (event.mouseButton.button == sf::Mouse::Left)
+    if (k != "")
+    {
+        if (Config::get("menu") == k)
         {
-            this->resolve_pnjspeak(m__X, m__Y, window);
+            this->menu_hud.setTrigger(true);
+            has_triggered_hud = true;
         }
-        break;
-
-    default:
-        break;
+        else if (Config::get("up") == k)
+        {
+            this->player.move(DIRECTION::up, this->level, elapsed);
+            has_moved = true;
+        }
+        else if (Config::get("down") == k)
+        {
+            this->player.move(DIRECTION::down, this->level, elapsed);
+            has_moved = true;
+        }
+        else if (Config::get("left") == k)
+        {
+            this->player.move(DIRECTION::left, this->level, elapsed);
+            has_moved = true;
+        }
+        else if (Config::get("right") == k)
+        {
+            this->player.move(DIRECTION::right, this->level, elapsed);
+            has_moved = true;
+        }
     }
 
     if (has_moved || has_triggered_hud)

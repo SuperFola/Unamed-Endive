@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Unamed Rebirth"
-#define MyAppVersion "1.7.1"
+#define MyAppVersion "1.9.17"
 #define MyAppPublisher "Kyatchioru"
 #define MyAppURL "https://loodoor.github.io/UnamedRebirth"
 #define MyAppExeName "main.exe"
@@ -24,7 +24,7 @@ DefaultDirName={pf}/{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputBaseFilename={#MyAppName} - {#MyAppVersion}
-OutputDir=F:/ENDIVE-protos/{#MyAppVersion}/
+OutputDir=../ENDIVE-protos/{#MyAppVersion}/
 Compression=lzma
 SolidCompression=yes
 LicenseFile=.github/LICENSE

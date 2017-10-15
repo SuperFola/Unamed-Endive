@@ -250,6 +250,13 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
         }
         break;
 
+    case sf::Event::KeyPressed:
+        if (this->key_needed != k_none)
+        {
+            this->key = SettingsView::convert_textentered_to_value(event.key.code, true);
+        }
+        break;
+
     case sf::Event::MouseButtonPressed:
         switch(event.mouseButton.button)
         {
@@ -363,7 +370,7 @@ void SettingsView::update(sf::RenderWindow& window, sf::Time elapsed)
 
     this->update_texts();
 
-    if (this->key_needed != k_none && this->key != "")
+    if (this->key_needed != k_none && this->key != "" && this->key != NOKEY)
     {
         std::string v = "";
         switch (this->key_needed)
@@ -401,17 +408,33 @@ void SettingsView::set_music_player(MusicPlayer* mp)
     this->mplayer = mp;
 }
 
-std::string SettingsView::convert_textentered_to_value(sf::Uint32 e)
+std::string SettingsView::convert_textentered_to_value(sf::Uint32 e, bool kp)
 {
     sf::String s;
-    // handling special cases
-    if (e == '\b')
-        s.insert(0, "backspace");
-    else if (e == 13 || e == 10)
-        s.insert(0, "return");
-    else if (e == 27)
-        s.insert(0, "escape");
+    if (!kp)
+    {
+        // handling special cases
+        if (e == '\b')
+            s.insert(0, "retour");
+        else if (e == 13 || e == 10)
+            s.insert(0, "entree");
+        else if (e == 27)
+            s.insert(0, "echap");
+        else
+            s.insert(0, e);  // otherwise just add the character as a utf 8 one
+    }
     else
-        s.insert(0, e);  // otherwise just add the character as a utf 8 one
+    {
+        if (e == sf::Keyboard::Up)
+            s.insert(0, "haut");
+        else if (e == sf::Keyboard::Down)
+            s.insert(0, "bas");
+        else if (e == sf::Keyboard::Right)
+            s.insert(0, "droite");
+        else if (e == sf::Keyboard::Left)
+            s.insert(0, "gauche");
+        else
+            s.insert(0, "");
+    }
     return s.toAnsiString();
 }

@@ -23,6 +23,7 @@
 #define k_dwn 3
 #define k_ri 4
 #define k_le 5
+#define NOKEY "<no_key>"
 
 class SettingsView : public View
 {
@@ -72,7 +73,7 @@ public:
 
     void set_music_player(MusicPlayer*);
 
-    static std::string convert_textentered_to_value(sf::Uint32 e);
+    static std::string convert_textentered_to_value(sf::Uint32 e, bool kp=false);
 };
 
 #endif // DEF_SETTINGS_VIEW
