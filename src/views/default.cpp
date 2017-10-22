@@ -131,6 +131,7 @@ void DefaultView::render(sf::RenderWindow& window)
         this->view.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
         window.setView(this->view);
     }
+
     sf::View mview = sf::View(sf::FloatRect(0 , 0 , MINIMAP_X,  MINIMAP_Y));
     mview.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
     mview.zoom(0.5f * float(MINIMAP_X) / float(this->level.getWidth()));

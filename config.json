@@ -1,13 +1,13 @@
 {
 	"aa" : 1,
-	"down" : "bas",
+	"down" : "s",
 	"fps" : 120,
-	"left" : "gauche",
+	"left" : "q",
 	"menu" : "echap",
 	"music" : true,
-	"right" : "droite",
+	"right" : "d",
 	"shader" : "none",
 	"sigma" : 0.5,
-	"up" : "haut",
+	"up" : "z",
 	"v-sync" : true
 }

@@ -9,6 +9,9 @@
 
 #include "game.hpp"
 
+#define SIN_color(f, t, i) (std::sin(f * t + i) * 127.0f + 128.0f)
+#define COS_color(f, t, i) (std::cos(f * t + i) * 127.0f + 128.0f)
+
 std::vector<std::string> glob(const std::string& directory)
 {
     std::vector<std::string> files;
@@ -401,6 +404,17 @@ void Game::update_menu(sf::Time elapsed, int s, bool new_game)
         this->blink = !this->blink;
         this->blinking %= 60;
     }
+
+    this->shape.setFillColor(sf::Color(
+                             SIN_color(0.5f, elapsed.asSeconds(), 0.0f)
+                             , SIN_color(0.5f, elapsed.asSeconds(), 2.0f)
+                             , SIN_color(0.5f, elapsed.asSeconds(), 4.0f)
+                             ));
+    this->shape.setOutlineColor(sf::Color(
+                                COS_color(0.5f, elapsed.asSeconds(), 0.0f)
+                                , COS_color(0.5f, elapsed.asSeconds(), 2.0f)
+                                , COS_color(0.5f, elapsed.asSeconds(), 4.0f)
+                                ));
 }
 
 void Game::render_menu(const std::vector<std::string>& s, bool new_game, bool del_game, bool play_game, bool valid_delete)

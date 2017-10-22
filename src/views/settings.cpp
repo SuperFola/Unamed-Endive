@@ -134,8 +134,8 @@ bool SettingsView::load()
     this->texts.get(this->MENU).setPosition(SET_START_X, SET_START_Y + 5.0f * SET_SPACE_Y);
     this->texts.get(this->UP).setPosition(SET_START_X, SET_START_Y + 6.0f * SET_SPACE_Y);
     this->texts.get(this->DW).setPosition(SET_START_X, SET_START_Y + 7.0f * SET_SPACE_Y);
-    this->texts.get(this->RI).setPosition(SET_START_X, SET_START_Y + 8.0f * SET_SPACE_Y);
-    this->texts.get(this->LE).setPosition(SET_START_X, SET_START_Y + 9.0f * SET_SPACE_Y);
+    this->texts.get(this->RI).setPosition(SET_START_X, SET_START_Y + 9.0f * SET_SPACE_Y);
+    this->texts.get(this->LE).setPosition(SET_START_X, SET_START_Y + 8.0f * SET_SPACE_Y);
 
     this->texts.get(this->VMU).setPosition(SET_START_X2, SET_START_Y);
     this->texts.get(this->VAA).setPosition(SET_START_X2, SET_START_Y + SET_SPACE_Y);
@@ -145,8 +145,8 @@ bool SettingsView::load()
     this->texts.get(this->VMENU).setPosition(SET_START_X2, SET_START_Y + 5.0f * SET_SPACE_Y);
     this->texts.get(this->VUP).setPosition(SET_START_X2, SET_START_Y + 6.0f * SET_SPACE_Y);
     this->texts.get(this->VDW).setPosition(SET_START_X2, SET_START_Y + 7.0f * SET_SPACE_Y);
-    this->texts.get(this->VRI).setPosition(SET_START_X2, SET_START_Y + 8.0f * SET_SPACE_Y);
-    this->texts.get(this->VLE).setPosition(SET_START_X2, SET_START_Y + 9.0f * SET_SPACE_Y);
+    this->texts.get(this->VRI).setPosition(SET_START_X2, SET_START_Y + 9.0f * SET_SPACE_Y);
+    this->texts.get(this->VLE).setPosition(SET_START_X2, SET_START_Y + 8.0f * SET_SPACE_Y);
 
     return true;
 }
@@ -325,12 +325,12 @@ int SettingsView::process_event(sf::Event& event, sf::Time elapsed)
                         // down key
                         this->key_needed = k_dwn;
                     }
-                    else if (r == 8)
+                    else if (r == 9)
                     {
                         // right key
                         this->key_needed = k_ri;
                     }
-                    else if (r == 9)
+                    else if (r == 8)
                     {
                         // left key
                         this->key_needed = k_le;
