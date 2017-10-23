@@ -385,6 +385,12 @@ void CreaView::draw_content(sf::RenderWindow& window)
             this->catk.setString(to_string<int>(crea->getAtk()));
             this->cdef.setString(to_string<int>(crea->getDef()));
             this->clif.setString(to_string<int>(crea->getLife()));
+            if (crea->getLife() == crea->getMaxLife())
+                this->clif.setFillColor(sf::Color::Green);
+            else if (crea->getLife() == 0)
+                this->clif.setFillColor(sf::Color::Red);
+            else
+                this->clif.setFillColor(sf::Color::Black);
 
             window.draw(this->cnam);
             window.draw(this->clev);
