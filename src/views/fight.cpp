@@ -93,6 +93,7 @@ FightView::FightView() :
     , whoisdead(NODEAD)
     , iamattacking(false)
     , wait(0)
+    , giving_xp_to(-1)
 {
 }
 
@@ -233,12 +234,14 @@ void FightView::render(sf::RenderWindow& window)
     // draw the creatures
     for (int i =0; i < this->adv.size(); ++i)
     {
-        if (this->adv[i]->getLife() > 0)
+        if (this->adv[i]->getLife() > 0 || (this->display_attack && this->adv[i]->getLife() <= 0
+                                            && std::find(this->cibles.begin(), this->cibles.end(), i) != this->cibles.end()))
             window.draw(this->sprites[this->__adv + to_string<int>(i)]);
     }
     for (int i=0; i < this->equip->getSize(); ++i)
     {
-        if (this->equip->getCrea(i)->getLife() > 0)
+        if (this->equip->getCrea(i)->getLife() > 0 || (this->display_attack && this->equip->getCrea(i)->getLife() <= 0
+                                                       && std::find(this->cibles.begin(), this->cibles.end(), -i) != this->cibles.end()))
             window.draw(this->sprites[this->__me + to_string<int>(i)]);
     }
 
@@ -337,9 +340,15 @@ void FightView::render(sf::RenderWindow& window)
         }
     }
 
+    // animation
     if (this->ending)
     {
-        // animation
+    }
+
+    // displaying particules for the attack
+    if (this->display_attack)
+    {
+        window.draw(this->particles);
     }
 }
 
@@ -378,18 +387,21 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                             {
                                 this->attacks_used.push_back(false);
                             }
+                            DebugLog(SH_INFO, "clic on attack");
                         }
                         else if (m__X >= 164 && m__X <= 316)
                         {
                             // equip button
                             new_view = MYCREATURES_VIEW_ID;
                             OMessenger::setlock(MYCREATURES_VIEW_ID);
+                            DebugLog(SH_INFO, "clic on equip");
                         }
                         else if (m__X >= 323 && m__X <= 475)
                         {
                             // bag button
                             new_view = INVENTORY_VIEW_ID;
                             OMessenger::setlock(INVENTORY_VIEW_ID);
+                            DebugLog(SH_INFO, "clic on bag");
                         }
                         else if (m__X >= 480 && m__X <= 632)
                         {
@@ -399,6 +411,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                                 this->action.setString("Vous vous échapez prestement ...");
                             else
                                 this->action.setString("Vous ne pouvez pas vous échaper !");
+                            DebugLog(SH_INFO, "clic on escape");
                         }
                     }
                     // click on one of my creatures
@@ -407,7 +420,10 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                         // this->sprites[this->__me + to_string<int>(i)].setPosition(47.0f + i * SPACEMENT_X, 458.0f - CREATURE_HEIGHT);
                         t = int((m__X - 47) / SPACEMENT_X) % this->equip->getSize();
                         if (this->equip->getCrea(t)->getLife() > 0)
+                        {
                             this->ui_my_selected = t;
+                            DebugLog(SH_INFO, "selected my creature : " << this->equip->getCrea(t)->getName());
+                        }
                     }
                     // click on a creature which belongs to the enemy
                     else if (206 - CREATURE_HEIGHT <= m__Y && m__Y <= 206 && START_X <= m__X)
@@ -415,7 +431,10 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                         // this->sprites[this->__adv + to_string<int>(i)].setPosition(START_X + i * SPACEMENT_X, 206.0f - CREATURE_HEIGHT);
                         t = int((m__X - START_X) / SPACEMENT_X) % this->adv.size();
                         if (this->adv[t]->getLife() > 0)
+                        {
                             this->ui_enemy_selected = t;
+                            DebugLog(SH_INFO, "selected an enemy : " << this->adv[t]->getName());
+                        }
                     }
                 }
                 else if (this->selectingcrea)
@@ -436,6 +455,8 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                                 this->__selected = -1;
                             if (!this->selectingadv && this->equip->getCrea(this->__selected)->getLife() == 0)
                                 this->__selected = -1;
+
+                            DebugLog(SH_INFO, "selectingcrea=true ; __selected=" << this->__selected);
                         }
                     }
                 }
@@ -445,6 +466,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                          (0 <= m__Y && m__Y <= 120) || (WIN_H - 120 <= m__Y && m__Y <= WIN_H))
                     {
                             this->attacking = false;
+                            DebugLog(SH_INFO, "attacking=false");
                     }
                     else
                     {
@@ -469,8 +491,11 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                                 this->__selected = 42;  // special code to tell the engine to chose random creatures
                                 this->action.setString("Attaque multiple déclenchée");
                                 this->display_attack = true;
+                                DebugLog(SH_INFO, "display_attack=true");
                                 this->attack_frames_count = ATK_FR_CNT;
                             }
+
+                            DebugLog(SH_INFO, "clic in attack selection ui ; " << pos_atk_sel);
 
                             this->has_selected_an_atk = true;
                             this->lock = true;
@@ -493,6 +518,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
     if (this->__count_before_flyaway == 1)
     {
         this->__count_before_flyaway = 0;
+        DebugLog(SH_INFO, "flying away");
         if (this->can_escape)
             return DEFAULT_VIEW_ID;
         else
@@ -500,6 +526,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
     }
     if (this->ending == 1)
     {
+        DebugLog(SH_INFO, "ending");
         this->ending = 0;
         return DEFAULT_VIEW_ID;
     }
@@ -515,8 +542,8 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     {
         this->attack_frames_count = 0;
         this->display_attack = false;
-        if (this->iamattacking)
-            this->iamattacking = false;
+        DebugLog(SH_WARN, "display_attack=false");
+        this->iamattacking = false;
     }
 
     if (this->wait_give_xp > 1)
@@ -524,7 +551,12 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     if (this->wait_give_xp == 1)
     {
         this->wait_give_xp = 0;
+        /// just to be sure
+        this->display_attack = false;
+        DebugLog(SH_WARN, "display_attack=false");
+        this->cibles.clear();
         this->ending = ENDING_CNT;
+        DebugLog(SH_SPE, "wait_give_xp=0, starting to decrement ending");
         if (this->whoisdead == DEADOTH)
             this->action.setString("Les créatures ennemies ont perdues !");
         else if (this->whoisdead == DEADME)
@@ -738,7 +770,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             this->give_xp(true);
             this->whoisdead = DEADOTH;
         }
-        d= 0;
+        d = 0;
         for (int i=0; i < this->equip->getSize(); ++i)
         {
             if (this->equip->getCrea(i)->getLife() == 0)
@@ -763,44 +795,17 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     // displaying particules for the attack
     if (this->display_attack)
     {
-        /// FAKE
-        sf::Vector2i mouse = sf::Mouse::getPosition(window);
-        this->particles.setEmitter(window.mapPixelToCoords(mouse));
+        this->particles.setEmitter(sf::Vector2f(250.0f, 250.0f));
+        this->particles.setColor(sf::Color::Red);
         this->particles.update(elapsed);
-        window.draw(this->particles);
     }
 }
 
 void FightView::give_xp(bool me)
 {
-    if (me)
-    {
-        this->wait_give_xp = this->equip->getSize() * 120;
-
-        for (int i=0; i < this->adv.size(); ++i)
-        {
-            if (i < this->equip->getSize())
-            {
-                int t = this->equip->getCrea(i)->gainExp(this->adv[i]);
-                if (t == 1)
-                    this->action.setString(this->equip->getCrea(i)->getName() + " a gagné " + to_string<int>(t) + " niveau");
-                else if (t > 1)
-                    this->action.setString(this->equip->getCrea(i)->getName() + " a gagné " + to_string<int>(t) + " niveaux");
-            }
-        }
-    }
-    else
-    {
-        this->wait_give_xp = 0;
-
-        for (int i=0; i < this->adv.size(); ++i)
-        {
-            if (i < this->equip->getSize())
-            {
-                this->adv[i]->gainExp(this->equip->getCrea(i));
-            }
-        }
-    }
+    this->giving_xp_to = 0;
+    this->wait_give_xp = this->equip->getSize() * 120;
+    DebugLog(SH_SPE, "wait_give_xp=" << this->wait_give_xp);
 }
 
 void FightView::check_statuses()
@@ -879,8 +884,10 @@ void FightView::attack(int selected, int index_my_creatures)
     // our creature attacking
     Creature* my = this->equip->getCrea(index_my_creatures);
 
-    /// FAKE
+    this->cibles.clear();
+
     this->display_attack = true;
+    DebugLog(SH_INFO, "display_attack=true");
     this->attack_frames_count = ATK_FR_CNT;
 
     if (selected == 42) // magic code, we need to select random creatures
@@ -890,10 +897,12 @@ void FightView::attack(int selected, int index_my_creatures)
         int targets = my->getSort()->getTargets();
         std::vector<int> enemies;
         int m = (this->attacking_enemy) ? this->adv.size() : this->equip->getSize();
+        int real_targets = (m > targets) ? targets : m;
 
-        for (int i=0; i < targets; ++i)
+        for (int i=0; i < real_targets; ++i)
         {
             int r = rand() % m;
+            /// we check if r is already in the vector otherwise we must change it
             for (int k=0; k < enemies.size(); ++k)
             {
                 if (enemies[k] == r)
@@ -906,24 +915,36 @@ void FightView::attack(int selected, int index_my_creatures)
         }
         for (auto& e : enemies)
         {
-            my->attack(this->adv[e]);
+            if (this->attacking_enemy)
+            {
+                this->cibles.push_back(e);
+                my->attack(this->adv[e]);
+            }
+            else
+            {
+                this->cibles.push_back(-e);
+                my->attack(this->equip->getCrea(e));
+            }
         }
     }
     else
     {
         // the enemy
-        Creature* enemy;
+        Creature* other;
         if (this->attacking_enemy)
         {
-            enemy = this->adv[selected];
-            this->action.setString(my->getName() + " attaque " + enemy->getName());
+            other = this->adv[selected];
+            this->action.setString(my->getName() + " attaque " + other->getName());
+            this->cibles.push_back(selected);
         }
         else
         {
-            enemy = this->equip->getCrea(selected);
-            this->action.setString(my->getName() + " aide " + enemy->getName());
+            // a friend
+            other = this->equip->getCrea(selected);
+            this->action.setString(my->getName() + " aide " + other->getName());
+            this->cibles.push_back(-selected);
         }
-        my->attack(enemy);
+        my->attack(other);
     }
 }
 
@@ -932,8 +953,10 @@ void FightView::e_attack(int selected)
     // enemy
     Creature* my = this->adv[selected % this->adv.size()];
 
-    /// FAKE
+    this->cibles.clear();
+
     this->display_attack = true;
+    DebugLog(SH_INFO, "display_attack=true");
     this->attack_frames_count = ATK_FR_CNT;
 
     int targets = my->getSort()->getTargets();
@@ -946,10 +969,12 @@ void FightView::e_attack(int selected)
 
         std::vector<int> enemies;
         int m = (us) ? this->adv.size() : this->equip->getSize();
+        int real_targets = (m > targets) ? targets : m;
 
-        for (int i=0; i < targets; ++i)
+        for (int i=0; i < real_targets; ++i)
         {
             int r = rand() % m;
+            /// we must check if the enemy chosen was already chosen or not to choose another one if so
             for (int k=0; k < enemies.size(); ++k)
             {
                 if (enemies[k] == r)
@@ -964,9 +989,15 @@ void FightView::e_attack(int selected)
         for (auto& e : enemies)
         {
             if (us)
+            {
+                this->cibles.push_back(e);
                 my->attack(this->adv[e]);
+            }
             else
+            {
+                this->cibles.push_back(-e);
                 my->attack(this->equip->getCrea(e));
+            }
         }
     }
     else
@@ -974,15 +1005,31 @@ void FightView::e_attack(int selected)
         // the enemy
         if (!us)
         {
-            Creature* enemy = this->equip->getCrea(rand() % this->equip->getSize());
+            int n = rand() % this->equip->getSize();
+            Creature* enemy = this->equip->getCrea(n);
+            /// we must take a living creature !
+            while (enemy->getLife() == 0)
+            {
+                n = rand() % this->equip->getSize();
+                enemy = this->equip->getCrea(n);
+            }
             this->action.setString(std::string("L'ennemi ") + my->getName() + " attaque " + enemy->getName());
             my->attack(enemy);
+            this->cibles.push_back(-n);
         }
         else
         {
-            Creature* enemy = this->adv[rand() % this->adv.size()];
+            int n = rand() % this->adv.size();
+            Creature* enemy = this->adv[n];
+            /// take only a living creature
+            while (enemy->getLife() == 0)
+            {
+                n = rand() % this->adv.size();
+                enemy = this->adv[n];
+            }
             this->action.setString(std::string("L'ennemi ") + my->getName() + " aide son allié " + enemy->getName());
             my->attack(enemy);
+            this->cibles.push_back(n);
         }
     }
 }
@@ -1049,6 +1096,7 @@ void FightView::start()
     this->whoisdead = NODEAD;
     this->iamattacking = false;
     this->wait = 0;
+    this->giving_xp_to = -1;
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());

@@ -33,11 +33,13 @@ private:
     sf::VertexArray vertices;
     sf::Time lifetime;
     sf::Vector2f emitter;
+    sf::Color fill_cl;
 
 public:
     // methods
     ParticleSystem(unsigned int);
     void setEmitter(sf::Vector2f);
+    void setColor(sf::Color);
     void update(sf::Time);
 };
 

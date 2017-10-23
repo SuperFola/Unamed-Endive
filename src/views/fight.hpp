@@ -40,6 +40,7 @@ private:
     std::map<std::string, sf::Sprite> sprites;
     Container<sf::Text> texts;
     std::vector<Creature*> adv;
+    std::vector<int> cibles;
     sf::Font font;
     sf::Text action;
     sf::Text enemy;
@@ -71,6 +72,9 @@ private:
     bool my_turn;
     bool attacking_enemy;
     ParticleSystem particles;
+    float eq_a;
+    float eq_b;
+    float eq_x;
     int ending;
     bool enemy_is_attacking;
     int enemy_wait_until_next;
@@ -79,6 +83,7 @@ private:
     int whoisdead;
     bool iamattacking;
     int wait;
+    int giving_xp_to;
 
     const std::string __adv = "adv";
     const std::string __me = "me";

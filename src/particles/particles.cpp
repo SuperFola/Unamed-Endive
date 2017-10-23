@@ -17,16 +17,21 @@ void ParticleSystem::resetParticle(std::size_t index)
 
 // public
 ParticleSystem::ParticleSystem(unsigned int count) :
-    particles(count),
-    vertices(sf::Points, count),
-    lifetime(sf::seconds(3)),
-    emitter(0, 0)
+    particles(count)
+    , vertices(sf::Points, count)
+    , lifetime(sf::seconds(3))
+    , emitter(0, 0)
 {
 }
 
 void ParticleSystem::setEmitter(sf::Vector2f position)
 {
     this->emitter = position;
+}
+
+void ParticleSystem::setColor(sf::Color cl)
+{
+    this->fill_cl = cl;
 }
 
 void ParticleSystem::update(sf::Time elapsed)
@@ -46,6 +51,9 @@ void ParticleSystem::update(sf::Time elapsed)
 
         // update alpha of the particle
         float ratio = p.lifetime.asSeconds() / this->lifetime.asSeconds();
+        this->vertices[i].color.r = this->fill_cl.r;
+        this->vertices[i].color.g = this->fill_cl.g;
+        this->vertices[i].color.b = this->fill_cl.b;
         this->vertices[i].color.a = static_cast<sf::Uint8>(ratio * 255);
     }
 }
