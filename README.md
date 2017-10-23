@@ -1,6 +1,6 @@
 **[Version française](.github/README-fr.md)**
 
-# Unamed Rebirth [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ae66540cc8d040b7955c6b93c0f9da2e)](https://www.codacy.com/app/folaefolc/Unamed-Endive/dashboard) [![Discord badge](https://img.shields.io/badge/Discord-Unamed__Rebirth-brightgreen.svg?style=flat)](https://discord.gg/AWSWvgU) (`yo͝onˈnāmd`)
+# Unamed Rebirth [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ae66540cc8d040b7955c6b93c0f9da2e)](https://www.codacy.com/app/folaefolc/Unamed-Endive/dashboard) [![Discord badge](https://img.shields.io/badge/Discord-Unamed__Rebirth-brightgreen.svg?style=flat)](https://discord.gg/AWSWvgU) ([`yo͝onˈnāmd`] Rebirth)
 
 Kind of game
 ============
