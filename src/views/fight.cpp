@@ -84,7 +84,12 @@ FightView::FightView() :
     , display_attack(false)
     , my_turn(true)
     , attacking_enemy(true)
-    , particles(500)
+    , particles(1024)
+    , eq_a(0.0f)
+    , eq_b(0.0f)
+    , eq_x(0.0f)
+    , eq_offset(0.0f)
+    , eq_pas(1.0f)
     , ending(0)
     , enemy_is_attacking(false)
     , enemy_wait_until_next(0)
@@ -841,8 +846,6 @@ void FightView::give_xp(bool me)
 {
     this->giving_xp_to = me ? 1 : 0;
     this->wait_give_xp = this->equip->getSize() * 360;
-    this->display_attack = false;
-    DebugLog(SH_INFO, "display_attack=false");
     DebugLog(SH_SPE, "wait_give_xp=" << this->wait_give_xp);
 }
 
@@ -1131,6 +1134,11 @@ void FightView::start()
     this->iamattacking = false;
     this->wait = 0;
     this->giving_xp_to = -1;
+    this->eq_a = 0.0f;
+    this->eq_b = 0.0f;
+    this->eq_x = 0.0f;
+    this->eq_offset = 0.0f;
+    this->eq_pas = 1.0f;
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());

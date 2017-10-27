@@ -75,6 +75,8 @@ private:
     float eq_a;
     float eq_b;
     float eq_x;
+    float eq_offset;
+    float eq_pas;
     int ending;
     bool enemy_is_attacking;
     int enemy_wait_until_next;
