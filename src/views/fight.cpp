@@ -689,6 +689,9 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     if (this->has_selected_an_atk && this->__selected != -1 && this->my_turn)
     {
         DebugLog(SH_INFO, "You are attacking");
+        /// just to test
+        this->particles.setColor(sf::Color::Blue);
+        /// end
         this->cibles.clear();
         DebugLog(SH_SPE, "----------------------------");
         this->attack(this->__selected, this->atk_using_sort_of);
@@ -740,6 +743,9 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
                     break;
                 }
             }
+            /// just to test
+            this->particles.setColor(sf::Color::Red);
+            /// end
             this->cibles.clear();
             DebugLog(SH_SPE, "----------------------------");
             if (c_alive == 0)
@@ -806,7 +812,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     if (this->display_attack)
     {
         this->particles.setEmitter(sf::Vector2f(250.0f, 250.0f));
-        this->particles.setColor(sf::Color::Red);
         this->particles.update(elapsed);
     }
 
