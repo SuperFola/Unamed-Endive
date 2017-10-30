@@ -86,6 +86,7 @@ private:
     bool iamattacking;
     int wait;
     int giving_xp_to;
+    bool random_encounter;
 
     const std::string __adv = "adv";
     const std::string __me = "me";
@@ -106,6 +107,7 @@ private:
     void e_attack(int);
     void check_statuses();
     void give_xp(bool);
+    void on_end();
 
 public:
     FightView();
@@ -122,6 +124,7 @@ public:
     void set_crealoader(CreaturesLoader*);
     void start();
     void set_escape(bool);
+    void set_random_encounter(bool);
 };
 
 #endif // DEF_FIGHT_VIEW

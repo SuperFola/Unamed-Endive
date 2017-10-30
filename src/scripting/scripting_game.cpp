@@ -21,22 +21,22 @@ sf::Event PyScripting::getEvent()
 }
 
 int PyScripting::loadImage(const char* name, const char* id)
- {
-     std::string tname = std::string(name);
-     std::string tid = std::string(id);
+{
+    std::string tname = std::string(name);
+    std::string tid = std::string(id);
 
-     sf::Texture tex;
-     if (!tex.loadFromFile(tname))
-        return -1;
-     instance.textures.add(tid, tex);
-     instance.sprites[tid] = sf::Sprite(instance.textures.get(tid));
+    sf::Texture tex;
+    if (!tex.loadFromFile(tname))
+       return -1;
+    instance.textures.add(tid, tex);
+    instance.sprites[tid] = sf::Sprite(instance.textures.get(tid));
 
-     return 0;
- }
+    return 0;
+}
 
- int PyScripting::displayImage(const char* id, int x, int y)
- {
-     std::string tid = std::string(id);
+int PyScripting::displayImage(const char* id, int x, int y)
+{
+    std::string tid = std::string(id);
 
     if (instance.sprites.find(tid) != instance.sprites.end())
     {
@@ -45,11 +45,11 @@ int PyScripting::loadImage(const char* name, const char* id)
     }
 
     return 0;
- }
+}
 
- int PyScripting::displayImageWithView(const char* id, int x, int y)
- {
-     std::string tid = std::string(id);
+int PyScripting::displayImageWithView(const char* id, int x, int y)
+{
+    std::string tid = std::string(id);
 
     if (instance.sprites.find(tid) != instance.sprites.end())
     {
@@ -59,9 +59,9 @@ int PyScripting::loadImage(const char* name, const char* id)
     }
 
     return 0;
- }
+}
 
- const char* PyScripting::getCurrentMusicName()
+const char* PyScripting::getCurrentMusicName()
 {
     return instance.music_player->getCurrentName().data();
 }
