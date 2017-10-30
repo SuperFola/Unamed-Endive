@@ -143,6 +143,10 @@ public:
 
     static void triggerBalloonPrompt(const char*&, int&, int);
     static const char* balloonPromptGetOuput();
+
+    static void set_fight_opponents(fight_opponent);
+    static void set_fight_opponents(fight_opponent, fight_opponent);
+    static void set_fight_opponents(fight_opponent, fight_opponent, fight_opponent);
 };
 
 #endif // DEF_SCRIPTING

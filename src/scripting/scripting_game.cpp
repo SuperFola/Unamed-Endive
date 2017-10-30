@@ -364,3 +364,27 @@ const char* PyScripting::balloonPromptGetOuput()
     else
         return 0;
 }
+
+void PyScripting::set_fight_opponents(fight_opponent fo_1)
+{
+    std::vector<fight_opponent> v;
+    v.push_back(fo_1);
+    instance.sm->getFight()->set_opponents(v);
+}
+
+void PyScripting::set_fight_opponents(fight_opponent fo_1, fight_opponent fo_2)
+{
+    std::vector<fight_opponent> v;
+    v.push_back(fo_1);
+    v.push_back(fo_2);
+    instance.sm->getFight()->set_opponents(v);
+}
+
+void PyScripting::set_fight_opponents(fight_opponent fo_1, fight_opponent fo_2, fight_opponent fo_3)
+{
+    std::vector<fight_opponent> v;
+    v.push_back(fo_1);
+    v.push_back(fo_2);
+    v.push_back(fo_3);
+    instance.sm->getFight()->set_opponents(v);
+}

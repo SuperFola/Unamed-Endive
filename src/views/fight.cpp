@@ -1176,7 +1176,7 @@ void FightView::start()
 
     int _x_ = (moy_equip - 2 > 0) ? moy_equip - 2 : moy_equip;
 
-    if (this->random_encounter)
+    if (this->random_encounter || (!this->random_encounter && this->_opponents.empty()))
     {
         // generate adv
         for (int i=0; i < this->equip->getMaxSize(); i++)
@@ -1213,7 +1213,46 @@ void FightView::start()
             this->sprites[this->__adv + to_string<int>(i)].setPosition(START_X + i * SPACEMENT_X, 206.0f - CREATURE_HEIGHT);
         }
     }
+    else
+    {
+        // random_encouter == false && !this->_opponents.empty()
+        // generate adv, but based on the opponents given :D
+        for (int i=0; i < this->_opponents.size(); i++)
+        {
+            fight_opponent cur = this->_opponents[i];
+            Creature* crea = new Creature();
 
+            int  id = this->_opponents[i].id
+                  , _t = this->dex->getInfo(id).type
+                  , _st = (cur.sort_type == -1) ? rand() % SortilegeType::Count : cur.sort_type  // SortilegeType::UniqueTargetAdvDamage
+                  , level = (cur.lvl == -1) ? (rand() % 6) + _x_ + 1 : cur.lvl
+                  , life = (cur.life == -1) ? 2 * level + (rand() % 4) + 3 : cur.life  // mlife = life
+                  , pp = Creature::calculatePPFromLevel(level) // mpp = pp
+                  , sdmg = (cur.sort_dmg == -1) ? ceil(((rand() % 4) + 3) * 0.125 * level + 1) : cur.sort_dmg  // damages for the sortilege
+                  , stargets = (cur.sort_targets == -1) ? rand() % (this->equip->getSize()+ 1) : cur.sort_targets  // targets for the sortilege
+                  , atk = (cur.atk == -1) ? Creature::calculateStatFromLevel(level) : cur.atk  // attack of the creature
+                  , def = (cur.def == -1) ? Creature::calculateStatFromLevel(level) : cur.def;  // defense
+            long int exp = Creature::calculateExpFromLevel(level);
+
+            Type t = static_cast<Type>(_t % 8);
+            SortilegeType st = static_cast<SortilegeType>(_st % 14);
+
+            crea->load(id, t, atk, def, life, life, pp, pp, this->dex->getName(id), State::STD, level, exp, st, sdmg, stargets);
+            this->adv.push_back(crea);
+
+            sf::Text _t2;
+            setupFont(_t2, this->font, sf::Color::Black, 24)
+            _t2.setString(this->dex->getName(id));
+            _t2.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * YS_TEXT_SELCREA_UI);
+            this->texts.add(this->__adv + to_string<int>(i), _t2);
+
+            this->sprites[this->__adv + to_string<int>(i)] = sf::Sprite(this->crealoader->get(this->dex->getInfo(crea->getId()).file));
+            float factor = CREATURE_HEIGHT / this->crealoader->get(this->dex->getInfo(crea->getId()).file).getSize().y;
+            this->sprites[this->__adv + to_string<int>(i)].setScale(factor, factor);
+            // calculate position of the sprite regarding to the index
+            this->sprites[this->__adv + to_string<int>(i)].setPosition(START_X + i * SPACEMENT_X, 206.0f - CREATURE_HEIGHT);
+        }
+    }
     this->encounter();
 }
 
@@ -1239,4 +1278,10 @@ void FightView::set_random_encounter(bool re)
 void FightView::on_end()
 {
     this->random_encounter = true;
+    this->_opponents.clear();
+}
+
+void FightView::set_opponents(std::vector<fight_opponent> vfos)
+{
+    this->_opponents = vfos;
 }

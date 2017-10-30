@@ -14,6 +14,7 @@
 #include "../abstract/creatures_loader.hpp"
 #include "../abstract/defines.hpp"
 #include "../particles/particles.hpp"
+#include "../scripting/types.hpp"
 
 #define X_TEXT_SELCREA_UI 200
 #define MX_TEXT_SELCREA_UI 400
@@ -87,6 +88,7 @@ private:
     int wait;
     int giving_xp_to;
     bool random_encounter;
+    std::vector<fight_opponent> _opponents;
 
     const std::string __adv = "adv";
     const std::string __me = "me";
@@ -125,6 +127,7 @@ public:
     void start();
     void set_escape(bool);
     void set_random_encounter(bool);
+    void set_opponents(std::vector<fight_opponent>);
 };
 
 #endif // DEF_FIGHT_VIEW

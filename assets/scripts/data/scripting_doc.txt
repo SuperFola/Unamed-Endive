@@ -124,6 +124,10 @@ setFightEscape
 --------------
 Set the fight escape mode
 
+setFightOpponents
+-----------------
+Set the opponents of the next fight. Need between 1 and 3 lists of 8 elements : [id, lvl, life, atk, def, sort_type, sort_dmg, sort_targets]. To let the game choose random values based on others already computed, set the wanted value to -1. The id is always needed, but all the other values can be set to -1
+
 stopMusic
 ---------
 Stop the current, if one is playing

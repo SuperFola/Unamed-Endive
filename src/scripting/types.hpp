@@ -10,4 +10,15 @@ struct svar_t {
     const char* kind;
 };
 
+struct fight_opponent {
+    int id;
+    int lvl;
+    int life;
+    int atk;
+    int def;
+    int sort_type;
+    int sort_dmg;
+    int sort_targets;
+};
+
 #endif // DEF_SCRIPTING_TYPES

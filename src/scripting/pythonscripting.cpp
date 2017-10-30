@@ -483,7 +483,70 @@ extern "C"
         {
             return Py_BuildValue("i", -1);
         }
-        Py_BuildValue("s", s);
+        return Py_BuildValue("s", s);
+    }
+
+    PyObject* setFightOpponents(PyObject* self, PyObject* args)
+    {
+        int id_1, lvl_1, life_1, atk_1, def_1, stype_1, sdmg_1, stargets_1;
+        int id_2, lvl_2, life_2, atk_2, def_2, stype_2, sdmg_2, stargets_2;
+        int id_3, lvl_3, life_3, atk_3, def_3, stype_3, sdmg_3, stargets_3;
+        int c = 0;
+        if (!PyArg_ParseTuple(args, "[iiiiiiii][iiiiiiii][iiiiiiii]",
+                              &id_1, &lvl_1, &life_1, &atk_1, &def_1, &stype_1, &sdmg_1, &stargets_1,
+                              &id_2, &lvl_2, &life_2, &atk_2, &def_2, &stype_2, &sdmg_2, &stargets_2,
+                              &id_3, &lvl_3, &life_3, &atk_3, &def_3, &stype_3, &sdmg_3, &stargets_3))
+        {
+            if (!PyArg_ParseTuple(args, "[iiiiiiii][iiiiiiii]",
+                                  &id_1, &lvl_1, &life_1, &atk_1, &def_1, &stype_1, &sdmg_1, &stargets_1,
+                                  &id_2, &lvl_2, &life_2, &atk_2, &def_2, &stype_2, &sdmg_2, &stargets_2))
+            {
+                if (!PyArg_ParseTuple(args, "[iiiiiiii]",
+                                      &id_1, &lvl_1, &life_1, &atk_1, &def_1, &stype_1, &sdmg_1, &stargets_1))
+                {
+                    PyErr_SetString(UnamedError, "Can not parse arguments for setFightOpponents. Need between 1 and 3 lists of 8 arguments (int)");
+                    return NULL;
+                }
+                else
+                {
+                    c = 1;
+                }
+            }
+            else
+            {
+                c = 2;
+            }
+        }
+        else
+        {
+            c = 3;
+        }
+
+        if (c == 0)
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments for setFightOpponents. Need between 1 and 3 lists of 8 arguments (int)");
+            return NULL;
+        }
+        else if (c == 1)
+        {
+            fight_opponent fo_1 = {id_1, lvl_1, life_1, atk_1, def_1, stype_1, sdmg_1, stargets_1};
+            PyScripting::set_fight_opponents(fo_1);
+        }
+        else if (c == 2)
+        {
+            fight_opponent fo_1 = {id_1, lvl_1, life_1, atk_1, def_1, stype_1, sdmg_1, stargets_1};
+            fight_opponent fo_2 = {id_2, lvl_2, life_2, atk_2, def_2, stype_2, sdmg_2, stargets_2};
+            PyScripting::set_fight_opponents(fo_1, fo_2);
+        }
+        else if (c == 3)
+        {
+            fight_opponent fo_1 = {id_1, lvl_1, life_1, atk_1, def_1, stype_1, sdmg_1, stargets_1};
+            fight_opponent fo_2 = {id_2, lvl_2, life_2, atk_2, def_2, stype_2, sdmg_2, stargets_2};
+            fight_opponent fo_3 = {id_3, lvl_3, life_3, atk_3, def_3, stype_3, sdmg_3, stargets_3};
+            PyScripting::set_fight_opponents(fo_1, fo_2, fo_3);
+        }
+
+        RETURN_NONE
     }
 
     static PyMethodDef UnamedMethods[] = {
@@ -523,6 +586,7 @@ extern "C"
         {"setFightEscape", setFightEsc, METH_VARARGS, "Set the fight escape mode"},
         {"triggerBalloonPrompt", triggerBalloonPrompt, METH_VARARGS, "Display a ballon message with a given prompt (possibly a max length to get (in characters), default to 0 which means no limit), and wait for an input (validated by Return key). Not blocking the main thread"},
         {"balloonPromptGetOuput", balloonPromptGetOuput, METH_VARARGS, "Get the output of the balloon prompt. -1 if the user did not validate ; if the balloon was not triggered, raises UnamedError"},
+        {"setFightOpponents", setFightOpponents, METH_VARARGS, "Set the opponents of the next fight. Need between 1 and 3 lists of 8 elements : [id, lvl, life, atk, def, sort_type, sort_dmg, sort_targets]. To let the game choose random values based on others already computed, set the wanted value to -1. The id is always needed, but all the other values can be set to -1"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };
