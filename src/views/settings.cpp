@@ -419,7 +419,7 @@ std::string SettingsView::convert_textentered_to_value(sf::Uint32 e, bool kp)
         else if (e == 13 || e == 10)
             s.insert(0, "entree");
         else if (e == 27)
-            s.insert(0, "echap");
+            s.insert(0, "escape");
         else
             s.insert(0, e);  // otherwise just add the character as a utf 8 one
     }

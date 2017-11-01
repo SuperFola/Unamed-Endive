@@ -3,7 +3,7 @@
 	"down" : "s",
 	"fps" : 120,
 	"left" : "q",
-	"menu" : "echap",
+	"menu" : "escape",
 	"music" : true,
 	"right" : "d",
 	"shader" : "none",
