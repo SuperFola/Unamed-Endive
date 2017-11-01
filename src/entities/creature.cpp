@@ -424,3 +424,8 @@ int Creature::updateState()
     return r;
 }
 
+void Creature::setName(std::string name)
+{
+    this->name = name;
+}
+

@@ -68,6 +68,7 @@ public:
     void atk_heal_pv(int);
     void atk_heal_status();
     int updateState();
+    void setName(std::string);
 
     static long int calculateExpFromLevel(int);
     static int calculateLevelFromXp(long int);

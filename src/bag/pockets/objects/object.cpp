@@ -32,3 +32,8 @@ void Object::drop(int quantity)
     if (this->quantity < 0)
         this->quantity = 0;
 }
+
+void Object::add(int quantity)
+{
+    this->quantity += quantity;
+}

@@ -43,6 +43,14 @@ keys_ev_code = ast.literal_eval(open("assets/scripts/data/keysevents.json").read
 PNJkind = {"normal": 0, "special": 1, "system": 2}
 BUFFER = 2 ** 10
 HOST, PORT = "", 0
+IN_TEAM, IN_PC = 0, 1
+POCKETS = {
+    "Objets": 0,
+    "Soins": 1,
+    "Balls": 2,
+    "Objets rares": 3,
+    "Fourre-tout": 4
+}
 
 # a table to track down the progress of the player in the adventure
 # useful if you want to create an event at a specific moment of the game

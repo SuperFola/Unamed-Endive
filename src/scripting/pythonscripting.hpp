@@ -47,6 +47,9 @@ extern "C"
     PYFUNC(triggerBalloonPrompt);
     PYFUNC(balloonPromptGetOuput);
     PYFUNC(setFightOpponents);
+    PYFUNC(setCreatureName);
+    PYFUNC(removeObjectsFromPocket);
+    PYFUNC(addObjectsToPocket);
 
     PyMODINIT_FUNC PyInit_Unamed(void);
 }

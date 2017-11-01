@@ -29,23 +29,55 @@ bool Pocket::load(Json::Value& root)
             }
         }
     }
-    else
-    {
-        Object* object = new Object(0, 1);
-        this->objects.push_back(object);
-    }
+    // empty pocket by default
     return true;
 }
 
 void Pocket::add_object(Object* object)
 {
-    this->objects.push_back(object);
+    bool in = false;
+    int pos = -1;
+
+    for (int i=0; i < this->objects.size(); ++i)
+    {
+        if (this->objects[i]->getId() == object->getId())
+        {
+            pos = object->getId();
+            in = true;
+            break;
+        }
+    }
+
+    if (!in)
+        this->objects.push_back(object);
+    else
+        this->objects[pos]->add(object->getQuantity());
 }
 
 void Pocket::add_object(int id, int qu)
 {
-    Object* o = new Object(id, qu);
-    this->objects.push_back(o);
+    bool in = false;
+    int pos = -1;
+
+    for (int i=0; i < this->objects.size(); ++i)
+    {
+        if (this->objects[i]->getId() == id)
+        {
+            pos = id;
+            in = true;
+            break;
+        }
+    }
+
+    if (!in)
+    {
+        Object* o = new Object(id, qu);
+        this->objects.push_back(o);
+    }
+    else
+    {
+        this->objects[pos]->add(qu);
+    }
 }
 
 Object* Pocket::getObject(int id)
@@ -168,4 +200,20 @@ Pocket::~Pocket()
 {
     CLEAR_PTR_VECT(this->objects)
     this->objects.clear();
+}
+
+void Pocket::drop_object_from_id(int id, int qu)
+{
+    int pos = -1;
+    for (int i=0; i < this->objects.size(); ++i)
+    {
+        if (this->objects[i]->getId() == id)
+        {
+            // assuming we are not staking object but grouping them by ID
+            pos = i;
+            break;
+        }
+    }
+    for (int i=0; i < qu; ++i)
+        this->drop_object(pos);
 }

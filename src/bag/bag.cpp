@@ -7,11 +7,11 @@
 Bag::Bag()
 {
     this->_pockets = {
-        "pocket1",
-        "pocket2",
-        "pocket3",
-        "pocket4",
-        "pocket5"
+        "Objets",
+        "Soins",
+        "Balls",
+        "Objets rares",
+        "Fourre-tout"
     };
 }
 
@@ -28,6 +28,8 @@ bool Bag::load(const std::string& path)
             Pocket* pocket = new Pocket(pname, true);
             this->pockets.push_back(pocket);
         }
+        /// first default object (running shoes)
+        this->pockets[0]->add_object(0, 1);
 
         DebugLog(SH_OK, "Bag loaded");
         return true;
@@ -40,7 +42,7 @@ bool Bag::load(const std::string& path)
     {
         Pocket* pocket = new Pocket(pname);
         if (!pocket->load(this->root[pname]))
-                return false;
+            return false;
         this->pockets.push_back(pocket);
         DebugLog(SH_OK, "Loaded " << pname);
     }

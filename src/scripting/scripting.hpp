@@ -147,6 +147,11 @@ public:
     static void set_fight_opponents(fight_opponent);
     static void set_fight_opponents(fight_opponent, fight_opponent);
     static void set_fight_opponents(fight_opponent, fight_opponent, fight_opponent);
+
+    static int set_creature_name(int, int, const char*);
+
+    static void remove_object_from_pocket(int, int, int);
+    static void add_object_to_pocket(int, int, int);
 };
 
 #endif // DEF_SCRIPTING

@@ -8,6 +8,10 @@ When you receive an event in the python scripting, it is a dict
 
 To check the code of a key event, you can do ev['key'] == keys_ev_code.index('A') (will check if it is the key A)
 
+addObjectsToPocket
+------------------
+Add an object to a specified pocket, given its unique id and a quantity
+
 balloonPromptGetOuput
 ---------------------
 Get the output of the balloon prompt. -1 if the user did not validate ; if the balloon was not triggered, raises UnamedError
@@ -108,9 +112,17 @@ registerScript
 --------------
 Register a script in the PyScripting singleton, as a specific kind given as an argument, with a string id also given
 
+removeObjectsFromPocket
+-----------------------
+Remove an object from a specified pocket, given its unique id and the quantity to remove (the quantity is optional, 1 by default)
+
 screenshot
 ----------
-Take a screenshot and save it to screenshots/. Return the name of the file
+Take a screenshot and save it to `screenshots/`. Return the name of the file
+
+setCreatureName
+---------------
+Set the name of a creature. Need an int (0 if you are in the team, 1 in the PC) to choose a container, another for the id of the creature in the container, and the name (string)
 
 setCurrentView
 --------------

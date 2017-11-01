@@ -549,6 +549,53 @@ extern "C"
         RETURN_NONE
     }
 
+    PyObject* setCreatureName(PyObject* self, PyObject* args)
+    {
+        int in, id;
+        const char* name;
+        if (!PyArg_ParseTuple(args, "iis", &in, &id, &name))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need two int (one to tell if you want a creature in the PC or in the team, another for the id of the creature in the container chosen) and a string for the name");
+            return NULL;
+        }
+        int out = PyScripting::set_creature_name(in, id, name);
+        if (out == -1)
+        {
+            PyErr_SetString(UnamedError, "The creature chosen is not in range");
+            return NULL;
+        }
+        RETURN_NONE
+    }
+
+    PyObject* removeObjectsFromPocket(PyObject* self, PyObject* args)
+    {
+        int pocket, id, qu;
+        if (!PyArg_ParseTuple(args, "iii", &pocket, &id, &qu))
+        {
+            if (!PyArg_ParseTuple(args, "ii", &pocket, &id))
+            {
+                PyErr_SetString(UnamedError, "Can not parse arguments, need three int, one for the pocket id, and another for the unique id of the object to remove. The last one is the quantity of the object to remove, 1 by default");
+                return NULL;
+            }
+            else
+                qu = 1;
+        }
+        PyScripting::remove_object_from_pocket(pocket, id, qu);
+        RETURN_NONE
+    }
+
+    PyObject* addObjectsToPocket(PyObject* self, PyObject* args)
+    {
+        int pocket, id, qu;
+        if (!PyArg_ParseTuple(args, "iii", &pocket, &id, &qu))
+        {
+            PyErr_SetString(UnamedError, "Can not parse arguments, need three int, one for the pocket id, one for the unique id of the object to add, and another for the quantity of the object to add");
+            return NULL;
+        }
+        PyScripting::add_object_to_pocket(pocket, id, qu);
+        RETURN_NONE
+    }
+
     static PyMethodDef UnamedMethods[] = {
         // ...
         {"upr", print, METH_VARARGS, "Print function using std::cout instead of the standard output stream of Python"},
@@ -574,7 +621,7 @@ extern "C"
         {"getPlayerName", getPlayerName, METH_VARARGS, "Return the name of the player"},
         {"getPlayerFolder", getPlayerFolder, METH_VARARGS, "Return the save folder of the player"},
         {"tpPlayerOn", tpPlayerOn, METH_VARARGS, "Take two integers (x, y). Will teleport the player on this position, on the current map"},
-        {"screenshot", screenshot, METH_VARARGS, "Take a screenshot and save it to screenshots/. Return the name of the file"},
+        {"screenshot", screenshot, METH_VARARGS, "Take a screenshot and save it to `screenshots/`. Return the name of the file"},
         {"setCurrentView", setCurrentView, METH_VARARGS, "Set the current view. Take the id of the new view"},
         {"countCreaturesInEquip", countCreaturesInEquip, METH_VARARGS, "Return how many creatures has the player in his/her equip"},
         {"countCreaturesInPC", countCreaturesInPC, METH_VARARGS, "Return how many creatures has the player in his/her PC"},
@@ -587,6 +634,9 @@ extern "C"
         {"triggerBalloonPrompt", triggerBalloonPrompt, METH_VARARGS, "Display a ballon message with a given prompt (possibly a max length to get (in characters), default to 0 which means no limit), and wait for an input (validated by Return key). Not blocking the main thread"},
         {"balloonPromptGetOuput", balloonPromptGetOuput, METH_VARARGS, "Get the output of the balloon prompt. -1 if the user did not validate ; if the balloon was not triggered, raises UnamedError"},
         {"setFightOpponents", setFightOpponents, METH_VARARGS, "Set the opponents of the next fight. Need between 1 and 3 lists of 8 elements : [id, lvl, life, atk, def, sort_type, sort_dmg, sort_targets]. To let the game choose random values based on others already computed, set the wanted value to -1. The id is always needed, but all the other values can be set to -1"},
+        {"setCreatureName", setCreatureName, METH_VARARGS, "Set the name of a creature. Need an int (0 if you are in the team, 1 in the PC) to choose a container, another for the id of the creature in the container, and the name (string)"},
+        {"removeObjectsFromPocket", removeObjectsFromPocket, METH_VARARGS, "Remove an object from a specified pocket, given its unique id and the quantity to remove (the quantity is optional, 1 by default)"},
+        {"addObjectsToPocket", addObjectsToPocket, METH_VARARGS, "Add an object to a specified pocket, given its unique id and a quantity"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };

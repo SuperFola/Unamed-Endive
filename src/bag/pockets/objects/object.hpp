@@ -16,6 +16,7 @@ public:
     int getId();
     int getQuantity();
     void drop(int quantity=1);
+    void add(int);
 };
 
 #endif // DEF_BAG_OBJECT

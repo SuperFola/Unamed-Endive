@@ -388,3 +388,38 @@ void PyScripting::set_fight_opponents(fight_opponent fo_1, fight_opponent fo_2, 
     v.push_back(fo_3);
     instance.sm->getFight()->set_opponents(v);
 }
+
+int PyScripting::set_creature_name(int in, int id, const char* name)
+{
+    if (in == 0) // equip
+    {
+        if (0 <= id && id < instance.sm->getDefault()->getCharacter()->getEquip()->getSize())
+        {
+            instance.sm->getDefault()->getCharacter()->getEquip()->getCrea(id)->setName(std::string(name));
+            return 0;
+        }
+        else
+            return -1;
+    }
+    else
+    {
+        // pc
+        if (0 <= id && id < instance.sm->getDefault()->getCharacter()->getPC()->getSize())
+        {
+            instance.sm->getDefault()->getCharacter()->getPC()->getCrea(id)->setName(std::string(name));
+            return 0;
+        }
+        else
+            return -1;
+    }
+}
+
+void PyScripting::remove_object_from_pocket(int pocket_id, int id, int qu)
+{
+    instance.sm->getDefault()->getCharacter()->getBag()->getPocket(pocket_id)->drop_object_from_id(id, qu);
+}
+
+void PyScripting::add_object_to_pocket(int pocket_id, int id, int qu)
+{
+    instance.sm->getDefault()->getCharacter()->getBag()->getPocket(pocket_id)->add_object(id, qu);
+}
