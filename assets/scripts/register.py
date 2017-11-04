@@ -33,12 +33,12 @@ def include(filename):
     return t
 
 sha256 = lambda w: hashlib.sha256(w.encode()).hexdigest()
-playername = Unamed.getPlayerFolder()
+playerfolder = Unamed.getPlayerFolder()
 
 # CONSTANTS
-PRGS_SAVING_PATH = "saves/" + playername + "/progess"
-SWITCHS_SAVING_PATH = "saves/" + playername + "/switchs"
-VARS_SAVING_PATH = "saves/" + playername + "/vars"
+PRGS_SAVING_PATH = "saves/" + playerfolder + "/progess"
+SWITCHS_SAVING_PATH = "saves/" + playerfolder + "/switchs"
+VARS_SAVING_PATH = "saves/" + playerfolder + "/vars"
 keys_ev_code = ast.literal_eval(open("assets/scripts/data/keysevents.json").read())
 PNJkind = {"normal": 0, "special": 1, "system": 2}
 BUFFER = 2 ** 10
@@ -146,6 +146,7 @@ Unamed.registerScript("runOnceWhenStarting", "doc_extract.py")
 Unamed.registerScript("runOnceWhenStarting", "addpnjs.py")
 Unamed.registerScript("runOnceWhenStarting", "textures.py")
 Unamed.registerScript("runWhenUpdatingGame", "ev_checking.py")
+Unamed.registerScript("runWhenUpdatingGame", "adventure.py")
 Unamed.registerScript("runOnceWhenClosing", "closing.py")
 
 ###############################################################################

@@ -416,10 +416,15 @@ int PyScripting::set_creature_name(int in, int id, const char* name)
 
 void PyScripting::remove_object_from_pocket(int pocket_id, int id, int qu)
 {
-    instance.sm->getDefault()->getCharacter()->getBag()->getPocket(pocket_id)->drop_object_from_id(id, qu);
+    instance.player->getBag()->getPocket(pocket_id)->drop_object_from_id(id, qu);
 }
 
 void PyScripting::add_object_to_pocket(int pocket_id, int id, int qu)
 {
-    instance.sm->getDefault()->getCharacter()->getBag()->getPocket(pocket_id)->add_object(id, qu);
+    instance.player->getBag()->getPocket(pocket_id)->add_object(id, qu);
+}
+
+void PyScripting::setPlayerName(const char* n)
+{
+    instance.player->setName(std::string(n));
 }

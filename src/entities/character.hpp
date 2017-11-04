@@ -43,6 +43,7 @@ public:
     bool pass_pnj(Map&, std::vector<float>) override;
     int save();
     void setFolder(const std::string&);
+    void setName(const std::string&);
     std::string getName();
     std::string getFolder();
     void _load() override;

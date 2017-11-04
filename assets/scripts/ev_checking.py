@@ -19,8 +19,7 @@ if ev_onmap:
                 if page["switch_2"]  != False: sws.append(page["switch_2"])   # game (global) switchs, and switch local to the event
                 if page["ev_switch"] != False: sws.append(page["ev_switch"])  # 
                 for s in sws:
-                    if _switchs.get(s) is not None or \
-                            data["local_switchs"].get(s) is not None:
+                    if _switchs.get(s) is not None or data["local_switchs"].get(s) is not None:
                         # the switch to check can be either in the game (global) switchs
                         # or in the switchs local to the event
                         ok += 1

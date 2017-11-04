@@ -50,6 +50,7 @@ extern "C"
     PYFUNC(setCreatureName);
     PYFUNC(removeObjectsFromPocket);
     PYFUNC(addObjectsToPocket);
+    PYFUNC(setPlayerName);
 
     PyMODINIT_FUNC PyInit_Unamed(void);
 }

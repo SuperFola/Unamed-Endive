@@ -70,6 +70,11 @@ void Character::setFolder(const std::string& folder)
     this->folder = folder;
 }
 
+void Character::setName(const std::string& name)
+{
+    this->name = name;
+}
+
 std::string Character::getName()
 {
     return this->name;

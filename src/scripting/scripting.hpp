@@ -152,6 +152,8 @@ public:
 
     static void remove_object_from_pocket(int, int, int);
     static void add_object_to_pocket(int, int, int);
+
+    static void setPlayerName(const char*);
 };
 
 #endif // DEF_SCRIPTING

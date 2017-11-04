@@ -596,6 +596,18 @@ extern "C"
         RETURN_NONE
     }
 
+    PyObject* setPlayerName(PyObject* self, PyObject* args)
+    {
+        const char* n;
+        if (!PyArg_ParseTuple(args, "s", &n))
+        {
+            PyErr_SetString(UnamedError, "Can not parse argument, need a string for the name of the character");
+            return NULL;
+        }
+        PyScripting::setPlayerName(n);
+        RETURN_NONE
+    }
+
     static PyMethodDef UnamedMethods[] = {
         // ...
         {"upr", print, METH_VARARGS, "Print function using std::cout instead of the standard output stream of Python"},
@@ -637,6 +649,7 @@ extern "C"
         {"setCreatureName", setCreatureName, METH_VARARGS, "Set the name of a creature. Need an int (0 if you are in the team, 1 in the PC) to choose a container, another for the id of the creature in the container, and the name (string)"},
         {"removeObjectsFromPocket", removeObjectsFromPocket, METH_VARARGS, "Remove an object from a specified pocket, given its unique id and the quantity to remove (the quantity is optional, 1 by default)"},
         {"addObjectsToPocket", addObjectsToPocket, METH_VARARGS, "Add an object to a specified pocket, given its unique id and a quantity"},
+        {"setPlayerName", setPlayerName, METH_VARARGS, "Set the name of the player. Need a string"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };

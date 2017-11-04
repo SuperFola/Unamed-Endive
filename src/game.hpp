@@ -69,6 +69,8 @@ private:
     sf::Sprite inner_balloon_prompt_sprite;
     int inner_balloon_prompt_triggered;
     int inner_balloon_prompt_max_length;
+      // states
+    bool _is_a_new_game;
     // methods
       // commons methods
     void handle_std_events(sf::Event&, sf::Time);

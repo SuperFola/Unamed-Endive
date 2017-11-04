@@ -470,7 +470,7 @@ void Game::render_menu(const std::vector<std::string>& s, bool new_game, bool de
 
         if (this->blink)
         {
-            this->cursor.setPosition(this->menu_user.getPosition().x + this->menu_user.getGlobalBounds().width + 10.0f, this->cursor.getPosition().y);
+            this->cursor.setPosition(this->menu_user.getPosition().x + this->menu_user.getGlobalBounds().width + 2.0f, this->cursor.getPosition().y);
             this->window.draw(this->cursor);
         }
     }
@@ -560,7 +560,10 @@ void Game::menu()
                     if (event.text.unicode == '\b' && this->menu_userentry.getSize() > 0)
                         this->menu_userentry.erase(this->menu_userentry.getSize() - 1, 1);
                     else if (event.text.unicode == 13)  // validate
+                    {
+                        this->_is_a_new_game = true;
                         quit = true;
+                    }
                     else if (this->menu_userentry.getSize() < 30)
                     {
                         this->menu_userentry.insert(this->menu_userentry.getSize(), event.text.unicode);
@@ -694,6 +697,7 @@ Game::Game() :
     , menu_game_selected(-1)
     , inner_balloon_prompt_triggered(0)
     , inner_balloon_prompt_max_length(0)
+    , _is_a_new_game(false)
 {
     DebugLog(SH_INFO, "Running on " << AutoVersion::FULLVERSION_STRING);
 
@@ -858,6 +862,8 @@ void Game::post_load()
     PyScripting::load();
     // launch the scripts
     PyScripting::run_on_start_modules();
+    // setting special flags
+    PyScripting::run_code(_is_a_new_game ? "_progress[\"new_game\"] = True" : "_progress[\"new_game\"] = False");
 
     this->sm.getCrea()->post_load();
     this->sm.getDefault()->getCharacter()->getPC()->increase_size(MAX_SIZE_PC);
