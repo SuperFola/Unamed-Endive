@@ -2,17 +2,16 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Unamed Rebirth"
-#define MyAppVersion "1.9.17"
+#define MyAppVersion "2.1.13"
 #define MyAppPublisher "Kyatchioru"
 #define MyAppURL "https://loodoor.github.io/UnamedRebirth"
 #define MyAppExeName "main.exe"
-
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{74233CF4-DC15-433F-82D6-DBB4E09BF60F}
+AppId={{88473DED-5F97-460D-9277-FEBAE0B2F477}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppVerName={#MyAppName} {#MyAppVersion}
@@ -20,17 +19,18 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName={pf}/{#MyAppName}
+DefaultDirName={pf}\UnamedRebirth
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputBaseFilename={#MyAppName} - {#MyAppVersion}
 OutputDir=../ENDIVE-protos/{#MyAppVersion}/
+LicenseFile=G:\ENDIVE\.github\LICENSE
+InfoBeforeFile=G:\ENDIVE\.github\README-fr.md
+OutputBaseFilename=setup
 Compression=lzma
 SolidCompression=yes
-LicenseFile=.github/LICENSE
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 
 [Tasks]
@@ -43,6 +43,7 @@ Name: "{app}\saves"
 Name: "{app}\screenshots"
 
 [Files]
+;; Source: "G:\ENDIVE\bin\DebugWin\main.exe"; DestDir: "{app}"; Flags: ignoreversion
 ;; Source: "*"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".github/LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
@@ -50,10 +51,10 @@ Source: "assets\*"; Excludes: ".dontupload"; DestDir: "{app}\assets"; Flags: ign
 Source: "bin\DebugWin\main.exe"; DestDir: "{app}"; Flags: ignoreversion
 ;;Source: "bin\ReleaseWin\main.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "dlls\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{group}\{cm:ProgramOnTheWeb,{#MyAppName}}"; Filename: "{#MyAppURL}"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
