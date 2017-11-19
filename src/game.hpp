@@ -99,7 +99,7 @@ public:
 
     // inner balloon prompt related
     void trigger_inner_balloon_prompt(bool v);
-    void set_balloon_prompt(const char*, int);
+    void set_balloon_prompt(const std::string&, int);
     bool get_triggered_inner_balloon_prompt();
     const char* get_inner_balloon_text();
 };

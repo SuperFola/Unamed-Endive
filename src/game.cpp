@@ -147,7 +147,7 @@ void Game::handle_std_events(sf::Event& event, sf::Time elapsed)
                 break;
 
             #ifdef DEV_MODE
-            case sf::Keyboard::F:
+            case sf::Keyboard::F2:
                 if (!this->cheat_on)
                     this->sm.change_view(FIGHT_VIEW_ID);
                 break;
@@ -904,11 +904,11 @@ void Game::trigger_inner_balloon_prompt(bool v)
     this->inner_balloon_prompt_triggered = v ? 1 : 0;
 }
 
-void Game::set_balloon_prompt(const char* text, int len)
+void Game::set_balloon_prompt(const std::string& text, int len)
 {
     DebugLog(SH_INFO, "set balloon prompt : '" << text << "'");
-    this->inner_balloon_prompt_txt.setString(std::string(text));
-    this->inner_balloon_prompt_str_back = std::string(text);
+    this->inner_balloon_prompt_txt.setString(text);
+    this->inner_balloon_prompt_str_back = text;
     this->inner_balloon_prompt_max_length = len;
 }
 

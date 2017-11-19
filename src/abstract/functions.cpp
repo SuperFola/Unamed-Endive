@@ -88,3 +88,10 @@ std::string convert_type_to_str(int t)
     }
     return s;
 }
+
+void fix_utf8_string(std::string& str)
+{
+    std::string temp;
+    utf8::replace_invalid(str.begin(), str.end(), back_inserter(temp));
+    str = temp;
+}

@@ -1,9 +1,4 @@
-# author : Loodoor
-# all rights reserved
-
-# PLEASE DO NOT DELETE THIS FILE
-
-##################################################################
+# game script
 
 ev_onmap = _progress.get(Unamed.getMapId(), {})
 

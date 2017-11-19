@@ -1,7 +1,5 @@
-# author : Loodoor
-# all rights reserved
+# game script
 
-# PLEASE DO NOT DELETE THIS FILE
 Unamed.loadImage("assets/gui/pnj/bubble.png", "balloon")
 
 def display_ballon(textid):

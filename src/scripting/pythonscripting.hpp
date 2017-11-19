@@ -4,6 +4,8 @@
 #include <cmath>
 #include <Python.h>
 
+#include "../abstract/utf8.hpp"
+
 #define PYFUNC( x ) static PyObject* x (PyObject* self, PyObject* args)
 
 const char* name = "Unamed";

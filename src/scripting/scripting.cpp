@@ -92,7 +92,7 @@ void PyScripting::load_all_modules()
         this->modules[mod.substr(directory.size())] = content;
     }
     PyScripting::run_code(this->modules["register.py"].data());
-    this->modules.clear();
+    // this->modules.clear();
 }
 
 // static methods

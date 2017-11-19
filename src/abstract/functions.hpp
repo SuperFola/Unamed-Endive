@@ -8,6 +8,8 @@
 #include <SFML/System/String.hpp>
 #include <SFML/Graphics/Font.hpp>
 
+#include "../utf8.h"
+
 #include "../constants.hpp"
 #ifdef PLATFORM_WIN
     #include <windows.h>
@@ -52,5 +54,7 @@ bool is_file_existing(const std::string& file);
 sf::String wrapText(sf::String, int, const sf::Font&, int, bool bold=false);
 
 std::string convert_type_to_str(int);
+
+void fix_utf8_string(std::string&);
 
 #endif // DEF_ABS_FUNC

@@ -1,3 +1,5 @@
+# game script
+
 methods = dir(Unamed)
 out = [
     "Documentation of the built-in methods of the module Unamed",

@@ -461,13 +461,13 @@ extern "C"
                 PyErr_SetString(UnamedError, "Can not parse arguments, need a string for the prompt");
                 return NULL;
             }
-
             // if we're here it means we only parsed a string
             len = 0; /// max length
         }
 
+        std::string s2 = fix_my_utf8(s);
         int e = 0;
-        PyScripting::triggerBalloonPrompt(s, e, len);
+        PyScripting::triggerBalloonPrompt(s2, e, len);
         if (e == 1)
         {
             PyErr_SetString(UnamedError, "Balloon prompt is already triggered, can not re-trigger it while it is running");

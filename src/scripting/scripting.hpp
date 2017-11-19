@@ -141,7 +141,7 @@ public:
     static void setFightEnv(int);
     static void setFightEscape(bool);
 
-    static void triggerBalloonPrompt(const char*&, int&, int);
+    static void triggerBalloonPrompt(const std::string&, int&, int);
     static const char* balloonPromptGetOuput();
 
     static void set_fight_opponents(fight_opponent);

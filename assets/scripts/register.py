@@ -1,10 +1,11 @@
-﻿# author : Loodoor
-# all rights reserved
+﻿# coding: utf-8
 
-# PLEASE DO NOT DELETE THIS FILE
+__author__  = 'Loodoor'
+__license__ = 'All right reserved'
+
 import Unamed
 from Unamed import upr
-import ast, socket, hashlib
+import ast, socket, hashlib, sys
 
 ###############################################################################
 # game stuff                                                                  #
@@ -164,3 +165,4 @@ load_stuff()
 print("cwd", os.getcwd())
 print("PYTHONHOME", os.environ.get("PYTHONHOME"))
 print("HOME", os.environ.get("HOME"))
+print("ENCODING", sys.stdout.encoding)
