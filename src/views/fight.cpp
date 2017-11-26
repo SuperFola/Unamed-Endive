@@ -299,9 +299,9 @@ void FightView::render(sf::RenderWindow& window)
             if (this->equip->getCrea(i)->getLife() > 0)
             {
                 if (this->attacks_used[i])
-                    this->attack_name.setColor(sf::Color::Red);
+                    this->attack_name.setFillColor(sf::Color::Red);
                 else
-                    this->attack_name.setColor(sf::Color::Black);
+                    this->attack_name.setFillColor(sf::Color::Black);
                 this->attack_name.setPosition(X_TEXT_SELCREA_UI, Y_TEXT_SELCREA_UI + i * SPACING_ATK_LISTING_Y);
                 window.draw(this->attack_name);
             }
@@ -314,7 +314,7 @@ void FightView::render(sf::RenderWindow& window)
         window.draw(this->sprites[this->BKG_SELECT]);
         this->attack_name.setString("Cible");
         this->attack_name.setPosition(120.0f + float(int((400.0f - this->attack_name.getGlobalBounds().width) / 2.0f)), 130.0f);
-        this->attack_name.setColor(sf::Color::Black);
+        this->attack_name.setFillColor(sf::Color::Black);
         window.draw(this->attack_name);
         if (this->selectingadv)
         {
