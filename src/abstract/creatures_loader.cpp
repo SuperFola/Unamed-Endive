@@ -63,16 +63,20 @@ bool CreaturesLoader::load_next()
 
     sf::Image image;
 
-    if (!image.loadFromFile(this->folder + "/" + file) && file != "." && file != "..")
-        DebugLog(SH_ERR, "Unable to open " << this->folder + "/" + file);
-    else
+    if (file != "." && file != "..")
     {
-        image.createMaskFromColor(sf::Color(255, 0, 255, 255));
-        sf::Texture texture;
-        texture.loadFromImage(image);
-        texture.setSmooth(true);
-        this->textures.add(file, texture);
+        if (!image.loadFromFile(this->folder + "/" + file))
+            DebugLog(SH_ERR, "Unable to open " << this->folder + "/" + file);
+        else
+        {
+            image.createMaskFromColor(sf::Color(255, 0, 255, 255));
+            sf::Texture texture;
+            texture.loadFromImage(image);
+            texture.setSmooth(true);
+            this->textures.add(file, texture);
+        }
     }
+    
 
     this->current++;  // increment the cursor
 

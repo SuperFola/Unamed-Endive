@@ -36,7 +36,7 @@ std::vector<std::string> glob_frag(const std::string& directory)
         while ((ent = readdir(rep)) != NULL)
         {
             std::string t = std::string(ent->d_name);
-            if (t.substr(t.size() - 4, t.size()) == "frag")
+            if (t.size() > 4 && t.substr(t.size() - 4, t.size()) == "frag")
                 files.push_back(ent->d_name);
         }
 
