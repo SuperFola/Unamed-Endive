@@ -22,3 +22,7 @@ if _progress['p'] == 3:
     if Unamed.balloonPromptGetOuput() != -1:
         _progress['p'] = 4
         Unamed.triggerBalloonPrompt("message no2", 0)
+
+if _progress['p'] == 4:
+    if Unamed.balloonPromptGetOuput() != -1:
+        _progress['p'] = 5

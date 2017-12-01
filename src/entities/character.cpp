@@ -87,7 +87,7 @@ std::string Character::getFolder()
 
 void Character::_load()
 {
-    DebugLog(SH_INFO, "creating \"saves/" << this->folder << "\"");
+    DebugLog(SH_INFO, "creating \"saves/" << this->folder << "\" if it does not exist");
     PyScripting::run_code(("if not os.path.exists(\"saves/" + this->folder + "\"): os.mkdir(\"saves/" + this->folder + "\")").c_str());
 
     this->bag.load("saves/" + this->folder + "/bag.json");

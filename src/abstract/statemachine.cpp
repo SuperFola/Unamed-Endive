@@ -14,51 +14,61 @@ StateMachine::StateMachine() :
 bool StateMachine::load(sf::String playername)
 {
     int id = -1;
+    bool b = false;
     switch(this->loaded)
     {
     case 0:
         id = this->defaultv.getId();
-        this->defaultv.load(playername);
+        b = this->defaultv.load(playername);
+        DebugLog(SH_SPE, "default view loaded : " << b);
         break;
 
     case 1:
         id = this->creav.getId();
-        this->creav.load();
+        b = this->creav.load();
+        DebugLog(SH_SPE, "crea view loaded : " << b);
         break;
 
     case 2:
         id = this->dexv.getId();
-        this->dexv.load();
+        b = this->dexv.load();
+        DebugLog(SH_SPE, "dex view loaded : " << b);
         break;
 
     case 3:
         id = this->savev.getId();
-        this->savev.load();
+        b = this->savev.load();
+        DebugLog(SH_SPE, "save view loaded : " << b);
         break;
 
     case 4:
         id = this->inventoryv.getId();
-        this->inventoryv.load();
+        b = this->inventoryv.load();
+        DebugLog(SH_SPE, "inventory view loaded : " << b);
         break;
 
     case 5:
         id = this->mapv.getId();
-        this->mapv.load();
+        b = this->mapv.load();
+        DebugLog(SH_SPE, "map view loaded : " << b);
         break;
 
     case 6:
         id = this->fightv.getId();
-        this->fightv.load();
+        b = this->fightv.load();
+        DebugLog(SH_SPE, "fight view loaded : " << b);
         break;
 
     case 7:
         id = this->shopv.getId();
-        this->shopv.load();
+        b = this->shopv.load();
+        DebugLog(SH_SPE, "shop view loaded : " << b);
         break;
 
     case 8:
         id = this->settingsv.getId();
-        this->settingsv.load();
+        b = this->settingsv.load();
+        DebugLog(SH_SPE, "settings views loaded : " << b);
         break;
     }
     DebugLog(SH_INFO, "Loading view " << id);
