@@ -948,7 +948,7 @@ void FightView::attack(int selected, int index_my_creatures)
         this->particles.setColor(sf::Color::Blue);
         this->eq_a = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
         this->eq_a /= float(FightView::ATK_FR_CNT());
-        this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
+        this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y + this->sprites[this->__me + to_string<int>(index_my_creatures)].getGlobalBounds().height / 2.0f;
         this->eq_pas = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x;
         this->eq_pas /= float(FightView::ATK_FR_CNT());
     }
@@ -956,10 +956,10 @@ void FightView::attack(int selected, int index_my_creatures)
     {
         this->particles.setColor(sf::Color::Green);
         this->eq_a = 1.0f;
-        this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
+        this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y + this->sprites[this->__me + to_string<int>(index_my_creatures)].getGlobalBounds().height / 2.0f;
         this->eq_pas = 0.0f;
     }
-    this->eq_x_off = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x;
+    this->eq_x_off = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x + this->sprites[this->__me + to_string<int>(index_my_creatures)].getGlobalBounds().width / 2.0f;
 
     if (selected == 42) // magic code, we need to select random creatures
     {
@@ -1037,7 +1037,7 @@ void FightView::e_attack(int selected)
     {
         this->particles.setColor(sf::Color::Yellow);
         this->eq_a = 1.0f;
-        this->eq_b = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().y;
+        this->eq_b = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y + this->sprites[this->__adv + to_string<int>(temp_sel)].getGlobalBounds().height / 2.0f;
         this->eq_pas = 0.0f;
     }
     else
@@ -1045,11 +1045,11 @@ void FightView::e_attack(int selected)
         this->particles.setColor(sf::Color::Red);
         this->eq_a = -this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().y;
         this->eq_a /= float(FightView::ATK_FR_CNT());
-        this->eq_b = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y;
+        this->eq_b = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y + this->sprites[this->__adv + to_string<int>(temp_sel)].getGlobalBounds().height / 2.0f;
         this->eq_pas = -this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().x;
         this->eq_pas /= float(FightView::ATK_FR_CNT());
     }
-    this->eq_x_off = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().x;
+    this->eq_x_off = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().x + this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getGlobalBounds().width / 2.0f;
 
     if (targets > 1)
     {
@@ -1342,5 +1342,5 @@ void FightView::set_opponents(std::vector<fight_opponent> vfos)
 
 int FightView::ATK_FR_CNT()
 {
-    return Config::get("fps") * 1.8f;
+    return Config::get("fps").asFloat() * 1.8f;
 }
