@@ -377,7 +377,7 @@ int Creature::updateState()
     switch (this->state)
     {
     case BURNED:
-        this->life -= int(this->max_life / 10.0f);
+        this->life -= int(std::log(this->max_life * this->max_life / 2.0f + 1.0f));
         if (this->life < 0)
         {
             this->life = 0;
@@ -393,7 +393,7 @@ int Creature::updateState()
         break;
 
     case POISONED:
-        this->life -= int(this->max_life / 8.0f);
+        this->life -= int(std::log(this->max_life * this->max_life / 3.0f + 1.0f));
         if (this->life < 0)
         {
             this->life = 0;

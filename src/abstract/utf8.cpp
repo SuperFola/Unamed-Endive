@@ -23,7 +23,7 @@ std::string fix_my_utf8(const char* base)
             out += n;
         }
     }
-    fix_utf8_string(out);
+    // fix_utf8_string(out);
     std::cout << "1 >>> " << out << std::endl;
     return out;
 }

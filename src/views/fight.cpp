@@ -84,7 +84,7 @@ FightView::FightView() :
     , display_attack(false)
     , my_turn(true)
     , attacking_enemy(true)
-    , particles(1024)
+    , particles(2048)
     , eq_a(0.0f)
     , eq_b(0.0f)
     , eq_x(0.0f)
