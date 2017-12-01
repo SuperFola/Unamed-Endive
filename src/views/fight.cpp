@@ -949,7 +949,7 @@ void FightView::attack(int selected, int index_my_creatures)
         this->eq_a = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
         this->eq_a /= float(ATK_FR_CNT);
         this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
-        this->eq_pas = this->sprites[this->_adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x;
+        this->eq_pas = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x;
         this->eq_pas /= float(ATK_FR_CNT);
     }
     else
@@ -1046,7 +1046,7 @@ void FightView::e_attack(int selected)
         this->eq_a = -this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().y;
         this->eq_a /= float(ATK_FR_CNT);
         this->eq_b = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y;
-        this->eq_pas = -this->sprites[this->_adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().x;
+        this->eq_pas = -this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().x;
         this->eq_pas /= float(ATK_FR_CNT);
     }
     this->eq_x_off = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().x;
