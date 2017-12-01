@@ -22,7 +22,7 @@ std::string convert_sort(SortilegeType s)
         break;
 
     case SortilegeType::UniqueTargetAdvBurn:
-        o = "brÃ»le";
+        o = "brûle";
         break;
 
     case SortilegeType::UniqueTargetAdvParalize:
@@ -44,7 +44,7 @@ std::string convert_sort(SortilegeType s)
         break;
 
     case SortilegeType::MultipleAdvBurn:
-        o = "[multi] brÃ»le";
+        o = "[multi] brûle";
         break;
 
     case SortilegeType::MultipleAdvParalize:
@@ -184,7 +184,7 @@ bool FightView::load()
 
     setupFont(this->action, this->font, sf::Color::Black, 24)
     this->action.setPosition(5.0f, WIN_H - 155.0f);
-    this->action.setString("C'est Ã  votre tour d'attaquer !");
+    this->action.setString("C'est à votre tour d'attaquer !");
 
     setupFont(this->enemy, this->font, sf::Color::Black, 20)
     this->enemy.setPosition(6.0f, 86.0f);
@@ -296,7 +296,7 @@ void FightView::render(sf::RenderWindow& window)
     if (this->attacking)
     {
         window.draw(this->sprites[this->BKG_SELECT]);
-        this->attack_name.setString("SortilÃ¨ges disponibles");
+        this->attack_name.setString("Sortilèges disponibles");
         this->attack_name.setPosition(120.0f + float(int((400.0f - this->attack_name.getGlobalBounds().width) / 2.0f)), 130.0f);
         window.draw(this->attack_name);
         for (int i=0; i < this->equip->getSize(); ++i)
@@ -426,9 +426,9 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                             // fly away button
                             this->__count_before_flyaway = 220;
                             if (this->can_escape)
-                                this->action.setString("Vous vous Ã©chappez prestement ...");
+                                this->action.setString("Vous vous échappez prestement ...");
                             else
-                                this->action.setString("Vous ne pouvez pas vous Ã©chapper !");
+                                this->action.setString("Vous ne pouvez pas vous échapper !");
                             DebugLog(SH_INFO, "clic on escape");
                         }
                     }
@@ -502,12 +502,12 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                             {
                                 this->selectingcrea = true;
                                 this->selectingadv = this->attacking_enemy;
-                                this->action.setString("Sur quelle crÃ©ature souhaitez-vous utiliser le sort ?");
+                                this->action.setString("Sur quelle créature souhaitez-vous utiliser le sort ?");
                             }
                             else
                             {
                                 this->__selected = 42;  // special code to tell the engine to chose random creatures
-                                this->action.setString("Attaque multiple dÃ©clenchÃ©e");
+                                this->action.setString("Attaque multiple déclenchée");
                                 this->display_attack = true;
                                 DebugLog(SH_INFO, "display_attack=true");
                                 this->attack_frames_count = FightView::ATK_FR_CNT();
@@ -577,7 +577,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         this->ending = ENDING_CNT;
         DebugLog(SH_SPE, "wait_give_xp=0, starting to decrement ending");
         if (this->whoisdead == DEADOTH)
-            this->action.setString("Les crÃ©atures ennemies ont perdues !");
+            this->action.setString("Les créatures ennemies ont perdues !");
         else if (this->whoisdead == DEADME)
             this->action.setString("Vous avez perdu ...");
     }
@@ -630,14 +630,14 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
                 if (!this->equip->add_creature(this->adv[this->__selected]))
                 {
                     this->pc->add_creature(this->adv[this->__selected]);
-                    this->action.setString("La crÃ©ature a Ã©tÃ© envoyÃ©e au PC");
+                    this->action.setString("La créature a été envoyée au PC");
                     pop(&this->adv, this->__selected);
                 }
                 else
-                    this->action.setString("La crÃ©ature a Ã©tÃ© ajoutÃ©e Ã  l'Ã©quipe !");
+                    this->action.setString("La créature a été ajoutée à l'équipe !");
             }
             else
-                this->action.setString("La crÃ©ature n'a pas pu Ãªtre attrapÃ©e ...");
+                this->action.setString("La créature n'a pas pu être attrapée ...");
             this->__c = 0;
             this->__selected = -1;
         }
@@ -777,7 +777,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
                 this->attacks_used[i] = false;
             }
             this->lock = true;
-            this->action.setString("C'est Ã  votre tour d'attaquer !");
+            this->action.setString("C'est à votre tour d'attaquer !");
             this->check_statuses();
         }
     }
@@ -843,7 +843,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             if (this->giving_xp_to == 1)
             {
                 int t = this->equip->getCrea(i % this->equip->getSize())->gainExp(this->adv[i % this->adv.size()]);
-                this->action.setString(this->equip->getCrea(i)->getName() + " a gagnÃ© " + to_string<int>(t) + " niveau" + ((t == 1) ? std::string("") : std::string("x")));
+                this->action.setString(this->equip->getCrea(i)->getName() + " a gagné " + to_string<int>(t) + " niveau" + ((t == 1) ? std::string("") : std::string("x")));
             }
             else
             {
@@ -875,19 +875,19 @@ void FightView::check_statuses()
             break;
 
         case DEAD_PSN:
-            s += std::string("L'ennemi ") + this->adv[i]->getName() + " est mort empoisonnÃ©\n";
+            s += std::string("L'ennemi ") + this->adv[i]->getName() + " est mort empoisonné\n";
             break;
 
         case LOST_BUR:
-            s += std::string("L'ennemi ") + this->adv[i]->getName() + " n'est plus brÃ»lÃ© !\n";
+            s += std::string("L'ennemi ") + this->adv[i]->getName() + " n'est plus brûlé !\n";
             break;
 
         case LOST_PAR:
-            s += std::string("L'ennemi ") + this->adv[i]->getName() + " n'est plus paralysÃ© !\n";
+            s += std::string("L'ennemi ") + this->adv[i]->getName() + " n'est plus paralysé !\n";
             break;
 
         case LOST_PSN:
-            s += std::string("L'ennemi ") + this->adv[i]->getName() + " n'est plus empoisonnÃ© !\n";
+            s += std::string("L'ennemi ") + this->adv[i]->getName() + " n'est plus empoisonné !\n";
             break;
 
         default:
@@ -906,19 +906,19 @@ void FightView::check_statuses()
             break;
 
         case DEAD_PSN:
-            s += this->equip->getCrea(i)->getName() + " est mort empoisonnÃ©\n";
+            s += this->equip->getCrea(i)->getName() + " est mort empoisonné\n";
             break;
 
         case LOST_BUR:
-            s += this->equip->getCrea(i)->getName() + " n'est plus brÃ»lÃ© !\n";
+            s += this->equip->getCrea(i)->getName() + " n'est plus brûlé !\n";
             break;
 
         case LOST_PAR:
-            s += this->equip->getCrea(i)->getName() + " n'est plus paralysÃ© !\n";
+            s += this->equip->getCrea(i)->getName() + " n'est plus paralysé !\n";
             break;
 
         case LOST_PSN:
-            s += this->equip->getCrea(i)->getName() + " n'est plus empoisonnÃ© !\n";
+            s += this->equip->getCrea(i)->getName() + " n'est plus empoisonné !\n";
             break;
 
         default:
@@ -1115,7 +1115,7 @@ void FightView::e_attack(int selected)
                 n = rand() % this->adv.size();
                 enemy = this->adv[n];
             }
-            this->action.setString(std::string("L'ennemi ") + my->getName() + " aide son alliÃ© " + enemy->getName());
+            this->action.setString(std::string("L'ennemi ") + my->getName() + " aide son allié " + enemy->getName());
             my->attack(enemy);
             this->cibles.push_back(n);
         }
@@ -1179,7 +1179,7 @@ void FightView::start()
     this->enemy_wait_until_next = 0;
     this->enemy_is_attacking = false;
     this->lock = false;
-    this->action.setString("C'est Ã  votre tour d'attaquer !");
+    this->action.setString("C'est à votre tour d'attaquer !");
     this->wait_give_xp = 0;
     this->whoisdead = NODEAD;
     this->iamattacking = false;
