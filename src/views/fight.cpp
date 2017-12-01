@@ -1195,6 +1195,7 @@ void FightView::start()
     this->black_fade.update(pixels);
     this->black_fade_sprite.setTexture(this->black_fade);
     this->black_fade_sprite.setColor(sf::Color(0, 0, 0, 255));
+    this->particles.update(sf::seconds(3.0f));
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());

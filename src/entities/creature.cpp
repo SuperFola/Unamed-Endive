@@ -60,7 +60,8 @@ bool Creature::loadfrom(Creature* other)
 
 int Creature::calculateLevelFromXp(long int exp)
 {
-    return int(pow(exp, 0.33));
+    int i = int(pow(exp, 0.33));
+    return (i < 0) ? 0 : i;
 }
 
 long int Creature::calculateExpFromLevel(int level)

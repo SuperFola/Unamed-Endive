@@ -904,7 +904,7 @@ void Game::trigger_inner_balloon_prompt(bool v)
     this->inner_balloon_prompt_triggered = v ? 1 : 0;
 }
 
-void Game::set_balloon_prompt(const std::string& text, int len)
+void Game::set_balloon_prompt(const char* text, int len)
 {
     DebugLog(SH_INFO, "set balloon prompt : '" << text << "'");
     this->inner_balloon_prompt_txt.setString(text);

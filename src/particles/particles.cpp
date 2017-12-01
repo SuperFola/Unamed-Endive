@@ -7,7 +7,7 @@ void ParticleSystem::resetParticle(std::size_t index)
 {
     // give random speed and random lifetime to a particle
     float angle = (std::rand() % 360) * 3.14f / 180.f;
-    float speed = (std::rand() % 50) + 50.f;
+    float speed = (std::rand() % 72) + 100.f;
     this->particles[index].velocity = sf::Vector2f(std::cos(angle) * speed, std::sin(angle) * speed);
     this->particles[index].lifetime = sf::milliseconds((std::rand() % 2000) + 1000);
 
@@ -19,7 +19,7 @@ void ParticleSystem::resetParticle(std::size_t index)
 ParticleSystem::ParticleSystem(unsigned int count) :
     particles(count)
     , vertices(sf::Points, count)
-    , lifetime(sf::seconds(3))
+    , lifetime(sf::seconds(3.0f))
     , emitter(0, 0)
 {
 }
