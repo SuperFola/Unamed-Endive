@@ -88,7 +88,7 @@ FightView::FightView() :
     , eq_a(0.0f)
     , eq_b(0.0f)
     , eq_x(0.0f)
-    , eq_offset(0.0f)
+    , eq_x_off(0.0f)
     , eq_pas(1.0f)
     , ending(0)
     , enemy_is_attacking(false)
@@ -706,9 +706,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     if (this->has_selected_an_atk && this->__selected != -1 && this->my_turn)
     {
         DebugLog(SH_INFO, "You are attacking");
-        /// just to test
-        this->particles.setColor(sf::Color::Blue);
-        /// end
         this->cibles.clear();
         DebugLog(SH_SPE, "----------------------------");
         this->attack(this->__selected, this->atk_using_sort_of);
@@ -760,9 +757,6 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
                     break;
                 }
             }
-            /// just to test
-            this->particles.setColor(sf::Color::Red);
-            /// end
             this->cibles.clear();
             DebugLog(SH_SPE, "----------------------------");
             if (c_alive == 0)
@@ -828,7 +822,8 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     // updating particle emitter for the attack
     if (this->display_attack)
     {
-        this->particles.setEmitter(sf::Vector2f(250.0f, 250.0f));
+        this->eq_x += this->eq_pas;
+        this->particles.setEmitter(sf::Vector2f(this->eq_x + this->eq_x_off, this->eq_a * this->eq_x + this->eq_b));
         this->particles.update(elapsed);
     }
 
@@ -946,6 +941,26 @@ void FightView::attack(int selected, int index_my_creatures)
     DebugLog(SH_INFO, "display_attack=true");
     this->attack_frames_count = ATK_FR_CNT;
 
+    int temp_sel = (selected == 42) ? 1 : selected;
+
+    if (this->attacking_enemy)
+    {
+        this->particles.setColor(sf::Color::Blue);
+        this->eq_a = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
+        this->eq_a /= float(ATK_FR_CNT);
+        this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
+        this->eq_pas = this->sprites[this->_adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x;
+        this->eq_pas /= float(ATK_FR_CNT);
+    }
+    else
+    {
+        this->particles.setColor(sf::Color::Green);
+        this->eq_a = 1.0f;
+        this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
+        this->eq_pas = 0.0f;
+    }
+    this->eq_x_off = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x;
+
     if (selected == 42) // magic code, we need to select random creatures
     {
         this->action.setString(my->getName() + " attaque");
@@ -1016,6 +1031,25 @@ void FightView::e_attack(int selected)
     int targets = my->getSort()->getTargets();
     SortilegeType s = my->getSort()->getType();
     bool us = (s == UniqueTargetUsHeal) || (s == MultipleUsHeal) || (s == MultipleUsHealStatus);
+
+    int temp_sel = (targets > 1) ? 1 : selected;
+    if (us)
+    {
+        this->particles.setColor(sf::Color::Yellow);
+        this->eq_a = 1.0f;
+        this->eq_b = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().y;
+        this->eq_pas = 0.0f;
+    }
+    else
+    {
+        this->particles.setColor(sf::Color::Red);
+        this->eq_a = -this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().y;
+        this->eq_a /= float(ATK_FR_CNT);
+        this->eq_b = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y;
+        this->eq_pas = -this->sprites[this->_adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().x;
+        this->eq_pas /= float(ATK_FR_CNT);
+    }
+    this->eq_x_off = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().x;
 
     if (targets > 1)
     {
@@ -1154,7 +1188,7 @@ void FightView::start()
     this->eq_a = 0.0f;
     this->eq_b = 0.0f;
     this->eq_x = 0.0f;
-    this->eq_offset = 0.0f;
+    this->eq_x_off = 0.0f;
     this->eq_pas = 1.0f;
     sf::Uint8* pixels = new sf::Uint8[WIN_W * WIN_W * 4];
     for (unsigned int i=0; i < WIN_W * WIN_H * 4; ++i) { pixels[i] = 0; }
