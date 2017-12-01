@@ -15,6 +15,7 @@
 #include "../abstract/defines.hpp"
 #include "../particles/particles.hpp"
 #include "../scripting/types.hpp"
+#include "../abstract/config.hpp"
 
 #define X_TEXT_SELCREA_UI 200
 #define MX_TEXT_SELCREA_UI 400
@@ -25,7 +26,6 @@
 #define START_X 269.0f
 #define SPACEMENT_X 100.0f
 #define SPACING_ATK_LISTING_Y 30
-#define ATK_FR_CNT 200
 #define ENDING_CNT 260
 
 #define NODEAD 0
@@ -130,6 +130,8 @@ public:
     void set_escape(bool);
     void set_random_encounter(bool);
     void set_opponents(std::vector<fight_opponent>);
+
+    static int ATK_FR_CNT();
 };
 
 #endif // DEF_FIGHT_VIEW

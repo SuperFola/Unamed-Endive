@@ -510,7 +510,7 @@ int FightView::process_event(sf::Event& event, sf::Time elapsed)
                                 this->action.setString("Attaque multiple déclenchée");
                                 this->display_attack = true;
                                 DebugLog(SH_INFO, "display_attack=true");
-                                this->attack_frames_count = ATK_FR_CNT;
+                                this->attack_frames_count = FightView::ATK_FR_CNT();
                             }
 
                             DebugLog(SH_INFO, "clic in attack selection ui ; " << pos_atk_sel);
@@ -728,13 +728,13 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             if (this->adv[i]->getLife() > 0)
                 ++c;
         }
-        this->enemy_wait_until_next = c * ATK_FR_CNT;
+        this->enemy_wait_until_next = c * FightView::ATK_FR_CNT();
         this->check_statuses();
     }
 
     if (this->enemy_is_attacking)
     {
-        if ((this->enemy_wait_until_next % ATK_FR_CNT) == 0 && this->enemy_wait_until_next != 0 && !this->lock)
+        if ((this->enemy_wait_until_next % FightView::ATK_FR_CNT()) == 0 && this->enemy_wait_until_next != 0 && !this->lock)
         {
             DebugLog(SH_WARN, "enemy attacking");
             // counting dead ones
@@ -744,7 +744,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
                 if (this->adv[i]->getLife() > 0)
                     ++c;
             }
-            int choosen = c - int(this->enemy_wait_until_next / ATK_FR_CNT) + 1;
+            int choosen = c - int(this->enemy_wait_until_next / FightView::ATK_FR_CNT()) + 1;
             int c_alive = 0;
             for (int i=0; i < this->adv.size(); ++i)
             {
@@ -939,7 +939,7 @@ void FightView::attack(int selected, int index_my_creatures)
 
     this->display_attack = true;
     DebugLog(SH_INFO, "display_attack=true");
-    this->attack_frames_count = ATK_FR_CNT;
+    this->attack_frames_count = FightView::ATK_FR_CNT();
 
     int temp_sel = (selected == 42) ? 1 : selected;
 
@@ -947,10 +947,10 @@ void FightView::attack(int selected, int index_my_creatures)
     {
         this->particles.setColor(sf::Color::Blue);
         this->eq_a = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
-        this->eq_a /= float(ATK_FR_CNT);
+        this->eq_a /= float(FightView::ATK_FR_CNT());
         this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
         this->eq_pas = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x;
-        this->eq_pas /= float(ATK_FR_CNT);
+        this->eq_pas /= float(FightView::ATK_FR_CNT());
     }
     else
     {
@@ -1026,7 +1026,7 @@ void FightView::e_attack(int selected)
 
     this->display_attack = true;
     DebugLog(SH_INFO, "display_attack=true");
-    this->attack_frames_count = ATK_FR_CNT;
+    this->attack_frames_count = FightView::ATK_FR_CNT();
 
     int targets = my->getSort()->getTargets();
     SortilegeType s = my->getSort()->getType();
@@ -1044,10 +1044,10 @@ void FightView::e_attack(int selected)
     {
         this->particles.setColor(sf::Color::Red);
         this->eq_a = -this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().y;
-        this->eq_a /= float(ATK_FR_CNT);
+        this->eq_a /= float(FightView::ATK_FR_CNT());
         this->eq_b = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y;
         this->eq_pas = -this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().x;
-        this->eq_pas /= float(ATK_FR_CNT);
+        this->eq_pas /= float(FightView::ATK_FR_CNT());
     }
     this->eq_x_off = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().x;
 
@@ -1338,4 +1338,9 @@ void FightView::on_end()
 void FightView::set_opponents(std::vector<fight_opponent> vfos)
 {
     this->_opponents = vfos;
+}
+
+int FightView::ATK_FR_CNT()
+{
+    return Config::get("fps") * 1.8f;
 }
