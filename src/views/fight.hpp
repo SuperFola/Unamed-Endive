@@ -89,6 +89,8 @@ private:
     int giving_xp_to;
     bool random_encounter;
     std::vector<fight_opponent> _opponents;
+    sf::Texture black_fade;
+    sf::Sprite black_fade_sprite;
 
     const std::string __adv = "adv";
     const std::string __me = "me";

@@ -198,6 +198,15 @@ bool FightView::load()
 
     setupFont(this->attack_name, this->font, sf::Color::Black, 20)
 
+    if (!this->black_fade.create(WIN_W, WIN_W))
+        return false;
+    sf::Uint8* pixels = new sf::Uint8[WIN_W * WIN_W * 4];
+    for (unsigned int i=0; i < WIN_W * WIN_H * 4; ++i) { pixels[i] = 0; }
+    this->black_fade.update(pixels);
+    this->black_fade_sprite.setTexture(this->black_fade);
+    this->black_fade_sprite.setColor(sf::Color(0, 0, 0, 255));
+    this->black_fade_sprite.setPosition(0.0f, 0.0f);
+
     return true;
 }
 
@@ -351,6 +360,7 @@ void FightView::render(sf::RenderWindow& window)
     // animation
     if (this->ending)
     {
+        window.draw(this->black_fade_sprite);
     }
 
     // displaying particules for the attack
@@ -815,11 +825,16 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
         }
     }
 
-    // displaying particules for the attack
+    // updating particle emitter for the attack
     if (this->display_attack)
     {
         this->particles.setEmitter(sf::Vector2f(250.0f, 250.0f));
         this->particles.update(elapsed);
+    }
+
+    if (this->ending)
+    {
+        this->black_fade_sprite.setColor(sf::Color(0, 0, 0, int(this->ending / ENDING_CNT)));
     }
 
     if (this->wait_give_xp % 360 == 0 && this->wait_give_xp != 0 && this->giving_xp_to != -1)
@@ -1141,6 +1156,11 @@ void FightView::start()
     this->eq_x = 0.0f;
     this->eq_offset = 0.0f;
     this->eq_pas = 1.0f;
+    sf::Uint8* pixels = new sf::Uint8[WIN_W * WIN_W * 4];
+    for (unsigned int i=0; i < WIN_W * WIN_H * 4; ++i) { pixels[i] = 0; }
+    this->black_fade.update(pixels);
+    this->black_fade_sprite.setTexture(this->black_fade);
+    this->black_fade_sprite.setColor(sf::Color(0, 0, 0, 255));
 
     this->attacks_used.clear();
     this->attacks_used.reserve(this->equip->getSize());
