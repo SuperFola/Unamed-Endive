@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../../debug.hpp"
 #include <cstdlib>
+#include <cmath>
 
 #include "creature.hpp"
 
