@@ -73,11 +73,8 @@ private:
     bool my_turn;
     bool attacking_enemy;
     ParticleSystem particles;
-    float eq_a;
-    float eq_b;
     float eq_x;
-    float eq_x_off;
-    float eq_pas;
+    float eq_y;
     int ending;
     bool enemy_is_attacking;
     int enemy_wait_until_next;

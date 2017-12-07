@@ -85,11 +85,8 @@ FightView::FightView() :
     , my_turn(true)
     , attacking_enemy(true)
     , particles(2048)
-    , eq_a(0.0f)
-    , eq_b(0.0f)
     , eq_x(0.0f)
-    , eq_x_off(0.0f)
-    , eq_pas(1.0f)
+    , eq_y(0.0f)
     , ending(0)
     , enemy_is_attacking(false)
     , enemy_wait_until_next(0)
@@ -822,8 +819,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
     // updating particle emitter for the attack
     if (this->display_attack)
     {
-        this->eq_x += this->eq_pas;
-        this->particles.setEmitter(sf::Vector2f(this->eq_x + this->eq_x_off, this->eq_a * this->eq_x + this->eq_b));
+        this->particles.setEmitter(sf::Vector2f(this->eq_x, this->eq_y));
         this->particles.update(elapsed);
     }
 
@@ -946,20 +942,15 @@ void FightView::attack(int selected, int index_my_creatures)
     if (this->attacking_enemy)
     {
         this->particles.setColor(sf::Color::Blue);
-        this->eq_a = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y;
-        this->eq_a /= float(FightView::ATK_FR_CNT());
-        this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y + this->sprites[this->__me + to_string<int>(index_my_creatures)].getGlobalBounds().height / 2.0f;
-        this->eq_pas = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x;
-        this->eq_pas /= float(FightView::ATK_FR_CNT());
+        this->eq_x = this->sprites[this->__adv + to_string<int>(selected)].getPosition().x + this->sprites[this->__adv + to_string<int>(selected)].getGlobalBounds().width / 2.0f;
+        this->eq_y = this->sprites[this->__adv + to_string<int>(selected)].getPosition().y + CREATURE_HEIGHT / 2.0f;
     }
     else
     {
         this->particles.setColor(sf::Color::Green);
-        this->eq_a = 1.0f;
-        this->eq_b = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y + this->sprites[this->__me + to_string<int>(index_my_creatures)].getGlobalBounds().height / 2.0f;
-        this->eq_pas = 0.0f;
+        this->eq_x = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x + this->sprites[this->__me + to_string<int>(index_my_creatures)].getGlobalBounds().width / 2.0f;
+        this->eq_y = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y + CREATURE_HEIGHT / 2.0f;
     }
-    this->eq_x_off = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x + this->sprites[this->__me + to_string<int>(index_my_creatures)].getGlobalBounds().width / 2.0f;
 
     if (selected == 42) // magic code, we need to select random creatures
     {
@@ -1036,20 +1027,18 @@ void FightView::e_attack(int selected)
     if (us)
     {
         this->particles.setColor(sf::Color::Yellow);
-        this->eq_a = 1.0f;
-        this->eq_b = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y + this->sprites[this->__adv + to_string<int>(temp_sel)].getGlobalBounds().height / 2.0f;
-        this->eq_pas = 0.0f;
+        this->eq_x = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().x + this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getGlobalBounds().width / 2.0f;
+        this->eq_y = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().y + CREATURE_HEIGHT / 2.0f;
     }
     else
     {
         this->particles.setColor(sf::Color::Red);
-        this->eq_a = -this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().y;
-        this->eq_a /= float(FightView::ATK_FR_CNT());
-        this->eq_b = this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().y + this->sprites[this->__adv + to_string<int>(temp_sel)].getGlobalBounds().height / 2.0f;
-        this->eq_pas = -this->sprites[this->__adv + to_string<int>(temp_sel)].getPosition().x - this->sprites[this->__me + to_string<int>(temp_sel)].getPosition().x;
-        this->eq_pas /= float(FightView::ATK_FR_CNT());
+        if (targets > 1)
+        {
+            this->eq_x = this->sprites[this->__me + to_string<int>(0)].getPosition().x + (this->sprites[this->__me + to_string<int>(0)].getGlobalBounds().width / 2.0f) * this->equip->getSize();
+            this->eq_y = this->sprites[this->__me + to_string<int>(0)].getPosition().y + CREATURE_HEIGHT / 2.0f;
+        }
     }
-    this->eq_x_off = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().x + this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getGlobalBounds().width / 2.0f;
 
     if (targets > 1)
     {
@@ -1094,6 +1083,10 @@ void FightView::e_attack(int selected)
         if (!us)
         {
             int n = rand() % this->equip->getSize();
+
+            this->eq_x = this->sprites[this->__me + to_string<int>(n)].getPosition().x + this->sprites[this->__me + to_string<int>(n)].getGlobalBounds().width / 2.0f;
+            this->eq_y = this->sprites[this->__me + to_string<int>(n)].getPosition().y + CREATURE_HEIGHT / 2.0f;
+
             Creature* enemy = this->equip->getCrea(n);
             /// we must take a living creature !
             while (enemy->getLife() == 0)
@@ -1185,11 +1178,8 @@ void FightView::start()
     this->iamattacking = false;
     this->wait = 0;
     this->giving_xp_to = -1;
-    this->eq_a = 0.0f;
-    this->eq_b = 0.0f;
     this->eq_x = 0.0f;
-    this->eq_x_off = 0.0f;
-    this->eq_pas = 1.0f;
+    this->eq_y = 0.0f;
     sf::Uint8* pixels = new sf::Uint8[WIN_W * WIN_W * 4];
     for (unsigned int i=0; i < WIN_W * WIN_H * 4; ++i) { pixels[i] = 0; }
     this->black_fade.update(pixels);
