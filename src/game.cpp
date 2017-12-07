@@ -417,7 +417,7 @@ void Game::update_menu(sf::Time elapsed, int s, bool new_game)
                                 ));
 }
 
-void Game::render_menu(const std::vector<std::string>& s, bool new_game, bool del_game, bool play_game, bool valid_delete)
+void Game::render_menu(const std::vector<std::string>& s, bool new_game, bool del_game, bool play_game, bool valid_delete, bool agree_delete_game)
 {
     // background + logo + version number
     this->window.draw(this->menu_bckg_s);
@@ -433,8 +433,6 @@ void Game::render_menu(const std::vector<std::string>& s, bool new_game, bool de
         // warning
         if (del_game)
             this->window.draw(this->deletewarn);
-        if (valid_delete)
-            this->window.draw(this->validatebtn);
 
         // drawing game choices
         int i = 0;
@@ -451,6 +449,11 @@ void Game::render_menu(const std::vector<std::string>& s, bool new_game, bool de
             this->window.draw(this->menu_text);
 
             i++;
+        }
+
+        if (del_game && valid_delete)
+        {
+            window.draw(this->validatebtn);
         }
     }
 
@@ -485,6 +488,8 @@ void Game::menu()
     bool del_game = false;
     bool play_game = false;
     bool delete_selected_game = false;
+    bool agree_delete_game = false;
+    int ry;
 
     std::vector<std::string> saves = glob("saves/");
 
@@ -529,27 +534,24 @@ void Game::menu()
                         break;
 
                     case sf::Keyboard::Escape:
-                        new_game = false;
-                        del_game = false;
-                        play_game = false;
-                        this->menu_userentry.clear();
-                        this->menu_user.setString(this->menu_userentry);
-                        this->menu_game_selected = -1;
+                        if (!delete_selected_game)
+                        {
+                            DebugLog(SH_INFO, "fuck");
+                            new_game = false;
+                            del_game = false;
+                            play_game = false;
+                            this->menu_userentry.clear();
+                            this->menu_user.setString(this->menu_userentry);
+                            this->menu_game_selected = -1;
+                        }
+                        else
+                        {
+                            delete_selected_game = false;
+                        }
                         break;
 
                     default:
                         break;
-                    }
-                }
-                if (del_game && delete_selected_game)
-                {
-                    if (event.key.code == sf::Keyboard::Return)
-                    {
-                        pop<std::string>(&saves, this->menu_game_selected);
-                        PyScripting::run_code((std::string("remove(\"saves/") + this->menu_userentry.toAnsiString() + "\")").c_str());
-                        this->menu_userentry.clear();
-                        this->menu_game_selected = -1;
-                        delete_selected_game = false;
                     }
                 }
                 break;
@@ -576,6 +578,23 @@ void Game::menu()
                 switch(event.mouseButton.button)
                 {
                 case sf::Mouse::Button::Left:
+                    if (del_game && delete_selected_game)
+                    {
+                        DebugLog(SH_WARN, "trying");
+                        // did the user clicked on ok ?
+                        if (m__X >= WIN_W / 2.0f - this->textures.get("validate").getSize().x / 2.0f &&
+                            m__X <= WIN_W / 2.0f + this->textures.get("validate").getSize().x / 2.0f &&
+                            m__Y >= WIN_H / 2.0f - this->textures.get("validate").getSize().y / 2.0f &&
+                            m__Y <= WIN_H / 2.0f + this->textures.get("validate").getSize().y / 2.0f)
+                        {
+                            DebugLog(SH_SPE, "clicked Valider");
+                            agree_delete_game = true;
+                        }
+                        else
+                        {
+                            delete_selected_game = false;
+                        }
+                    }
                     // activate buttons only if not in a submenu
                     if (!play_game && !del_game && !new_game)
                     {
@@ -599,14 +618,14 @@ void Game::menu()
                             play_game = true;
                         }
                     }
-                    else
+                    else if (play_game || del_game || new_game)
                     {
                         if (m__X >= WIN_W / 2.0f - 200.0f && m__X <= WIN_W / 2.0f + 200.0f && m__Y >= 250.0f && m__Y <= 250.0f + saves.size() * (4.0f + this->menu_text.getCharacterSize()))
                         {
                             // clic on an existing save
-                            int ry = (m__Y - 250) / (4.0f + this->menu_text.getCharacterSize());
+                            ry = (m__Y - 250) / (4.0f + this->menu_text.getCharacterSize());
 
-                            if (play_game || del_game)
+                            if (play_game || del_game && !delete_selected_game)
                             {
                                 if (0 <= ry && ry <= saves.size() - 1)
                                 {
@@ -616,6 +635,7 @@ void Game::menu()
 
                                 if (del_game)
                                 {
+                                    DebugLog(SH_SPE, "delete_selected_game=true");
                                     delete_selected_game = true;
                                 }
                                 else if (play_game)
@@ -642,9 +662,20 @@ void Game::menu()
             }
         }
 
+        // small update
+        if (del_game && delete_selected_game && agree_delete_game)
+        {
+            pop<std::string>(&saves, this->menu_game_selected);
+            PyScripting::run_code((std::string("remove(\"saves/") + this->menu_userentry.toAnsiString() + "\")").c_str());
+            this->menu_userentry.clear();
+            this->menu_game_selected = -1;
+            delete_selected_game = false;
+            agree_delete_game = false;
+        }
+
         // rendering
         this->window.clear();
-        this->render_menu(saves, new_game, del_game, play_game, delete_selected_game);
+        this->render_menu(saves, new_game, del_game, play_game, delete_selected_game, agree_delete_game);
         this->window.display();
 
         if (quit)
@@ -777,7 +808,7 @@ Game::Game() :
     this->deletewarn.setTexture(this->textures.get("delwarn"));
     this->deletewarn.setPosition(0.0f, 0.0f);
     this->validatebtn.setTexture(this->textures.get("validate"));
-    this->validatebtn.setPosition(0.0f, 0.0f);
+    this->validatebtn.setPosition(WIN_W / 2.0f - this->textures.get("validate").getSize().x / 2.0f, WIN_H / 2.0f - this->textures.get("validate").getSize().y / 2.0f);
     this->inner_balloon_prompt_sprite.setTexture(this->textures.get("inner_balloon_prompt"));
     this->inner_balloon_prompt_sprite.setPosition(10.0f, WIN_H - 110.0f);
 

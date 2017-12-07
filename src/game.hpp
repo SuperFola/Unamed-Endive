@@ -84,7 +84,7 @@ private:
     void loading();
       // menu interface methods
     void update_menu(sf::Time, int, bool);
-    void render_menu(const std::vector<std::string>&, bool, bool, bool, bool);
+    void render_menu(const std::vector<std::string>&, bool, bool, bool, bool, bool);
     void menu();
       // others methods
     void take_screenshot();

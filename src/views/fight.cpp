@@ -943,14 +943,18 @@ void FightView::attack(int selected, int index_my_creatures)
     if (this->attacking_enemy)
     {
         this->particles.setColor(sf::Color::Blue);
+        DebugLog(SH_INFO, "--------------" << std::endl << "attack, attacking_enemy=true, selected=" << selected);
         this->eq_x = this->sprites[this->__adv + to_string<int>(selected)].getPosition().x + this->sprites[this->__adv + to_string<int>(selected)].getGlobalBounds().width / 2.0f;
         this->eq_y = this->sprites[this->__adv + to_string<int>(selected)].getPosition().y + CREATURE_HEIGHT / 2.0f;
+        DebugLog(SH_INFO, "--------------");
     }
     else
     {
         this->particles.setColor(sf::Color::Green);
+        DebugLog(SH_INFO, "--------------" << std::endl << "attack, attacking_enemy=false, index_my_creatures=" << index_my_creatures);
         this->eq_x = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().x + this->sprites[this->__me + to_string<int>(index_my_creatures)].getGlobalBounds().width / 2.0f;
         this->eq_y = this->sprites[this->__me + to_string<int>(index_my_creatures)].getPosition().y + CREATURE_HEIGHT / 2.0f;
+        DebugLog(SH_INFO, "--------------");
     }
 
     if (selected == 42) // magic code, we need to select random creatures
@@ -1028,16 +1032,20 @@ void FightView::e_attack(int selected)
     if (us)
     {
         this->particles.setColor(sf::Color::Yellow);
+        DebugLog(SH_INFO, "--------------" << std::endl << "e_attack, us=true, selected=" << selected % this->adv.size());
         this->eq_x = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().x + this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getGlobalBounds().width / 2.0f;
         this->eq_y = this->sprites[this->__adv + to_string<int>(selected % this->adv.size())].getPosition().y + CREATURE_HEIGHT / 2.0f;
+        DebugLog(SH_INFO, "--------------");
     }
     else
     {
         this->particles.setColor(sf::Color::Red);
         if (targets > 1)
         {
+            DebugLog(SH_INFO, "--------------" << std::endl << "e_attack, us=false, targets>1");
             this->eq_x = this->sprites[this->__me + to_string<int>(0)].getPosition().x + (this->sprites[this->__me + to_string<int>(0)].getGlobalBounds().width / 2.0f) * this->equip->getSize();
             this->eq_y = this->sprites[this->__me + to_string<int>(0)].getPosition().y + CREATURE_HEIGHT / 2.0f;
+            DebugLog(SH_INFO, "--------------");
         }
     }
 
@@ -1084,9 +1092,10 @@ void FightView::e_attack(int selected)
         if (!us)
         {
             int n = rand() % this->equip->getSize();
-
+            DebugLog(SH_INFO, "--------------" << std::endl << "e_attack, us=false, targets=1, n=" << n);
             this->eq_x = this->sprites[this->__me + to_string<int>(n)].getPosition().x + this->sprites[this->__me + to_string<int>(n)].getGlobalBounds().width / 2.0f;
             this->eq_y = this->sprites[this->__me + to_string<int>(n)].getPosition().y + CREATURE_HEIGHT / 2.0f;
+            DebugLog(SH_INFO, "--------------");
 
             Creature* enemy = this->equip->getCrea(n);
             /// we must take a living creature !
