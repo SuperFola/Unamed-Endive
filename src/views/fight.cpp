@@ -839,7 +839,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             DebugLog(SH_INFO, "giving xp to no " << i << ", giving_xp_to=" << this->giving_xp_to);
             if (this->giving_xp_to == 1)
             {
-                int t = this->equip->getCrea(i % this->equip->getSize())->gainExp(this->adv[i % this->adv.size()]);
+                int t = std::abs(this->equip->getCrea(i % this->equip->getSize())->gainExp(this->adv[i % this->adv.size()]));
                 this->action.setString(this->equip->getCrea(i)->getName() + " a gagné " + to_string<int>(t) + " niveau" + ((t == 1) ? std::string("") : std::string("x")));
             }
             else
