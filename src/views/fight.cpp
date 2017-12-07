@@ -2,6 +2,7 @@
 #include <random>
 #include <ctime>
 #include <cstdlib>
+#include <cmath>
 #include "../../debug.hpp"
 
 #include "fight.hpp"
@@ -843,7 +844,7 @@ void FightView::update(sf::RenderWindow& window, sf::Time elapsed)
             }
             else
             {
-                int t = this->adv[i % this->adv.size()]->gainExp(this->equip->getCrea(i % this->equip->getSize()));
+                int t = std::abs(this->adv[i % this->adv.size()]->gainExp(this->equip->getCrea(i % this->equip->getSize())));
                 this->action.setString(this->equip->getCrea(i)->getName() + " a perdu " + to_string<int>(t) + " niveau" + ((t == 1) ? std::string("") : std::string("x")));
             }
         }
