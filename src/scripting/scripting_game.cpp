@@ -343,7 +343,7 @@ void PyScripting::setFightEscape(bool e)
     instance.sm->getFight()->set_escape(e);
 }
 
-void PyScripting::triggerBalloonPrompt(const char* prompt, int& e, int len)
+void PyScripting::triggerBalloonPrompt(const std::wstring& prompt, int& e, int len)
 {
     if (!instance.game->get_triggered_inner_balloon_prompt())
     {

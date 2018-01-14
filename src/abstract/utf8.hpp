@@ -4,6 +4,6 @@
 #include <string>
 #include "functions.hpp"
 
-std::string fix_my_utf8(const char* base);
+std::wstring fix_my_utf8(const char* base);
 
 #endif // DEF_MY_UTF8

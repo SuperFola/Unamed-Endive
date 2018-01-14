@@ -2,6 +2,7 @@
 #include <ctime>
 #include <string>
 #include <cstdlib>
+#include <clocale>
 
 #include "../debug.hpp"
 
@@ -536,7 +537,6 @@ void Game::menu()
                     case sf::Keyboard::Escape:
                         if (!delete_selected_game)
                         {
-                            DebugLog(SH_INFO, "fuck");
                             new_game = false;
                             del_game = false;
                             play_game = false;
@@ -571,6 +571,10 @@ void Game::menu()
                         this->menu_userentry.insert(this->menu_userentry.getSize(), event.text.unicode);
                     }
                     this->menu_user.setString(this->menu_userentry);
+                }
+                if (event.text.unicode == 13 && del_game && delete_selected_game)
+                {
+                    agree_delete_game = true;
                 }
                 break;
 
@@ -731,6 +735,8 @@ Game::Game() :
     , _is_a_new_game(false)
 {
     DebugLog(SH_INFO, "Running on " << AutoVersion::FULLVERSION_STRING);
+
+    setlocale(LC_ALL, "French");
 
     // configuration file
     Config::load();
@@ -935,10 +941,10 @@ void Game::trigger_inner_balloon_prompt(bool v)
     this->inner_balloon_prompt_triggered = v ? 1 : 0;
 }
 
-void Game::set_balloon_prompt(const char* text, int len)
+void Game::set_balloon_prompt(const std::wstring& text, int len)
 {
-    DebugLog(SH_INFO, "set balloon prompt : '" << text << "'");
-    this->inner_balloon_prompt_txt.setString(text);
+    DebugWLog(SH_INFO, "set balloon prompt : '" << text << "'");
+    this->inner_balloon_prompt_txt.setString(sf::String(text));
     this->inner_balloon_prompt_str_back = text;
     this->inner_balloon_prompt_max_length = len;
 }

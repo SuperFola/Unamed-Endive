@@ -465,9 +465,9 @@ extern "C"
             len = 0; /// max length
         }
 
-        std::string s2 = fix_my_utf8(s);
+        std::wstring s2 = fix_my_utf8(s);
         int e = 0;
-        PyScripting::triggerBalloonPrompt(s2.c_str(), e, len);
+        PyScripting::triggerBalloonPrompt(s2, e, len);
         if (e == 1)
         {
             PyErr_SetString(UnamedError, "Balloon prompt is already triggered, can not re-trigger it while it is running");

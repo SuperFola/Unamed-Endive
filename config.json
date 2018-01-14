@@ -7,7 +7,7 @@
 	"music" : true,
 	"right" : "d",
 	"shader" : "none",
-	"sigma" : 0.5,
+	"sigma" : 0,
 	"up" : "z",
 	"v-sync" : true
 }

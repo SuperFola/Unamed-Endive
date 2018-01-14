@@ -17,6 +17,7 @@ namespace SHCL = termcolor;
 
 #ifdef DEV_MODE
     #define DebugLog(color, msg)  std::cout << __FILE__ << ":" << __LINE__ << ": " << color << msg << SHCL::reset << std::endl
+    #define DebugWLog(color, msg) std::wcout << __FILE__ << L":" << __LINE__ << L": " << color << msg << SHCL::reset << std::endl
 #else
     #define DebugLog(color, msg) {}
 #endif
