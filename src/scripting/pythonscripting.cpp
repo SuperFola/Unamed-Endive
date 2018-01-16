@@ -25,6 +25,26 @@ extern "C"
         RETURN_NONE
     }
 
+    PyObject* unloadScript(PyObject* self, PyObject* args)
+    {
+        const char* id;
+        char result[256];
+        if (!PyArg_ParseTuple(args, "s", &id))
+        {
+            PyErr_SetString(UnamedError, "Can not parse argument, need a const char* representing the id of the script");
+            return NULL;
+        }
+        if (PyScripting::unloadModule(id) == 1)
+        {
+            strcpy(result, "Can not unload wanted module : ");
+            strcat(result, id);
+            PyErr_SetString(UnamedError, result);
+            return NULL;
+        }
+
+        RETURN_NONE
+    }
+
     PyObject* print(PyObject* self, PyObject* args)
     {
         PyObject* content;
@@ -612,6 +632,7 @@ extern "C"
         // ...
         {"upr", print, METH_VARARGS, "Print function using std::cout instead of the standard output stream of Python"},
         {"registerScript", registerScript, METH_VARARGS, "Register a script in the PyScripting singleton, as a specific kind given as an argument, with a string id also given"},
+        {"unloadScript", unloadScript, METH_VARARGS, "Unload a module. It will prevent it to be ran according to its given kind. You can still use it if you register it again"},
         {"loadImage", loadTexture, METH_VARARGS, "Load an image using a given path, and assigne it to a given id"},
         {"displayImage", displayTexture, METH_VARARGS, "Display an image loaded before using loadImage with its id, and its position (2 integers, x and y)"},
         {"displayWithView", display_with_view, METH_VARARGS, "Display an image loaded before, relative to the top left corner of the view. Need the same argument as displayImage(...)"},

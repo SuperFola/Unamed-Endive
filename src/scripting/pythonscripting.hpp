@@ -14,6 +14,7 @@ extern "C"
     static PyObject* UnamedError;
 
     PYFUNC(registerScript);
+    PYFUNC(unloadScript);
     PYFUNC(print);
     PYFUNC(loadTexture);
     PYFUNC(displayTexture);

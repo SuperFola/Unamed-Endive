@@ -291,28 +291,56 @@ void PyScripting::setGame(Game* game)
 }
 
 int PyScripting::setModuleKind(const char* kind, const char* id)
- {
-     std::string tkind = std::string(kind);
-     std::string tid = std::string(id);
+{
+    std::string tkind = std::string(kind);
+    std::string tid = std::string(id);
 
-     DebugLog(SH_OK, "Registering " << tid << " as " << tkind);
+    DebugLog(SH_OK, "Registering " << tid << " as " << tkind);
 
-     if (instance.modules_kinds.find(tkind) != instance.modules_kinds.end())
-     {
-         if (instance.modules_kinds[tkind].find(tid) == instance.modules_kinds[tkind].end())
-         {
-             instance.modules_kinds[tkind][tid] = instance.modules[tid];
-             return 0;
-         }
-         else
+    if (instance.modules_kinds.find(tkind) != instance.modules_kinds.end())
+    {
+        if (instance.modules_kinds[tkind].find(tid) == instance.modules_kinds[tkind].end())
+        {
+            instance.modules_kinds[tkind][tid] = instance.modules[tid];
+            return 0;
+        }
+        else
             return -1;  // error the module already exists
-     }
-     else
-     {
-         instance.modules_kinds[tkind][tid] = instance.modules[tid];
-         return 0;
-     }
- }
+    }
+    else
+    {
+        instance.modules_kinds[tkind][tid] = instance.modules[tid];
+        return 0;
+    }
+}
+
+int PyScripting::unloadModule(const char* id)
+{
+    std::string sid = std::string(id);
+    DebugLog(SH_INFO, "Unloading " << sid);
+
+    std::string kind = "";
+
+    for (auto const& p : instance.modules_kinds)
+    {
+        for (auto const& s : p.second)
+        {
+            if (s.first == sid)
+            {
+                kind = p.first;
+                break;
+            }
+        }
+        if (kind != "")
+            break;
+    }
+    if (kind != "")
+    {
+        instance.modules_kinds[kind].erase(sid);
+    }
+
+    return (kind != "") ? 0 : 1;
+}
 
 int PyScripting::createGlobal(const char* name, struct svar_t value)
  {

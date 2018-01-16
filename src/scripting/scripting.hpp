@@ -81,6 +81,7 @@ public:
     static int run_drawing_modules();
 
     static int setModuleKind(const char*, const char*);
+    static int unloadModule(const char*);
 
     static void setWindow(sf::RenderWindow*);
     static void setMusicPlayer(MusicPlayer*);
