@@ -24,13 +24,13 @@ int Character::chara_move(Map& map_, std::vector<float> vect)
     // checking all edges and returning the first one to be like != -1
     // which means that it is on a tp, and we got a new rpos
     // so we return it
-    int nrp1 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      );
+    int nrp1 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,     vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE    );
     if (nrp1 != -1) return nrp1;
 
-    int nrp2 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      );
+    int nrp2 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE    );
     if (nrp2 != -1) return nrp2;
 
-    int nrp3 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
+    int nrp3 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,     vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
     if (nrp3 != -1) return nrp3;
 
     int nrp4 = map_.post_colliding_test_to_check_tp(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
@@ -42,13 +42,25 @@ int Character::chara_move(Map& map_, std::vector<float> vect)
 
 bool Character::pass_pnj(Map& map_, std::vector<float> vect)
 {
-    if (this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()                       , vect[1] + this->pos.getY()                       , map_.getId()) != -1 ||
-         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + TILE_SIZE, vect[1] + this->pos.getY()                       , map_.getId()) != -1 ||
-         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()                       , vect[1] + this->pos.getY() + TILE_SIZE, map_.getId()) != -1 ||
-         this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + TILE_SIZE, vect[1] + this->pos.getY() + TILE_SIZE, map_.getId()) != -1)
-    {
-        return false;
-    }
+    bool c_lu = this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()            , vect[1] + this->pos.getY()            , map_.getId()) != -1;
+    bool c_ru = this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + TILE_SIZE, vect[1] + this->pos.getY()            , map_.getId()) != -1;
+    bool c_ld = this->pnjm->find_pnjid_at(vect[0] + this->pos.getX()            , vect[1] + this->pos.getY() + TILE_SIZE, map_.getId()) != -1;
+    bool c_rd = this->pnjm->find_pnjid_at(vect[0] + this->pos.getX() + TILE_SIZE, vect[1] + this->pos.getY() + TILE_SIZE, map_.getId()) != -1;
+
+    bool c = (c_lu || c_ru || c_ld /*|| c_rd*/);
+
+    // if we are already on a npc we should check if we are going in a direction to escape from it
+    if (vect[0] < 1 && (c_ru || c_rd)) // left
+        { return true; }
+    if (vect[0] > 1 && (c_lu || c_ld)) // right
+        { return true; }
+    if (vect[1] < 1 && (c_ld || c_rd)) // up
+        { return true; }
+    if (vect[1] > 1 && (c_lu || c_ru)) // down
+        { return true; }
+    // all collisions
+    if (c)
+        { return false; }
     return true;
 }
 

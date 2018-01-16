@@ -148,37 +148,44 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
     float speed = ((this->speed / float(this->_size)) * TILE_SIZE * 3.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
-    std::vector<float> vect {0, 0};
+    std::vector<float> vect  {0, 0};
+    std::vector<float> vect2 {0, 0};
 
     if (dir == DIRECTION::up)
     {
         if (this->pos.getY() - speed >= 0.0f)
+        {
             vect[1] = -1 * speed;
+            vect2[1] = vect[1] + TILE_SIZE - 4;
+        }
     }
     else if (dir == DIRECTION::down)
     {
         if (this->pos.getY() + speed - csprite_size.y < map_.getHeight() * TILE_SIZE)
             vect[1] = 1 * speed;
+        vect2[1] = vect[1];
     }
     else if (dir == DIRECTION::left)
     {
         if (this->pos.getX() - speed >= 0.0f)
+        {
             vect[0] = -1 * speed;
+            vect2[0] = vect[0] + TILE_SIZE - 4;
+        }
     }
     else if (dir == DIRECTION::right)
     {
         if (this->pos.getX() + speed - csprite_size.x < map_.getWidth() * TILE_SIZE)
             vect[0] = 1 * speed;
+        vect2[0] = vect[0];
     }
 
-    bool pass =        !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      )
-                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE      )
-                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,       vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2)
-                        && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
-    if (!pass || !this->pass_pnj(map_, vect))
-    {
-        return 0;
-    }
+    bool pass =  !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,     vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE    )
+              && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE    )
+              && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,     vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2)
+              && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
+    if (!pass || !this->pass_pnj(map_, vect2))
+        { return 0; }
 
     // check for tp on a new map
     int nrpos = this->chara_move(map_, vect);
@@ -271,7 +278,7 @@ void AnimatedEntity::chara_send_player_touch(Map& map_)
 
 bool AnimatedEntity::pass_pnj(Map&, std::vector<float>)
 {
-    // not implemented for basi entities such as PNJ(npc)
+    // not implemented for basic entities such as PNJ(npc)
     return true;
 }
 

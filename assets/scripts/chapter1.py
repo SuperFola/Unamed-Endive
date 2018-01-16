@@ -14,7 +14,9 @@ if _progress['p'] == 2:
         Unamed.setPlayerName(n)
         # tell the beginning of the story
         Unamed.triggerBalloonPrompt("""{name}, te voici sur l'île d'Unamed. Tu es un élu d'après une ancienne prophétie,
+        
 ce qui te donne la possibilité de dresser des créatures. Te voilà donc déclaré
+
 élu depuis moins d'un an, cherchant encore comment utiliser correctement ce don.""".format(name=Unamed.getPlayerName()), 0)
         _progress['p'] = 3
 

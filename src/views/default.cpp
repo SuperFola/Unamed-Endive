@@ -144,7 +144,7 @@ void DefaultView::render(sf::RenderWindow& window)
 
     // normal rendering (level and chara)
     this->level.render(this->world);
-    this->world.draw(this->player.getCurrentSprite());
+    bool rendered_chara = false;
 
     // pnj rendering
     int mid = this->level.getId();
@@ -152,7 +152,24 @@ void DefaultView::render(sf::RenderWindow& window)
     {
         this->world.draw(this->pnjmgr.getPNJonMap(mid, i).getCurrentSprite());
         this->pnjmgr.getPNJonMap(mid, i).render(this->offscreen);
+
+        // we check if the player is right in front of a NPC
+        bool condition = this->pnjmgr.getPNJonMap(mid, i).getPos().intersect(
+                                this->player.getPos()
+                                , int(this->pnjmgr.getPNJonMap(mid, i).getCurrentSprite().getGlobalBounds().width)
+                                , int(this->pnjmgr.getPNJonMap(mid, i).getCurrentSprite().getGlobalBounds().height)
+                         ) &&
+                         this->pnjmgr.getPNJonMap(mid, i).getPos().getY() < this->player.getPos().getY()
+            ;
+
+        if (!rendered_chara && condition)
+        {
+            rendered_chara = true;
+            this->world.draw(this->player.getCurrentSprite());
+        }
     }
+    if (!rendered_chara)
+        this->world.draw(this->player.getCurrentSprite());
     this->level.render_top(this->world);
 
     // rendering with our shaders now !! :D

@@ -19,6 +19,7 @@ public:
     float getY();
     sf::Vector2f get();
     int squareDistanceTo(Point&);
+    bool intersect(Point& other, int spacingx=64, int spacingy=64);
 };
 
 #endif // DEF_POINT

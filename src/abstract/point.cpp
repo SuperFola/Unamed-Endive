@@ -56,3 +56,8 @@ int Point::squareDistanceTo(Point& _pos)
 
     return r;
 }
+
+bool Point::intersect(Point& other, int spacingx, int spacingy)
+{
+    return (this->x <= other.x) && (other.x <= this->x + spacingx) && (this->y <= other.y) && (other.y <= this->y + spacingy);
+}

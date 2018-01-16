@@ -160,6 +160,10 @@ turnPlayer
 ----------
 Turn the player in the specified direction. 0: up, 1: down, 2: left, 3: right
 
+unloadScript
+------------
+Unload a module. It will prevent it to be ran according to its given kind. You can still use it if you register it again
+
 upr
 ---
 Print function using std::cout instead of the standard output stream of Python

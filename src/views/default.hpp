@@ -14,6 +14,7 @@
 #include "../abstract/functions.hpp"
 #include "../json/json.h"
 #include "../entities/character.hpp"
+#include "../abstract/point.hpp"
 
 std::vector<std::string> glob_frag(const std::string& directory);
 
