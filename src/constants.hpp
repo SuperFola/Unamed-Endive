@@ -33,7 +33,7 @@
 
 // tiles
 #define TILE_SIZE 16
-#define TILE_SIZE_IN_TILESET 17
+#define TILE_SIZE_IN_TILESET 16
 
 // window
 #define WIN_W 640

@@ -1,8 +1,9 @@
 **[Version française](.github/README-fr.md)**
 
-# Unamed Rebirth [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ae66540cc8d040b7955c6b93c0f9da2e)](https://www.codacy.com/app/folaefolc/Unamed-Endive/dashboard) [![Discord badge](https://img.shields.io/badge/Discord-Unamed__Rebirth-brightgreen.svg?style=flat)](https://discord.gg/AWSWvgU) ([`yo͝onˈnāmd`] Rebirth)
+# Unamed Rebirth [![Discord badge](https://img.shields.io/badge/Discord-Unamed__Rebirth-brightgreen.svg?style=flat)](https://discord.gg/AWSWvgU)
+*[`yo͝onˈnāmd`] Rebirth*
 
-** Only download the game from the official website : https://loodoor.github.io/UnamedRebirth !**
+** Only download the game from the official website : https://superfola.github.io/UnamedRebirth !**
 
 Kind of game
 ============
@@ -27,14 +28,14 @@ Otherwise, you just have to download the latest release working on your platform
 
 Compiling the project
 =====================
-If you want to compile the project, you will need to install the SFML lib and follow these steps : https://loodoor.github.io/Unamed-Endive/compiling.html 
+If you want to compile the project, you will need to install the SFML lib as well Python 3.6, and call cmake, then make.
 
 Credits
 =======
 * copyright Pokémon Company ©, Game Freak inc (using the term "Pokémon" to define the kind of game)
 * regular help and support : OverSurge, Pacific Void, Nuri Yuri, AhzeLeSteak, yyyyj, DarkCisum, the_new_sky, Deakcor, ralandel, Qames, WDguy45
 * logo of the game : Izaliia
-* outside tiles : WesleyFG (at the beginning for project Marnian)
+* outside tiles : WesleyFG (at the beginning for project Marnian), thatssowitty
 * inside tiles : Slahs
 * graphical interfaces (inventory, dex, equip/PC) : vulvoch
 * graphical interfaces (menu) : Eurons ??, ralandel
@@ -49,7 +50,7 @@ Credits
 
 What can we do when a bug appears ?
 ===================================
-If you encounter a bug, please open a new [issue](https://github.com/Loodoor/Unamed-Endive/issues/new) 
+If you encounter a bug, please open a new [issue](https://github.com/SuperFola/Unamed-Endive/issues/new) 
 and describe the bug as follows :
 
 [CONTRIBUTING](.github/CONTRIBUTING.md)
@@ -60,4 +61,4 @@ Links
 * [ZesteDeSavoir](https://zestedesavoir.com/forums/sujet/7064/unamed-rebirth/)
 * [Trello](https://trello.com/b/JdzEnDJf)
 * [The forum](http://unamedrebirth.alwaysdata.net/)
-* [The scripting engine made for this project](https://github.com/Loodoor/Py3ScriptingEngine)
+* [The scripting engine made for this project](https://github.com/SuperFola/Py3ScriptingEngine)

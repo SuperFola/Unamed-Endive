@@ -2,13 +2,29 @@
 
 #include "tilemap.hpp"
 #include "../constants.hpp"
+#include "../../debug.hpp"
+
+bool TileMap::loaded_tileset = false;
+sf::Texture TileMap::tileset;
 
 // public
 int TileMap::load(const std::string& tileset_path)
 {
     // load tileset !
-    if (!this->tileset.loadFromFile(tileset_path))
-        return 1;
+    if (!TileMap::loaded_tileset)
+    {
+        sf::Image image;
+        if (!image.loadFromFile(tileset_path))
+            DebugLog(SH_ERR, "Unable to open " << tileset_path);
+        else
+        {
+            image.createMaskFromColor(sf::Color(  0, 183, 239, 255));
+            image.createMaskFromColor(sf::Color(255, 242,   0, 255));
+            if (!TileMap::tileset.loadFromImage(image))
+                return 1;
+        }
+        TileMap::loaded_tileset = true;
+    }
     return 0;
 }
 
@@ -24,23 +40,25 @@ int TileMap::load_map(sf::Vector2u tileSize, std::vector<Block*> tiles, unsigned
         {
             int tileNumber = (tiles[i + j * width])->getId();
 
-            if (tileNumber == -1)
+            if (tileNumber == -1 || tileNumber == 99999)
                 tileNumber = TRANSPARENT_TILE;
 
-            int tu = tileNumber % (this->tileset.getSize().x / tileSize.x);
-            int tv = tileNumber / (this->tileset.getSize().x / tileSize.x);
+            int tu = tileNumber % (TileMap::tileset.getSize().x / tileSize.x);
+            int tv = tileNumber / (TileMap::tileset.getSize().x / tileSize.x);
 
             sf::Vertex* quad = &this->vertices[(i + j * width) * 4];
 
-            quad[0].position = sf::Vector2f(i * TILE_SIZE, j * TILE_SIZE);
-            quad[1].position = sf::Vector2f((i + 1) * TILE_SIZE, j * TILE_SIZE);
-            quad[2].position = sf::Vector2f((i + 1) * TILE_SIZE, (j + 1) * TILE_SIZE);
-            quad[3].position = sf::Vector2f(i * TILE_SIZE, (j + 1) * TILE_SIZE);
+            // on définit ses quatre coins
+            quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
+            quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
+            quad[2].position = sf::Vector2f((i + 1) * tileSize.x, (j + 1) * tileSize.y);
+            quad[3].position = sf::Vector2f(i * tileSize.x, (j + 1) * tileSize.y);
 
+            // on définit ses quatre coordonnées de texture
             quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
-            quad[1].texCoords = sf::Vector2f(tu * tileSize.x + TILE_SIZE, tv * tileSize.y);
-            quad[2].texCoords = sf::Vector2f(tu * tileSize.x + TILE_SIZE, tv * tileSize.y + TILE_SIZE);
-            quad[3].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y + TILE_SIZE);
+            quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
+            quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
+            quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
         }
 
     return 0;

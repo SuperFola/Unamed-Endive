@@ -13,12 +13,13 @@ private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
         states.transform *= getTransform();
-        states.texture = &tileset;
+        states.texture = &TileMap::tileset;
         target.draw(this->vertices, states);
     }
     // variables
     sf::VertexArray vertices;
-    sf::Texture tileset;
+    static sf::Texture tileset;
+    static bool loaded_tileset;
 
 public:
     // methods

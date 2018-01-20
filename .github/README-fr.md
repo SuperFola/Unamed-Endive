@@ -1,6 +1,7 @@
 **[English README](../README.md)**
 
-# Unamed Rebirth [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ae66540cc8d040b7955c6b93c0f9da2e)](https://www.codacy.com/app/folaefolc/Unamed-Endive/dashboard) [![Discord badge](https://img.shields.io/badge/Discord-Unamed__Rebirth-brightgreen.svg?style=flat)](https://discord.gg/AWSWvgU) ([`yo͝onˈnāmd`] Rebirth)
+# Unamed Rebirth [![Discord badge](https://img.shields.io/badge/Discord-Unamed__Rebirth-brightgreen.svg?style=flat)](https://discord.gg/AWSWvgU)
+*[`yo͝onˈnāmd`] Rebirth*
 
 ** Téléchargez uniquement le jeu depuis le site officiel : https://loodoor.github.io/UnamedRebirth !**
 
@@ -27,14 +28,14 @@ Sinon, vous avez juste à télécharger la dernière release correspondant à vo
 
 Compiler le projet
 ==================
-Si vous souhaitez compiler le projet, il vous faut installer la SFML et suivre ces étapes : https://loodoor.github.io/Unamed-Endive/compiling.html
+Si vous souhaitez compiler le projet, il vous faut installer la SFML et python 3.6, et appeler cmake, puis make.
 
 Crédits
 =======
 * copyright Pokémon Company ©, Game Freak inc (utilisation du mot "Pokémon" pour définir le type de projet)
 * aide constante et soutien : OverSurge, Pacific Void, Nuri Yuri, AhzeLeSteak, yyyyj, DarkCisum, the_new_sky, Deakcor, ralandel, Qames, WDguy45
 * logo du jeu : Izaliia
-* tiles d'extérieur : WesleyFG (à la base pour le projet Marnian)
+* tiles d'extérieur : WesleyFG (à la base pour le projet Marnian), thatssowitty
 * tiles d'intérieur : Slahs
 * interfaces graphiques (inventaire, dex, équipe/PC) : vulvoch
 * interfaces graphiques (menu) : Eurons ??, ralandel
@@ -49,7 +50,7 @@ Crédits
 
 En cas de bug
 =============
-Si vous rencontrez un bug, merci de créer une nouvelle [issue](https://github.com/Loodoor/Unamed-Endive/issues/new) 
+Si vous rencontrez un bug, merci de créer une nouvelle [issue](https://github.com/SuperFola/Unamed-Endive/issues/new) 
 et de l'y décrire comme suit :
 
 [CONTRIBUTING](CONTRIBUTING.md)
@@ -60,4 +61,4 @@ Liens
 * [ZesteDeSavoir](https://zestedesavoir.com/forums/sujet/7064/unamed-rebirth/)
 * [Trello](https://trello.com/b/JdzEnDJf)
 * [Le forum](http://unamedrebirth.alwaysdata.net/)
-* [Le moteur de scripting conçu pour ce projet](https://github.com/Loodoor/Py3ScriptingEngine)
+* [Le moteur de scripting conçu pour ce projet](https://github.com/SuperFola/Py3ScriptingEngine)
