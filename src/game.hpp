@@ -1,6 +1,7 @@
 #ifndef DEF_GAME
 #define DEF_GAME
 
+#include <cmath>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 

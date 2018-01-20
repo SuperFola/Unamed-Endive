@@ -213,6 +213,7 @@ static inline void fixNumericLocale(char* begin, char* end) {
 #define snprintf std::snprintf
 #else
 #define snprintf _snprintf
+#error "fuck"
 #endif
 #elif defined(__ANDROID__) || defined(__QNXNTO__)
 #define snprintf snprintf

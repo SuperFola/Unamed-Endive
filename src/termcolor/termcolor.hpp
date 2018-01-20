@@ -34,6 +34,7 @@
 #   include <unistd.h>
 #elif defined(TERMCOLOR_OS_WINDOWS)
 #   include <stdio.h>
+#   define _fileno(__F) ((__F)->_file)
 #   include <io.h>
 #   include <windows.h>
 #endif

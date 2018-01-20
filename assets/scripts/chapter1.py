@@ -1,8 +1,8 @@
 # game script
 
 if _progress['p'] == 1:
-    # ask player name
     Unamed.playMusic("01.ogg")
+    # ask player name
     Unamed.triggerBalloonPrompt("Quel est ton nom ? ", 18)
     _progress['p'] = 2
 
@@ -13,10 +13,8 @@ if _progress['p'] == 2:
         # set the name of the player
         Unamed.setPlayerName(n)
         # tell the beginning of the story
-        Unamed.triggerBalloonPrompt("""{name}, te voici sur l'île d'Unamed. Tu es un élu d'après une ancienne prophétie,
-        
-ce qui te donne la possibilité de dresser des créatures. Te voilà donc déclaré
-
+        Unamed.triggerBalloonPrompt("""{name}, te voici sur l'île d'Unamed. Tu es un élu d'après une ancienne prophétie,\n
+ce qui te donne la possibilité de dresser des créatures. Te voilà donc déclaré\n
 élu depuis moins d'un an, cherchant encore comment utiliser correctement ce don.""".format(name=Unamed.getPlayerName()), 0)
         _progress['p'] = 3
 

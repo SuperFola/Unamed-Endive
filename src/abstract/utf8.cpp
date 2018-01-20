@@ -8,7 +8,6 @@ std::wstring fix_my_utf8(const char* base)
     for (int i=0; base[i] != '\0'; ++i)
     {
         unsigned char c = base[i];
-
         if (c < 0x80)  // 128
             out += c;
         else
@@ -20,7 +19,6 @@ std::wstring fix_my_utf8(const char* base)
     }
     // fix_utf8_string(out);
     DebugLog(SH_SPE, out);
-
     std::wstring out3(out.size(), L' ');
     out3.resize(std::mbstowcs(&out3[0], out.c_str(), out.size()));
 
