@@ -39,6 +39,11 @@ private:
     std::string current_shader;
     sf::Shader shader;
     sf::Texture distortionMap;
+    sf::Texture bulle;
+    sf::Sprite bulle_sp;
+    sf::Texture fd;
+    sf::Sprite fd_sp;
+    sf::RectangleShape rect;
     Sex player_sex;
     // methods
     void set_view(sf::RenderWindow&);
@@ -46,7 +51,7 @@ private:
 
     const std::string shaders_path = "assets/shaders/";
 
-    void display_ui_first_game(sf::RenderWindow&);
+    void display_ui_first_game(sf::RenderWindow&, bool);
     int ask_for_player_sex(sf::RenderWindow&);
 
 public:

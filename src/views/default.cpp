@@ -58,13 +58,23 @@ void DefaultView::unset_view(sf::RenderWindow& window)
     window.setView(window.getDefaultView());
 }
 
-void DefaultView::display_ui_first_game(sf::RenderWindow& window)
+void DefaultView::display_ui_first_game(sf::RenderWindow& window, bool ending)
 {
-    //
+    window.draw(this->fd_sp);
+    window.draw(this->bulle_sp);
+
+    if (ending)
+    {
+        window.draw(this->rect);
+        this->rect.setFillColor(sf::Color(
+              this->rect.getFillColor().r, this->rect.getFillColor().g, this->rect.getFillColor().b, this->rect.getFillColor().a - 1));
+    }
 }
 
 int DefaultView::ask_for_player_sex(sf::RenderWindow& window)
 {
+    bool ending = false;
+    int frame_cnt = 0;
     sf::Event event;
     while (window.isOpen())
     {
@@ -111,9 +121,14 @@ int DefaultView::ask_for_player_sex(sf::RenderWindow& window)
             }
         }
 
+        if (ending)
+            frame_cnt++;
+        if (frame_cnt == 255)
+            break;
+
         // rendering
         window.clear();
-        this->display_ui_first_game(window);
+        this->display_ui_first_game(window, ending);
         window.display();
     }
 
@@ -136,8 +151,17 @@ DefaultView::DefaultView() :
 
 bool DefaultView::load() { return true; }
 
-bool DefaultView::load(sf::String folder, bool new_game, sf::RenderWindow& window)
+bool DefaultView::load(sf::String folder, bool new_game, sf::RenderWindow& window, bool& has_requested_quit)
 {
+    // loading first scene
+    if (!this->bulle.loadFromFile("assets/gui/pnj/bubble.png"))
+        return false;
+    if (!this->fd.loadFromFile("assets/gui/fd_aventure.png"))
+        return false;
+    this->rect.setSize(sf::Vector2f(WIN_W, WIN_H));
+    this->rect.setPosition(sf::Vector2f(0.0f, 0.0f));
+    this->rect.setFillColor(sf::Color(0, 0, 0, 255));
+
     // loading shaders
     if (sf::Shader::isAvailable())
     {

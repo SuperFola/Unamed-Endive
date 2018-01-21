@@ -2,7 +2,7 @@
 #define DEF_CONTAINERGUARD
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <iostream>
 
 #include "../../debug.hpp"
@@ -11,7 +11,7 @@ template <typename ContainerType>
 class Container
 {
 private:
-    std::map<std::string, ContainerType> content;
+    std::unordered_map<std::string, ContainerType> content;
 
 public:
     Container();
