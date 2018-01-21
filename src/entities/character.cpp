@@ -12,7 +12,12 @@ Character::Character(Sex sex_) :
     , sex(sex_)
 {
     DebugLog(SH_INFO, "Character cstr");
+    setSex(this->sex);
+}
 
+void Character::setSex(Sex sex_)
+{
+    this->sex = sex_;
     if (this->sex == Sex::Male)
         this->path = "assets/players/male/";
     else if (this->sex == Sex::Female)
@@ -119,7 +124,6 @@ void Character::_load()
         this->speed = root["speed"].asInt();
         this->name = root["name"].asString();
     }
-
 }
 
 int Character::save()

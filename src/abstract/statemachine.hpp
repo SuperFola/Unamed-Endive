@@ -41,7 +41,7 @@ private:
 public:
     // methods
     StateMachine();
-    bool load(sf::String);
+    bool load(sf::String, bool, sf::RenderWindow&, bool&);
     int getId();
     bool hasActiveHud(int);
     int change_view(int);

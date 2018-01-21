@@ -11,7 +11,7 @@ StateMachine::StateMachine() :
     this->history.reserve(MAX_HISTORY);
 }
 
-bool StateMachine::load(sf::String playername)
+bool StateMachine::load(sf::String playername, bool new_game, sf::RenderWindow& window, bool& has_requested_quit)
 {
     int id = -1;
     bool b = false;
@@ -19,7 +19,7 @@ bool StateMachine::load(sf::String playername)
     {
     case 0:
         id = this->defaultv.getId();
-        b = this->defaultv.load(playername);
+        b = this->defaultv.load(playername, new_game, window, has_requested_quit);
         DebugLog(SH_SPE, "default view loaded : " << b);
         break;
 

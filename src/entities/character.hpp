@@ -38,6 +38,7 @@ public:
     // methods
     Character(Sex sex_=Sex::Male);
     ~Character();
+    void setSex(Sex sex_);
     int chara_move(Map&, std::vector<float>) override;
     void chara_send_player_touch(Map&) override;
     bool pass_pnj(Map&, std::vector<float>) override;

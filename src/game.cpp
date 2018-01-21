@@ -351,8 +351,12 @@ void Game::loading()
         }
         if (load_sm && !load_musics)
         {
-            if (this->sm.load(this->menu_userentry))
+            if (this->sm.load(this->menu_userentry, this->_is_a_new_game, this->window, this->has_requested_quit))
+            {
                 load_musics = true;
+                if (this->has_requested_quit)
+                    break;
+            }
         }
         if (load_musics)
         {

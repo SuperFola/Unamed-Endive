@@ -39,16 +39,20 @@ private:
     std::string current_shader;
     sf::Shader shader;
     sf::Texture distortionMap;
+    Sex player_sex;
     // methods
     void set_view(sf::RenderWindow&);
     void unset_view(sf::RenderWindow&);
 
     const std::string shaders_path = "assets/shaders/";
 
+    void display_ui_first_game(sf::RenderWindow&);
+    int ask_for_player_sex(sf::RenderWindow&);
+
 public:
     // methods
     DefaultView();
-    bool load(sf::String);
+    bool load(sf::String, bool, sf::RenderWindow&, bool&);
       // we are overriding it but not using it
       bool load() override;
     void render(sf::RenderWindow&) override;
@@ -65,6 +69,7 @@ public:
     void draw_on_offscreen(const sf::Drawable&);
     void resolve_pnjspeak(int, int, sf::RenderWindow&);
     void disable_pnj_speaking();
+    void setPlayerSex(Sex sex_);
 
     template <typename T>
     void setShaderParameter(const std::string& param, T& value)

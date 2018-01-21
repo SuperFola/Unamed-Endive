@@ -58,6 +58,71 @@ void DefaultView::unset_view(sf::RenderWindow& window)
     window.setView(window.getDefaultView());
 }
 
+void DefaultView::display_ui_first_game(sf::RenderWindow& window)
+{
+    //
+}
+
+int DefaultView::ask_for_player_sex(sf::RenderWindow& window)
+{
+    sf::Event event;
+    while (window.isOpen())
+    {
+        // dispatch events using a loop
+        while (window.pollEvent(event))
+        {
+            // default events
+            switch(event.type)
+            {
+            case sf::Event::KeyPressed:
+                switch(event.key.code)
+                {
+                case sf::Keyboard::Up:
+                    break;
+
+                case sf::Keyboard::Down:
+                    break;
+
+                case sf::Keyboard::Escape:
+                    break;
+
+                default:
+                    break;
+                }
+                break;
+
+            case sf::Event::MouseButtonPressed:
+                switch(event.mouseButton.button)
+                {
+                case sf::Mouse::Button::Left:
+                    break;
+
+                default:
+                    break;
+                }
+                break;
+
+            case sf::Event::Closed:
+                window.close();
+                return 1;
+
+            default:
+                break;
+            }
+        }
+
+        // rendering
+        window.clear();
+        this->display_ui_first_game(window);
+        window.display();
+    }
+
+    /// we need to ask for it
+    this->player_sex = Sex::Male;
+
+    return 0;
+}
+
 DefaultView::DefaultView() :
     View(DEFAULT_VIEW_ID)
     , view(sf::FloatRect(0, 0, WIN_W, WIN_H))
@@ -65,12 +130,13 @@ DefaultView::DefaultView() :
     , display_mmap(false)
     , _speaking_to_pnj(false, -1, -1)
     , current_shader("")
+    , player_sex(Sex::Male)
 {
 }
 
 bool DefaultView::load() { return true; }
 
-bool DefaultView::load(sf::String folder)
+bool DefaultView::load(sf::String folder, bool new_game, sf::RenderWindow& window)
 {
     // loading shaders
     if (sf::Shader::isAvailable())
@@ -99,6 +165,11 @@ bool DefaultView::load(sf::String folder)
     }
 
     // configuring stuff
+    if (new_game)
+    {
+        has_requested_quit = (this->ask_for_player_sex(window) == 1);
+        this->player.setSex(player_sex);
+    }
     this->player.setFolder(folder.toAnsiString());
     if (!this->player.load())
     {
@@ -357,6 +428,11 @@ void DefaultView::disable_pnj_speaking()
 
         this->_speaking_to_pnj = std::make_tuple(false, -1, -1);
     }
+}
+
+void DefaultView::setPlayerSex(Sex sex_)
+{
+    this->player_sex = sex_;
 }
 
 void DefaultView::setShader(const std::string& name)
