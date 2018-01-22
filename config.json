@@ -1,13 +1,13 @@
 {
-	"aa" : 1,
+	"aa" : 0,
 	"down" : "s",
-	"fps" : 120,
+	"fps" : 240,
 	"left" : "q",
 	"menu" : "escape",
-	"music" : true,
+	"music" : false,
 	"right" : "d",
 	"shader" : "none",
 	"sigma" : 0,
 	"up" : "z",
-	"v-sync" : true
+	"v-sync" : false
 }

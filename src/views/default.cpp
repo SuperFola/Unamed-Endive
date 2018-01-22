@@ -5,6 +5,7 @@
 
 #include "default.hpp"
 #include "../scripting/scripting.hpp"
+#include "../abstract/functions.hpp"
 
 std::vector<std::string> glob_frag(const std::string& directory)
 {
@@ -162,6 +163,12 @@ bool DefaultView::load(sf::String folder, bool new_game, sf::RenderWindow& windo
     this->rect.setPosition(sf::Vector2f(0.0f, 0.0f));
     this->rect.setFillColor(sf::Color(0, 0, 0, 255));
 
+    if (!this->font.loadFromFile(FONTPATH))
+        return false;
+    setupFont(this->debugmessage, this->font, sf::Color::White, 20);
+    this->debugmessage.setOutlineColor(sf::Color::Black);
+    this->debugmessage.setPosition(10.0f, 10.0f);
+
     // loading shaders
     if (sf::Shader::isAvailable())
     {
@@ -220,11 +227,15 @@ void DefaultView::render(sf::RenderWindow& window)
 {
     // setting the views
     if (!this->level.smaller_than_window())
+    {
+        this->debugmessage.setString("Centered view on the player\nCenter x:" + to_string<int>(this->view.getCenter().x) + ", y:" + to_string<int>(this->view.getCenter().y));
         this->set_view(window);
+    }
     else
     {
         this->view.setCenter(this->level.getWidth() / 2 * TILE_SIZE, this->level.getHeight() / 2 * TILE_SIZE);
         window.setView(this->view);
+        this->debugmessage.setString("Centered view on the center of the map\nCenter x:" + to_string<int>(this->view.getCenter().x) + ", y:" + to_string<int>(this->view.getCenter().y));
     }
 
     sf::View mview = sf::View(sf::FloatRect(0 , 0 , MINIMAP_X,  MINIMAP_Y));
@@ -278,6 +289,11 @@ void DefaultView::render(sf::RenderWindow& window)
     this->offscreen.display();
     sf::Vector2f p = window.mapPixelToCoords(sf::Vector2i(0, 0));
     this->offsprite.setPosition(p);
+
+    #ifdef DEV_MODE
+    this->offscreen.draw(this->debugmessage);
+    #endif // DEV_MODE
+
     window.draw(this->offsprite);
 
     // displaying (or not) the mini map

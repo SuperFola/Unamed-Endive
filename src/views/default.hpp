@@ -45,6 +45,8 @@ private:
     sf::Sprite fd_sp;
     sf::RectangleShape rect;
     Sex player_sex;
+    sf::Font font;
+    sf::Text debugmessage;
     // methods
     void set_view(sf::RenderWindow&);
     void unset_view(sf::RenderWindow&);

@@ -143,6 +143,7 @@ int Map::load_map(std::string& map_path)
     DebugLog(SH_INFO, "Loading map");
     this->map_width = this->root["width"].asInt();
     this->map_height = this->root["height"].asInt();
+    DebugLog(SH_INFO, "Width : " << this->map_width << "  Height : " << this->map_height);
 
     const std::vector<std::string> maps = {"map", "map2", "map3"};
 
@@ -158,6 +159,7 @@ int Map::load_map(std::string& map_path)
             temp.push_back(block);
         }
         this->level.push_back(temp);
+        DebugLog(SH_INFO, "Loaded layer '" << map_name << "' as layer number " << this->level.size() - 1);
     }
     DebugLog(SH_OK, "Map loaded");
 
@@ -215,7 +217,7 @@ int Map::getMapFromTp(int rpos)
 
 bool Map::smaller_than_window()
 {
-    return this->map_width <= WIN_W && this->map_height <= WIN_H;
+    return this->map_width * TILE_SIZE <= WIN_W && this->map_height * TILE_SIZE <= WIN_H;
 }
 
 void Map::setBlockAttrib(int rid, std::string identifier, bool value)
