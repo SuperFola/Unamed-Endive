@@ -107,12 +107,11 @@ bool AnimatedEntity::load()
         }
     }
 
-    // essentially for th pnj, otherwise the static ones won't be at the correct position
+    // essentially for the pnj, otherwise the static ones won't be at the correct position
     sf::Vector2f _pos {
         float(int(this->pos.getX()))
         , float(int(this->pos.getY()))
     };
-
     this->getCurrentSprite().setPosition(_pos);
 
     return true;
@@ -121,8 +120,8 @@ bool AnimatedEntity::load()
 bool AnimatedEntity::has_changed_case()
 {
     if (int(this->opos.getX()) / TILE_SIZE != int(this->pos.getX()) / TILE_SIZE ||
-         int(this->opos.getY()) / TILE_SIZE != int(this->pos.getY()) / TILE_SIZE)
-             return true;
+            int(this->opos.getY()) / TILE_SIZE != int(this->pos.getY()) / TILE_SIZE)
+        return true;
     return false;
 }
 
@@ -137,54 +136,52 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
     // set the new direction
     if (this->direction != dir)
         this->anim_cursor = MvState::idle;
-        // the AnimatedEntity change his direction so we reset the anim cursor
+        // the AnimatedEntity changed its direction so we reset the anim' cursor
         // to prevent some visual glitches
     this->direction = dir;
 
     // update anim
     this->not_moving_time = sf::seconds(0.0f);  // reset it
-    this->update_anim(elapsed);
+    if (this->anim_cursor != MvState::idle)
+        this->update_anim(elapsed);
+    else
+        this->update_anim(sf::seconds(0.0f));
 
     float speed = ((this->speed / float(this->_size)) * TILE_SIZE * 3.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
 
     std::vector<float> vect  {0, 0};
-    std::vector<float> vect2 {0, 0};
 
     if (dir == DIRECTION::up)
     {
         if (this->pos.getY() - speed >= 0.0f)
         {
             vect[1] = -1 * speed;
-            vect2[1] = vect[1] + TILE_SIZE - 4;
         }
     }
     else if (dir == DIRECTION::down)
     {
         if (this->pos.getY() + speed - csprite_size.y < map_.getHeight() * TILE_SIZE)
             vect[1] = 1 * speed;
-        vect2[1] = vect[1];
     }
     else if (dir == DIRECTION::left)
     {
         if (this->pos.getX() - speed >= 0.0f)
         {
             vect[0] = -1 * speed;
-            vect2[0] = vect[0] + TILE_SIZE - 4;
         }
     }
     else if (dir == DIRECTION::right)
     {
         if (this->pos.getX() + speed - csprite_size.x < map_.getWidth() * TILE_SIZE)
             vect[0] = 1 * speed;
-        vect2[0] = vect[0];
     }
 
     bool pass =  !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,     vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE    )
-              && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE    )
-              && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,     vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2)
-              && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 2, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 2);
-    if (!pass || !this->pass_pnj(map_, vect2))
+              && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 1, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE    )
+              && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE,     vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 1)
+              && !map_.colliding_at(vect[0] / TILE_SIZE + this->pos.getX() / TILE_SIZE + 1, vect[1] / TILE_SIZE + this->pos.getY() / TILE_SIZE + 1);
+    if (!pass || !this->pass_pnj(map_, vect))
         { return 0; }
 
     // check for tp on a new map
@@ -208,7 +205,6 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
         float(int(this->pos.getX()))
         , float(int(this->pos.getY()))
     };
-
     for (int i=0; i < this->sprites.size(); i++)
         this->sprites[i].setPosition(_pos);
 
@@ -232,7 +228,10 @@ void AnimatedEntity::simplemove(DIRECTION dir, sf::Time elapsed)
 
     // update anim
     this->not_moving_time = sf::seconds(0.0f);  // reset it
-    this->update_anim(elapsed);
+    if (this->anim_cursor != MvState::idle)
+        this->update_anim(elapsed);
+    else
+        this->update_anim(sf::seconds(0.0f));
 
     float speed = ((this->speed / 32.0f) * TILE_SIZE * 3.0f);  // * (elapsed.asSeconds() * 100.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
@@ -295,7 +294,7 @@ sf::Sprite& AnimatedEntity::getCurrentSprite()
 
 void AnimatedEntity::update(sf::RenderWindow& window, sf::Time elapsed)
 {
-    if (this->state != ChState::idle)
+    if (this->state == ChState::idle)
         this->not_moving_time += elapsed;
     if (this->not_moving_time.asSeconds() > 1.0f)
         this->state = ChState::idle;

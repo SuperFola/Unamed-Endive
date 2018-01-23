@@ -256,17 +256,15 @@ void DefaultView::render(sf::RenderWindow& window)
     int mid = this->level.getId();
     for (int i=0; i < this->pnjmgr.countPNJonMap(this->level.getId()); i++)
     {
-        this->world.draw(this->pnjmgr.getPNJonMap(mid, i).getCurrentSprite());
-        this->pnjmgr.getPNJonMap(mid, i).render(this->offscreen);
+        PNJ& pnj = this->pnjmgr.getPNJonMap(mid, i);
+        this->world.draw(pnj.getCurrentSprite());
+        pnj.render(this->offscreen);
 
         // we check if the player is right in front of a NPC
-        bool condition = this->pnjmgr.getPNJonMap(mid, i).getPos().intersect(
-                                this->player.getPos()
-                                , int(this->pnjmgr.getPNJonMap(mid, i).getCurrentSprite().getGlobalBounds().width)
-                                , int(this->pnjmgr.getPNJonMap(mid, i).getCurrentSprite().getGlobalBounds().height)
-                         ) &&
-                         this->pnjmgr.getPNJonMap(mid, i).getPos().getY() < this->player.getPos().getY()
-            ;
+        bool condition = pnj.getPos().intersect(this->player.getPos()
+                                                , int(this->player.getCurrentSprite().getGlobalBounds().width)
+                                                , int(this->player.getCurrentSprite().getGlobalBounds().height)) &&
+                         pnj.getPos().getY() < this->player.getPos().getY();
 
         if (!rendered_chara && condition)
         {

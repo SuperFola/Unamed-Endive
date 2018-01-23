@@ -84,11 +84,9 @@ bool Map::colliding_at(int tx, int ty)
 {
     int rpos = tx + ty * this->map_width;
     bool ret_val = true;
-
-    if (rpos < this->map_height * this->map_width)
-    {
-        ret_val = this->level[COLLIDING_LAYER][rpos]->is_solid();
-    }
+    // if we are in range for the tile to get
+    if (rpos < this->map_height * this->map_width && tx < this->map_width && ty < this->map_height)
+        { ret_val = this->level[COLLIDING_LAYER][rpos]->is_solid(); }
     return ret_val;
 }
 
@@ -194,11 +192,10 @@ int Map::load_map(std::string& map_path)
 bool Map::is_tp(int x, int y)
 {
     int rpos = x + y * this->map_width;
-
     struct TypeTp ttp = this->findTpOnCase(rpos);
 
     if (ttp.fromcase != this->default_tp.fromcase && ttp.tocasex != this->default_tp.tocasex &&
-         ttp.tocasey != this->default_tp.tocasey && ttp.tomap != this->default_tp.tomap)
+            ttp.tocasey != this->default_tp.tocasey && ttp.tomap != this->default_tp.tomap)
         return true;
     return false;
 }
@@ -206,12 +203,9 @@ bool Map::is_tp(int x, int y)
 int Map::getMapFromTp(int rpos)
 {
     int mid;
-
     struct TypeTp ttp = this->findTpOnCase(rpos);
     mid = ttp.tomap;
-
     DebugLog(SH_INFO, "Tp on " << rpos << " go to map " << mid);
-
     return mid;
 }
 

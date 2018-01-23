@@ -97,7 +97,7 @@ def save_stuff():
 # function to trigger an event from the C++ code
 def trigger_event(mid, x, y, triggtype):
     global _progress
-    print("trying to trigger an event on map id", mid, ", x", x, ", y", y, ", triggtype", triggtype)
+    print("trying to trigger an event on map {}, x:{}, y:{}, triggtype:{}".format(mid, x, y, triggtype))
     ev_onmap = _progress.get(mid, {})
     if ev_onmap and ((x, y) in ev_onmap.keys() or triggtype == "autorun"):
         # triggering the autorun events
@@ -143,12 +143,12 @@ def netrecv():
     return str(r)
 
 # scripts only for the game do not modify/delete them
-Unamed.registerScript("runOnceWhenStarting", "doc_extract.py")
-Unamed.registerScript("runOnceWhenStarting", "addpnjs.py")
-Unamed.registerScript("runOnceWhenStarting", "textures.py")
-Unamed.registerScript("runWhenUpdatingGame", "ev_checking.py")
-Unamed.registerScript("runWhenUpdatingGame", "adventure.py")
-Unamed.registerScript("runOnceWhenClosing", "closing.py")
+Unamed.registerScript("runOnceWhenStarting", "doc_extract.py")  # automatic generation of the documentation for the C++/Python binding
+Unamed.registerScript("runOnceWhenStarting", "addpnjs.py")      # script loading and putting all the NPC
+Unamed.registerScript("runOnceWhenStarting", "textures.py")     # script to load the textures needed
+Unamed.registerScript("runWhenUpdatingGame", "ev_checking.py")  # where all the events are checked
+Unamed.registerScript("runWhenUpdatingGame", "adventure.py")    # the main adventure, loading automatically all the chapters when they're needed
+Unamed.registerScript("runOnceWhenClosing",  "closing.py")      # script run when the game is closing
 
 ###############################################################################
 # your own scripts here                                                       #
