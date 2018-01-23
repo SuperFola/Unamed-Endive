@@ -155,6 +155,8 @@ public:
     static void add_object_to_pocket(int, int, int);
 
     static void setPlayerName(const char*);
+
+    static int getTileId(int);
 };
 
 #endif // DEF_SCRIPTING

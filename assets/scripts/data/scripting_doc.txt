@@ -88,6 +88,10 @@ getPlayerName
 -------------
 Return the name of the player
 
+getTileId
+---------
+Return the id of a tile, from its position (layer is collision layer only) on the current map
+
 giveObject
 ----------
 Give an object to the player. Need the id of the object, the quantity to give, and in which pocket (id) it will be put

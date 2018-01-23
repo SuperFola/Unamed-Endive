@@ -16,6 +16,7 @@ public:
     Block(int, bool);
     bool is_solid();
     int getId();
+    void setId(int);
     void setSolid(bool);
 };
 

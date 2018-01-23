@@ -628,6 +628,23 @@ extern "C"
         RETURN_NONE
     }
 
+    PyObject* getTileId(PyObject* self, PyObject* args)
+    {
+        int rpos;
+        if (!PyArg_ParseTuple(args, "i", &rpos))
+        {
+            PyErr_SetString(UnamedError, "Can not parse argument, need an int for the rpos of the tile");
+            return NULL;
+        }
+        int rep = PyScripting::getTileId(rpos);
+        if (rep == -1)
+        {
+            PyErr_SetString(UnamedError, "Can not reach tile, it's out of bound for the current map");
+            return NULL;
+        }
+        return Py_BuildValue("i", rep);
+    }
+
     static PyMethodDef UnamedMethods[] = {
         // ...
         {"upr", print, METH_VARARGS, "Print function using std::cout instead of the standard output stream of Python"},
@@ -671,6 +688,7 @@ extern "C"
         {"removeObjectsFromPocket", removeObjectsFromPocket, METH_VARARGS, "Remove an object from a specified pocket, given its unique id and the quantity to remove (the quantity is optional, 1 by default)"},
         {"addObjectsToPocket", addObjectsToPocket, METH_VARARGS, "Add an object to a specified pocket, given its unique id and a quantity"},
         {"setPlayerName", setPlayerName, METH_VARARGS, "Set the name of the player. Need a string"},
+        {"getTileId", getTileId, METH_VARARGS, "Return the id of a tile, from its position (layer is collision layer only) on the current map"},
         // ...
         {NULL, NULL, 0, NULL}  // sentinel
     };

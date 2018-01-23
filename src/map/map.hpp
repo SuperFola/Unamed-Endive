@@ -48,7 +48,8 @@ public:
     TypeTp findTpOnCase(int); // take a rpos
     int getMapFromTp(int);  // return a mid, take a rpos
     bool smaller_than_window();
-    void setBlockAttrib(int, std::string, bool);
+    void setBlockAttrib(int, std::string, int);
+    int getTileAt(int);
 };
 
 #endif // DEF_MAP

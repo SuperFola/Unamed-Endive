@@ -138,7 +138,7 @@ int PyScripting::getMapId()
 
 void PyScripting::changeBlockAttrib(int rid, const char* identifier, int value)
 {
-    instance.level->setBlockAttrib(rid, std::string(identifier), bool(value));
+    instance.level->setBlockAttrib(rid, std::string(identifier), value);
 }
 
 const char* PyScripting::getPlayerName()
@@ -427,4 +427,9 @@ void PyScripting::add_object_to_pocket(int pocket_id, int id, int qu)
 void PyScripting::setPlayerName(const char* n)
 {
     instance.player->setName(std::string(n));
+}
+
+int PyScripting::getTileId(int rpos)
+{
+    return instance.level->getTileAt(rpos);
 }

@@ -214,12 +214,26 @@ bool Map::smaller_than_window()
     return this->map_width * TILE_SIZE <= WIN_W && this->map_height * TILE_SIZE <= WIN_H;
 }
 
-void Map::setBlockAttrib(int rid, std::string identifier, bool value)
+void Map::setBlockAttrib(int rid, std::string identifier, int value)
 {
     if (identifier.compare("solid") != 0)
     {
-        this->level[COLLIDING_LAYER][rid]->setSolid(value);
+        this->level[COLLIDING_LAYER][rid]->setSolid(bool(value));
     }
+    if (identifier.compare("id") != 0)
+    {
+        this->level[COLLIDING_LAYER][rid]->setId(value);
+        // reload the layer
+        this->tmaps[COLLIDING_LAYER]->load_map(sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET)
+                                               , this->level[COLLIDING_LAYER], this->map_width, this->map_height);
+    }
+}
+
+int Map::getTileAt(int rpos)
+{
+    if (0 <= rpos < this->map_height * this->map_width)
+        return this->level[COLLIDING_LAYER][rpos]->getId();
+    return -1;
 }
 
 Map::~Map()

@@ -26,6 +26,11 @@ int Block::getId()
     return this->id;
 }
 
+void Block::setId(int newone)
+{
+    this->id = newone;
+}
+
 void Block::setSolid(bool value)
 {
     this->solid = value;
