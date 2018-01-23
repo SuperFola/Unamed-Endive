@@ -264,7 +264,7 @@ void DefaultView::render(sf::RenderWindow& window)
         bool condition = pnj.getPos().intersect(this->player.getPos()
                                                 , int(this->player.getCurrentSprite().getGlobalBounds().width)
                                                 , int(this->player.getCurrentSprite().getGlobalBounds().height)) &&
-                         pnj.getPos().getY() < this->player.getPos().getY();
+                         pnj.getPos().getY() > this->player.getPos().getY();
 
         if (!rendered_chara && condition)
         {

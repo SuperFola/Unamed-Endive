@@ -142,10 +142,7 @@ int AnimatedEntity::move(DIRECTION dir, Map& map_, sf::Time elapsed)
 
     // update anim
     this->not_moving_time = sf::seconds(0.0f);  // reset it
-    if (this->anim_cursor != MvState::idle)
-        this->update_anim(elapsed);
-    else
-        this->update_anim(sf::seconds(0.0f));
+    this->update_anim(elapsed);
 
     float speed = ((this->speed / float(this->_size)) * TILE_SIZE * 3.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();
@@ -228,10 +225,7 @@ void AnimatedEntity::simplemove(DIRECTION dir, sf::Time elapsed)
 
     // update anim
     this->not_moving_time = sf::seconds(0.0f);  // reset it
-    if (this->anim_cursor != MvState::idle)
-        this->update_anim(elapsed);
-    else
-        this->update_anim(sf::seconds(0.0f));
+    this->update_anim(elapsed);
 
     float speed = ((this->speed / 32.0f) * TILE_SIZE * 3.0f);  // * (elapsed.asSeconds() * 100.0f);
     sf::Vector2u csprite_size = (this->getCurrentSprite().getTexture())->getSize();

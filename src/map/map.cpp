@@ -85,7 +85,7 @@ bool Map::colliding_at(int tx, int ty)
     int rpos = tx + ty * this->map_width;
     bool ret_val = true;
     // if we are in range for the tile to get
-    if (rpos < this->map_height * this->map_width && tx < this->map_width && ty < this->map_height)
+    if (rpos < this->map_height * this->map_width && tx < (this->map_width - 1) && ty < (this->map_height - 1))
         { ret_val = this->level[COLLIDING_LAYER][rpos]->is_solid(); }
     return ret_val;
 }
