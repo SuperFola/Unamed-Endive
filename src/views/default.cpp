@@ -178,6 +178,7 @@ bool DefaultView::load(sf::String folder, bool new_game, sf::RenderWindow& windo
     if (!this->distortionMap.loadFromFile("assets/shaders/textures/noiseWater.png"))
         return false;
 
+    DebugLog(SH_INFO, "Loading player data");
     // loading game data
     if (is_file_existing("saves/" + folder.toAnsiString() + "/map.json"))
     {
@@ -187,6 +188,7 @@ bool DefaultView::load(sf::String folder, bool new_game, sf::RenderWindow& windo
         this->level.setMapPath("assets/map/" + to_string<int>(root["id"].asInt()) + ".umd");
     }
     this->level.load_map_at();  // empty will cause to load the map given by default
+    DebugLog(SH_OK, "Data loaded");
 
     // loading UI
     if (!this->menu_hud.load())
@@ -198,8 +200,10 @@ bool DefaultView::load(sf::String folder, bool new_game, sf::RenderWindow& windo
     // configuring stuff
     if (new_game)
     {
+        DebugLog(SH_INFO, "Asking for player sex");
         has_requested_quit = (this->ask_for_player_sex(window) == 1);
         this->player.setSex(player_sex);
+        DebugLog(SH_OK, "Asked");
     }
     this->player.setFolder(folder.toAnsiString());
     if (!this->player.load())
