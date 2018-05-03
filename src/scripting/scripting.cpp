@@ -60,7 +60,8 @@ void PyScripting::load_all_modules()
 
         while ((ent = readdir(rep)) != NULL)
         {
-            mods.push_back(directory + std::string(ent->d_name));
+            if (std::string(ent->d_name) != "." && std::string(ent->d_name) != "..")
+                mods.push_back(directory + std::string(ent->d_name));
         }
 
         closedir(rep);

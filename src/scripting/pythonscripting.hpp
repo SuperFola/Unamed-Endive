@@ -2,7 +2,13 @@
 #define DEF_PYSCRIPTING
 
 #include <cmath>
-#include <Python.h>
+
+#include "../constants.hpp"
+#ifdef PLATFORM_POSIX
+    #include <python3.6/Python.h>
+#elif defined(PLATFORM_WIN)
+    #include <Python.h>
+#endif
 
 #include "../abstract/utf8.hpp"
 

@@ -5,6 +5,7 @@
 *.backup
 .vs
 assets/.dontupload
+bin/
 obj/
 screenshots/
 dlls/Lib/

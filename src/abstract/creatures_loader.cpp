@@ -40,7 +40,8 @@ std::vector<std::string> list_files(const std::string& directory)
 
         while ((ent = readdir(rep)) != NULL)
         {
-            files.push_back(ent->d_name);
+            if (std::string(ent->d_name) != "." && std::string(ent->d_name) != "..")
+                files.push_back(ent->d_name);
         }
 
         closedir(rep);
@@ -76,7 +77,7 @@ bool CreaturesLoader::load_next()
             this->textures.add(file, texture);
         }
     }
-    
+
 
     this->current++;  // increment the cursor
 

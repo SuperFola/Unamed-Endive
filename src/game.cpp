@@ -42,7 +42,8 @@ std::vector<std::string> glob(const std::string& directory)
 
         while ((ent = readdir(rep)) != NULL)
         {
-            files.push_back(ent->d_name);
+            if (std::string(ent->d_name) != "." && std::string(ent->d_name) != "..")
+                files.push_back(ent->d_name);
         }
 
         closedir(rep);

@@ -2,7 +2,14 @@
 #define DEF_SCRIPTING
 
 #include <cmath>
-#include <Python.h>
+
+#include "../constants.hpp"
+#ifdef PLATFORM_POSIX
+    #include <python3.6/Python.h>
+#elif defined(PLATFORM_WIN)
+    #include <Python.h>
+#endif
+
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics.hpp>
 
