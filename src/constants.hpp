@@ -60,10 +60,6 @@
     #define PLATFORM_POSIX
 #endif
 
-#ifdef PLATFORM_WIN
-    #include <windows.h>
-#endif // PLATFORM_WIN
-
 #ifdef PLATFORM_POSIX
     #include <dirent.h>
 #endif // PLATFORM_POSIX

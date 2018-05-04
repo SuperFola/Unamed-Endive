@@ -10,6 +10,9 @@
 #include "../abstract/container.hpp"
 #include "../bag/bag.hpp"
 #include "../constants.hpp"
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif // PLATFORM_WIN
 #include "../bag/objectstable.hpp"
 #include "../abstract/functions.hpp"
 #include "../objects/messenger.hpp"

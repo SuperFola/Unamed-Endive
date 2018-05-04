@@ -12,6 +12,9 @@
 #include "../abstract/point.hpp"
 #include "../abstract/functions.hpp"
 #include "../constants.hpp"
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif // PLATFORM_WIN
 
 class AnimatedEntity
 {

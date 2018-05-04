@@ -13,7 +13,7 @@
 #include "../constants.hpp"
 #ifdef PLATFORM_WIN
     #include <windows.h>
-#endif
+#endif // PLATFORM_WIN
 #ifdef PLATFORM_POSIX
      #include <sys/types.h>
     #include <sys/stat.h>

@@ -10,6 +10,9 @@
 #include "../entities/pnj.hpp"
 #include "huds/menu.hpp"
 #include "../constants.hpp"
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif // PLATFORM_WIN
 #include "../entities/pnjmanager.hpp"
 #include "../abstract/functions.hpp"
 #include "../json/json.h"

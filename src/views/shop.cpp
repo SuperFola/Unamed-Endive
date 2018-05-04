@@ -2,6 +2,9 @@
 
 #include "shop.hpp"
 #include "../constants.hpp"
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif // PLATFORM_WIN
 
 // public
 ShopView::ShopView() :

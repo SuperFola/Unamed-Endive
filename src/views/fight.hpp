@@ -8,6 +8,9 @@
 #include "view.hpp"
 #include "../abstract/container.hpp"
 #include "../constants.hpp"
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif // PLATFORM_WIN
 #include "../objects/dex.hpp"
 #include "../entities/creature.hpp"
 #include "../abstract/equip.hpp"

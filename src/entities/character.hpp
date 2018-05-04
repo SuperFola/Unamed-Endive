@@ -8,6 +8,9 @@
 #include <SFML/System/Vector2.hpp>
 
 #include "../constants.hpp"
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif // PLATFORM_WIN
 #include "../abstract/point.hpp"
 #include "../map/map.hpp"
 #include "../bag/bag.hpp"

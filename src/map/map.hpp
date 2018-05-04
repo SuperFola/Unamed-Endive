@@ -10,6 +10,9 @@
 #include "blocks/block.hpp"
 #include "../json/json.h"
 #include "../constants.hpp"
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif // PLATFORM_WIN
 #include "../abstract/functions.hpp"
 #include "type_tp.hpp"
 

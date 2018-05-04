@@ -4,6 +4,9 @@
 #include<iostream>
 
 #include "src/constants.hpp"
+#ifdef PLATFORM_WIN
+    #include <windows.h>
+#endif // PLATFORM_WIN
 #include "src/termcolor/termcolor.hpp"
 
 namespace SHCL = termcolor;
