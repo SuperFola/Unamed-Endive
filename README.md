@@ -1,9 +1,7 @@
-**[Version française](.github/README-fr.md)**
-
 # Unamed Rebirth [![Discord badge](https://img.shields.io/badge/Discord-Unamed__Rebirth-brightgreen.svg?style=flat)](https://discord.gg/AWSWvgU)
 *[`yo͝onˈnāmd`] Rebirth*
 
-** Only download the game from the official website : https://superfola.github.io/UnamedRebirth !**
+**Only download the game from the official website : https://superfola.github.io/UnamedRebirth !**
 
 Kind of game
 ============
@@ -22,20 +20,33 @@ You will need to be patient to get out of the dungeons, and the best creatures p
 
 Requirements
 ============
-This game needs an up-to-date compiler for C++ and the SFML 2.4 to run correctly, if you want to install it from the source.
+If you run it thanks to the provided release : none
 
-Otherwise, you just have to download the latest release working on your platform and run the game !
+If you want to build it your self :
+
+* Python 3.x
+* SFML 2.x.y
+* cmake
+* make
+* ruby 2.5.x
 
 Compiling the project
 =====================
-If you want to compile the project, you will need to install the SFML lib as well Python 3.6, and call cmake, then make.
+Linux :
+```bash
+$ cd Unamed-ENDIVE && chmod 744 configure.sh && ./configure.sh
+```
+
+Windows :
+Download the latest release of Python (3.x) as well as the latest from the SFML (2.x.y). Download as well cmake and make. Open a command prompt, `cd` in the directory, then `mkdir build && cd build && cmake .. && make`.
+Then open the build directory in the explorer and move Unamed.exe for it to be alongside the assets folder.
 
 Credits
 =======
 * copyright Pokémon Company ©, Game Freak inc (using the term "Pokémon" to define the kind of game)
 * regular help and support : OverSurge, Pacific Void, Nuri Yuri, AhzeLeSteak, yyyyj, DarkCisum, the_new_sky, Deakcor, ralandel, Qames, WDguy45
 * logo of the game : Izaliia
-* outside tiles : WesleyFG (at the beginning for project Marnian), thatssowitty
+* outside tiles : Ralandel, 19dante91, 27alexmad27, Alistair, Alucus, Bakura155, Bati', Blue Beedrill, BoOmxBiG, Chimcharsfireworkd, CNickC/CNC, CrimsonTakai, Cuddlesthefatcat, Darkange, Dewitty, EpicDay, Fused, Gigatom, Heavy-Metal-Lover, Hek-el-grande, Kage-No-Sensei, Kizemaru_Kurunosuke, Kyle-dove, LaPampa, LotusKing, New-titeuf, Novus, Nuri Yuri, Pokemon_Diamond, Paranoid, PrinceLegendario, Reck, Red-Gyrados, REMY35, Saurav, SL249, Spaceemotion, Speedialga, Stefpoke, sylver1984, ThatsSoWitty, TheEnglishKiwi, Thegreatblaid, ThePokemonChronicles, TwentyOne, UltimoSpriter, Warpras, WesleyFG, Yoh
 * inside tiles : Slahs
 * graphical interfaces (inventory, dex, equip/PC) : vulvoch
 * graphical interfaces (menu) : Eurons ??, ralandel
@@ -47,6 +58,7 @@ Credits
 * characters :
     * `Darth`, `Vader`, `Tress` : [OceansLugiaSpirit](http://oceanslugiaspirit.deviantart.com/)
     * `Minus` : [Lightbulb15](http://lightbulb15.deviantart.com)
+    * any other characters are made by my-self
 
 What can we do when a bug appears ?
 ===================================
