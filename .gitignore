@@ -5,6 +5,7 @@
 *.backup
 .vs
 .dontupload/
+build/
 bin/
 obj/
 screenshots/
