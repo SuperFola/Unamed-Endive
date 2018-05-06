@@ -1,0 +1,3 @@
+/home/folaefolc/Documents/Git/Unamed/build/CMakeFiles/rebuild_cache.dir
+/home/folaefolc/Documents/Git/Unamed/build/CMakeFiles/Unamed.dir
+/home/folaefolc/Documents/Git/Unamed/build/CMakeFiles/edit_cache.dir

@@ -10,7 +10,7 @@
 
 #define DEV_MODE
 
-#define TRANSPARENT_TILE 68
+#define TRANSPARENT_TILE 178
 
 // views id
 #define UNREACHABLE_VIEW_ID -1

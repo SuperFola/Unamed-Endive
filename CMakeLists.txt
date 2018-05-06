@@ -12,7 +12,9 @@ file(GLOB_RECURSE HD_UN "${Unamed_SOURCE_DIR}/src/*.cpp" "${Unamed_SOURCE_DIR}/m
 
 set_property(GLOBAL APPEND_STRING PROPERTY COMPILE_FLAGS -Wall)
 
-include_directories(src/)
+# include_directories(src/)
+
+set(CMAKE_MODULE_PATH "${Unamed_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 find_package(SFML 2 REQUIRED graphics window system network audio)
 find_package(PythonLibs 3.6 REQUIRED)
@@ -23,9 +25,11 @@ include_directories(${PYTHON_INCLUDE_DIR})
 add_executable(Unamed ${PG_UN} ${HD_UN})
 
 if(SFML_FOUND)
+  include_directories(${SFML_INCLUDE_DIR})
   target_link_libraries(Unamed ${EXECUTABLE_NAME} ${SFML_LIBRARIES})
 endif()
 
 if (PYTHONLIBS_FOUND)
-    target_link_libraries(Unamed ${EXECUTABLE_NAME} ${PYTHON_LIBRARIES})
+  include_directories(${PYTHONLIBS_INCLUDE_DIR})
+  target_link_libraries(Unamed ${EXECUTABLE_NAME} ${PYTHON_LIBRARIES})
 endif()

@@ -4,7 +4,7 @@
 *.cbp
 *.backup
 .vs
-assets/.dontupload
+.dontupload/
 bin/
 obj/
 screenshots/
