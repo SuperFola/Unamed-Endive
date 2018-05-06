@@ -581,7 +581,11 @@ def id(line_n,index_l, line_s = 8)
   return line_n * line_s + index_l if line_n < 99999
   return 99999
 end
-
+def priority(id,map)
+  return 0 if id == 99999 or id = -1
+  return map.priorities[id+384]
+  
+end
 def fichier_umd(map_name) #Création du fichier umd
   map_id = Array.new
   player_x = Array.new
@@ -633,12 +637,12 @@ def fichier_umd(map_name) #Création du fichier umd
       
       files.puts("],")
     end
-    files.puts("\"map3\":[")
+    files.puts("\"floor\":[")
     i = 0
     for t in fy #layer 1
       ids = id(t[1],t[0])
-      files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids}},") if i < (fy.size - 1)
-	  files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids}}") if i >= (fy.size - 1)
+      files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids},\"priority\": #{priority(ids,u)}}},") if i < (fy.size - 1)
+	  files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids},\"priority\": #{priority(ids,u)}}}") if i >= (fy.size - 1)
 	  puts "#{i} met true" if !passages[i] == true
       i += 1
 
@@ -646,22 +650,22 @@ def fichier_umd(map_name) #Création du fichier umd
     files.puts("],\n")
     files.puts("\"width\":#{u.width},")
     files.puts("\"height\":#{u.height},")
-    files.puts("\"map2\":[")
+    files.puts("\"colliding_layer\":[")
     i = 0
     for t in gy #layer 2
       ids = id(t[1],t[0])
-      files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids}},") if i < (gy.size - 1)
-	  files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids}}") if i >= (gy.size - 1)
+      files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids},\"priority\": #{priority(ids,u)}},") if i < (gy.size - 1)
+	  files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids},\"priority\": #{priority(ids,u)}}") if i >= (gy.size - 1)
       i += 1
     end
-    files.puts("],\"map\":[")
+    files.puts("],\"mid_layer\":[")
     i = 0
 
 	for t in hy #layer 3
       ids = id(t[1],t[0])
 	  puts "ids : #{ids}"
-      files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids}},") if i < (hy.size - 1)
-	  files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids}}") if i >= (hy.size - 1)
+      files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids},\"priority\": #{priority(ids,u)}},") if i < (hy.size - 1)
+	  files.puts("{\"colliding\":#{!passages[i]},\"id\": #{ids},\"priority\": #{priority(ids,u)}}") if i >= (hy.size - 1)
       i += 1
 
     end
@@ -673,5 +677,6 @@ puts "Quel fichier voulez-vous convertir (en numéro plz les 001 ne sont pas acc
 u = gets.chomp.to_i
 puts "Vous avez choisi la Map00#{u}.rxdata"
 fichier_umd(u)
+
 puts " Appuyez pour fermer..."
 gets
