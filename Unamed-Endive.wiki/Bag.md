@@ -1,6 +1,6 @@
 Si vous avez besoin d'utiliser le sac grâce au scripting, cela peut être ce que vous cherchez :
 
-Dans `register.py` L47-53, un dictionnaire est défini pour sélectionner facilement une poche, sans connaître par coeur tous les ids :
+Dans `register.py` L48-54, un dictionnaire est défini pour sélectionner facilement une poche, sans connaître par coeur tous les ids :
 
 ```py
 POCKETS = {
