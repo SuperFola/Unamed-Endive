@@ -12,7 +12,7 @@ POCKETS = {
 }
 ```
 
-Le sac est composé de 5 poches différentes, chacune peut contenir beaucoup d'objets, mais prenez garde, quand vous ajoutez un objet, qu'elles ne soient pas remplies !  
-Les objets sont regroupés par id, et quand un objet est déposer dans une poche, il peut uniquement être utilisé ou jeté (juste un ou tout), vous ne pouvez pas les déplacer !
+Le sac est composé de 5 poches différentes, chacune peut contenir beaucoup d'objets, mais prenez garde quand vous ajoutez un objet, qu'elles ne soient pas remplies complètement !  
+Les objets sont regroupés par id, et quand un objet est déposé dans une poche, il peut uniquement être utilisé ou jeté (juste un ou tout), vous ne pouvez pas les déplacer.
 
-Grâce au moteur de script, il est possible de prendre un objet du sac et de le jeter (ou d'en ajouter un nouveau ) juste en connaissant son ID. Pas besoin de savoir où il est.
+Grâce au moteur de script, il est possible de prendre un objet du sac et de le jeter (ou d'en ajouter un nouveau) juste en connaissant son ID. Nul besoin de savoir où il est.
