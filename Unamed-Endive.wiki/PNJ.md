@@ -1,4 +1,4 @@
-Si vous utilisez l'éditeur de scripts, vous voudrez certainement créer votre propre PNJ en Python, vous avez donc besoin de quelques informations pour ce faire.
+Si vous utilisez l'Ã©diteur de scripts, vous voudrez certainement crÃ©er votre propre PNJ en Python, vous avez donc besoin de quelques informations pour cela.
 
 Type de PNJ
 ========
@@ -10,6 +10,6 @@ Type de PNJ
 
 Le nom et son affichage
 =====================
-Le nom du PNJ est utilisé pour trouver le sous-dossier (soit dans `pnj` soit dans `pnj/.specials`) qui contient toutes les images des PNJ.
+Le nom du PNJ est utilisÃ© pour trouver le sous-dossier (soit dans `pnj` soit dans `pnj/.specials`) qui contient toutes les images des PNJ.
 
-Le nom affiché du PNJ est le nom qui sera affiché lorsque vous parlerez au PNJ.
+Le nom affichÃ© du PNJ est le nom qui sera affichÃ© lorsque vous parlerez au PNJ.
