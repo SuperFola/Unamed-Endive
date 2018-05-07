@@ -1,15 +1,12 @@
 Bienvenue sur le wiki d'Unamed Rebirth (Endive version) 
 
-Ceci est la première page du wiki, vous allez apprendre les bases du jeu.
+Ceci est la premiÃ¨re page du wiki, vous allez apprendre les bases du jeu.
 
-Votre aventure va bientôt commencer, bonne journée !
+Votre aventure va bientÃ´t commencer, bonne journÃ©e !
 
 ## Concept
 
-Vous être un scientifique et vous arrivez sur Unamed, une île ou peu de gens vivent. 
-Les seuls lieux habitables sont près des côtes ou vraiment bien protégés, 
-car les habitants n'ont aucune créature pour se défendre contre celles qui vivent au centre de l'île. Vous allez vous installer après avoir vu 
-un de vos amis, un chercheur, mourir à cause de l'attaque de ces créatures, et chercher 
-toutes les créature pour comprendre ce qui se passe !
+Vous Ãªtes un scientifique et vous arrivez sur Unamed, une Ã®le oÃ¹ peu de gens vivent. 
+Les seuls lieux habitables sont prÃ¨s des cÃ´tes ou vraiment bien protÃ©gÃ©s, car les habitants n'ont aucune crÃ©ature pour se dÃ©fendre contre celles qui vivent au centre de l'Ã®le. Vous allez vous y installer aprÃ¨s avoir vu un de vos amis, un chercheur, mourir Ã  cause d'une attaque de crÃ©atures, et chercher toutes les crÃ©ature pour comprendre ce qui se passe !
 
-Vous aurez besoin d'être patient pour sortir des donjons, et capturer les meilleures créatures possibles !
+Vous aurez besoin d'Ãªtre patient pour sortir des donjons, et capturer les meilleures crÃ©atures possibles !
