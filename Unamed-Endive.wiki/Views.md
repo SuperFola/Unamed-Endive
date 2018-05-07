@@ -2,18 +2,19 @@
 
 La vue par défaut
 ============
-* description : affiche le personnage dans la fenêtre de jeu, permet au joueur d'afficher le menu, de déplacer le personnage sur la map ... c'est le jeu !
+* description : affiche le personnage dans la fenêtre de jeu, permet au joueur d'afficher le menu, de déplacer le personnage sur la map... c'est le jeu !
 * id : 1
 
 La vue du sac (inventaire)
 ==============
-* description : affiche toutes les poches du sac, et leur contenu (tous les objets), autorise le joueur à jeter des objets, à en utiliser quelques-uns ...
+* description : affiche toutes les poches du sac, et leur contenu (tous les objets), permet au joueur de jeter des objets, d'en utiliser...
 * id : 2
 
 La vue de la map
 ========
-* description : Tout à propos de la map, avec les différentes villes et les chemins entre eux.
+* description : tout à propos de la map, avec les différentes villes et les chemins entre eux.
 * id : 3
+
 Vue de l'équipe et du PC
 =====================
 * description : affiche toutes les créatures que le joueur possède, permet également au joueur d'avoir des informations sur ses créatures.
@@ -26,5 +27,5 @@ Vue du Dex
 
 Vue de la sauvegarde
 ===========
-* description : juste la petite chose qui est affichée lors de la sauvegarde
+* description : un écran spécial pour faire patienter le joueur pendant la sauvegarde de sa partie
 * id : 6
