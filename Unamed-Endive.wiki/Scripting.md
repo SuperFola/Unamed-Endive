@@ -1,30 +1,30 @@
 Comment commencer
 ============
-PremiËrement, crÈez un fichier `.py` dans le dossier `assets/scripts`, que vous nommerez selon vos envies.
+Premi√®rement, cr√©ez un fichier `.py` dans le dossier `assets/scripts`, que vous nommerez selon vos envies.
 
-Puis ouvrez-le dans un Èditeur de scripts (comme [Notepad++](https://notepad-plus-plus.org/)), nous allons Ècrire notre premier code pour le jeu :3 !
+Puis ouvrez-le dans un √©diteur de scripts (comme [Notepad++](https://notepad-plus-plus.org/)), nous allons √©crire notre premier code pour le jeu.
 
-Pour inclure quelques mÈthodes "built in" pour modifier le jeu, nous allons inclure le module `Unamed` comme ceci :
+Pour inclure quelques m√©thodes "built in" pour modifier le jeu, nous allons inclure le module `Unamed` comme ceci :
 
 ```py
 import Unamed
 ```
 
-Puis nous allons dÈclarer le type de fichier (‡ quoi servira-t-il) dans le fichier `register.py` : 
+Puis nous allons d√©clarer le type de fichier (√† quoi va-t-il servir) dans le fichier `register.py` : 
 
 ```py
 Unamed.registerScript(type, nom)
 ```
 
-`type` et `nom` devraient Ítre des chaÓnes de caractËres.  Pour le nom, il **doit** Ítre le nom complet de votre script (par exemple `"myscript.py"`). Pour le type de script, cela va dÈpendre de comment celui-ci va fonctionner:
+`type` et `nom` devraient √™tre des cha√Ænes de caract√®res.  Pour le nom, il **doit** √™tre le nom complet de votre script (par exemple `"myscript.py"`). Pour le type de script, cela va d√©pendre de comment celui-ci va fonctionner:
 
-* juste une fois, ‡ l'ouverture du jeu ? utilisez `runOnceWhenStarting`
+* juste une fois, √† l'ouverture du jeu ? utilisez `runOnceWhenStarting`
 
-* juste une fois, ‡ la fermeture du jeu ? utilisez `runOnceWhenClosing`
+* juste une fois, √† la fermeture du jeu ? utilisez `runOnceWhenClosing`
 
-* chaque fois que le jeu est mis ‡ jour ? utilisez `runWhenUpdatingGame`
+* chaque fois que le jeu est mis √† jour ? utilisez `runWhenUpdatingGame`
 
-* chaque fois que le jeu lance les ÈvËnements, vous avez besoin d'aller chercher ces ÈvËnements ? utilisez `runWhenProcessingEvents`
+* chaque fois que le jeu lance les √©v√®nements, vous avez besoin d'aller chercher ces √©v√®nements ? utilisez `runWhenProcessingEvents`
 
 * chaque fois que le jeu affiche quelque chose ? utilisez `runWhenRenderingView`
 
@@ -37,21 +37,21 @@ puis :arrow_right:
 
 Pendant que le jeu tourne :
 
-* `runWhenUpdatingGame`, chaque fois que le jeu est mis ‡ jour
+* `runWhenUpdatingGame`, chaque fois que le jeu est mis √† jour
 
 puis :arrow_right: 
 
-* `runWhenProcessingEvents`, chaque fois que le jeu reÁoit un ÈvËnement
+* `runWhenProcessingEvents`, chaque fois que le jeu re√ßoit un √©v√®nement
 
 puis :arrow_right: 
 
-* `runWhenRenderingView`, chaque fois qu'une vue est affichÈe
+* `runWhenRenderingView`, chaque fois qu'une vue est affich√©e
 
 puis :arrow_right: 
 
-* `runOnceWhenClosing`, seulement une fois, ‡ la fermeture du jeu
+* `runOnceWhenClosing`, seulement une fois, √† la fermeture du jeu
 
-Notez que les scripts de type `runOnceWhenStarting` ne peuvent Ítre lancÈs que lorsque tous les autres composants du jeu (comme le joueur, son sac, son Èquipe et tout ce dont il a besoin  ; ainsi que les maps, et les vues ... etc) sont chargÈs, donc il est possible d'appliquer directement des modifications ‡ l'Èquipe ou au joueur avant que le jeu ne commence vraiment.
+Notez que les scripts de type `runOnceWhenStarting` ne peuvent √™tre lanc√©s que lorsque tous les autres composants du jeu (comme le joueur, son sac, son √©quipe et tout ce dont il a besoin  ; ainsi que les maps, et les vues ... etc) sont charg√©s, donc il est possible d'appliquer directement des modifications √† l'√©quipe ou au joueur avant que le jeu ne commence vraiment.
 
 Ce que nous pouvons faire et ce que nous ne pouvons pas faire
 ==================================
@@ -67,11 +67,11 @@ Les scripts ayant cette forme :
 
 * `runWhenRenderingView`
 
-ne devraient pas, ou le moins possible , et doivent tourner en vraiment peu de temps, parce qu'ils ne peuvent pas Ítre mis sur un "fil" sÈparÈ.
+ne devraient pas, ou le moins possible , et doivent tourner en vraiment peu de temps, parce qu'ils ne peuvent pas √™tre mis sur un thread s√©par√©. Si les scripts de ces types ci prennent trop de temps √† s'ex√©cuter, le jeu s'en verra donc ralenti.
 
-Script commenÁant par runWhen... mais qui a besoin de valeurs globales
+Script commen√ßant par runWhen... mais qui a besoin de variables globales
 =================================================
-Si votre script devrait tourner lorsque le jeu se met ‡ jour, mais qu'il a besoin d'une valeur globale, vous pouvez penser que votre script ne gardera pas la valeur entre chaque frame. Donc vous pouvez utiliser cette mÈthode pour crÈer une valeur globale: 
+Si votre script devrait tourner lorsque le jeu se met √† jour, mais qu'il a besoin d'une variable globale, vous pouvez penser que votre script ne gardera pas la valeur entre chaque frame. Donc vous pouvez utiliser cette m√©thode pour cr√©er une valeur globale: 
 
 ```py
 import Unamed
@@ -79,9 +79,9 @@ import Unamed
 Unamed.createGlobal(name, value)
 ```
 
-Le code C++ qui s'en occupe essaiera de dÈduire le type lui-mÍme ;) il retournera 1 si c'est un succËs, sinon 0 (par exemple si 'name' existe dÈj‡ dans le tableau des variables globales). `name` devrait Ítre un 'string'.
+Le code C++ qui s'en occupe essaiera de d√©duire le type lui-m√™me ;) il retournera 1 si c'est un succ√®s, sinon 0 (par exemple si 'name' existe d√©j√† dans le tableau des variables globales). `name` devrait √™tre un 'string'.
 
-Et quand vous voulez obtenir une valeur globale, vous avez juste ‡ faire ceci : 
+Et quand vous voulez obtenir une valeur globale, vous avez juste √† faire ceci : 
 
 ```py
 import Unamed
@@ -91,7 +91,7 @@ Unamed.getGlobal(name)
 
 avec `name` l'identifiant de votre variable globale (c'est aussi un 'string')
 
-Mais il y a une autre astuce qui est que le moteur de script charge les fichiers en texte brut, et puis envoie ce "texte" ‡ Python. So, what it means is that you can totally do this, sans aucun souci : 
+Mais il y a une autre astuce qui est que le moteur de script charge les fichiers en texte brut, et puis envoie ce "texte" √† Python. Ce qui veut dire que vous pouvez faire ceci, sans aucun souci : 
 
 fichier 1:
 ```py
@@ -111,7 +111,7 @@ import Unamed
 print(global_var)
 ```
 
-Parce que c'est pareil que :+1: 
+Parce que c'est pareil que : 
 ```py
 import Unamed
 
@@ -126,22 +126,20 @@ import Unamed
 print(global_var)
 ```
 
-Parce que les fichiers sont lus par le mÍme interprÈteur, les uns aprËs les autres, et qu'ils ne sont pas enchaÓnÈs (Donc, vous avez juste ‡ appeler le module Unamed dans register.py et vous pouvez l'utiliser sans l'importer)
-
-mais soyez s˚r que le fichier 1 sera appelÈ avant le fichier 2, en vÈrifiant l'ordre d'appel de ces scripts.
+Parce que les fichiers sont lus par le m√™me interpr√©teur, les uns apr√®s les autres, et qu'ils ne sont pas encha√Æn√©s (donc vous avez juste √† appeler le module Unamed dans register.py et vous pouvez l'utiliser sans l'importer dans tous les autres scripts), mais soyez s√ªr que le fichier 1 sera appel√© avant le fichier 2, en v√©rifiant l'ordre d'appel de ces scripts.
 
 Chargement et affichage d'images
 =============================
 Rien de plus simple : 
 
-loader.py (dÈfini comme `runOnceWhenStarting` dans register.py)
+loader.py (d√©fini comme `runOnceWhenStarting` dans register.py)
 ```py
 import Unamed
 
 Unamed.loadImage("path/to/image.png", "id")
 ```
 
-display.py (dÈfini comme `runWhenRenderingView` dans register.py)
+display.py (d√©fini comme `runWhenRenderingView` dans register.py)
 ```py
 import Unamed
 
@@ -150,12 +148,11 @@ Unamed.displayImage("id", 150, 140)
 
 Jouer avec les musiques
 =======================
-Tout le systËme a ÈtÈ simplifiÈ, donc vous avez une trËs petite interface comme dÈcrit ci-dessous : 
+Tout le syst√®me a √©t√© simplifi√©, donc vous avez une tr√®s petite interface comme d√©crit ci-dessous : 
 
 * `Unamed.playMusic(name)` avec `name` le nom de la chanson, comme "01.ogg" par exemple
-* `Unamed.stopMusic()` qui stoppe la musique, si une musique est jouÈe
-
-* `Unamed.getCurrentMusicName()` qui retourne le nom de la musique actuellement jouÈe
+* `Unamed.stopMusic()` qui stoppe la musique, si une musique est jou√©e
+* `Unamed.getCurrentMusicName()` qui retourne le nom de la musique actuellement jou√©e
 
 Jouer avec la map
 ====================
@@ -165,25 +162,25 @@ Maintenant, vous pouvez obtenir la largeur et la hauteur de la map comme ceci :
 
 * `Unamed.getMapHeight()`
 
-Vous pouvez aussi vÈrifier si un block est soit une arrivÈe (un spawn) d'une autre map, soit une tÈlÈportation pour aller sur une autre map :
+Vous pouvez aussi v√©rifier si un block est soit une arriv√©e (un spawn) d'une autre map, soit un point de t√©l√©portation pour aller sur une autre map :
 
-* `Unamed.isSpawn(x, y)` avec `x` and `y` reprÈsente la position du block, en blocks (pas en pixels !). il retournera `1` si le block est un spawn, sinon `0`
+* `Unamed.isSpawn(x, y)` avec `x` et `y` repr√©sentant la position du block, en blocks (pas en pixels !). Il retournera `1` si le block est un spawn, sinon `0`
 
-* `Unamed.isTp(x, y)` avec `x` and `y` reprÈsente la position du block, en blocks (pas en pixels !). il retournera `1` si le block est une tÈlÈportation, sinon 0
+* `Unamed.isTp(x, y)` avec `x` et `y` repr√©sentant la position du block, en blocks (pas en pixels !). Il retournera `1` si le block est une t√©l√©portation, sinon `0`
 
-Puis vous pouvez Ègalement obtenir la position du spawn o˘ vous arrivez sur une map d'ID X comme ceci : `Unamed.getSpawnPosFromMapId(X)`. il retourne un tuple of two integers si un spawn avec la map id X est trouvÈ, sinon `-1`.
+Puis vous pouvez √©galement obtenir la position du spawn o√π vous arrivez sur une map d'ID X comme ceci : `Unamed.getSpawnPosFromMapId(X)`. Il retourne un tuple de 2 entiers (`x`, `y`) si un spawn avec la map id X est trouv√©, sinon `-1`.
 
-Finalement vous pouvez obtenir le lieu o˘ vous arrivez avec une TP, ‡ une position donnÈe : `Unamed.getMapIdFromTpPos(x, y)` avec `x` and `y` 2 entiers. Si une TP `x, y` n'est pas trouvÈ, il retournera `-1`.
+Enfin, vous pouvez obtenir le lieu o√π vous arrivez avec un point de t√©l√©portation, √† une position donn√©e : `Unamed.getMapIdFromTpPos(x, y)` avec `x` et `y` 2 entiers. Si un point de t√©l√©portation `x, y` n'est pas trouv√©, la fonction retournera `-1`.
 
-Valeurs globales liÈes au jeu
+Variables globales li√©es au jeu
 ===========================
-Si vous avez besoin de savoir quel est l'ID de vue actuel, par exemple pour estimer si vous devez afficher une image, vous pouvez utiliser cette mÈthode: `Unamed.getCurrentViewId ()` qui renvoie un entier reprÈsentant l'ID de vue (reportez-vous ‡ la page `View` sur ce wiki pour en savoir plus sur eux
+Si vous avez besoin de savoir quel est l'ID de vue actuel, par exemple pour savoir si vous devez afficher une image, vous pouvez utiliser cette m√©thode: `Unamed.getCurrentViewId ()` qui renvoie un entier repr√©sentant l'ID de vue (reportez-vous √† la page `Vues` sur ce wiki pour en savoir plus sur celles-ci.
 
-Aussi, si vous voulez vÈrifier si la vue actuelle a un HUD actif traitant des ÈvÈnements / affichage, utilisez `Unamed.hasActiveHud (vid)` avec `vid` un view_id (pour savoir si la vue actuelle a un HUD actif, vous pouvez utiliser `Unamed.hasActiveHud (Unamed.getCurrentView ())`)
+Egalement, si vous voulez v√©rifier si la vue actuelle a un HUD actif traitant des √©v√©nements / faisant de l'affichage, utilisez `Unamed.hasActiveHud(vid)` avec `vid` un view_id (pour savoir si la vue actuelle a un HUD actif, vous pouvez utiliser `Unamed.hasActiveHud(Unamed.getCurrentView ())`)
 
-CrÈer un PNJ
+Cr√©er un PNJ
 ==============
-Rien n'est plus facile que de crÈer un PNJ : 
+Rien n'est plus facile que de cr√©er un PNJ : 
 
 ```py
 import Unamed
@@ -193,25 +190,25 @@ Unamed.createPNJ(0, "test", "je suis un test pnj", 0, "Test PNJ", 32, 32)
 
 Liste des arguments : 
 
-* `map id` : integer
+* `map id` : entier
 
 * `folder` : string (ils sont tous dans `assets/pnj`)
 
 * `text` : string (ce que le PNJ dira)
 
-* `kind` : integer (allez sur la page PNJ du wiki pour en savoir plus)
+* `kind` : entier (allez sur la page PNJ du wiki pour en savoir plus)
 
-* `display name` : string (Nom qui sera affichÈ)
+* `display name` : string (le nom qui sera affich√©)
 
-* `x` : integer (pixels, position relative du coin supÈrieur gauche de la map)
+* `x` : entier (pixels, position relative du coin sup√©rieur gauche de la map)
 
-* `y` : integer (pixels, position relative du coin supÈrieur gauche de la map)
+* `y` : entier (pixels, position relative du coin sup√©rieur gauche de la map)
 
-Obtenir `sf::Event`s
+Obtenir des `sf::Event`s
 ====================
-Ca ne peut pas Ítre intÈressant si nous ne pouvons pas jouer avec les Èvents que le jeu exÈcute, non?
+Ce n'est pas int√©ressant si nous ne pouvons pas jouer avec les √©vents que le jeu ex√©cute, non ?
 
-Pour rÈcupÈrer le dernier Event que le jeu a exÈcutÈ, marquez votre script comme `runWhenProcessingEvents`, et puis vous devriez faire Áa : 
+Pour r√©cup√©rer le dernier `Event` que le jeu a ex√©cut√©, marquez votre script comme `runWhenProcessingEvents`, puis : 
 
 ```py
 import Unamed
@@ -219,16 +216,16 @@ import Unamed
 ev = Unamed.getEvent()
 ```
 
-`Unamed.getEvent()` retourne un `dict`. Enfin, pour vÈrifier si il a une clÈ spÈcifique et retrouver sa valeur associÈe, utilisez la mÈthode `.get(key, [default value])`.
-Pour obtenir le type d'un Èvent, vous pouvez Ècrire: 
+`Unamed.getEvent()` retourne un `dict`. Enfin, pour v√©rifier s'il a une cl√© sp√©cifique et retrouver sa valeur associ√©e, utilisez la m√©thode `.get(key, [default value])`.
+Pour obtenir le type d'un √©vent, vous pouvez √©crire: 
 
 ```
 type_ev = ev.get('type')
 if type_ev:
-    # nous pouvons l'exÈcuter, il a un type
+    # nous pouvons l'ex√©cuter, il a un type
 ```
 
-Les types d'Èvents supportÈs sont ici (notez qu'ils sont Ècrits en caractËres minuscules) : 
+Les types d'√©vents support√©s sont ici (notez qu'ils sont √©crits en caract√®res minuscules) : 
 
 * closed
 * resized
@@ -236,13 +233,13 @@ Les types d'Èvents supportÈs sont ici (notez qu'ils sont Ècrits en caractËres mi
 * gainedfocus
 * textentered => `{'unicode': character}`
 * keypressed => `{'key': keycode, 'alt': bool, 'control': bool, 'shift': bool, 'system': bool}`
-* keyreleased => pareil que keypressed
+* keyreleased => pareil que keypressed, mais lanc√© uniquement quand une touche est rel√¢ch√©e
 * mousewheelscrolled => `{'vertical': bool, 'delta': int, 'x': int, 'y': int}`
 * mousebuttonpressed => `{'button': int, 'x': int, 'y': int}`
-* mousebuttonreleased => pareil que mousebuttonpressed
+* mousebuttonreleased => pareil que mousebuttonpressed, mais lanc√© uniquement quand un bouton de la souris est rel√¢ch√©
 * mousemoved => `{'x': int, 'y': int}`
 * mouseentered
 * mouseleft
-* unrecognized => pour tous les autres Èvents non-supportÈs par le jeu (principalement liÈs au joystick)
+* unrecognized => pour tous les autres √©vents non-support√©s par le jeu (principalement ceux li√©s au joystick)
 
-Si vous n'Ítes pas familier avec la SFML, cela peut vous aider ‡ mieux comprendre comment fonctionnent les Èvents : [SFML doc on sf::Event](https://www.sfml-dev.org/tutorials/2.4/window-events.php)
+Si vous n'√™tes pas familier avec la SFML, cela peut vous aider √† mieux comprendre comment fonctionnent les √©v√©nements : [documentation SFML sur sf::Event](https://www.sfml-dev.org/tutorials/2.4/window-events.php)
