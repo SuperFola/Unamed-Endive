@@ -1,1 +1,0 @@
-Si vous avez besoin d'informations supplémentaires sur la construction du module `Unamed`, merci d'aller voir les notes dans le fichier `scripting_doc.txt` qui est créé à chaque ouverture du jeu, dans le dossier `assets/scripts`, avec toute la documentation des méthodes comprises dans le module.

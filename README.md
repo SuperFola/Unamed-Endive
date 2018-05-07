@@ -44,6 +44,8 @@ Then open the build directory in the explorer and move Unamed.exe for it to be a
 Credits
 =======
 * copyright Pokémon Company ©, Game Freak inc (using the term "Pokémon" to define the kind of game)
+* Table class (ruby) to handle rxdata : vgvgf
+* using Enterbrain software to create the maps (but we traduct them into the game format)
 * regular help and support : OverSurge, Pacific Void, Nuri Yuri, AhzeLeSteak, yyyyj, DarkCisum, the_new_sky, Deakcor, ralandel, Qames, WDguy45
 * logo of the game : Izaliia
 * outside tiles : Ralandel, 19dante91, 27alexmad27, Alistair, Alucus, Bakura155, Bati', Blue Beedrill, BoOmxBiG, Chimcharsfireworkd, CNickC/CNC, CrimsonTakai, Cuddlesthefatcat, Darkange, Dewitty, EpicDay, Fused, Gigatom, Heavy-Metal-Lover, Hek-el-grande, Kage-No-Sensei, Kizemaru_Kurunosuke, Kyle-dove, LaPampa, LotusKing, New-titeuf, Novus, Nuri Yuri, Pokemon_Diamond, Paranoid, PrinceLegendario, Reck, Red-Gyrados, REMY35, Saurav, SL249, Spaceemotion, Speedialga, Stefpoke, sylver1984, ThatsSoWitty, TheEnglishKiwi, Thegreatblaid, ThePokemonChronicles, TwentyOne, UltimoSpriter, Warpras, WesleyFG, Yoh

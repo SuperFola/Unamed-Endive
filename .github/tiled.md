@@ -2,9 +2,7 @@
 
 Téléchargez l'éditeur [ici](https://thorbjorn.itch.io/tiled/download/)
 
-Téléchargez le convertisseur [ici]()
-
-**LE CONVERTISSEUR N'EST PAS ENCORE CODE MAIS VOUS POUVEZ DEJA MAPPER**
+Téléchargez le convertisseur [ici](https://github.com/SuperFola/GUACAMOLE/)
 
 Lancez l'installateur, acceptez tout ce qu'il veut, puis lancez Tiled.
 
@@ -111,20 +109,3 @@ Quand vous avez fini, sauvegardez, copiez vos fichiers de maps dans le dossier `
 Copiez les dans le dossier `assets/map` du jeu et tout est bon !
 
 **NOTE** : il n'est pas possible d'éditer une map convertie. Pour cela, gardez **toujours** les .tmx pour éditer vos maps, vous n'aurez qu'à reconvertir une fois vos maps une fois que vous les aurez éditées.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

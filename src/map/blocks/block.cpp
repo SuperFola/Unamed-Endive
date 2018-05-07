@@ -9,9 +9,10 @@ Block::Block() :
 
 }
 
-Block::Block(int id_, bool solid_) :
+Block::Block(int id_, bool solid_, int priority_) :
     solid(solid_)
     , id(id_)
+    , priority(priority_)
 {
 
 }
@@ -34,4 +35,9 @@ void Block::setId(int newone)
 void Block::setSolid(bool value)
 {
     this->solid = value;
+}
+
+int Block::getPriority()
+{
+    return this->priority;
 }

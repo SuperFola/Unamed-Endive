@@ -45,19 +45,25 @@ int Map::load_map_at(std::string path)
 
 void Map::render(sf::RenderTexture& window)
 {
-    window.draw(*this->tmaps[2]);
+    window.draw(*this->tmaps[0]);
     window.draw(*this->tmaps[1]);
+
+    if (this->tmaps.size() == 4)
+        window.draw(*this->tmaps[2]);
 }
 
 void Map::micro_render(sf::RenderTexture& window)
 {
-    window.draw(*this->tmaps[2]);
+    window.draw(*this->tmaps[0]);
     window.draw(*this->tmaps[1]);
+
+    if (this->tmaps.size() == 4)
+        window.draw(*this->tmaps[2]);
 }
 
 void Map::render_top(sf::RenderTexture& window)
 {
-    window.draw(*this->tmaps[0]);
+    window.draw(*this->tmaps[(this->tmaps.size() == 3) ? 2 : 3]);
 }
 
 void Map::update(sf::RenderWindow& window, sf::Time elapsed)
@@ -143,25 +149,51 @@ int Map::load_map(std::string& map_path)
     this->map_height = this->root["height"].asInt();
     DebugLog(SH_INFO, "Width : " << this->map_width << "  Height : " << this->map_height);
 
-    const std::vector<std::string> maps = {"map", "map2", "map3"};
+    const std::vector<std::string> maps = {"floor", "colliding_layer", "mid_layer"};
+    std::vector<Block*> top_layer;
 
     for (const auto& map_name: maps)
     {
         std::vector<Block*> temp;
         for (int i=0; i < this->root[map_name].size(); ++i)
         {
+            int priority = this->root[map_name][i]["priority"].asInt();
             Block* block = new Block (
                 this->root[map_name][i]["id"].asInt(),
-                this->root[map_name][i]["colliding"].asBool()
+                this->root[map_name][i]["colliding"].asBool(),
+                priority
             );
-            temp.push_back(block);
+            if (priority == 0)
+                temp.push_back(block);
+            else if (priority == 5 && this->level.size() == 2)
+            {
+                if (top_layer.size() != i - 1)
+                {
+                    Block* b = new Block(TRANSPARENT_TILE, false, 0);
+                    for (int j=top_layer.size(); j < i; ++j)
+                        top_layer.push_back(b);
+                }
+                top_layer.push_back(block);
+            }
+            else
+                DebugLog(SH_ERR, "Unknow priority for block " << i << ":" << priority);
         }
         this->level.push_back(temp);
         DebugLog(SH_INFO, "Loaded layer '" << map_name << "' as layer number " << this->level.size() - 1);
     }
+    if (top_layer.size() != 0)
+    {
+        if (top_layer.size() != this->level[0].size())
+        {
+            Block* b = new Block(TRANSPARENT_TILE, false, 0);
+            for (int j=top_layer.size(); j < this->level[0].size(); ++j)
+                top_layer.push_back(b);
+        }
+        this->level.push_back(top_layer);
+    }
     DebugLog(SH_OK, "Map loaded");
 
-    for (int i=0; i < 3; i++)
+    for (int i=0; i < this->level.size(); i++)
     {
         TileMap* tmap = new TileMap();
         tmap->load(this->tileset_path);
