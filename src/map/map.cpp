@@ -149,7 +149,8 @@ int Map::load_map(std::string& map_path)
     this->map_height = this->root["height"].asInt();
     DebugLog(SH_INFO, "Width : " << this->map_width << "  Height : " << this->map_height);
 
-    const std::vector<std::string> maps = {"floor", "colliding_layer", "mid_layer"};
+    /// const std::vector<std::string> maps = {"floor", "colliding_layer", "mid_layer"};
+    const std::vector<std::string> maps = {"map", "map2", "map3"};
     std::vector<Block*> top_layer;
 
     for (const auto& map_name: maps)
@@ -183,6 +184,7 @@ int Map::load_map(std::string& map_path)
     }
     if (top_layer.size() != 0)
     {
+        DebugLog(SH_INFO, "top_layer.size() != 0");
         if (top_layer.size() != this->level[0].size())
         {
             Block* b = new Block(TRANSPARENT_TILE, false, 0);
@@ -197,10 +199,13 @@ int Map::load_map(std::string& map_path)
     {
         TileMap* tmap = new TileMap();
         tmap->load(this->tileset_path);
-        this->tmaps.push_back(tmap);
 
-        if (this->tmaps[i]->load_map(sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level[i], this->map_width, this->map_height))
+        if (tmap->load_map(sf::Vector2u(TILE_SIZE_IN_TILESET, TILE_SIZE_IN_TILESET), this->level[i], this->map_width, this->map_height))
+        {
+            delete tmap;
             return 1;
+        }
+        this->tmaps.push_back(tmap);
     }
     DebugLog(SH_OK, "Tilemaps loaded");
 
