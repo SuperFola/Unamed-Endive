@@ -1,7 +1,5 @@
-# Unamed Rebirth [![Discord badge](https://img.shields.io/badge/Discord-Unamed__Rebirth-brightgreen.svg?style=flat)](https://discord.gg/AWSWvgU)
+# Unamed Rebirth
 *[`yo͝onˈnāmd`] Rebirth*
-
-**Only download the game from the official website : https://superfola.github.io/UnamedRebirth !**
 
 Kind of game
 ============
